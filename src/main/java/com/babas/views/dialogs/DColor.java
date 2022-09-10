@@ -54,6 +54,12 @@ public class DColor extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
+        if(update){
+            setTitle("Actualizar color");
+            btnSave.setText("Guardar");
+            btnHecho.setText("Cancelar");
+            load();
+        }
         pack();
         setResizable(false);
         setLocationRelativeTo(Utilities.getJFrame());
@@ -82,6 +88,9 @@ public class DColor extends JDialog{
     }
     private void clear(){
         txtName.setText(null);
+    }
+    private void load(){
+        txtName.setText(color.getName());
     }
     private void onHecho(){
         if(update){

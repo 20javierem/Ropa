@@ -3,6 +3,7 @@ package com.babas.views.dialogs;
 import com.babas.models.Color;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorColor;
 import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
 import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
 import com.babas.views.frames.FPrincipal;
@@ -49,6 +50,7 @@ public class DAllColors extends JDialog{
 
     private void init(){
         setContentPane(contentPane);
+        getRootPane().setDefaultButton(btnHecho);
         loadTable();
         pack();
         setResizable(false);
@@ -60,6 +62,8 @@ public class DAllColors extends JDialog{
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ColorCellRendered.setCellRenderer(table);
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorColor(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorColor(true));
     }
     private void loadNewColor(){
         DColor dColor=new DColor(new Color());
