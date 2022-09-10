@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.driver_class">org.mariadb.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mariadb://localhost/DB</property>
+        <property name="connection.user">root</property>
+        <property name="connection.password"></property>
+        <property name="connection.pool_size">5</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="dialect">org.hibernate.dialect.MariaDBDialect</property>
+        <property name="hbm2ddl.auto">update</property>
+        <mapping class="com.babas.models.Branch"/>
+        <mapping class="com.babas.models.Category" />
+        <mapping class="com.babas.models.Client" />
+        <mapping class="com.babas.models.Color" />
+        <mapping class="com.babas.models.DetailSale"/>
+        <mapping class="com.babas.models.DetailTransfer"/>
+        <mapping class="com.babas.models.Presentation"/>
+        <mapping class="com.babas.models.Price"/>
+        <mapping class="com.babas.models.Product"/>
+        <mapping class="com.babas.models.Sale"/>
+        <mapping class="com.babas.models.Sex"/>
+        <mapping class="com.babas.models.Stock"/>
+        <mapping class="com.babas.models.Style"/>
+        <mapping class="com.babas.models.Transfer"/>
+        <mapping class="com.babas.models.User"/>
+        <mapping class="com.babas.models.Size"/>
+    </session-factory>
+</hibernate-configuration>

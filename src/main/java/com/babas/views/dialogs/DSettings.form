@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.babas.views.dialogs.DSettings">
+  <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
+    <margin top="10" left="10" bottom="10" right="10"/>
+    <constraints>
+      <xy x="20" y="20" width="664" height="400"/>
+    </constraints>
+    <properties>
+      <preferredSize width="500" height="500"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <tabbedpane id="104ef" binding="tabbedPane1" default-binding="true">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="200" height="200"/>
+          </grid>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="194a" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
+            <margin top="10" left="10" bottom="10" right="10"/>
+            <constraints>
+              <tabbedpane title="Apariencia"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <vspacer id="50bd6">
+                <constraints>
+                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <grid id="f8f20" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="88d6b" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Tema:"/>
+                    </properties>
+                  </component>
+                  <hspacer id="ca1a6">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                  <component id="9f942" class="com.formdev.flatlaf.extras.components.FlatComboBox" binding="cbbThemes">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="7" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <model>
+                        <item value="Claro"/>
+                        <item value="Oscuro"/>
+                        <item value="Ligth"/>
+                        <item value="Darcula"/>
+                        <item value="Arc"/>
+                        <item value="Arc - Orange"/>
+                        <item value="Arc Dark"/>
+                        <item value="Arc Dark - Orange"/>
+                        <item value="Carbon"/>
+                        <item value="Cobalt 2"/>
+                        <item value="Cyan light"/>
+                        <item value="Dark Flat"/>
+                        <item value="Dark purple"/>
+                        <item value="Dracula"/>
+                        <item value="Gradianto Dark Fuchsia"/>
+                        <item value="Gradianto Deep Ocean"/>
+                        <item value="Gradianto Midnight Blue"/>
+                        <item value="Gradianto Nature Green"/>
+                        <item value="Gray"/>
+                        <item value="Gruvbox Dark Hard"/>
+                        <item value="Gruvbox Dark Medium"/>
+                        <item value="Gruvbox Dark Soft"/>
+                        <item value="Hiberbee Dark"/>
+                        <item value="High contrast"/>
+                        <item value="Light Flat"/>
+                        <item value="Material Design Dark"/>
+                        <item value="Monocai"/>
+                        <item value="Monokai Pro"/>
+                        <item value="Nord"/>
+                        <item value="One Dark"/>
+                        <item value="Solarized Dark"/>
+                        <item value="Solarized Light"/>
+                        <item value="Spacegray"/>
+                        <item value="Vuesion"/>
+                        <item value="Xcode-Dark"/>
+                        <item value="Arc Dark (Material)"/>
+                        <item value="Arc Dark Contrast (Material)"/>
+                        <item value="Atom One Dark (Material)"/>
+                        <item value="Atom One Dark Contrast (Material)"/>
+                        <item value="Atom One Light (Material)"/>
+                        <item value="Atom One Light Contrast (Material)"/>
+                        <item value="Dracula (Material)"/>
+                        <item value="Dracula Contrast (Material)"/>
+                        <item value="GitHub (Material)"/>
+                        <item value="GitHub Contrast (Material)"/>
+                        <item value="GitHub Dark (Material)"/>
+                        <item value="GitHub Dark Contrast (Material)"/>
+                        <item value="Light Owl (Material)"/>
+                        <item value="Light Owl Contrast (Material)"/>
+                        <item value="Material Darker (Material)"/>
+                        <item value="Material Darker Contrast (Material)"/>
+                        <item value="Material Deep Ocean (Material)"/>
+                        <item value="Material Deep Ocean Contrast (Material)"/>
+                        <item value="Material Lighter (Material)"/>
+                        <item value="Material Lighter Contrast (Material)"/>
+                        <item value="Material Oceanic (Material)"/>
+                        <item value="Material Oceanic Contrast (Material)"/>
+                        <item value="Material Palenight (Material)"/>
+                        <item value="Material Palenight Contrast (Material)"/>
+                        <item value="Monokai Pro (Material)"/>
+                        <item value="Monokai Pro Contrast (Material)"/>
+                        <item value="Moonlight (Material)"/>
+                        <item value="Moonlight Contrast (Material)"/>
+                        <item value="Night Owl (Material)"/>
+                        <item value="Night Owl Contrast (Material)"/>
+                        <item value="Solarized Dark (Material)"/>
+                        <item value="Solarized Dark Contrast (Material)"/>
+                        <item value="Solarized Light (Material)"/>
+                        <item value="Solarized Light Contrast (Material)"/>
+                      </model>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <grid id="c86e0" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="957a6" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Tamaño de fuente:"/>
+                    </properties>
+                  </component>
+                  <component id="b1602" class="com.formdev.flatlaf.extras.components.FlatComboBox" binding="cbbFontSize">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <editable value="true"/>
+                      <model>
+                        <item value="8"/>
+                        <item value="9"/>
+                        <item value="10"/>
+                        <item value="11"/>
+                        <item value="12"/>
+                        <item value="14"/>
+                        <item value="16"/>
+                        <item value="18"/>
+                        <item value="20"/>
+                        <item value="22"/>
+                        <item value="24"/>
+                        <item value="26"/>
+                        <item value="28"/>
+                        <item value="36"/>
+                        <item value="48"/>
+                        <item value="72"/>
+                      </model>
+                    </properties>
+                  </component>
+                  <hspacer id="54f67">
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                  </hspacer>
+                </children>
+              </grid>
+            </children>
+          </grid>
+        </children>
+      </tabbedpane>
+      <grid id="2e48f" layout-manager="GridLayoutManager" row-count="1" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="b4808" class="javax.swing.JButton" binding="hechoButton" default-binding="true">
+            <constraints>
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Cancel"/>
+            </properties>
+          </component>
+          <hspacer id="b1921">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+          </hspacer>
+          <component id="7ca4a" class="javax.swing.JButton" binding="btnSave">
+            <constraints>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="OK"/>
+            </properties>
+          </component>
+          <component id="68056" class="javax.swing.JButton" binding="btnApply">
+            <constraints>
+              <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <enabled value="false"/>
+              <text value="Aplicar"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
