@@ -24,11 +24,11 @@ public class UtilitiesTables {
         table.getTableHeader().setReorderingAllowed(false);
     }
 
-    public static JTextField buscarTexto(Map<Integer, String> listaFiltros, Object value, int column, DefaultTableCellRenderer defaultTableCellRenderer) {
+    public static JTextField buscarTexto(Map<Integer, String> listaFiltros, Object value, int column, Component component) {
         JTextField componente=new JTextField();
-        componente.setBorder(defaultTableCellRenderer.getBorder());
-        componente.setBackground(defaultTableCellRenderer.getBackground());
-        componente.setForeground(defaultTableCellRenderer.getForeground());
+        componente.setBorder(null);
+        componente.setBackground(component.getBackground());
+        componente.setForeground(component.getForeground());
         if(value instanceof Date){
             componente.setText(Utilities.formatoFecha.format(value));
         }else{

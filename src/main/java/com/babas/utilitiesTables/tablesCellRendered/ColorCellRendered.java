@@ -23,16 +23,16 @@ public class ColorCellRendered extends DefaultTableCellRenderer {
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+        Component component=super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if(table.getColumnClass(column).equals(JButton.class)){
             table.getColumnModel().getColumn(column).setMaxWidth(25);
             table.getColumnModel().getColumn(column).setMinWidth(25);
             table.getColumnModel().getColumn(column).setPreferredWidth(25);
-            ColorCellRendered colorCellRendered= (ColorCellRendered) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            ((JButton) value).setBackground(colorCellRendered.getBackground());
-            return (JButton)value;
+            JButton button=(JButton) value;
+            button.setBackground(component.getBackground());
+            return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,this);
+            JTextField componente=buscarTexto(null,value,column,component);
             switch(table.getColumnName(column)){
                 case "ID":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
