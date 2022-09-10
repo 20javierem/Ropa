@@ -17,6 +17,7 @@ public class Style extends Babas {
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;
+    private String code;
     @OneToMany(mappedBy = "style")
     private List<Presentation> presentations=new ArrayList<>();
     private Date created=new Date();
@@ -70,4 +71,13 @@ public class Style extends Babas {
     public List<Product> getProducts() {
         return products;
     }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
 }
