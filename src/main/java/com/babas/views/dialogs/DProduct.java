@@ -42,19 +42,11 @@ public class DProduct extends JDialog{
         txtStyle.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                loadMenu();
+                if(e.getKeyCode()!=KeyEvent.VK_UP&&e.getKeyCode()!=KeyEvent.VK_DOWN&&e.getKeyCode()!=KeyEvent.VK_ENTER){
+                    loadMenu();
+                }
             }
         });
-    }
-
-    private void loadDropDownListStyles(KeyEvent event){
-        if(event.getKeyCode()==KeyEvent.VK_UP){
-            System.out.println("up");
-        }else if(event.getKeyCode()==KeyEvent.VK_DOWN){
-            System.out.println("donw");
-        }else if(event.getKeyCode()==KeyEvent.VK_ENTER){
-            System.out.println("enter");
-        }
     }
 
     private void loadMenu(){
@@ -64,7 +56,6 @@ public class DProduct extends JDialog{
         if(!txtStyle.getText().isBlank()){
             styles.addAll(Styles.search(txtStyle.getText().trim()));
         }
-        System.out.println(styles.size());
         if(!styles.isEmpty()){
             styles.forEach(style -> {
                 JMenuItem menuItem=new JMenuItem(style.getName());
