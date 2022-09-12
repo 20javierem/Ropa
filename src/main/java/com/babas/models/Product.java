@@ -1,13 +1,10 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.util.*;
 
 @Entity(name = "product_tbl")
 public class Product extends Babas {
@@ -26,6 +23,10 @@ public class Product extends Babas {
     @ManyToOne
     @NotNull(message = "Talla")
     private Size size;
+    @ElementCollection
+    @CollectionTable(name="Images", joinColumns=@JoinColumn(name="product_id"))
+    @Column(name="image")
+    private List<String> images=new ArrayList<>();
     private Date created=new Date();
     private Date updated;
     private Integer stockTotal=0;
@@ -98,4 +99,9 @@ public class Product extends Babas {
     public void setActive(boolean active) {
         this.active = active;
     }
+
+    public List<String> getImages() {
+        return images;
+    }
+
 }

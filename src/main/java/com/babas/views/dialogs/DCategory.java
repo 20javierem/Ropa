@@ -1,7 +1,7 @@
 package com.babas.views.dialogs;
 
-import com.babas.models.Color;
-import com.babas.models.Sex;
+import com.babas.models.Category;
+import com.babas.models.Size;
 import com.babas.utilities.Utilities;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
@@ -13,18 +13,18 @@ import java.awt.event.*;
 import java.util.Date;
 import java.util.Set;
 
-public class DSex extends JDialog{
+public class DCategory extends JDialog{
     private JTextField txtName;
     private JButton btnHecho;
     private JButton btnSave;
     private JPanel contentPane;
-    private Sex sex;
+    private Category category;
     private boolean update;
 
-    public DSex(Sex sex){
-        super(Utilities.getJFrame(),"Nuevo Género",true);
-        this.sex=sex;
-        update=sex.getId()!=null;
+    public DCategory(Category category){
+        super(Utilities.getJFrame(),"Nueva Categoría",true);
+        this.category=category;
+        update=category.getId()!=null;
         init();
         btnHecho.addActionListener(new ActionListener() {
             @Override
@@ -55,7 +55,7 @@ public class DSex extends JDialog{
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         if(update){
-            setTitle("Actualizar Género");
+            setTitle("Actualizar Categoría");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
             load();
@@ -65,20 +65,20 @@ public class DSex extends JDialog{
         setLocationRelativeTo(Utilities.getJFrame());
     }
     private void onSave(){
-        sex.setName(txtName.getText());
-        sex.setUpdated(new Date());
-        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(sex);
+        category.setName(txtName.getText());
+        category.setUpdated(new Date());
+        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(category);
         if(constraintViolationSet.isEmpty()){
-            sex.save();
+            category.save();
             if(!update){
-                FPrincipal.sexs.add(sex);
+                FPrincipal.categories.add(category);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
-                sex=new Sex();
+                category=new Category();
                 clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Género registrado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Categoría registrado");
             }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Género actualizado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Categoría actualizado");
                 onHecho();
             }
 
@@ -90,11 +90,11 @@ public class DSex extends JDialog{
         txtName.setText(null);
     }
     private void load(){
-        txtName.setText(sex.getName());
+        txtName.setText(category.getName());
     }
     private void onHecho(){
         if(update){
-            sex.refresh();
+            category.refresh();
         }
         dispose();
     }

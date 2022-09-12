@@ -1,11 +1,14 @@
 package com.babas.views.dialogs;
 
 import com.babas.models.Color;
+import com.babas.models.Size;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorColor;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorSize;
 import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
 import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
+import com.babas.utilitiesTables.tablesModels.SizeAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatTable;
@@ -13,15 +16,15 @@ import com.formdev.flatlaf.extras.components.FlatTable;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class DAllColors extends JDialog{
+public class DAllSizes extends JDialog{
     private JPanel contentPane;
     private FlatTable table;
     private FlatButton btnNew;
     private FlatButton btnHecho;
-    private ColorAbstractModel model;
+    private SizeAbstractModel model;
 
-    public DAllColors(){
-        super(Utilities.getJFrame(),"Todos los colores",true);
+    public DAllSizes(){
+        super(Utilities.getJFrame(),"Todos los tallas",true);
         init();
         btnNew.addActionListener(new ActionListener() {
             @Override
@@ -58,16 +61,16 @@ public class DAllColors extends JDialog{
         Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
-        model=new ColorAbstractModel(FPrincipal.colors);
+        model=new SizeAbstractModel(FPrincipal.sizes);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ColorCellRendered.setCellRenderer(table);
-        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorColor(false));
-        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorColor(true));
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorSize(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorSize(true));
     }
     private void loadNew(){
-        DColor dColor=new DColor(new Color());
-        dColor.setVisible(true);
+        DSize size=new DSize(new Size());
+        size.setVisible(true);
     }
     private void onHecho(){
         dispose();

@@ -72,8 +72,8 @@ public class Utilities {
     }
 
     public static void loadTheme(){
-        FlatLaf.registerCustomDefaultsSource("com.moreno.themes");
         UIManager.getDefaults().put("defaultFont",propiedades.getFont());
+        FlatLaf.registerCustomDefaultsSource("com.babas.themes");
         switch (propiedades.getTema()){
             case "Ligth":
                 FlatIntelliJLaf.setup();

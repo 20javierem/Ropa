@@ -1,10 +1,13 @@
 package com.babas.views.dialogs;
 
+import com.babas.models.Category;
 import com.babas.models.Color;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorCategory;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorColor;
 import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
+import com.babas.utilitiesTables.tablesModels.CategoryAbstractModel;
 import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatButton;
@@ -13,15 +16,15 @@ import com.formdev.flatlaf.extras.components.FlatTable;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class DAllColors extends JDialog{
+public class DAllCategorys extends JDialog{
     private JPanel contentPane;
     private FlatTable table;
     private FlatButton btnNew;
     private FlatButton btnHecho;
-    private ColorAbstractModel model;
+    private CategoryAbstractModel model;
 
-    public DAllColors(){
-        super(Utilities.getJFrame(),"Todos los colores",true);
+    public DAllCategorys(){
+        super(Utilities.getJFrame(),"Todas las categorías",true);
         init();
         btnNew.addActionListener(new ActionListener() {
             @Override
@@ -58,16 +61,16 @@ public class DAllColors extends JDialog{
         Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
-        model=new ColorAbstractModel(FPrincipal.colors);
+        model=new CategoryAbstractModel(FPrincipal.categories);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ColorCellRendered.setCellRenderer(table);
-        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorColor(false));
-        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorColor(true));
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorCategory(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorCategory(true));
     }
     private void loadNew(){
-        DColor dColor=new DColor(new Color());
-        dColor.setVisible(true);
+        DCategory dCategory=new DCategory(new Category());
+        dCategory.setVisible(true);
     }
     private void onHecho(){
         dispose();
