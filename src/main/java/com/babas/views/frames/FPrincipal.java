@@ -1,18 +1,13 @@
 package com.babas.views.frames;
 
 import com.babas.App;
-import com.babas.controllers.Categorys;
-import com.babas.controllers.Colors;
-import com.babas.controllers.Products;
-import com.babas.controllers.Sizes;
+import com.babas.controllers.*;
 import com.babas.custom.CToggleButton;
 import com.babas.custom.CustomPane;
 import com.babas.custom.FondoPanel;
 import com.babas.custom.TabbedPane;
-import com.babas.models.Category;
+import com.babas.models.*;
 import com.babas.models.Color;
-import com.babas.models.Product;
-import com.babas.models.Size;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
 import com.babas.views.dialogs.DCompany;
@@ -67,6 +62,7 @@ public class FPrincipal extends JFrame{
     public static Vector<Category> categories;
     public static Vector<Color> colors;
     public static Vector<Size> sizes;
+    public static Vector<Sex> sexs;
 
     public FPrincipal(){
         initComponents();
@@ -188,6 +184,7 @@ public class FPrincipal extends JFrame{
         categories= Categorys.getActives();
         colors= Colors.getActives();
         sizes= Sizes.getActives();
+        sexs= Sexs.getActives();
         products= Products.getActives();
     }
     private void cargarCursores(){
