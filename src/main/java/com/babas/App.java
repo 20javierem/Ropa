@@ -21,11 +21,6 @@ public class App
         Utilities.propiedades=new Propiedades();
         Babas.initialize();
         Utilities.loadTheme();
-//        Style style= Styles.get(2);
-//        style.setCategory(Categorys.get(2));
-//        style.setName("CAMISA MANGA LARGA CUELLO V");
-//        style.setUpdated(new Date());
-//        style.save();
         FLogin fLogin=new FLogin();
         fLogin.setVisible(true);
     }

@@ -48,10 +48,7 @@ public class PriceAbstractModel extends AbstractTableModel {
             case 0:
                 return price.getPrice();
             case 1:
-                if(price.getPresentation().getPriceDefault()!=null&&price.getId()!=null){
-                    return Objects.equals(price.getPresentation().getPriceDefault().getId(), price.getId())?"SI":"NO";
-                }
-                return "NO";
+                return price.isDefault()?"SI":"NO";
             case 2:
                 return new JButtonAction("x16/editar.png");
             default:

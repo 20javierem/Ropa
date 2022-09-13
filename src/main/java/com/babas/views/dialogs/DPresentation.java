@@ -60,8 +60,8 @@ public class DPresentation extends JDialog{
     private void registerNewPrice(){
         Price price=new Price(presentation);
         price.setPrice((Double) spinnerPriceNew.getValue());
-        if(presentation.getPriceDefault()==null){
-            presentation.setPriceDefault(price);
+        if(presentation.getPrices().isEmpty()){
+            price.setDefault(true);
         }
         presentation.getPrices().add(price);
         spinnerPriceNew.setValue(1.0);
@@ -85,7 +85,7 @@ public class DPresentation extends JDialog{
     private void load(){
         spinnerQuantity.setValue(presentation.getQuantity());
         if(update){
-            ckDefault.setEnabled(Objects.equals(presentation.getStyle().getPresentationDefault().getId(), presentation.getId()));
+            ckDefault.setSelected(presentation.isDefault());
         }
     }
 
@@ -98,12 +98,7 @@ public class DPresentation extends JDialog{
 
     private void onSave(){
         presentation.setQuantity((Integer) spinnerQuantity.getValue());
-        if(ckDefault.isSelected()){
-            presentation.getStyle().setPresentationDefault(presentation);
-        }
-        if(presentation.getStyle().getPresentationDefault()==null){
-            presentation.getStyle().setPresentationDefault(presentation);
-        }
+        presentation.setDefault(ckDefault.isSelected());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(presentation);
         if(constraintViolationSet.isEmpty()){
             if(presentation.getStyle().getId()!=null){

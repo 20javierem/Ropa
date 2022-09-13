@@ -24,7 +24,8 @@ public class Presentation extends Babas {
     private List<Price> prices =new ArrayList<>();
     private Date created=new Date();
     private Date updated;
-    @ManyToOne
+    private boolean isDefault=false;
+    @Transient
     private Price priceDefault;
 
     public Presentation(Style style){
@@ -63,22 +64,31 @@ public class Presentation extends Babas {
         return prices;
     }
 
-    public Price getPriceDefault() {
-        return priceDefault;
+    public boolean isDefault() {
+        return isDefault;
     }
 
-    public void setPriceDefault(Price priceDefault) {
-        this.priceDefault = priceDefault;
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
+    }
+
+    public Price getPriceDefault() {
+        if(priceDefault==null){
+            for (Price price : getPrices()) {
+                if(price.isDefault()){
+                    System.out.println("entró");
+                    priceDefault=price;
+                    return priceDefault;
+                }
+            }
+        }
+        return priceDefault;
     }
 
     @Override
     public void save() {
         updated=new Date();
-        Price price=getPriceDefault();
-        setPriceDefault(null);
         super.save();
         getPrices().forEach(Price::save);
-        setPriceDefault(price);
-        super.save();
     }
 }

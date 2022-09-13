@@ -16,6 +16,7 @@ public class Price extends Babas {
     private Double price;
     private Date created;
     private Date updated;
+    private boolean isDefault=false;
 
     public Price(Presentation presentation){
         this.presentation=presentation;
@@ -48,6 +49,14 @@ public class Price extends Babas {
 
     public Date getUpdated() {
         return updated;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
 
     @Override

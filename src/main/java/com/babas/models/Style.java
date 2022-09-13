@@ -27,8 +27,6 @@ public class Style extends Babas {
     @NotEmpty(message = "Presentaciones")
     @OneToMany(mappedBy = "style")
     private List<Presentation> presentations=new ArrayList<>();
-    @ManyToOne
-    private Presentation presentationDefault;
     private Date created=new Date();
     private Date updated;
     @ManyToOne
@@ -37,6 +35,8 @@ public class Style extends Babas {
     @OneToMany(mappedBy = "style")
     @Where(clause = "active==true")
     private List<Product> products=new ArrayList<>();
+    @Transient
+    private Presentation presentationDefault;
 
     public Long getId() {
         return id;
@@ -78,14 +78,6 @@ public class Style extends Babas {
         return products;
     }
 
-    public Presentation getPresentationDefault() {
-        return presentationDefault;
-    }
-
-    public void setPresentationDefault(Presentation presentationDefault) {
-        this.presentationDefault = presentationDefault;
-    }
-
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Style) {
@@ -96,6 +88,18 @@ public class Style extends Babas {
         }
     }
 
+    public Presentation getPresentationDefault() {
+        if(presentationDefault==null){
+            for (Presentation presentation : getPresentations()) {
+                if(presentation.isDefault()){
+                    presentationDefault=presentation;
+                    return presentationDefault;
+                }
+            }
+        }
+        return presentationDefault;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -104,12 +108,8 @@ public class Style extends Babas {
     @Override
     public void save() {
         updated=new Date();
-        Presentation presentation=getPresentationDefault();
-        setPresentationDefault(null);
         super.save();
         getPresentations().forEach(Presentation::save);
-        setPresentationDefault(presentation);
-        super.save();
     }
 }
 
