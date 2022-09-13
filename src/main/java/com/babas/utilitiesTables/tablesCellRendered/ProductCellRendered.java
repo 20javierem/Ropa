@@ -41,6 +41,12 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
+                case "PRECIO":
+                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;

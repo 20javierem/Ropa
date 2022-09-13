@@ -3,6 +3,8 @@ package com.babas.views.tabs;
 import com.babas.custom.TabPane;
 import com.babas.models.Product;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorSize;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.dialogs.*;
@@ -101,6 +103,9 @@ public class TabProducts {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ProductCellRendered.setCellRenderer(table);
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorProduct("delete"));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorProduct("edit"));
+        table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorProduct("images"));
     }
     private void filter(){
 

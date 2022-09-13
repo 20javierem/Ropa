@@ -107,12 +107,10 @@ public class DPresentation extends JDialog{
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(presentation);
         if(constraintViolationSet.isEmpty()){
             if(presentation.getStyle().getId()!=null){
-                presentation.getStyle().getPresentations().add(presentation);
                 presentation.save();
-            }else{
-                presentation.getStyle().getPresentations().add(presentation);
             }
             if(!update){
+                presentation.getStyle().getPresentations().add(presentation);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 presentation=new Presentation(presentation.getStyle());

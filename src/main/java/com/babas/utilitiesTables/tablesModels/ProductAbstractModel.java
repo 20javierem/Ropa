@@ -8,8 +8,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class ProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","COLOR","GÉNERO","TALLA","TOTAL-STOCK","","",""};
-    private final Class[] typeColumns={String.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NOMBRE","PRECIO","COLOR","GÉNERO","TALLA","TOTAL-STOCK","","",""};
+    private final Class[] typeColumns={String.class,Double.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
     private final List<Product> list;
 
     public ProductAbstractModel(List<Product> list){
@@ -46,16 +46,18 @@ public class ProductAbstractModel extends AbstractTableModel {
             case 0:
                 return product.getStyle().getName();
             case 1:
-                return product.getColor().getName();
+                return product.getStyle().getPresentationDefault().getPriceDefault().getPrice();
             case 2:
-                return product.getSex().getName();
+                return product.getColor().getName();
             case 3:
-                return product.getSize().getName();
+                return product.getSex().getName();
             case 4:
-                return product.getStockTotal();
+                return product.getSize().getName();
             case 5:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return product.getStockTotal();
             case 6:
+                return new JButtonAction("x16/mostrarContraseña.png");
+            case 7:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");

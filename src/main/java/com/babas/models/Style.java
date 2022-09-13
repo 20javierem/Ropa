@@ -2,16 +2,15 @@ package com.babas.models;
 
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.Session;
-import org.jdesktop.swingx.autocomplete.ComboBoxCellEditor;
+import org.hibernate.annotations.OrderBy;
+import org.hibernate.annotations.Where;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +35,7 @@ public class Style extends Babas {
     @NotNull(message = "Categoría")
     private Category category;
     @OneToMany(mappedBy = "style")
+    @Where(clause = "active==true")
     private List<Product> products=new ArrayList<>();
 
     public Long getId() {

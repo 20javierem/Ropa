@@ -5,6 +5,8 @@ import com.babas.models.*;
 import com.babas.models.Color;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorPresentation;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorSex;
 import com.babas.utilitiesTables.tablesCellRendered.PresentationCellRendered;
 import com.babas.utilitiesTables.tablesModels.PresentationsAbstractModel;
 import com.babas.validators.ProgramValidator;
@@ -13,9 +15,7 @@ import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.moreno.Notify;
 import jakarta.validation.ConstraintViolation;
-import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxEditor;
@@ -156,6 +156,11 @@ public class DProduct extends JDialog{
             }
         });
         loadCombos();
+        if(update){
+            btnHecho.setText("Cancelar");
+            btnSave.setText("Guardar");
+            load();
+        }
         loadTable();
         pack();
         setLocationRelativeTo(getOwner());
@@ -180,12 +185,21 @@ public class DProduct extends JDialog{
         cbbSex.setSelectedIndex(-1);
         AutoCompleteDecorator.decorate(cbbStyle);
     }
-
+    private void load(){
+        cbbStyle.setSelectedItem(product.getStyle());
+        cbbCategory.setSelectedItem(product.getStyle().getCategory());
+        cbbColor.setSelectedItem(product.getColor());
+        cbbSize.setSelectedItem(product.getSize());
+        cbbSex.setSelectedItem(product.getSex());
+        style=product.getStyle();
+    }
     private void loadTable(){
         model=new PresentationsAbstractModel(style.getPresentations());
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         PresentationCellRendered.setCellRenderer(table);
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorPresentation(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorPresentation(true));
     }
     private void onSave(){
         boolean createdStyle=true;
