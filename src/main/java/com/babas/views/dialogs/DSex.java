@@ -66,7 +66,6 @@ public class DSex extends JDialog{
     }
     private void onSave(){
         sex.setName(txtName.getText());
-        sex.setUpdated(new Date());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(sex);
         if(constraintViolationSet.isEmpty()){
             sex.save();

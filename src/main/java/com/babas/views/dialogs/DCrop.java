@@ -51,10 +51,8 @@ public class DCrop extends JDialog {
     public static String nuevaImagen(){
         File imagenProducto;
         JFileChooser selectorArchivos = new JFileChooser();
-        FileFilter filtro1=new FileNameExtensionFilter("*.png","png");
-        FileFilter filtro2=new FileNameExtensionFilter("*.jpg","jpg");
+        FileFilter filtro1=new FileNameExtensionFilter("*.images","png","jpg","jpeg");
         selectorArchivos.addChoosableFileFilter(filtro1);
-        selectorArchivos.addChoosableFileFilter(filtro2);
         int resultado = selectorArchivos.showOpenDialog(null);
         if (resultado != 0) {
             JOptionPane.showMessageDialog(selectorArchivos, "No seleccionó la imagen", "", JOptionPane.WARNING_MESSAGE);

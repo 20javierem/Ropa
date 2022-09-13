@@ -4,7 +4,6 @@ import ch.swaechter.smbjwrapper.SmbConnection;
 import ch.swaechter.smbjwrapper.SmbDirectory;
 import ch.swaechter.smbjwrapper.SmbFile;
 import com.babas.custom.TabbedPane;
-import com.babas.utilitiesTables.UtilitiesTables;
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
@@ -25,6 +24,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -77,15 +77,40 @@ public class Utilities {
     }
 
     public static boolean newImage(InputStream imageImput,String imageName){
-        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
-//            SmbDirectory root = new SmbDirectory(smbConnection);
-            SmbDirectory dirCompany = new SmbDirectory(smbConnection, "company/cert");
-            System.out.println(dirCompany.getSmbPath());
-            SmbFile file = new SmbFile(smbConnection,"products/images/"+imageName);
+        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
+            SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
             OutputStream out = file.getOutputStream();
             IOUtils.copy(imageImput, out);
             imageImput.close();
+            out.close();
+            return true;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static Image getImage(String imageName){
+        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
+            SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+            return ImageIO.read(file.getInputStream());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean downloadImage(String imageName){
+        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
+            SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+"miimagen.png");
+            OutputStream out = new FileOutputStream("F:\\"+imageName);
+            IOUtils.copy(file.getInputStream(), out);
             out.close();
             return true;
         }catch (IOException e) {

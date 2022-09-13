@@ -54,10 +54,6 @@ public class Sex extends Babas {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
     public List<Product> getProducts() {
         return products;
     }
@@ -72,5 +68,11 @@ public class Sex extends Babas {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;
         }
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

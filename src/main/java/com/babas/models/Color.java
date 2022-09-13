@@ -46,10 +46,6 @@ public class Color extends Babas {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -72,5 +68,11 @@ public class Color extends Babas {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;
         }
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

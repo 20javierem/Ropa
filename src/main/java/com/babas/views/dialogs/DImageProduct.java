@@ -35,14 +35,14 @@ public class DImageProduct extends JDialog{
 
     private void init(){
         setContentPane(contentPane);
-        loadImagesProduct();
+        loadImages();
         pack();
         setLocationRelativeTo(getOwner());
     }
 
-    private void loadImagesProduct(){
-        product.getImages().forEach(image->{
-            imageSlide.addImage(new ImageIcon(image));
+    private void loadImages(){
+        product.getImages().forEach(img->{
+            imageSlide.addImage(new ImageIcon(Utilities.getImage(img)));
         });
     }
 }

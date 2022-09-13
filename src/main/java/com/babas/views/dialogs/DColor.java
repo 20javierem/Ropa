@@ -66,7 +66,6 @@ public class DColor extends JDialog{
     }
     private void onSave(){
         color.setName(txtName.getText());
-        color.setUpdated(new Date());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(color);
         if(constraintViolationSet.isEmpty()){
             color.save();

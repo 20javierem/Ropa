@@ -1,7 +1,7 @@
 package com.babas.views.dialogs;
 
-import com.babas.models.Sex;
-import com.babas.models.Size;
+import com.babas.models.Brand;
+import com.babas.models.Color;
 import com.babas.utilities.Utilities;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
@@ -10,21 +10,20 @@ import jakarta.validation.ConstraintViolation;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Date;
 import java.util.Set;
 
-public class DSize extends JDialog{
-    private JTextField txtName;
-    private JButton btnHecho;
-    private JButton btnSave;
+public class DBrand extends JDialog{
     private JPanel contentPane;
-    private Size size;
+    private JButton btnHecho;
+    private JTextField txtName;
+    private JButton btnSave;
+    private Brand brand;
     private boolean update;
 
-    public DSize(Size size){
-        super(Utilities.getJFrame(),"Nueva Talla",true);
-        this.size=size;
-        update=size.getId()!=null;
+    public DBrand(Brand brand){
+        super(Utilities.getJFrame(),"Nueva Marca",true);
+        this.brand=brand;
+        update=brand.getId()!=null;
         init();
         btnHecho.addActionListener(new ActionListener() {
             @Override
@@ -55,7 +54,7 @@ public class DSize extends JDialog{
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         if(update){
-            setTitle("Actualizar Talla");
+            setTitle("Actualizar Marca");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
             load();
@@ -65,19 +64,19 @@ public class DSize extends JDialog{
         setLocationRelativeTo(Utilities.getJFrame());
     }
     private void onSave(){
-        size.setName(txtName.getText());
-        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(size);
+        brand.setName(txtName.getText());
+        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(brand);
         if(constraintViolationSet.isEmpty()){
-            size.save();
+            brand.save();
             if(!update){
-                FPrincipal.sizes.add(size);
+                FPrincipal.brands.add(brand);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
-                size=new Size();
+                brand=new Brand();
                 clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla registrado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Marca registrada");
             }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla actualizado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Marca actualizada");
                 onHecho();
             }
 
@@ -89,11 +88,11 @@ public class DSize extends JDialog{
         txtName.setText(null);
     }
     private void load(){
-        txtName.setText(size.getName());
+        txtName.setText(brand.getName());
     }
     private void onHecho(){
         if(update){
-            size.refresh();
+            brand.refresh();
         }
         dispose();
     }

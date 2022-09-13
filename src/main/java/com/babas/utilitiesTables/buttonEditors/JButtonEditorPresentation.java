@@ -9,6 +9,7 @@ import com.babas.utilitiesTables.tablesModels.PresentationsAbstractModel;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.dialogs.DPresentation;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -44,12 +45,22 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                 DPresentation dPresentation=new DPresentation(presentation);
                 dPresentation.setVisible(true);
             }else{
-                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Presentación",JOptionPane.YES_NO_OPTION)==0;
-                if(si){
-                    presentation.refresh();
-                    presentation.getStyle().getPresentations().remove(presentation);
-                    presentation.getPrices().forEach(Babas::delete);
-                    presentation.delete();
+                if (presentation.getStyle().getPresentations().size()>1){
+                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Presentación",JOptionPane.YES_NO_OPTION)==0;
+                    if(si){
+                        presentation.refresh();
+                        presentation.getStyle().getPresentations().remove(presentation);
+                        if(presentation.isDefault()){
+                            presentation.getStyle().getPresentations().get(0).setDefault(true);
+                            presentation.getStyle().getPresentations().get(0).save();
+                            presentation.getStyle().setPresentationDefault(presentation.getStyle().getPresentations().get(0));
+                        }
+                        presentation.getPrices().forEach(Babas::delete);
+                        presentation.delete();
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación eliminada");
+                    }
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No puede eliminar todas las presentaciones");
                 }
             }
             Utilities.updateDialog();

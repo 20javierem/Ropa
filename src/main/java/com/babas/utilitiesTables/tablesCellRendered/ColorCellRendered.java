@@ -34,31 +34,12 @@ public class ColorCellRendered extends DefaultTableCellRenderer {
         }else{
             JTextField componente=buscarTexto(null,value,column,component);
             switch(table.getColumnName(column)){
-                case "ID":
+                case "PRODUCTOS":
+                case "ESTILOS":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(40);
                     table.getColumn(table.getColumnName(column)).setMinWidth(40);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(40);
-                    break;
-                case "ACTUALIZADO":
-                    componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(140);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(140);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(140);
-                    break;
-                case "ESTADO":
-                    componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
-                    break;
-                case "VENTA-TOTAL":
-                case "TOTAL-ACTUAL":
-                case "ENTREGÓ":
-                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.CENTER);

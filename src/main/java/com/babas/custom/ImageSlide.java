@@ -129,7 +129,7 @@ public class ImageSlide extends JComponent {
         }
         double xScale = (double) w / iw;
         double yScale = (double) h / ih;
-        double scale = Math.max(xScale, yScale);
+        double scale = Math.min(xScale, yScale);
         int width = (int) (scale * iw);
         int height = (int) (scale * ih);
         int x = getWidth() / 2 - (width / 2);

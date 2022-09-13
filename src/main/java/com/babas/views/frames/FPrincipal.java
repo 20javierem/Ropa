@@ -61,6 +61,7 @@ public class FPrincipal extends JFrame{
     public static Vector<Product> products;
     public static Vector<Category> categories;
     public static Vector<Color> colors;
+    public static Vector<Brand> brands;
     public static Vector<Size> sizes;
     public static Vector<Sex> sexs;
     public static Vector<Style> styles;
@@ -185,6 +186,7 @@ public class FPrincipal extends JFrame{
         categories= Categorys.getActives();
         colors= Colors.getActives();
         sizes= Sizes.getActives();
+        brands=Brands.getActives();
         sexs= Sexs.getActives();
         products= Products.getActives();
         styles=Styles.getTodos();

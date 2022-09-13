@@ -9,8 +9,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class ColorAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","",""};
-    private final Class[] typeColumns={String.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NOMBRE","PRODUCTOS","",""};
+    private final Class[] typeColumns={String.class,Integer.class,JButton.class,JButton.class};
     private final List<Color> list;
 
     public ColorAbstractModel(List<Color> list){
@@ -47,6 +47,8 @@ public class ColorAbstractModel extends AbstractTableModel {
             case 0:
                 return color.getName();
             case 1:
+                return color.getProducts().size();
+            case 2:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");

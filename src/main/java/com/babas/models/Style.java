@@ -32,6 +32,9 @@ public class Style extends Babas {
     @ManyToOne
     @NotNull(message = "Categoría")
     private Category category;
+    @ManyToOne
+    @NotNull(message = "Marca")
+    private Brand brand;
     @OneToMany(mappedBy = "style")
     @Where(clause = "active==true")
     private List<Product> products=new ArrayList<>();
@@ -78,6 +81,15 @@ public class Style extends Babas {
         return products;
     }
 
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Style) {
@@ -87,7 +99,9 @@ public class Style extends Babas {
             return this;
         }
     }
-
+    public void setPresentationDefault(Presentation presentationDefault){
+        this.presentationDefault=presentationDefault;
+    }
     public Presentation getPresentationDefault() {
         if(presentationDefault==null){
             for (Presentation presentation : getPresentations()) {

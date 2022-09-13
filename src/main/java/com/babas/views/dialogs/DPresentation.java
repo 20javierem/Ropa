@@ -98,7 +98,11 @@ public class DPresentation extends JDialog{
 
     private void onSave(){
         presentation.setQuantity((Integer) spinnerQuantity.getValue());
-        presentation.setDefault(ckDefault.isSelected());
+        if(presentation.getStyle().getPresentations().size()<2){
+            presentation.setDefault(true);
+        }else{
+            presentation.setDefault(ckDefault.isSelected());
+        }
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(presentation);
         if(constraintViolationSet.isEmpty()){
             if(presentation.getStyle().getId()!=null){
@@ -112,6 +116,11 @@ public class DPresentation extends JDialog{
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación registrada");
             }else{
+                if(presentation.isDefault()){
+                    presentation.getStyle().getPresentationDefault().setDefault(false);
+                    presentation.getStyle().getPresentationDefault().save();
+                    presentation.getStyle().setPresentationDefault(presentation);
+                }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación actualizada");
                 onHecho();
             }

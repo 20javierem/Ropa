@@ -71,12 +71,13 @@ public class Presentation extends Babas {
     public void setDefault(boolean aDefault) {
         isDefault = aDefault;
     }
-
+    public void  setPriceDefault(Price priceDefault){
+        this.priceDefault=priceDefault;
+    }
     public Price getPriceDefault() {
         if(priceDefault==null){
             for (Price price : getPrices()) {
                 if(price.isDefault()){
-                    System.out.println("entró");
                     priceDefault=price;
                     return priceDefault;
                 }

@@ -47,8 +47,10 @@ public class DProduct extends JDialog{
     private JLabel quantityImages;
     private JButton btnNext;
     private JButton btnPrevious;
+    private JComboBox cbbBrand;
+    private JButton btnNewBrand;
     private Product product;
-    private boolean update;
+    private final boolean update;
     private PresentationsAbstractModel model;
     private Style style=new Style();
 
@@ -117,16 +119,47 @@ public class DProduct extends JDialog{
                 loadAddNewImage();
             }
         });
+        btnNewBrand.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewBrand();
+            }
+        });
+        btnPrevious.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imageSlide.toNext();
+            }
+        });
+        btnNext.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imageSlide.toPrevious();
+            }
+        });
     }
-    private void loadAddNewImage(){
+    private void loadAddNewImage() {
         DCrop dCrop=new DCrop();
         dCrop.setVisible(true);
         BufferedImage bufferedImage=DCrop.imageSelected;
-        DataBufferByte byteArrayOutputStream= (DataBufferByte) bufferedImage.getData().getDataBuffer();
-        try {
-            Utilities.newImage(new FileInputStream(Arrays.toString(byteArrayOutputStream.getData())),"imagen");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(bufferedImage!=null){
+            try {
+                ByteArrayOutputStream os = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage, "png", os);
+                String nameImage=product.getId() + "-" + product.getImages().size()+"."+"png";
+                InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
+                if(Utilities.newImage(inputStream, nameImage)){
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
+                    product.getImages().add(nameImage);
+                    product.save();
+                    imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage)));
+                    loadQuantityImages();
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     private void loadNewPresentation(){
@@ -137,6 +170,10 @@ public class DProduct extends JDialog{
     private void loadNewSex(){
         DSex dSex=new DSex(new Sex());
         dSex.setVisible(true);
+    }
+    private void loadNewBrand(){
+        DBrand dBrand=new DBrand(new Brand());
+        dBrand.setVisible(true);
     }
     private void loadNewCategory(){
         DCategory dCategory=new DCategory(new Category());
@@ -195,11 +232,14 @@ public class DProduct extends JDialog{
         cbbSex.setRenderer(new Sex.ListCellRenderer());
         cbbColor.setModel(new DefaultComboBoxModel(FPrincipal.colors));
         cbbColor.setRenderer(new Color.ListCellRenderer());
+        cbbBrand.setModel(new DefaultComboBoxModel(FPrincipal.brands));
+        cbbBrand.setRenderer(new Brand.ListCellRenderer());
         cbbStyle.setSelectedIndex(-1);
         cbbCategory.setSelectedIndex(-1);
         cbbSize.setSelectedIndex(-1);
         cbbColor.setSelectedIndex(-1);
         cbbSex.setSelectedIndex(-1);
+        cbbBrand.setSelectedIndex(-1);
         AutoCompleteDecorator.decorate(cbbStyle);
     }
     private void load(){
@@ -208,7 +248,20 @@ public class DProduct extends JDialog{
         cbbColor.setSelectedItem(product.getColor());
         cbbSize.setSelectedItem(product.getSize());
         cbbSex.setSelectedItem(product.getSex());
+        cbbBrand.setSelectedItem(product.getStyle().getBrand());
+        loadImages();
+        loadQuantityImages();
         style=product.getStyle();
+    }
+
+    private void loadImages(){
+        product.getImages().forEach(img->{
+            imageSlide.addImage(new ImageIcon(Utilities.getImage(img)));
+        });
+    }
+
+    private void loadQuantityImages(){
+        quantityImages.setText(String.valueOf(product.getImages().size()));
     }
     private void loadTable(){
         model=new PresentationsAbstractModel(style.getPresentations());
@@ -226,6 +279,7 @@ public class DProduct extends JDialog{
         }else{
             style.setName(String.valueOf(cbbStyle.getEditor().getItem()));
         }
+        style.setBrand((Brand) cbbBrand.getSelectedItem());
         style.setCategory((Category) cbbCategory.getSelectedItem());
         product.setStyle(style);
         product.setColor((Color) cbbColor.getSelectedItem());
