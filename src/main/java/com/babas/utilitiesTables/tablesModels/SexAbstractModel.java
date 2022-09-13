@@ -1,18 +1,19 @@
 package com.babas.utilitiesTables.tablesModels;
 
-import com.babas.models.Product;
+import com.babas.models.Color;
+import com.babas.models.Sex;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-public class ProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","COLOR","GÉNERO","TALLA","TOTAL-STOCK","","",""};
-    private final Class[] typeColumns={String.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
-    private final List<Product> list;
+public class SexAbstractModel extends AbstractTableModel {
+    private final String[] nameColumns={"NOMBRE","",""};
+    private final Class[] typeColumns={String.class,JButton.class,JButton.class};
+    private final List<Sex> list;
 
-    public ProductAbstractModel(List<Product> list){
+    public SexAbstractModel(List<Sex> list){
         this.list=list;
     }
 
@@ -41,28 +42,18 @@ public class ProductAbstractModel extends AbstractTableModel {
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Product product= list.get(rowIndex);
+        Sex sex= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return product.getStyle().getName();
+                return sex.getName();
             case 1:
-                return product.getColor().getName();
-            case 2:
-                return product.getSex().getName();
-            case 3:
-                return product.getSize().getName();
-            case 4:
-                return product.getStockTotal();
-            case 5:
-                return new JButtonAction("x16/mostrarContraseña.png");
-            case 6:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");
         }
     }
 
-    public List<Product> getList(){
+    public List<Sex> getList(){
         return list;
     }
 }

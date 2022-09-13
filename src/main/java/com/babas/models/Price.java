@@ -14,8 +14,17 @@ public class Price extends Babas {
     @ManyToOne
     private Presentation presentation;
     private Double price;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
+
+    public Price(Presentation presentation){
+        this.presentation=presentation;
+        created=new Date();
+    }
+
+    public Price() {
+
+    }
 
     public Long getId() {
         return id;
@@ -23,10 +32,6 @@ public class Price extends Babas {
 
     public Presentation getPresentation() {
         return presentation;
-    }
-
-    public void setPresentation(Presentation presentation) {
-        this.presentation = presentation;
     }
 
     public Double getPrice() {
@@ -45,7 +50,9 @@ public class Price extends Babas {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

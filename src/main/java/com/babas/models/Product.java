@@ -36,10 +36,6 @@ public class Product extends Babas {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Style getStyle() {
         return style;
     }
@@ -72,9 +68,6 @@ public class Product extends Babas {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
-    }
 
     public Size getSize() {
         return size;
@@ -86,10 +79,6 @@ public class Product extends Babas {
 
     public Integer getStockTotal() {
         return stockTotal;
-    }
-
-    public void setStockTotal(Integer stockTotal) {
-        this.stockTotal = stockTotal;
     }
 
     public boolean isActive() {
@@ -104,4 +93,14 @@ public class Product extends Babas {
         return images;
     }
 
+    private void calculateStockTotal(){
+
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        calculateStockTotal();
+        super.save();
+    }
 }

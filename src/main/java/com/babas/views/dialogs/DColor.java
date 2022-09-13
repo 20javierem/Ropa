@@ -22,7 +22,7 @@ public class DColor extends JDialog{
     private boolean update;
 
     public DColor(Color color){
-        super(Utilities.getJFrame(),"Nuevo color",true);
+        super(Utilities.getJFrame(),"Nuevo Color",true);
         this.color=color;
         update=color.getId()!=null;
         init();
@@ -55,7 +55,7 @@ public class DColor extends JDialog{
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         if(update){
-            setTitle("Actualizar color");
+            setTitle("Actualizar Color");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
             load();

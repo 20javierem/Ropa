@@ -1,6 +1,7 @@
 package com.babas;
 
 import com.babas.controllers.Categorys;
+import com.babas.controllers.Styles;
 import com.babas.models.Style;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
@@ -20,10 +21,9 @@ public class App
         Utilities.propiedades=new Propiedades();
         Babas.initialize();
         Utilities.loadTheme();
-//        Style style=new Style();
-//        style.setCategory(Categorys.get(1));
-//        style.setCode("acs");
-//        style.setName("PANTALON DE VESTIR MARCA PALOMITA");
+//        Style style= Styles.get(2);
+//        style.setCategory(Categorys.get(2));
+//        style.setName("CAMISA MANGA LARGA CUELLO V");
 //        style.setUpdated(new Date());
 //        style.save();
         FLogin fLogin=new FLogin();

@@ -29,7 +29,7 @@
             </properties>
             <border type="none"/>
             <children>
-              <grid id="235f0" layout-manager="GridLayoutManager" row-count="6" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="5">
+              <grid id="235f0" layout-manager="GridLayoutManager" row-count="7" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="5">
                 <margin top="10" left="10" bottom="0" right="10"/>
                 <constraints>
                   <tabbedpane title="Producto"/>
@@ -113,7 +113,7 @@
                   </component>
                   <scrollpane id="d072d">
                     <constraints>
-                      <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                     <border type="none" title="Presentaciones"/>
@@ -124,18 +124,42 @@
                       </component>
                     </children>
                   </scrollpane>
-                  <component id="a3f19" class="com.formdev.flatlaf.extras.components.FlatTextField" binding="txtStyle">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <component id="f960d" class="javax.swing.JButton" binding="btnNewPresentation">
                     <constraints>
-                      <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Nueva presentación"/>
+                    </properties>
+                  </component>
+                  <component id="b19be" class="javax.swing.JComboBox" binding="cbbStyle">
+                    <constraints>
+                      <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <editable value="true"/>
+                    </properties>
+                  </component>
+                  <component id="d60b7" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Género:"/>
+                    </properties>
+                  </component>
+                  <component id="20453" class="javax.swing.JComboBox" binding="cbbSex">
+                    <constraints>
+                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="dbee6" class="javax.swing.JButton" binding="btnNewSex">
+                    <constraints>
+                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Nuevo"/>
                     </properties>
                   </component>
                 </children>

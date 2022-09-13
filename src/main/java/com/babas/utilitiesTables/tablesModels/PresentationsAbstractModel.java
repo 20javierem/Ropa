@@ -1,18 +1,19 @@
 package com.babas.utilitiesTables.tablesModels;
 
-import com.babas.models.Product;
+import com.babas.models.Presentation;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+import java.util.Date;
 import java.util.List;
 
-public class ProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","COLOR","GÉNERO","TALLA","TOTAL-STOCK","","",""};
-    private final Class[] typeColumns={String.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
-    private final List<Product> list;
+public class PresentationsAbstractModel extends AbstractTableModel {
+    private final String[] nameColumns={"CANTIDAD","PRECIO","ACTUALIZADO","",""};
+    private final Class[] typeColumns={Integer.class, Double.class, Date.class, JButton.class, JButton.class};
+    private final List<Presentation> list;
 
-    public ProductAbstractModel(List<Product> list){
+    public PresentationsAbstractModel(List<Presentation> list){
         this.list=list;
     }
 
@@ -41,28 +42,22 @@ public class ProductAbstractModel extends AbstractTableModel {
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Product product= list.get(rowIndex);
+        Presentation presentation= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return product.getStyle().getName();
+                return presentation.getQuantity();
             case 1:
-                return product.getColor().getName();
+                return presentation.getPriceDefault().getPrice();
             case 2:
-                return product.getSex().getName();
+                return presentation.getUpdated();
             case 3:
-                return product.getSize().getName();
-            case 4:
-                return product.getStockTotal();
-            case 5:
-                return new JButtonAction("x16/mostrarContraseña.png");
-            case 6:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");
         }
     }
 
-    public List<Product> getList(){
+    public List<Presentation> getList(){
         return list;
     }
 }

@@ -1,20 +1,34 @@
 package com.babas.views.dialogs;
 
 import com.babas.controllers.Styles;
-import com.babas.models.Product;
-import com.babas.models.Style;
+import com.babas.models.*;
+import com.babas.models.Color;
 import com.babas.utilities.Utilities;
+import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.tablesCellRendered.PresentationCellRendered;
+import com.babas.utilitiesTables.tablesModels.PresentationsAbstractModel;
+import com.babas.validators.ProgramValidator;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import com.moreno.Notify;
+import jakarta.validation.ConstraintViolation;
+import org.jdesktop.swingx.autocomplete.AutoCompleteComboBoxEditor;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+import org.jdesktop.swingx.autocomplete.ObjectToStringConverter;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.sql.Wrapper;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 public class DProduct extends JDialog{
     private JPanel contentPane;
@@ -29,56 +43,200 @@ public class DProduct extends JDialog{
     private JComboBox cbbColor;
     private FlatTable table;
     private JButton btnNewPresentation;
-    private FlatTextField txtStyle;
+    private JComboBox cbbStyle;
+    private JComboBox cbbSex;
+    private JButton btnNewSex;
     private Product product;
     private boolean update;
-    private JPopupMenu menu;
+    private PresentationsAbstractModel model;
+    private Style style=new Style();
 
     public DProduct(Product product){
         super(Utilities.getJFrame(),"Nuevo producto",true);
         this.product=product;
         update=product.getId()!=null;
         init();
-        txtStyle.addKeyListener(new KeyAdapter() {
+        cbbStyle.addActionListener(new ActionListener() {
             @Override
-            public void keyReleased(KeyEvent e) {
-                if(e.getKeyCode()!=KeyEvent.VK_UP&&e.getKeyCode()!=KeyEvent.VK_DOWN&&e.getKeyCode()!=KeyEvent.VK_ENTER){
-                    loadMenu();
-                }
+            public void actionPerformed(ActionEvent e) {
+                loadStyle();
+            }
+        });
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSave();
+            }
+        });
+        btnHecho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        });
+        btnNewSex.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewSex();
+            }
+        });
+        btnNewCategory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewCategory();
+            }
+        });
+        btnNewColor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewColor();
+            }
+        });
+        btnNewSize.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewSize();
+            }
+        });
+        btnNewPresentation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        btnNewPresentation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewPresentation();
             }
         });
     }
 
-    private void loadMenu(){
-        menu.removeAll();
-        menu.setSize(new Dimension(400,250));
-        List<Style> styles= new ArrayList<>();
-        if(!txtStyle.getText().isBlank()){
-            styles.addAll(Styles.search(txtStyle.getText().trim()));
-        }
-        if(!styles.isEmpty()){
-            styles.forEach(style -> {
-                JMenuItem menuItem=new JMenuItem(style.getName());
-                menuItem.addActionListener(e -> {
-                    txtStyle.setText(style.getName());
-                    menu.setVisible(false);
-                });
-                menu.add(menuItem);
-            });
-            menu.updateUI();
-            menu.show(txtStyle,txtStyle.getVisibleRect().x,txtStyle.getVisibleRect().y+txtStyle.getHeight());
-            txtStyle.requestFocus();
+    private void loadNewPresentation(){
+        DPresentation dPresentation=new DPresentation(new Presentation(style));
+        dPresentation.setVisible(true);
+
+    }
+    private void loadNewSex(){
+        DSex dSex=new DSex(new Sex());
+        dSex.setVisible(true);
+    }
+    private void loadNewCategory(){
+        DCategory dCategory=new DCategory(new Category());
+        dCategory.setVisible(true);
+    }
+    private void loadNewColor(){
+        DColor dColor=new DColor(new Color());
+        dColor.setVisible(true);
+    }
+    private void loadNewSize(){
+        DSize dSize=new DSize(new Size());
+        dSize.setVisible(true);
+    }
+    private void loadStyle(){
+        if(cbbStyle.getSelectedItem() instanceof Style){
+            style= (Style) cbbStyle.getSelectedItem();
+            cbbCategory.setSelectedItem(style.getCategory());
+            loadTable();
+            UtilitiesTables.actualizarTabla(table);
         }else{
-            menu.setVisible(false);
+            style=new Style();
+            cbbCategory.setSelectedIndex(-1);
+            loadTable();
+            UtilitiesTables.actualizarTabla(table);
         }
     }
-
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        menu=new JPopupMenu();
+        Utilities.setActionsdOfDialog(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UtilitiesTables.actualizarTabla(table);
+            }
+        });
+        loadCombos();
+        loadTable();
         pack();
         setLocationRelativeTo(getOwner());
+        setResizable(false);
+    }
+
+    private void loadCombos(){
+        cbbStyle.setModel(new DefaultComboBoxModel(FPrincipal.styles));
+        cbbStyle.setRenderer(new Style.ListCellRenderer());
+        cbbCategory.setModel(new DefaultComboBoxModel(FPrincipal.categories));
+        cbbCategory.setRenderer(new Category.ListCellRenderer());
+        cbbSize.setModel(new DefaultComboBoxModel(FPrincipal.sizes));
+        cbbSize.setRenderer(new Size.ListCellRenderer());
+        cbbSex.setModel(new DefaultComboBoxModel(FPrincipal.sexs));
+        cbbSex.setRenderer(new Sex.ListCellRenderer());
+        cbbColor.setModel(new DefaultComboBoxModel(FPrincipal.colors));
+        cbbColor.setRenderer(new Color.ListCellRenderer());
+        cbbStyle.setSelectedIndex(-1);
+        cbbCategory.setSelectedIndex(-1);
+        cbbSize.setSelectedIndex(-1);
+        cbbColor.setSelectedIndex(-1);
+        cbbSex.setSelectedIndex(-1);
+        AutoCompleteDecorator.decorate(cbbStyle);
+    }
+
+    private void loadTable(){
+        model=new PresentationsAbstractModel(style.getPresentations());
+        table.setModel(model);
+        UtilitiesTables.headerNegrita(table);
+        PresentationCellRendered.setCellRenderer(table);
+    }
+    private void onSave(){
+        boolean createdStyle=true;
+        if((cbbStyle.getSelectedItem() instanceof Style)){
+            style= (Style) cbbStyle.getSelectedItem();
+            createdStyle=false;
+        }else{
+            style.setName(String.valueOf(cbbStyle.getEditor().getItem()));
+        }
+        style.setCategory((Category) cbbCategory.getSelectedItem());
+        product.setStyle(style);
+        product.setColor((Color) cbbColor.getSelectedItem());
+        product.setSex((Sex) cbbSex.getSelectedItem());
+        product.setSize((Size) cbbSize.getSelectedItem());
+        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(style);
+        constraintViolationSet.addAll(ProgramValidator.loadViolations(product));
+        if(constraintViolationSet.isEmpty()){
+            style.save();
+            product.save();
+            if(createdStyle){
+                FPrincipal.styles.add(style);
+            }
+            if(!update){
+                FPrincipal.products.add(product);
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
+                product=new Product();
+                clear();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Producto registrado");
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Producto actualizado");
+                onHecho();
+            }
+
+        }else{
+            ProgramValidator.mostrarErrores(constraintViolationSet);
+        }
+    }
+    private void clear(){
+        cbbStyle.setSelectedIndex(-1);
+        cbbCategory.setSelectedIndex(-1);
+        cbbSize.setSelectedIndex(-1);
+        cbbColor.setSelectedIndex(-1);
+        cbbSex.setSelectedIndex(-1);
+        loadStyle();
+    }
+    private void onHecho(){
+        if(update){
+            product.refresh();
+        }
+        dispose();
     }
 
 }

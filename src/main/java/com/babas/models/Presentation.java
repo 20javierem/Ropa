@@ -19,26 +19,28 @@ public class Presentation extends Babas {
     private Style style;
     @NotNull
     private Integer quantity;
-    @NotEmpty
+    @NotEmpty(message = "Precios")
     @OneToMany(mappedBy = "presentation")
     private List<Price> prices =new ArrayList<>();
     private Date created=new Date();
     private Date updated;
+    @ManyToOne
+    private Price priceDefault;
+
+    public Presentation(Style style){
+        this.style=style;
+    }
+
+    public Presentation() {
+
+    }
 
     public Date getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Long getId() {
@@ -47,10 +49,6 @@ public class Presentation extends Babas {
 
     public Style getStyle() {
         return style;
-    }
-
-    public void setStyle(Style style) {
-        this.style = style;
     }
 
     public Integer getQuantity() {
@@ -65,7 +63,22 @@ public class Presentation extends Babas {
         return prices;
     }
 
-    public void setPrices(List<Price> prices) {
-        this.prices = prices;
+    public Price getPriceDefault() {
+        return priceDefault;
+    }
+
+    public void setPriceDefault(Price priceDefault) {
+        this.priceDefault = priceDefault;
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        Price price=getPriceDefault();
+        setPriceDefault(null);
+        super.save();
+        getPrices().forEach(Price::save);
+        setPriceDefault(price);
+        super.save();
     }
 }

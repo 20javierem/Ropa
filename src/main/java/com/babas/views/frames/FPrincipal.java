@@ -63,6 +63,7 @@ public class FPrincipal extends JFrame{
     public static Vector<Color> colors;
     public static Vector<Size> sizes;
     public static Vector<Sex> sexs;
+    public static Vector<Style> styles;
 
     public FPrincipal(){
         initComponents();
@@ -186,6 +187,7 @@ public class FPrincipal extends JFrame{
         sizes= Sizes.getActives();
         sexs= Sexs.getActives();
         products= Products.getActives();
+        styles=Styles.getTodos();
     }
     private void cargarCursores(){
         btnAjustes.setCursor(new Cursor(Cursor.HAND_CURSOR));

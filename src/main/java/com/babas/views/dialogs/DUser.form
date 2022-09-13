@@ -27,7 +27,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="8988f" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
+              <grid id="8988f" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
                 <margin top="10" left="10" bottom="10" right="10"/>
                 <constraints>
                   <tabbedpane title="Datos"/>

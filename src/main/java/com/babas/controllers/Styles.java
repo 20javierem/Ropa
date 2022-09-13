@@ -23,13 +23,6 @@ public class Styles extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    public static Vector<Style> getActives(){
-        criteria = builder.createQuery(Style.class);
-        root=criteria.from(Style.class);
-        criteria.select(root).where(builder.isTrue(root.get("active")));
-        return new Vector<>(session.createQuery(criteria).getResultList());
-    }
-
     public static Vector<Style> search(String search){
         criteria = builder.createQuery(Style.class);
         root=criteria.from(Style.class);

@@ -131,6 +131,12 @@
       <item class="com.formdev.flatlaf.extras.components.FlatTextField" icon="/com/intellij/uiDesigner/icons/textField.png" removable="true" auto-create-binding="true" can-attach-label="true">
         <default-constraints vsize-policy="3" hsize-policy="6" anchor="0" fill="1" />
       </item>
+      <item class="com.babas.models.AutoCompleteComboBox" icon="/com/intellij/uiDesigner/icons/comboBox.png" removable="true" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="3" hsize-policy="7" anchor="0" fill="1" />
+      </item>
+      <item class="com.formdev.flatlaf.extras.components.FlatSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="true" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="3" hsize-policy="6" anchor="0" fill="1" />
+      </item>
     </group>
   </component>
 </project>

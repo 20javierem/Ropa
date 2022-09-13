@@ -3,6 +3,7 @@ package com.babas.views.tabs;
 import com.babas.custom.TabPane;
 import com.babas.models.Product;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.dialogs.*;
 import com.babas.views.frames.FPrincipal;
@@ -23,6 +24,7 @@ public class TabProducts {
     private JButton btnSizes;
     private JButton btnColors;
     private JButton btnNewProduct;
+    private JButton btnAllSexs;
     private ProductAbstractModel model;
 
     public TabProducts(){
@@ -57,6 +59,16 @@ public class TabProducts {
                 loadNewProduct();
             }
         });
+        btnAllSexs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadSexs();
+            }
+        });
+    }
+    private void loadSexs(){
+        DAllSexs dAllSexs=new DAllSexs();
+        dAllSexs.setVisible(true);
     }
     private void loadNewProduct(){
         DProduct dProduct=new DProduct(new Product());
@@ -76,12 +88,19 @@ public class TabProducts {
     }
     private void init(){
         tabPane.setTitle("Productos");
+        getTabPane().getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                UtilitiesTables.actualizarTabla(table);
+            }
+        });
         loadTable();
     }
     private void loadTable(){
         model=new ProductAbstractModel(FPrincipal.products);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
+        ProductCellRendered.setCellRenderer(table);
     }
     private void filter(){
 
