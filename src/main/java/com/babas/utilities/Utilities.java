@@ -1,5 +1,8 @@
 package com.babas.utilities;
 
+import ch.swaechter.smbjwrapper.SmbConnection;
+import ch.swaechter.smbjwrapper.SmbDirectory;
+import ch.swaechter.smbjwrapper.SmbFile;
 import com.babas.custom.TabbedPane;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.formdev.flatlaf.*;
@@ -13,6 +16,8 @@ import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 import com.formdev.flatlaf.intellijthemes.*;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
+import com.hierynomus.smbj.auth.AuthenticationContext;
+import org.apache.commons.io.IOUtils;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -24,7 +29,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.security.AlgorithmParameters;
 import java.security.NoSuchAlgorithmException;
@@ -69,6 +74,24 @@ public class Utilities {
 
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         return new JSpinner.NumberEditor(spinner, "###,###,###.##");
+    }
+
+    public static boolean newImage(InputStream imageImput,String imageName){
+        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
+//            SmbDirectory root = new SmbDirectory(smbConnection);
+            SmbDirectory dirCompany = new SmbDirectory(smbConnection, "company/cert");
+            System.out.println(dirCompany.getSmbPath());
+            SmbFile file = new SmbFile(smbConnection,"products/images/"+imageName);
+            OutputStream out = file.getOutputStream();
+            IOUtils.copy(imageImput, out);
+            imageImput.close();
+            out.close();
+            return true;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public static void loadTheme(){

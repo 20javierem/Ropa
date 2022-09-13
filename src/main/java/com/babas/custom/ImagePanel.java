@@ -10,8 +10,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class ImagePanel extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -103,6 +105,7 @@ public class ImagePanel extends JPanel {
             if(isRelesed&&shape!=null){
                 Rectangle2D rectangle2D=new Rectangle((int) shape.getBounds().getMinX()-8, (int) shape.getBounds().getMinY()-8,8,8);
                 Rectangle2D rectangle2D2=new Rectangle((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY(),8,8);
+                graphics2D.setPaint(Color.red);
                 graphics2D.fill(rectangle2D);
                 graphics2D.fill(rectangle2D2);
             }
@@ -147,7 +150,12 @@ public class ImagePanel extends JPanel {
             return false;
         }
     }
-
+    public BufferedImage getImageSelected(){
+        if(shape!=null) {
+            return bufferedImage.getSubimage(shape.getBounds().x-(getWidth()-bufferedImage.getWidth())/2, shape.getBounds().y-(getHeight()-bufferedImage.getHeight())/2, shape.getBounds().height, shape.getBounds().height);
+        }
+        return null;
+    }
     private Shape makeRectangle(int x1, int y1, int x2, int y2) {
         int startX = 0;
         int startY = 0;
@@ -158,12 +166,12 @@ public class ImagePanel extends JPanel {
         int width=Math.abs(x1 - x2);
         int heigth=Math.abs(y1 - y2);
 
-        if(width>200&&shape!=null){
+        if(width>700&&shape!=null){
             width=shape.getBounds().width;
         }else{
             startX=Math.min(x1,x2);
         }
-        if(heigth>200&&shape!=null){
+        if(heigth>600&&shape!=null){
             heigth=shape.getBounds().height;
         }else{
             startY=Math.min(y1,y2);
@@ -176,8 +184,8 @@ public class ImagePanel extends JPanel {
             Image image = ImageIO.read(new File(inputImage));
             int width=image.getWidth(this);
             int height=image.getHeight(this);
-            if(image.getHeight(this)>=650||image.getWidth(this)>=650){
-                double percen= 650.00 / image.getWidth(this);
+            if(image.getHeight(this)>=800||image.getWidth(this)>=800){
+                double percen= Math.min(800.00/image.getWidth(this),800.00/image.getHeight(this));
                 width= (int) (percen*image.getWidth(this));
                 height=(int) (percen*image.getHeight(this));
             }

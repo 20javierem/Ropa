@@ -119,14 +119,14 @@ public class ImageSlide extends JComponent {
     private Rectangle getAutoSize(Icon image) {
         int w = getWidth();
         int h = getHeight();
-        if (w > image.getIconWidth()) {
-            w = image.getIconWidth();
-        }
-        if (h > image.getIconHeight()) {
-            h = image.getIconHeight();
-        }
         int iw = image.getIconWidth();
         int ih = image.getIconHeight();
+        if (w > iw) {
+            w = iw;
+        }
+        if (h > ih) {
+            h = ih;
+        }
         double xScale = (double) w / iw;
         double yScale = (double) h / ih;
         double scale = Math.max(xScale, yScale);

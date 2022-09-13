@@ -9,6 +9,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,11 +19,10 @@ public class DCrop extends JDialog {
     private JButton btnCancel;
     private JButton btnOpenFileChooser;
     private JPanel contentPane;
-    private Image image;
+    public static BufferedImage imageSelected;
 
-    public DCrop(Image image) {
+    public DCrop() {
         super(Utilities.getJFrame(),"Editar Logo",true);
-        this.image=image;
         initComponents();
         btnSave.addActionListener(new ActionListener() {
             @Override
@@ -32,16 +32,22 @@ public class DCrop extends JDialog {
         });
         btnCancel.addActionListener(e -> onDispose());
         btnOpenFileChooser.addActionListener(e -> loadImage());
+        btnSave.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                imageSelected=((ImagePanel)panelImagen).getImageSelected();
+                onDispose();
+            }
+        });
     }
+
     public void loadImage(){
         String ruta=nuevaImagen();
         if(ruta!=null){
             ((ImagePanel)panelImagen).loadImage(ruta);
         }
     }
-    public void setImageSelected(){
 
-    }
     public static String nuevaImagen(){
         File imagenProducto;
         JFileChooser selectorArchivos = new JFileChooser();
@@ -64,6 +70,7 @@ public class DCrop extends JDialog {
     }
     private void initComponents(){
         setContentPane(contentPane);
+        imageSelected=null;
         pack();
         setLocationRelativeTo(getOwner());
         setResizable(false);

@@ -38,7 +38,6 @@ public class Propiedades {
             inputStream.close();
             setKey("2QXDJJUCSSUW2GC");
             guardar();
-            setPassword("AAABBBCCC");
             setTema("Claro");
             setFont(String.valueOf(new JTextField().getFont().getSize()));
             guardar();
@@ -61,12 +60,20 @@ public class Propiedades {
         }
     }
 
-    public String getPassword(){
-        return Utilities.desencriptar(properties.getProperty("password"));
+    public String getUserPassword(){
+        String pasword=properties.getProperty("userPassword");
+        return pasword==null?"":Utilities.desencriptar(pasword);
     }
-    public void setPassword(String password){
-        properties.put("password",Utilities.encriptar(password));
+    public void setUserPassword(String password){
+        properties.put("userPassword",Utilities.encriptar(password));
     }
+    public String getUserName(){
+        return properties.getProperty("userName");
+    }
+    public void setUserName(String nameUser){
+        properties.put("userName",nameUser);
+    }
+
     public String getKey() {
         return properties.getProperty("key");
     }
@@ -79,7 +86,19 @@ public class Propiedades {
     public String getTema() {
         return properties.getProperty("tema");
     }
-
+    public String getServerName(){
+        return properties.getProperty("userNameServer");
+    }
+    public void setServerName(String userServer){
+        properties.put("userNameServer",userServer);
+    }
+    public String getServerPassword(){
+        String pasword=properties.getProperty("passwordServer");
+        return pasword==null?"":Utilities.desencriptar(pasword);
+    }
+    public void setServerPassword(String password){
+        properties.put("passwordServer",Utilities.encriptar(password));
+    }
     public void setFont(String fontSize){
         properties.put("fontSize", fontSize);
     }

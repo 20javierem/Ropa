@@ -1,33 +1,29 @@
 package com.babas.views.dialogs;
 
-import com.babas.controllers.Styles;
+import com.babas.custom.ImageSlide;
 import com.babas.models.*;
 import com.babas.models.Color;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorPresentation;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorSex;
 import com.babas.utilitiesTables.tablesCellRendered.PresentationCellRendered;
 import com.babas.utilitiesTables.tablesModels.PresentationsAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
-import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.moreno.Notify;
 import jakarta.validation.ConstraintViolation;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.sql.Wrapper;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.awt.image.BufferedImage;
+import java.awt.image.DataBufferByte;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Set;
 
 public class DProduct extends JDialog{
@@ -46,6 +42,11 @@ public class DProduct extends JDialog{
     private JComboBox cbbStyle;
     private JComboBox cbbSex;
     private JButton btnNewSex;
+    private ImageSlide imageSlide;
+    private JButton btnAddImage;
+    private JLabel quantityImages;
+    private JButton btnNext;
+    private JButton btnPrevious;
     private Product product;
     private boolean update;
     private PresentationsAbstractModel model;
@@ -110,8 +111,24 @@ public class DProduct extends JDialog{
                 loadNewPresentation();
             }
         });
+        btnAddImage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadAddNewImage();
+            }
+        });
     }
-
+    private void loadAddNewImage(){
+        DCrop dCrop=new DCrop();
+        dCrop.setVisible(true);
+        BufferedImage bufferedImage=DCrop.imageSelected;
+        DataBufferByte byteArrayOutputStream= (DataBufferByte) bufferedImage.getData().getDataBuffer();
+        try {
+            Utilities.newImage(new FileInputStream(Arrays.toString(byteArrayOutputStream.getData())),"imagen");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
     private void loadNewPresentation(){
         DPresentation dPresentation=new DPresentation(new Presentation(style));
         dPresentation.setVisible(true);

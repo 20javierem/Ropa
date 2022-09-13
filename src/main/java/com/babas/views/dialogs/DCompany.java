@@ -46,7 +46,7 @@ public class DCompany extends JDialog {
         btnShowCrop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                DCrop dCrop=new DCrop(null);
+                DCrop dCrop=new DCrop();
                 dCrop.setVisible(true);
             }
         });

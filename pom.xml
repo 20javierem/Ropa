@@ -45,7 +45,12 @@
     <dependency>
       <groupId>org.swinglabs.swingx</groupId>
       <artifactId>swingx-all</artifactId>
-      <version>1.6.3</version>
+      <version>1.6.5</version>
+    </dependency>
+    <dependency>
+      <groupId>ch.swaechter</groupId>
+      <artifactId>smbjwrapper</artifactId>
+      <version>1.2.0</version>
     </dependency>
     <dependency>
       <groupId>org.apache.maven.plugins</groupId>
