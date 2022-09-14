@@ -22,6 +22,7 @@ public class DAllCategorys extends JDialog{
     private FlatButton btnNew;
     private FlatButton btnHecho;
     private CategoryAbstractModel model;
+    private ActionListener actionListener;
 
     public DAllCategorys(){
         super(Utilities.getJFrame(),"Todas las categorías",true);
@@ -54,11 +55,12 @@ public class DAllCategorys extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();
         setResizable(false);
         setLocationRelativeTo(getOwner());
-        Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
         model=new CategoryAbstractModel(FPrincipal.categories);
@@ -73,6 +75,7 @@ public class DAllCategorys extends JDialog{
         dCategory.setVisible(true);
     }
     private void onHecho(){
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 }

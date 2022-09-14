@@ -22,6 +22,7 @@ public class DAllSexs extends JDialog{
     private FlatButton btnNew;
     private FlatButton btnHecho;
     private SexAbstractModel model;
+    private ActionListener actionListener;
 
     public DAllSexs(){
         super(Utilities.getJFrame(),"Todos los Géneros",true);
@@ -54,11 +55,12 @@ public class DAllSexs extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();
         setResizable(false);
         setLocationRelativeTo(getOwner());
-        Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
         model=new SexAbstractModel(FPrincipal.sexs);
@@ -73,6 +75,7 @@ public class DAllSexs extends JDialog{
         dColor.setVisible(true);
     }
     private void onHecho(){
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 }

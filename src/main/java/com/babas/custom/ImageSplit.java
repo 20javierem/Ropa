@@ -1,5 +1,6 @@
 package com.babas.custom;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Area;
 import java.awt.image.BufferedImage;
@@ -34,6 +35,7 @@ public class ImageSplit {
         Graphics2D g2 = img.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g2.setColor(new JPanel().getBackground());
         g2.fill(createShape(right, size));
         g2.setComposite(AlphaComposite.SrcIn);
         g2.drawImage(image, imageRec.getLocation().x, imageRec.getLocation().y, imageRec.getSize().width, imageRec.getSize().height, null);

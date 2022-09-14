@@ -152,7 +152,7 @@ public class ImagePanel extends JPanel {
     }
     public BufferedImage getImageSelected(){
         if(shape!=null) {
-            return bufferedImage.getSubimage(shape.getBounds().x-(getWidth()-bufferedImage.getWidth())/2, shape.getBounds().y-(getHeight()-bufferedImage.getHeight())/2, shape.getBounds().height, shape.getBounds().height);
+            return bufferedImage.getSubimage(shape.getBounds().x-(getWidth()-bufferedImage.getWidth())/2, shape.getBounds().y-(getHeight()-bufferedImage.getHeight())/2, shape.getBounds().width, shape.getBounds().height);
         }
         return null;
     }

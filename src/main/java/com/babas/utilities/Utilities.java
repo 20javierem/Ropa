@@ -63,11 +63,9 @@ public class Utilities {
     public static JLabel lblIzquiera;
     public static JButton actions=new JButton();
 
-    public static void setActionsdOfDialog(ActionListener action){
-        actions=new JButton();
-        actions.addActionListener(action);
+    public static JButton getActionsOfDialog(){
+        return actions;
     }
-
     public static void updateDialog(){
         actions.doClick();
     }

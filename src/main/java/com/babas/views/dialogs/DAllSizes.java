@@ -22,6 +22,7 @@ public class DAllSizes extends JDialog{
     private FlatButton btnNew;
     private FlatButton btnHecho;
     private SizeAbstractModel model;
+    private ActionListener actionListener;
 
     public DAllSizes(){
         super(Utilities.getJFrame(),"Todos los tallas",true);
@@ -54,11 +55,12 @@ public class DAllSizes extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();
         setResizable(false);
         setLocationRelativeTo(getOwner());
-        Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
         model=new SizeAbstractModel(FPrincipal.sizes);
@@ -73,6 +75,7 @@ public class DAllSizes extends JDialog{
         size.setVisible(true);
     }
     private void onHecho(){
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 }

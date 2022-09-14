@@ -20,6 +20,7 @@ public class DAllBrands extends JDialog{
     private FlatButton btnNew;
     private FlatButton btnHecho;
     private BrandAbstractModel model;
+    private ActionListener actionListener;
 
     public DAllBrands(){
         super(Utilities.getJFrame(),"Todas las marcas",true);
@@ -52,11 +53,12 @@ public class DAllBrands extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();
         setResizable(false);
         setLocationRelativeTo(getOwner());
-        Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
         model=new BrandAbstractModel(FPrincipal.brands);
@@ -71,6 +73,7 @@ public class DAllBrands extends JDialog{
         dCategory.setVisible(true);
     }
     private void onHecho(){
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 }

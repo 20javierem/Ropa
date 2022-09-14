@@ -19,6 +19,7 @@ public class DAllColors extends JDialog{
     private FlatButton btnNew;
     private FlatButton btnHecho;
     private ColorAbstractModel model;
+    private ActionListener actionListener;
 
     public DAllColors(){
         super(Utilities.getJFrame(),"Todos los colores",true);
@@ -51,11 +52,12 @@ public class DAllColors extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();
         setResizable(false);
         setLocationRelativeTo(getOwner());
-        Utilities.setActionsdOfDialog(e -> UtilitiesTables.actualizarTabla(table));
     }
     private void loadTable(){
         model=new ColorAbstractModel(FPrincipal.colors);
@@ -70,6 +72,7 @@ public class DAllColors extends JDialog{
         dColor.setVisible(true);
     }
     private void onHecho(){
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 }

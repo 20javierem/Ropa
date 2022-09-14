@@ -65,7 +65,10 @@ public class ImageSlide extends JComponent {
             repaint();
         }
     }
-
+    public String getImagePosition(){
+        int index=indexOld+1;
+        return "Mostrando "+index+" de "+images.size();
+    }
     private void showImage(int index) {
         if (index < images.size()) {
             if (!animator.isRunning()) {
@@ -101,7 +104,6 @@ public class ImageSlide extends JComponent {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
         int width = getWidth();
-        int height = getHeight();
         if (indexOld >= 0) {
             Icon image = images.get(indexOld);
             Rectangle size = getAutoSize(image);

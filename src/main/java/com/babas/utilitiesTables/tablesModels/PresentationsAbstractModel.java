@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.List;
 
 public class PresentationsAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"CANTIDAD","PRECIO","ACTUALIZADO","",""};
-    private final Class[] typeColumns={Integer.class, Double.class, Date.class, JButton.class, JButton.class};
+    private final String[] nameColumns={"CANTIDAD","PRECIO","DEFECTO","",""};
+    private final Class[] typeColumns={Integer.class, Double.class, String.class, JButton.class, JButton.class};
     private final List<Presentation> list;
 
     public PresentationsAbstractModel(List<Presentation> list){
@@ -49,7 +49,7 @@ public class PresentationsAbstractModel extends AbstractTableModel {
             case 1:
                 return presentation.getPriceDefault().getPrice();
             case 2:
-                return presentation.getUpdated();
+                return presentation.isDefault()?"SI":"NO";
             case 3:
                 return new JButtonAction("x16/editar.png");
             default:

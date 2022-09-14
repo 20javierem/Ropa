@@ -5,6 +5,8 @@ import com.babas.models.Price;
 import com.babas.models.Product;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorColor;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorPrice;
 import com.babas.utilitiesTables.tablesCellRendered.PriceCellRendered;
 import com.babas.utilitiesTables.tablesModels.PriceAbstractModel;
 import com.babas.validators.ProgramValidator;
@@ -15,8 +17,7 @@ import com.moreno.Notify;
 import jakarta.validation.ConstraintViolation;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -32,6 +33,7 @@ public class DPresentation extends JDialog{
     private Presentation presentation;
     private boolean update;
     private PriceAbstractModel model;
+    private ActionListener actionListener;
 
     public DPresentation(Presentation presentation){
         super(Utilities.getJFrame(),"Nueva Presentación",true);
@@ -41,7 +43,7 @@ public class DPresentation extends JDialog{
         btnNewPrice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                registerNewPrice();
+                loadNewPrice();
             }
         });
         btnSave.addActionListener(new ActionListener() {
@@ -56,20 +58,27 @@ public class DPresentation extends JDialog{
                 onHecho();
             }
         });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onHecho();
+            }
+        });
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-    private void registerNewPrice(){
-        Price price=new Price(presentation);
-        price.setPrice((Double) spinnerPriceNew.getValue());
-        if(presentation.getPrices().isEmpty()){
-            price.setDefault(true);
-        }
-        presentation.getPrices().add(price);
-        spinnerPriceNew.setValue(1.0);
-        UtilitiesTables.actualizarTabla(table);
+    private void loadNewPrice(){
+        DPrice dPrice=new DPrice(new Price(presentation));
+        dPrice.setVisible(true);
     }
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         if(update){
             setTitle("Actualizar Presentación");
             btnSave.setText("Guardar");
@@ -94,6 +103,8 @@ public class DPresentation extends JDialog{
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         PriceCellRendered.setCellRenderer(table);
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorPrice(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorPrice(true));
     }
 
     private void onSave(){
@@ -107,6 +118,13 @@ public class DPresentation extends JDialog{
         if(constraintViolationSet.isEmpty()){
             if(presentation.getStyle().getId()!=null){
                 presentation.save();
+                if(presentation.isDefault()&&presentation.getPriceDefault()!=null){
+                    presentation.getStyle().getPresentationDefault().setDefault(false);
+                    presentation.getStyle().getPresentationDefault().save();
+                    presentation.getStyle().setPresentationDefault(presentation);
+                    presentation.setDefault(true);
+                    presentation.save();
+                }
             }
             if(!update){
                 presentation.getStyle().getPresentations().add(presentation);
@@ -120,6 +138,8 @@ public class DPresentation extends JDialog{
                     presentation.getStyle().getPresentationDefault().setDefault(false);
                     presentation.getStyle().getPresentationDefault().save();
                     presentation.getStyle().setPresentationDefault(presentation);
+                    presentation.setDefault(true);
+                    presentation.save();
                 }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación actualizada");
                 onHecho();
@@ -134,6 +154,7 @@ public class DPresentation extends JDialog{
         if(update){
             presentation.refresh();
         }
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
     private void clear(){

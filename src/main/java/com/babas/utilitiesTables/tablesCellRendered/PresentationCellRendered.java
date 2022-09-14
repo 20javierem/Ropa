@@ -33,10 +33,11 @@ public class PresentationCellRendered extends DefaultTableCellRenderer {
             JTextField componente=buscarTexto(null,value,column,component);
             switch(table.getColumnName(column)){
                 case "CANTIDAD":
+                case "DEFECTO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(80);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(80);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(80);
                     break;
                 case "ACTUALIZADO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);

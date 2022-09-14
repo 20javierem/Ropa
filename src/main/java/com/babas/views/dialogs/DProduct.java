@@ -18,8 +18,7 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.io.*;
@@ -53,6 +52,7 @@ public class DProduct extends JDialog{
     private final boolean update;
     private PresentationsAbstractModel model;
     private Style style=new Style();
+    private ActionListener actionListener;
 
     public DProduct(Product product){
         super(Utilities.getJFrame(),"Nuevo producto",true);
@@ -104,12 +104,6 @@ public class DProduct extends JDialog{
         btnNewPresentation.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        btnNewPresentation.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
                 loadNewPresentation();
             }
         });
@@ -128,15 +122,26 @@ public class DProduct extends JDialog{
         btnPrevious.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                imageSlide.toNext();
+                imageSlide.toPrevious();
             }
         });
         btnNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                imageSlide.toPrevious();
+                imageSlide.toNext();
             }
         });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onHecho();
+            }
+        });
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
     private void loadAddNewImage() {
         DCrop dCrop=new DCrop();
@@ -165,7 +170,6 @@ public class DProduct extends JDialog{
     private void loadNewPresentation(){
         DPresentation dPresentation=new DPresentation(new Presentation(style));
         dPresentation.setVisible(true);
-
     }
     private void loadNewSex(){
         DSex dSex=new DSex(new Sex());
@@ -203,12 +207,8 @@ public class DProduct extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        Utilities.setActionsdOfDialog(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                UtilitiesTables.actualizarTabla(table);
-            }
-        });
+        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadCombos();
         if(update){
             btnHecho.setText("Cancelar");
@@ -321,6 +321,7 @@ public class DProduct extends JDialog{
         if(update){
             product.refresh();
         }
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 
