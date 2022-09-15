@@ -14,7 +14,7 @@ public class Styles extends Babas {
     private static CriteriaQuery<Style> criteria;
 
     public static Style get(Integer id) {
-        return session.find(Style.class, id, LockModeType.NONE);
+        return session.find(Style.class, id);
     }
 
     public static Vector<Style> getTodos(){

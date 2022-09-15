@@ -14,7 +14,7 @@ public class Sizes extends Babas {
     private static CriteriaQuery<Size> criteria;
 
     public static Size get(Integer id) {
-        return session.find(Size.class, id, LockModeType.NONE);
+        return session.find(Size.class, id);
     }
 
     public static Vector<Size> getTodos(){

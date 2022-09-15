@@ -14,7 +14,7 @@ public class Brands extends Babas {
     private static CriteriaQuery<Brand> criteria;
 
     public static Brand get(Integer id) {
-        return session.find(Brand.class, id, LockModeType.NONE);
+        return session.find(Brand.class, id);
     }
 
     public static Vector<Brand> getTodos(){

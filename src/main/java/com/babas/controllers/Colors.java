@@ -14,7 +14,7 @@ public class Colors extends Babas {
     private static CriteriaQuery<Color> criteria;
 
     public static Color get(Integer id) {
-        return session.find(Color.class, id, LockModeType.NONE);
+        return session.find(Color.class, id);
     }
 
     public static Vector<Color> getTodos(){

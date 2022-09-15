@@ -15,10 +15,15 @@ import java.util.Map;
 public class UtilitiesTables {
 
     public static void actualizarTabla(JTable tabla){
-        SwingUtilities.invokeLater(tabla::updateUI);
+        SwingUtilities.invokeLater(() -> {
+            if(SwingUtilities.windowForComponent(tabla).isActive()){
+                SwingUtilities.invokeLater(tabla::updateUI);
+            }
+        });
     }
 
     public static void headerNegrita(FlatTable table){
+        table.getTableHeader().setBorder(null);
         table.getTableHeader().setBackground(Color.black);
         table.getTableHeader().setForeground(Color.WHITE);
         table.getTableHeader().setReorderingAllowed(false);

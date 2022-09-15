@@ -13,7 +13,7 @@ public class Products extends Babas {
     private static CriteriaQuery<Product> criteria;
 
     public static Product get(Integer id) {
-        return session.find(Product.class, id, LockModeType.NONE);
+        return session.find(Product.class, id);
     }
 
     public static Vector<Product> getTodos(){

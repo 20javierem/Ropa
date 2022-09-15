@@ -1,6 +1,7 @@
 package com.babas.controllers;
 
 import com.babas.models.Color;
+import com.babas.models.Product;
 import com.babas.models.Sex;
 import com.babas.utilities.Babas;
 import jakarta.persistence.LockModeType;
@@ -14,7 +15,7 @@ public class Sexs extends Babas {
     private static CriteriaQuery<Sex> criteria;
 
     public static Sex get(Integer id) {
-        return session.find(Sex.class, id, LockModeType.NONE);
+        return session.find(Sex.class, id);
     }
 
     public static Vector<Sex> getTodos(){

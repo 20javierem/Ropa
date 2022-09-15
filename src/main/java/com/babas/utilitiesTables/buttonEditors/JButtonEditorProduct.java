@@ -52,7 +52,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                     dProduct.setVisible(true);
                     break;
                 case "delete":
-                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Categoría",JOptionPane.YES_NO_OPTION)==0;
+                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Producto",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         product.setActive(false);
                         product.save();

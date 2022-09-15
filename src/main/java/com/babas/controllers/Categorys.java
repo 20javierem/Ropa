@@ -14,7 +14,7 @@ public class Categorys extends Babas {
     private static CriteriaQuery<Category> criteria;
 
     public static Category get(Integer id) {
-        return session.find(Category.class, id, LockModeType.NONE);
+        return session.find(Category.class, id);
     }
 
     public static Vector<Category> getTodos(){

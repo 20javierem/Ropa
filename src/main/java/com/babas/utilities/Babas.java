@@ -1,8 +1,8 @@
 package com.babas.utilities;
 
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaBuilder;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -25,7 +25,9 @@ public class Babas {
     }
 
     public void refresh(){
+        session.beginTransaction();
         session.refresh(this);
+        session.getTransaction().commit();
     }
 
     public void save(){
