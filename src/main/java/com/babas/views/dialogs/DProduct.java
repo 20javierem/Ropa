@@ -195,19 +195,17 @@ public class DProduct extends JDialog{
         if(cbbStyle.getSelectedItem() instanceof Style){
             style= (Style) cbbStyle.getSelectedItem();
             cbbCategory.setSelectedItem(style.getCategory());
-            loadTable();
-            UtilitiesTables.actualizarTabla(table);
         }else{
             style=new Style();
             cbbCategory.setSelectedIndex(-1);
-            loadTable();
-            UtilitiesTables.actualizarTabla(table);
         }
+        loadTable();
+        model.fireTableDataChanged();
     }
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        actionListener= e -> model.fireTableDataChanged();
         Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadCombos();
         if(update){

@@ -1,13 +1,12 @@
 package com.babas.utilitiesTables.buttonEditors;
 
-import com.babas.models.Color;
-import com.babas.models.Sex;
+import com.babas.models.Branch;
+import com.babas.models.Brand;
 import com.babas.utilities.Utilities;
-import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
-import com.babas.utilitiesTables.tablesModels.SexAbstractModel;
-import com.babas.views.dialogs.DAllSexs;
-import com.babas.views.dialogs.DColor;
-import com.babas.views.dialogs.DSex;
+import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
+import com.babas.utilitiesTables.tablesModels.BrandAbstractModel;
+import com.babas.views.dialogs.DBranch;
+import com.babas.views.dialogs.DBrand;
 import com.babas.views.frames.FPrincipal;
 
 import javax.swing.*;
@@ -16,11 +15,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class JButtonEditorSex extends AbstractCellEditor implements TableCellEditor, ActionListener {
+public class JButtonEditorBranch extends AbstractCellEditor implements TableCellEditor, ActionListener {
     private JButtonAction button;
     private boolean edit;
 
-    public JButtonEditorSex(boolean edit) {
+    public JButtonEditorBranch(boolean edit) {
         this.edit=edit;
         if(edit){
             button=new JButtonAction("x16/editar.png");
@@ -39,21 +38,25 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
-            Sex sex=((SexAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            Branch branch=((BranchAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
-                DSex dSex=new DSex(sex);
-                dSex.setVisible(true);
+                DBranch dBranch=new DBranch(branch);
+                dBranch.setVisible(true);
             }else{
-                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Género",JOptionPane.YES_NO_OPTION)==0;
+                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Sucursal",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
-                    sex.refresh();
-                    if(sex.getProducts().isEmpty()){
-                        FPrincipal.sexs.remove(sex);
-                        sex.delete();
+                    branch.refresh();
+                    branch.getUsers().forEach(user -> {
+                        user.getBranchs().remove(branch);
+                        user.save();
+                    });
+                    if(branch.getSales().isEmpty()){
+                        branch.delete();
                     }else{
-                        sex.setActive(false);
-                        FPrincipal.sexs.remove(sex);
+                        branch.setActive(false);
+                        branch.save();
                     }
+                    FPrincipal.branchs.remove(branch);
                 }
             }
             Utilities.updateDialog();

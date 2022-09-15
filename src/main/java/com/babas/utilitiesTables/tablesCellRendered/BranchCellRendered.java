@@ -33,11 +33,10 @@ public class BranchCellRendered extends DefaultTableCellRenderer {
             JTextField componente=buscarTexto(null,value,column,component);
             switch(table.getColumnName(column)){
                 case "EMAIL":
-                case "DIRECCIÓN":
-                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    componente.setHorizontalAlignment(SwingConstants.LEFT);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(210);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(210);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(210);
                     break;
                 case "ESTADO":
                 case "USUARIOS":

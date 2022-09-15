@@ -56,6 +56,7 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
                 }
             }
             Utilities.updateDialog();
+            fireEditingStopped();
         }
     }
 

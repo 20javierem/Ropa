@@ -43,7 +43,7 @@ public class UserAbstractModel extends AbstractTableModel {
         User user= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return user.getLastName()+user.getFirstName();
+                return user.getLastName()+", "+user.getFirstName();
             case 1:
                 return user.getPhone();
             case 2:

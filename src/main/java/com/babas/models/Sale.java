@@ -26,6 +26,9 @@ public class Sale extends Babas {
     private Double totalCurrent=0.0;
     private Date created=new Date();
     private Date updated;
+    @ManyToOne
+    @NotNull
+    private Branch branch;
 
     public Long getId() {
         return id;
@@ -89,5 +92,19 @@ public class Sale extends Babas {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

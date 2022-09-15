@@ -44,7 +44,7 @@ public class TabbedPane extends FlatTabbedPane {
                 components[i]=component;
                 i++;
             }
-            components[i]=pop_up;
+            components[i]= pop_up;
             return components;
         }
         return super.getComponents();

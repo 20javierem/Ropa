@@ -104,12 +104,7 @@ public class TabProducts {
     private void init(){
         tabPane.setTitle("Productos");
         loadIcons();
-        getTabPane().getActions().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                UtilitiesTables.actualizarTabla(table);
-            }
-        });
+        getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
         loadTable();
     }
     private void loadIcons(){

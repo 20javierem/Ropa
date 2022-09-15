@@ -67,6 +67,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
             }
             Utilities.updateDialog();
             Utilities.getTabbedPane().updateTab();
+            fireEditingStopped();
         }
     }
 

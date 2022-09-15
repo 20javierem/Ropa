@@ -2,6 +2,7 @@ package com.babas.utilitiesTables;
 
 import com.babas.utilities.Utilities;
 import com.formdev.flatlaf.extras.components.FlatTable;
+import org.apache.commons.math3.analysis.function.Abs;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -10,14 +11,11 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import java.awt.*;
+import java.awt.event.FocusEvent;
 import java.util.Date;
 import java.util.Map;
 
 public class UtilitiesTables {
-
-    public static void actualizarTabla(JTable tabla){
-        SwingUtilities.invokeLater(tabla::updateUI);
-    }
 
     public static void headerNegrita(FlatTable table){
         table.getTableHeader().setBorder(null);

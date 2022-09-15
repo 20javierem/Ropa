@@ -81,8 +81,8 @@ public class DUser extends JDialog{
             user.getBranchs().add(branch);
             branch.getUsers().add(user);
             modelBranchs.getList().remove(branch);
-            UtilitiesTables.actualizarTabla(tableBranchs);
-            UtilitiesTables.actualizarTabla(tableBranchsUser);
+            modelBranchs.fireTableDataChanged();
+            modelBranchsUsers.fireTableDataChanged();
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar una sucursal");
         }
@@ -94,8 +94,8 @@ public class DUser extends JDialog{
             user.getBranchs().remove(branch);
             branch.getUsers().remove(user);
             modelBranchs.getList().add(branch);
-            UtilitiesTables.actualizarTabla(tableBranchs);
-            UtilitiesTables.actualizarTabla(tableBranchsUser);
+            modelBranchs.fireTableDataChanged();
+            modelBranchsUsers.fireTableDataChanged();
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar una sucursal");
         }
@@ -151,7 +151,7 @@ public class DUser extends JDialog{
         tableBranchsUser.removeColumn(tableBranchsUser.getColumn(""));
 
         user.getBranchs().forEach( branch -> modelBranchs.getList().remove(branch));
-        UtilitiesTables.actualizarTabla(tableBranchs);
+        modelBranchs.fireTableDataChanged();
     }
 
     private void onSave(){

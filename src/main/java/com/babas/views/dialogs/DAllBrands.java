@@ -54,7 +54,7 @@ public class DAllBrands extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
-        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        actionListener= e -> model.fireTableDataChanged();
         Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();

@@ -35,6 +35,8 @@ public class User extends Babas {
     private Date birthday;
     @ManyToMany
     private List<Branch> branchs=new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<Sale> sales=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -126,6 +128,11 @@ public class User extends Babas {
 
     public void setSex(Sex sex) {
         this.sex = sex;
+    }
+
+
+    public List<Sale> getSales() {
+        return sales;
     }
 
     @Override

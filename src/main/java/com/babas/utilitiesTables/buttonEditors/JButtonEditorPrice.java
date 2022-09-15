@@ -62,6 +62,7 @@ public class JButtonEditorPrice extends AbstractCellEditor implements TableCellE
                 }
             }
             Utilities.updateDialog();
+            fireEditingStopped();
         }
     }
 

@@ -6,6 +6,7 @@ import com.babas.models.User;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.BranchCellRendered;
+import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.utilitiesTables.tablesModels.UserAbstractModel;
 import com.babas.views.dialogs.DBranch;
@@ -44,7 +45,7 @@ public class TabUsers {
 
     private void init(){
         tabPane.setTitle("Usuarios");
-        tabPane.getActions().addActionListener(e -> UtilitiesTables.actualizarTabla(table));
+        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
         loadTable();
         loadIcons();
     }
@@ -54,7 +55,7 @@ public class TabUsers {
     private void loadTable(){
         model=new UserAbstractModel(FPrincipal.users);
         table.setModel(model);
-        BranchCellRendered.setCellRenderer(table);
+        UserCellRendered.setCellRenderer(table);
         UtilitiesTables.headerNegrita(table);
     }
 

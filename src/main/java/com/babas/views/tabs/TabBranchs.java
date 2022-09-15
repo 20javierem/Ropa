@@ -41,7 +41,7 @@ public class TabBranchs {
 
     private void init(){
         tabPane.setTitle("Sucursales");
-        tabPane.getActions().addActionListener(e -> UtilitiesTables.actualizarTabla(table));
+        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
         loadTable();
         loadIcons();
     }

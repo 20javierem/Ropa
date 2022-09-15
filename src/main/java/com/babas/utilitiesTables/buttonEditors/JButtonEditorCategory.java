@@ -56,6 +56,7 @@ public class JButtonEditorCategory extends AbstractCellEditor implements TableCe
                 }
             }
             Utilities.updateDialog();
+            fireEditingStopped();
         }
     }
 

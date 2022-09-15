@@ -12,6 +12,7 @@ import java.util.List;
 @Entity(name = "branch_tbl")
 public class Branch extends Babas {
     @Id
+    @GeneratedValue(generator = "increment")
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;
@@ -30,6 +31,8 @@ public class Branch extends Babas {
     private List<Transfer> transfers_destinys =new ArrayList<>();
     private Date created=new Date();
     private Date updated;
+    @OneToMany(mappedBy = "branch")
+    private List<Sale> sales=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -85,6 +88,11 @@ public class Branch extends Babas {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+
+    public List<Sale> getSales() {
+        return sales;
     }
 
     @Override

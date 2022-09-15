@@ -53,6 +53,7 @@ public class JButtonEditorColor extends AbstractCellEditor implements TableCellE
                 }
             }
             Utilities.updateDialog();
+            fireEditingStopped();
         }
     }
 

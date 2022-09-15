@@ -64,6 +64,7 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                 }
             }
             Utilities.updateDialog();
+            fireEditingStopped();
         }
     }
 

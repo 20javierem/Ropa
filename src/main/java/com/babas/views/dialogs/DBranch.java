@@ -29,7 +29,6 @@ public class DBranch extends JDialog{
     private JButton btnAddUser;
     private FlatTable tableUsers;
     private FlatTable tableUserBranch;
-    private JCheckBox ckActive;
     private FlatTextField txtDirection;
     private FlatTextField txtEmail;
     private FlatTextField txtPhone;
@@ -125,7 +124,6 @@ public class DBranch extends JDialog{
         txtDirection.setText(branch.getDirection());
         txtEmail.setText(branch.getEmail());
         txtPhone.setText(branch.getPhone());
-        ckActive.setSelected(branch.isActive());
         modelUsersBranchs=new UserAbstractModel(branch.getUsers());
         tableUserBranch.setModel(modelUsersBranchs);
         UserCellRendered.setCellRenderer(tableUserBranch);
@@ -137,7 +135,7 @@ public class DBranch extends JDialog{
         tableUserBranch.removeColumn(tableUserBranch.getColumn(""));
         tableUserBranch.removeColumn(tableUserBranch.getColumn(""));
         branch.getUsers().forEach(user -> modelUsers.getList().remove(user));
-        UtilitiesTables.actualizarTabla(tableUsers);
+        modelUsers.fireTableDataChanged();
     }
 
     private void loadTables(){
@@ -152,9 +150,9 @@ public class DBranch extends JDialog{
         tableUsers.removeColumn(tableUsers.getColumn(""));
         tableUsers.removeColumn(tableUsers.getColumn(""));
     }
+
     private void onSave(){
         branch.setPhone(txtPhone.getText().trim());
-        branch.setActive(ckActive.isSelected());
         branch.setDirection(txtDirection.getText().trim());
         branch.setEmail(txtEmail.getText().trim());
         branch.setName(txtName.getText().trim());

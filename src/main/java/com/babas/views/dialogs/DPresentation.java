@@ -77,7 +77,7 @@ public class DPresentation extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        actionListener= e -> model.fireTableDataChanged();
         Utilities.getActionsOfDialog().addActionListener(actionListener);
         if(update){
             setTitle("Actualizar Presentación");

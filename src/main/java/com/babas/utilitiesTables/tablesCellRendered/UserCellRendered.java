@@ -34,11 +34,6 @@ public class UserCellRendered extends DefaultTableCellRenderer {
             switch(table.getColumnName(column)){
                 case "CELULAR":
                 case "ULTIMA SESIÓN":
-                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
-                    break;
                 case "ESTADO":
                 case "SUCURSALES":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);

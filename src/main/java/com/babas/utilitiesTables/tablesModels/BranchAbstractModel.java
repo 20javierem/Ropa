@@ -9,7 +9,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class BranchAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","EMAIL","DIRECCIÓN","ESTADO","USUARIOS","",""};
+    private final String[] nameColumns={"NOMBRE","DIRECCIÓN","EMAIL","ESTADO","USUARIOS","",""};
     private final Class[] typeColumns={String.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class};
     private final List<Branch> list;
 
@@ -44,9 +44,9 @@ public class BranchAbstractModel extends AbstractTableModel {
             case 0:
                 return branch.getName();
             case 1:
-                return branch.getEmail();
-            case 2:
                 return branch.getDirection();
+            case 2:
+                return branch.getEmail();
             case 3:
                 return branch.isActive()?"ACTIVO":"INACTIVO";
             case 4:

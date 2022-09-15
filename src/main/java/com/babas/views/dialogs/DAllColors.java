@@ -11,8 +11,6 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import java.awt.event.*;
 
 public class DAllColors extends JDialog{
@@ -54,7 +52,7 @@ public class DAllColors extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnHecho);
-        actionListener= e -> UtilitiesTables.actualizarTabla(table);
+        actionListener= e -> model.fireTableDataChanged();
         Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadTable();
         pack();
