@@ -95,6 +95,7 @@ public class DPresentation extends JDialog{
         spinnerQuantity.setValue(presentation.getQuantity());
         if(update){
             ckDefault.setSelected(presentation.isDefault());
+            ckDefault.setEnabled(!presentation.isDefault());
         }
     }
 

@@ -111,6 +111,7 @@ public class DPrice extends JDialog{
     private void load(){
         spinnerPrice.setValue(price.getPrice());
         ckDefault.setSelected(price.isDefault());
+        ckDefault.setEnabled(!price.isDefault());
     }
     private void onHecho(){
         if(update){
