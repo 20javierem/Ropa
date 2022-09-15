@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="442" height="387"/>
     </constraints>
-    <properties/>
+    <properties>
+      <preferredSize width="400" height="448"/>
+    </properties>
     <border type="none"/>
     <children>
       <grid id="fe03d" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -154,19 +156,7 @@
                     <properties/>
                     <border type="none"/>
                     <children>
-                      <component id="3f960" class="javax.swing.JButton" binding="btnRemoveBranch">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                            <minimum-size width="42" height="35"/>
-                            <preferred-size width="42" height="35"/>
-                            <maximum-size width="42" height="35"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <icon value="com/babas/icons/x32/flechaLeft.png"/>
-                        </properties>
-                      </component>
-                      <component id="191d8" class="javax.swing.JButton" binding="btnAddBranch">
+                      <component id="191d8" class="javax.swing.JButton" binding="btnAddUser">
                         <constraints>
                           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                             <minimum-size width="42" height="35"/>
@@ -176,6 +166,18 @@
                         </constraints>
                         <properties>
                           <icon value="com/babas/icons/x32/flechaRigth.png"/>
+                        </properties>
+                      </component>
+                      <component id="3f960" class="javax.swing.JButton" binding="btnRemoveUser">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                            <minimum-size width="42" height="35"/>
+                            <preferred-size width="42" height="35"/>
+                            <maximum-size width="42" height="35"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <icon value="com/babas/icons/x32/flechaLeft.png"/>
                         </properties>
                       </component>
                     </children>

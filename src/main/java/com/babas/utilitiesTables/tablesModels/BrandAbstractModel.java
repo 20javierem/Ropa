@@ -35,10 +35,7 @@ public class BrandAbstractModel extends AbstractTableModel {
     }
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if (typeColumns[columnIndex].equals(JButton.class)){
-            return true;
-        }
-        return false;
+        return typeColumns[columnIndex].equals(JButton.class);
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {

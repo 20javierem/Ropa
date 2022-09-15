@@ -58,6 +58,8 @@ public class FPrincipal extends JFrame{
     private MenuInventory menuInventory;
     private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
+    public static Vector<Branch> branchs;
+    public static Vector<User> users;
     public static Vector<Product> products;
     public static Vector<Category> categories;
     public static Vector<Color> colors;
@@ -183,6 +185,8 @@ public class FPrincipal extends JFrame{
     }
 
     private void loadLists(){
+        users=Users.getActives();
+        branchs=Branchs.getActives();
         categories= Categorys.getActives();
         colors= Colors.getActives();
         sizes= Sizes.getActives();

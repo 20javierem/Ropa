@@ -11,6 +11,8 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import java.awt.event.*;
 
 public class DAllColors extends JDialog{
@@ -59,6 +61,7 @@ public class DAllColors extends JDialog{
         setResizable(false);
         setLocationRelativeTo(getOwner());
     }
+
     private void loadTable(){
         model=new ColorAbstractModel(FPrincipal.colors);
         table.setModel(model);

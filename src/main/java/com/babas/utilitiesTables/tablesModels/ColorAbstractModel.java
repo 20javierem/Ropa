@@ -5,6 +5,8 @@ import com.babas.models.Product;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class ColorAbstractModel extends AbstractTableModel {
     public ColorAbstractModel(List<Color> list){
         this.list=list;
     }
-
+    
     @Override
     public String getColumnName(int col) {
         return nameColumns[col];
@@ -35,11 +37,9 @@ public class ColorAbstractModel extends AbstractTableModel {
     }
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        if (typeColumns[columnIndex].equals(JButton.class)){
-            return true;
-        }
-        return false;
+        return typeColumns[columnIndex].equals(JButton.class);
     }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Color color= list.get(rowIndex);

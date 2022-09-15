@@ -13,14 +13,15 @@ import java.util.List;
 public class Branch extends Babas {
     @Id
     private Long id;
-    @NotBlank
+    @NotBlank(message = "Nombre")
     private String name;
-    @NotBlank
     private String email;
-    @NotBlank
+    @NotBlank(message = "Dirección")
     private String direction;
+    @NotBlank(message = "Celular")
+    private String phone;
     @NotNull
-    private boolean active;
+    private boolean active=true;
     @ManyToMany
     private List<User> users =new ArrayList<>();
     @OneToMany(mappedBy = "source")
@@ -70,15 +71,25 @@ public class Branch extends Babas {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
-        this.updated = updated;
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

@@ -1,12 +1,15 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 @Entity(name = "user_Tbl")
 public class User extends Babas {
 
@@ -20,6 +23,9 @@ public class User extends Babas {
     private String phone;
     @NotBlank(message = "Nombre de usuario")
     private String userName;
+    @ManyToOne
+    @NotNull(message = "Género")
+    private Sex sex;
     @NotBlank(message = "Contraseña")
     private String userPassword;
     private Date created=new Date();
@@ -27,6 +33,8 @@ public class User extends Babas {
     private Date lastLogin;
     private boolean active=true;
     private Date birthday;
+    @ManyToMany
+    private List<Branch> branchs=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -80,16 +88,8 @@ public class User extends Babas {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Date getLastLogin() {
@@ -114,5 +114,23 @@ public class User extends Babas {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public List<Branch> getBranchs() {
+        return branchs;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

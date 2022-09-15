@@ -2,6 +2,7 @@ package com.babas.custom;
 
 import com.babas.App;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
+import com.formdev.flatlaf.icons.FlatRevealIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,15 +34,15 @@ public class CustomPasswordField extends FlatPasswordField {
                 super.mouseClicked(e);
                 if (getEchoChar() == '•') {
                     setEchoChar((char) 0);
-                    btnShowPasword.setIcon(new ImageIcon(App.class.getResource("icons/x16/mostrarContraseña.png")));
+                    btnShowPasword.setIcon(new FlatRevealIcon());
                 } else {
                     setEchoChar('•');
-                    btnShowPasword.setIcon(new ImageIcon(App.class.getResource("icons/x16/ocultarContraseña.png")));
+                    btnShowPasword.setIcon(new FlatRevealIcon());
                 }
             }
         });
-        btnShowPasword.setIcon(new ImageIcon(App.class.getResource("icons/x16/ocultarContraseña.png")));
+        btnShowPasword.setIcon(new FlatRevealIcon());
         btnShowPasword.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        putClientProperty("JTextField.trailingComponent",btnShowPasword);
+        setTrailingComponent(btnShowPasword);
     }
 }

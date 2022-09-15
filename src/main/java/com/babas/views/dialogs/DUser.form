@@ -27,7 +27,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="8988f" layout-manager="GridLayoutManager" row-count="9" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
+              <grid id="8988f" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
                 <margin top="10" left="10" bottom="10" right="10"/>
                 <constraints>
                   <tabbedpane title="Datos"/>
@@ -45,7 +45,7 @@
                   </component>
                   <vspacer id="e081f">
                     <constraints>
-                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
                   <component id="8ba93" class="javax.swing.JLabel">
@@ -56,7 +56,7 @@
                       <text value="Apellidos:"/>
                     </properties>
                   </component>
-                  <component id="2b77f" class="javax.swing.JTextField" binding="txtName">
+                  <component id="2b77f" class="javax.swing.JTextField" binding="txtFirstName">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -151,13 +151,29 @@
                       <text value="Nro. Celular:"/>
                     </properties>
                   </component>
-                  <component id="96c2" class="javax.swing.JTextField" binding="txtCelular">
+                  <component id="96c2" class="javax.swing.JTextField" binding="txtPhone">
                     <constraints>
                       <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                     <properties/>
+                  </component>
+                  <component id="ed221" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Activo:"/>
+                    </properties>
+                  </component>
+                  <component id="c8db5" class="javax.swing.JCheckBox" binding="ckActive">
+                    <constraints>
+                      <grid row="8" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
                   </component>
                 </children>
               </grid>
@@ -176,7 +192,7 @@
                     <properties/>
                     <border type="none" title="Sucursales" title-justification="2"/>
                     <children>
-                      <component id="98a3f" class="javax.swing.JTable" binding="tableBranchs">
+                      <component id="1ce28" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tableBranchs">
                         <constraints/>
                         <properties/>
                       </component>
@@ -189,7 +205,7 @@
                     <properties/>
                     <border type="none" title="Sucursales del usuario" title-justification="2"/>
                     <children>
-                      <component id="5ceff" class="javax.swing.JTable" binding="tableBranchsUser">
+                      <component id="7e63d" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tableBranchsUser">
                         <constraints/>
                         <properties/>
                       </component>
@@ -212,7 +228,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <icon value="com/babas/Icons/x32/flechaLeft.png"/>
+                          <icon value="com/babas/icons/x32/flechaLeft.png"/>
                         </properties>
                       </component>
                       <component id="e0104" class="javax.swing.JButton" binding="btnAddBranch">
@@ -224,7 +240,7 @@
                           </grid>
                         </constraints>
                         <properties>
-                          <icon value="com/babas/Icons/x32/flechaRigth.png"/>
+                          <icon value="com/babas/icons/x32/flechaRigth.png"/>
                         </properties>
                       </component>
                     </children>
