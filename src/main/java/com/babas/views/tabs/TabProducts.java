@@ -2,6 +2,7 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.Product;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSize;
@@ -11,6 +12,7 @@ import com.babas.views.dialogs.*;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +29,7 @@ public class TabProducts {
     private JButton btnColors;
     private JButton btnNewProduct;
     private JButton btnAllSexs;
+    private JButton btnBrands;
     private ProductAbstractModel model;
 
     public TabProducts(){
@@ -67,6 +70,16 @@ public class TabProducts {
                 loadSexs();
             }
         });
+        btnBrands.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadBrands();
+            }
+        });
+    }
+    private void loadBrands(){
+        DAllBrands dAllBrands=new DAllBrands();
+        dAllBrands.setVisible(true);
     }
     private void loadSexs(){
         DAllSexs dAllSexs=new DAllSexs();
@@ -90,6 +103,7 @@ public class TabProducts {
     }
     private void init(){
         tabPane.setTitle("Productos");
+        loadIcons();
         getTabPane().getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -97,6 +111,9 @@ public class TabProducts {
             }
         });
         loadTable();
+    }
+    private void loadIcons(){
+        flatTextField.setLeadingIcon(new FlatSearchIcon());
     }
     private void loadTable(){
         model=new ProductAbstractModel(FPrincipal.products);

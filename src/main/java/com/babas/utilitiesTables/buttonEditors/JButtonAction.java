@@ -1,6 +1,8 @@
 package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.App;
+import com.formdev.flatlaf.icons.FlatClearIcon;
+import com.formdev.flatlaf.icons.FlatTabbedPaneCloseIcon;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class JButtonAction extends JButton {
         setHorizontalTextPosition(2);
         initialize();
     }
+
     public JButtonAction(String icon) {
         setIcon(new ImageIcon(App.class.getResource("icons/"+icon)));
         initialize();

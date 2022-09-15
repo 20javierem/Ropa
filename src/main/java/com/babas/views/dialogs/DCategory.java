@@ -78,6 +78,8 @@ public class DCategory extends JDialog{
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Categoría registrado");
             }else{
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Categoría actualizado");
                 onHecho();
             }

@@ -75,9 +75,11 @@ public class DSize extends JDialog{
                 Utilities.getTabbedPane().updateTab();
                 size=new Size();
                 clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla registrado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla registrada");
             }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla actualizado");
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla actualizada");
                 onHecho();
             }
 

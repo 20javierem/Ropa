@@ -99,7 +99,7 @@ public class DSettings extends JDialog{
 
     private void save(){
         onDispose();
-        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_RIGHT,"ÉXITO","Cambios guardados");
+        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Cambios guardados");
     }
 
     private void onDispose(){

@@ -3,6 +3,7 @@ package com.babas.views.dialogs;
 import com.babas.models.Category;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorBrand;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorCategory;
 import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
 import com.babas.utilitiesTables.tablesModels.BrandAbstractModel;
@@ -65,8 +66,8 @@ public class DAllBrands extends JDialog{
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ColorCellRendered.setCellRenderer(table);
-        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorCategory(false));
-        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorCategory(true));
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorBrand(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorBrand(true));
     }
     private void loadNew(){
         DCategory dCategory=new DCategory(new Category());

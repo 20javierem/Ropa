@@ -77,6 +77,8 @@ public class DSex extends JDialog{
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Género registrado");
             }else{
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Género actualizado");
                 onHecho();
             }

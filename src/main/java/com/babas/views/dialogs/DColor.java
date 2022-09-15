@@ -77,6 +77,8 @@ public class DColor extends JDialog{
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Color registrado");
             }else{
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Color actualizado");
                 onHecho();
             }

@@ -15,11 +15,7 @@ import java.util.Map;
 public class UtilitiesTables {
 
     public static void actualizarTabla(JTable tabla){
-        SwingUtilities.invokeLater(() -> {
-            if(SwingUtilities.windowForComponent(tabla).isActive()){
-                SwingUtilities.invokeLater(tabla::updateUI);
-            }
-        });
+        SwingUtilities.invokeLater(tabla::updateUI);
     }
 
     public static void headerNegrita(FlatTable table){
