@@ -1,11 +1,14 @@
 package com.babas.utilities;
 
+import com.moreno.Notify;
+import com.thoughtworks.qdox.model.expression.Not;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.service.spi.ServiceException;
 
 
 public class Babas {
@@ -19,9 +22,14 @@ public class Babas {
     }
     private static void buildSessionFactory() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
-        sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        session = sessionFactory.openSession();
-        builder = session.getCriteriaBuilder();
+        try {
+            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+            session = sessionFactory.openSession();
+            builder = session.getCriteriaBuilder();
+        }catch (ServiceException e){
+            System.out.println("error de conexion");
+        }
+
     }
 
     public void refresh(){

@@ -19,6 +19,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 
 public class DUser extends JDialog{
@@ -138,7 +139,12 @@ public class DUser extends JDialog{
         txtFirstName.setText(user.getFirstName());
         txtLastName.setText(user.getLastName());
         txtPhone.setText(user.getPhone());
+        jdateBirthday.setDate(user.getBirthday());
+        txtNameUser.setText(user.getUserName());
+        pswPasword1.setText(user.getUserPassword());
+        pswPasword2.setText(user.getUserPassword());
         cbbSex.setSelectedItem(user.getSex());
+        ckActive.setSelected(user.isStaff());
         modelBranchsUsers=new BranchAbstractModel(user.getBranchs());
         tableBranchsUser.setModel(modelBranchsUsers);
         BranchCellRendered.setCellRenderer(tableBranchsUser);
@@ -162,7 +168,12 @@ public class DUser extends JDialog{
         user.setUserName(txtNameUser.getText().trim());
         user.setBirthday(jdateBirthday.getDate());
         user.setSex((Sex) cbbSex.getSelectedItem());
-        user.setUserPassword(new String(pswPasword1.getPassword()));
+        user.setStaff(ckActive.isSelected());
+        if(Arrays.equals(pswPasword2.getPassword(), pswPasword1.getPassword())){
+            user.setUserPassword(new String(pswPasword1.getPassword()));
+        }else{
+            user.setUserPassword(null);
+        }
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(user);
         if(constraintViolationSet.isEmpty()){
             user.save();

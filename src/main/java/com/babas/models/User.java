@@ -1,6 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -32,6 +33,8 @@ public class User extends Babas {
     private Date updated;
     private Date lastLogin;
     private boolean active=true;
+    private boolean staff=true;
+
     private Date birthday;
     @ManyToMany
     private List<Branch> branchs=new ArrayList<>();
@@ -79,11 +82,11 @@ public class User extends Babas {
     }
 
     public String getUserPassword() {
-        return userPassword;
+        return Utilities.desencriptar(userPassword);
     }
 
     public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword;
+        this.userPassword = Utilities.encriptar(userPassword);
     }
 
     public Date getCreated() {
@@ -133,6 +136,14 @@ public class User extends Babas {
 
     public List<Sale> getSales() {
         return sales;
+    }
+
+    public boolean isStaff() {
+        return staff;
+    }
+
+    public void setStaff(boolean staff) {
+        this.staff = staff;
     }
 
     @Override

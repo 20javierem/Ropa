@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.babas.views.menus.MenuSales">
-  <grid id="27dc6" binding="contentPane" custom-create="true" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+  <grid id="27dc6" binding="contentPane" custom-create="true" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
     <margin top="10" left="5" bottom="5" right="5"/>
     <constraints>
       <xy x="20" y="20" width="140" height="400"/>
@@ -14,7 +14,7 @@
     <children>
       <vspacer id="56dff">
         <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
       <component id="9ed1d" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnNewSale">
@@ -27,10 +27,18 @@
       </component>
       <component id="3a48" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnRecordSales">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="&lt;html&gt;&lt;center&gt;Historial de ventas&lt;center&gt;&lt;/html&gt;"/>
+        </properties>
+      </component>
+      <component id="b1d31" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnCatalogue">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="&lt;html&gt;&lt;center&gt;Ver catálogo&lt;center&gt;&lt;/html&gt;"/>
         </properties>
       </component>
     </children>

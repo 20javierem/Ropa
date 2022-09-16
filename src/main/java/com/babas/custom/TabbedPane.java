@@ -1,6 +1,10 @@
 package com.babas.custom;
 import com.babas.utilities.Utilities;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane;
+import com.formdev.flatlaf.icons.FlatRevealIcon;
+import com.formdev.flatlaf.icons.FlatSearchWithHistoryIcon;
+import com.formdev.flatlaf.ui.FlatTitlePaneIcon;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

@@ -137,6 +137,9 @@
       <item class="com.formdev.flatlaf.extras.components.FlatSpinner" icon="/com/intellij/uiDesigner/icons/spinner.png" removable="true" auto-create-binding="true" can-attach-label="true">
         <default-constraints vsize-policy="3" hsize-policy="6" anchor="0" fill="1" />
       </item>
+      <item class="com.formdev.flatlaf.extras.components.FlatTextArea" icon="/com/intellij/uiDesigner/icons/textArea.png" removable="true" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
     </group>
   </component>
 </project>

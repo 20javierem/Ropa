@@ -3,6 +3,7 @@ package com.babas.views.menus;
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
 import com.babas.utilities.Utilities;
+import com.babas.views.tabs.TabCatalogue;
 import com.babas.views.tabs.TabNewSale;
 import com.babas.views.tabs.TabRecordSales;
 import com.formdev.flatlaf.FlatLaf;
@@ -16,9 +17,11 @@ public class MenuSales {
     private JPanel contentPane;
     private FlatToggleButton btnNewSale;
     private FlatToggleButton btnRecordSales;
+    private FlatToggleButton btnCatalogue;
     private TabbedPane tabbedPane;
     private TabNewSale tabNewSale;
     private TabRecordSales tabRecordSales;
+    private TabCatalogue tabCatalogue;
 
     public MenuSales(TabbedPane tabbedPane){
         this.tabbedPane=tabbedPane;
@@ -34,10 +37,32 @@ public class MenuSales {
                 loadRecordSales();
             }
         });
+        btnCatalogue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadCatalogue();
+            }
+        });
+    }
+
+    public void loadCatalogue(){
+        Utilities.despintarButton(btnRecordSales);
+        Utilities.despintarButton(btnNewSale);
+        Utilities.buttonSelected(btnCatalogue);
+        if (tabCatalogue == null) {
+            tabCatalogue = new TabCatalogue();
+        }
+        if (tabbedPane.indexOfTab(tabCatalogue.getTabPane().getTitle())==-1) {
+            tabCatalogue = new TabCatalogue();
+            tabCatalogue.getTabPane().setOption(btnCatalogue);
+            tabbedPane.addTab(tabCatalogue.getTabPane().getTitle(), tabCatalogue.getTabPane().getIcon(), tabCatalogue.getTabPane());
+        }
+        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabCatalogue.getTabPane().getTitle()));
     }
 
     public void loadNewSale(){
         Utilities.despintarButton(btnRecordSales);
+        Utilities.despintarButton(btnCatalogue);
         Utilities.buttonSelected(btnNewSale);
         if (tabNewSale == null) {
             tabNewSale = new TabNewSale();
@@ -51,6 +76,7 @@ public class MenuSales {
     }
     public void loadRecordSales(){
         Utilities.despintarButton(btnNewSale);
+        Utilities.despintarButton(btnCatalogue);
         Utilities.buttonSelected(btnRecordSales);
         if (tabRecordSales == null) {
             tabRecordSales = new TabRecordSales();
@@ -64,17 +90,10 @@ public class MenuSales {
     }
     public JPanel getContentPane() {
         contentPane.updateUI();
+        btnCatalogue.updateUI();
         btnRecordSales.updateUI();
         btnNewSale.updateUI();
         return contentPane;
-    }
-
-    public JToggleButton getBtnNewSale() {
-        return btnNewSale;
-    }
-
-    public JToggleButton getBtnRecordSales() {
-        return btnRecordSales;
     }
 
     private void createUIComponents() {

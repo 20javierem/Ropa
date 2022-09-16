@@ -5,6 +5,8 @@ import com.babas.models.Branch;
 import com.babas.models.User;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorUser;
 import com.babas.utilitiesTables.tablesCellRendered.BranchCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
@@ -57,6 +59,8 @@ public class TabUsers {
         table.setModel(model);
         UserCellRendered.setCellRenderer(table);
         UtilitiesTables.headerNegrita(table);
+        table.getColumnModel().getColumn(model.getColumnCount() -1).setCellEditor(new JButtonEditorUser(false));
+        table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorUser(true));
     }
 
     public TabPane getTabPane() {

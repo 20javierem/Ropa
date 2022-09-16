@@ -12,10 +12,7 @@ import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
 import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DSettings;
-import com.babas.views.menus.MenuAlmacen;
-import com.babas.views.menus.MenuInventory;
-import com.babas.views.menus.MenuManage;
-import com.babas.views.menus.MenuSales;
+import com.babas.views.menus.*;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 
 import javax.swing.*;
@@ -24,7 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.List;
 import java.util.Vector;
 
 public class FPrincipal extends JFrame{
@@ -44,7 +40,7 @@ public class FPrincipal extends JFrame{
     private FlatToggleButton btnSales;
     private JButton btnExit;
     private FlatToggleButton btnAlmacen;
-    private FlatToggleButton btnGestionar;
+    private FlatToggleButton btnManagement;
     private FlatToggleButton btnAjustes;
     private FlatToggleButton btnAdministrador;
     private JPanel panelMenus;
@@ -53,11 +49,13 @@ public class FPrincipal extends JFrame{
     private JPanel paneNotify;
     private JLabel lblNotify;
     private JPanel cPane;
+    private FlatToggleButton btnTraslades;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuInventory menuInventory;
     private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
+    private MenuTraslade menuTraslade;
     public static Vector<Branch> branchs;
     public static Vector<User> users;
     public static Vector<Product> products;
@@ -112,10 +110,16 @@ public class FPrincipal extends JFrame{
                 loadMenuAlmacen();
             }
         });
-        btnGestionar.addActionListener(new ActionListener() {
+        btnManagement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadMenuManage();
+            }
+        });
+        btnTraslades.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadMenuTransfer();
             }
         });
     }
@@ -164,6 +168,9 @@ public class FPrincipal extends JFrame{
     private void loadMenuManage() {
         splitPane.setRightComponent(menuManage.getContentPane());
     }
+    private void loadMenuTransfer() {
+        splitPane.setRightComponent(menuTraslade.getContentPane());
+    }
     private void initComponents(){
         setContentPane(contentPane);
         setTitle("Software-Tienda");
@@ -178,6 +185,7 @@ public class FPrincipal extends JFrame{
         menuInventory=new MenuInventory(tabbedPane);
         menuAlmacen=new MenuAlmacen(tabbedPane);
         menuManage=new MenuManage(tabbedPane);
+        menuTraslade=new MenuTraslade(tabbedPane);
         setExtendedState(MAXIMIZED_BOTH);
         loadMenuItems();
         loadMenuSales();
@@ -200,12 +208,13 @@ public class FPrincipal extends JFrame{
         btnInventary.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSales.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAlmacen.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnGestionar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnManagement.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAdministrador.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewSale.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNuevoInventario.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnHistorialTransfers.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnHistorialVentas.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnTraslades.setCursor(new Cursor(Cursor.HAND_CURSOR));
         paneNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
@@ -219,8 +228,9 @@ public class FPrincipal extends JFrame{
         btnSales=new CToggleButton();
         btnInventary=new CToggleButton();
         btnAlmacen=new CToggleButton();
-        btnGestionar=new CToggleButton();
+        btnManagement =new CToggleButton();
         btnAjustes=new CToggleButton();
         btnAdministrador=new CToggleButton();
+        btnTraslades=new CToggleButton();
     }
 }

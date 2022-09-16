@@ -4,7 +4,6 @@ import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabProducts;
-import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 
 import javax.swing.*;
