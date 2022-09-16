@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
 @Entity(name = "detailSale_tbl")
@@ -20,9 +21,10 @@ public class DetailSale extends Babas {
     @ManyToOne
     @NotNull(message = "Producto")
     private Presentation presentation;
-    private Integer quantity=0;
+    @Min(value = 1,message = "Cantidad")
+    private Integer quantity;
     private Double subtotal=0.0;
-    private Double priceUnity=0.0;
+    private Double priceUnity;
 
     public Long getId() {
         return id;

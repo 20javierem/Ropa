@@ -50,12 +50,14 @@ public class FPrincipal extends JFrame{
     private JLabel lblNotify;
     private JPanel cPane;
     private FlatToggleButton btnTraslades;
+    private FlatToggleButton btnReserves;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuInventory menuInventory;
     private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
+    private MenuReserves menuReserves;
     public static Vector<Branch> branchs;
     public static Vector<User> users;
     public static Vector<Product> products;
@@ -122,6 +124,12 @@ public class FPrincipal extends JFrame{
                 loadMenuTransfer();
             }
         });
+        btnReserves.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadMenuReserves();
+            }
+        });
     }
     private void exit(){
         FLogin fLogin =new FLogin();
@@ -171,6 +179,9 @@ public class FPrincipal extends JFrame{
     private void loadMenuTransfer() {
         splitPane.setRightComponent(menuTraslade.getContentPane());
     }
+    private void loadMenuReserves(){
+        splitPane.setRightComponent(menuReserves.getContentPane());
+    }
     private void initComponents(){
         setContentPane(contentPane);
         setTitle("Software-Tienda");
@@ -186,6 +197,7 @@ public class FPrincipal extends JFrame{
         menuAlmacen=new MenuAlmacen(tabbedPane);
         menuManage=new MenuManage(tabbedPane);
         menuTraslade=new MenuTraslade(tabbedPane);
+        menuReserves=new MenuReserves(tabbedPane);
         setExtendedState(MAXIMIZED_BOTH);
         loadMenuItems();
         loadMenuSales();
@@ -232,5 +244,6 @@ public class FPrincipal extends JFrame{
         btnAjustes=new CToggleButton();
         btnAdministrador=new CToggleButton();
         btnTraslades=new CToggleButton();
+        btnReserves=new CToggleButton();
     }
 }
