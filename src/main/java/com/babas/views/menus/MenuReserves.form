@@ -7,6 +7,8 @@
     </constraints>
     <properties>
       <maximumSize width="140" height="2147483647"/>
+      <minimumSize width="140" height="104"/>
+      <preferredSize width="140" height="104"/>
     </properties>
     <border type="none"/>
     <children>

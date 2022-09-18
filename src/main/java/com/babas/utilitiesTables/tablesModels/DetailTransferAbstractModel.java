@@ -1,18 +1,19 @@
 package com.babas.utilitiesTables.tablesModels;
 
-import com.babas.models.Product;
+import com.babas.models.Color;
+import com.babas.models.DetailTransfer;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-public class ProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"CÓDIGO","NOMBRE","PRECIO","COLOR","GÉNERO","TALLA","TOTAL-STOCK","","",""};
-    private final Class[] typeColumns={Long.class,String.class,Double.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
-    private final List<Product> list;
+public class DetailTransferAbstractModel extends AbstractTableModel {
+    private final String[] nameColumns={"CÓDIGO","PRODUCTO","COLOR","TALLA","CANTIDAD","",""};
+    private final Class[] typeColumns={Long.class,String.class,String.class,String.class,Integer.class, JButton.class,JButton.class};
+    private final List<DetailTransfer> list;
 
-    public ProductAbstractModel(List<Product> list){
+    public DetailTransferAbstractModel(List<DetailTransfer> list){
         this.list=list;
     }
 
@@ -36,34 +37,29 @@ public class ProductAbstractModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return typeColumns[columnIndex].equals(JButton.class);
     }
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Product product= list.get(rowIndex);
+        DetailTransfer detailTransfer= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return product.getBarcode();
+                return detailTransfer.getProduct().getBarcode();
             case 1:
-                return product.getStyle().getName();
+                return detailTransfer.getProduct().getStyle().getName();
             case 2:
-                return product.getStyle().getPresentationDefault().getPriceDefault().getPrice();
+                return detailTransfer.getProduct().getColor().getName();
             case 3:
-                return product.getColor().getName();
+                return detailTransfer.getProduct().getSize().getName();
             case 4:
-                return product.getSex().getName();
+                return detailTransfer.getQuantity();
             case 5:
-                return product.getSize().getName();
-            case 6:
-                return product.getStockTotal();
-            case 7:
-                return new JButtonAction("x16/mostrarContraseña.png");
-            case 8:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");
         }
     }
 
-    public List<Product> getList(){
+    public List<DetailTransfer> getList(){
         return list;
     }
 }

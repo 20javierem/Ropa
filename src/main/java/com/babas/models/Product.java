@@ -31,6 +31,7 @@ public class Product extends Babas {
     private Date updated;
     private Integer stockTotal=0;
     private boolean active=true;
+    private Long barcode;
 
     public Long getId() {
         return id;
@@ -93,14 +94,17 @@ public class Product extends Babas {
         return images;
     }
 
-    private void calculateStockTotal(){
-
+    public Long getBarcode() {
+        return barcode;
     }
 
     @Override
     public void save() {
         updated=new Date();
-        calculateStockTotal();
         super.save();
+        if(barcode==null){
+            barcode=1000+getId();
+            super.save();
+        }
     }
 }

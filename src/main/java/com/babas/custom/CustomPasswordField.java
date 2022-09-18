@@ -45,4 +45,12 @@ public class CustomPasswordField extends FlatPasswordField {
         btnShowPasword.setCursor(new Cursor(Cursor.HAND_CURSOR));
         setTrailingComponent(btnShowPasword);
     }
+
+    @Override
+    public void setText(String t) {
+        super.setText(t);
+        if(getPassword().length>0){
+            btnShowPasword.setVisible(true);
+        }
+    }
 }

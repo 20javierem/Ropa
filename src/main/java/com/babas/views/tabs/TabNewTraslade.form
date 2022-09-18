@@ -54,11 +54,9 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="49d9" class="javax.swing.JTable" binding="tabla">
+                  <component id="2e7bc" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tabla">
                     <constraints/>
-                    <properties>
-                      <rowHeight value="25"/>
-                    </properties>
+                    <properties/>
                   </component>
                 </children>
               </scrollpane>
@@ -86,7 +84,7 @@
                     </constraints>
                     <properties>
                       <font style="1"/>
-                      <text value="Tipo de transferencia"/>
+                      <text value="Tipo de transferencia:"/>
                     </properties>
                   </component>
                   <hspacer id="eedf7">
@@ -94,7 +92,34 @@
                       <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </hspacer>
-                  <grid id="a80f4" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="-1">
+                  <grid id="a80f4" binding="paneEntry" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints>
+                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="8cd9e" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font style="1"/>
+                          <text value="Destino:"/>
+                        </properties>
+                      </component>
+                      <component id="33dd5" class="javax.swing.JLabel" binding="lblBranch">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Destino"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                  <grid id="e2708" binding="paneTraslade" layout-manager="GridLayoutManager" row-count="1" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="-1">
                     <margin top="0" left="0" bottom="0" right="0"/>
                     <constraints>
                       <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -102,6 +127,39 @@
                     <properties/>
                     <border type="none"/>
                     <children>
+                      <component id="d3013" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <font style="1"/>
+                          <text value="Destino:"/>
+                        </properties>
+                      </component>
+                      <component id="79ba3" class="javax.swing.JLabel" binding="lblDestiny">
+                        <constraints>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Destino"/>
+                        </properties>
+                      </component>
+                      <component id="6b579" class="javax.swing.JSeparator">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <orientation value="1"/>
+                        </properties>
+                      </component>
+                      <component id="c72f9" class="javax.swing.JLabel" binding="lblSource">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Origen:"/>
+                        </properties>
+                      </component>
                       <component id="36da7" class="javax.swing.JLabel">
                         <constraints>
                           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -111,65 +169,22 @@
                           <text value="Origen:"/>
                         </properties>
                       </component>
-                      <component id="affaf" class="javax.swing.JComboBox" binding="cbbBranchSource">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <model>
-                            <item value="--SELECCIONE--"/>
-                          </model>
-                        </properties>
-                      </component>
                     </children>
                   </grid>
-                  <grid id="e2708" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
+                  <component id="7e39e" class="javax.swing.JButton" binding="btnEdit">
                     <constraints>
-                      <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="d3013" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <font style="1"/>
-                          <text value="Destino:"/>
-                        </properties>
-                      </component>
-                      <component id="d72f4" class="javax.swing.JComboBox" binding="cbbBranchDestiny">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <model>
-                            <item value="--SELECCIONE--"/>
-                          </model>
-                        </properties>
-                      </component>
-                    </children>
-                  </grid>
-                  <component id="6b579" class="javax.swing.JSeparator">
-                    <constraints>
-                      <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <orientation value="1"/>
+                      <text value="Editar"/>
                     </properties>
                   </component>
-                  <component id="7f802" class="javax.swing.JComboBox" binding="cbbTipoTransfer">
+                  <component id="92d59" class="javax.swing.JLabel" binding="lblTypeTraslade">
                     <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="2" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <model>
-                        <item value="--SELECCIONE--"/>
-                        <item value="RECEPCIÓN"/>
-                        <item value="ENVÍO"/>
-                      </model>
+                      <text value="Tipo de transferencia"/>
                     </properties>
                   </component>
                 </children>
@@ -202,7 +217,7 @@
                 </constraints>
                 <properties>
                   <font size="16"/>
-                  <text value="Descripción"/>
+                  <text value="Descripción:"/>
                 </properties>
               </component>
               <scrollpane id="41b0f">

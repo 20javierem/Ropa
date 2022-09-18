@@ -1,5 +1,6 @@
 package com.babas.utilities;
 
+import com.babas.models.User;
 import com.moreno.Notify;
 import com.thoughtworks.qdox.model.expression.Not;
 import jakarta.persistence.LockModeType;
@@ -16,10 +17,13 @@ public class Babas {
     protected static CriteriaBuilder builder;
     public static boolean state;
     private static SessionFactory sessionFactory;
+    public static User user;
+
     public static void initialize() {
         buildSessionFactory();
         state=true;
     }
+
     private static void buildSessionFactory() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
         try {

@@ -514,7 +514,11 @@ public class Utilities {
         return new SecretKeySpec(keyTmp.getEncoded(), "AES");
     }
     public static String encriptar(String contraseña){
-        return encrypt(contraseña,getSecretKey());
+        if(contraseña!=null){
+            return encrypt(contraseña,getSecretKey());
+        }else{
+            return null;
+        }
     }
     public static String desencriptar(String contraseña){
         return decrypt(contraseña,getSecretKey());

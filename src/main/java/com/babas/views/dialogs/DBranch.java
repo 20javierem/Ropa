@@ -112,7 +112,6 @@ public class DBranch extends JDialog{
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
         }
-        loadTables();
         load();
         pack();
         setResizable(false);
@@ -134,6 +133,7 @@ public class DBranch extends JDialog{
         tableUserBranch.removeColumn(tableUserBranch.getColumn("SUCURSALES"));
         tableUserBranch.removeColumn(tableUserBranch.getColumn(""));
         tableUserBranch.removeColumn(tableUserBranch.getColumn(""));
+        loadTables();
         branch.getUsers().forEach(user -> modelUsers.getList().remove(user));
         modelUsers.fireTableDataChanged();
     }

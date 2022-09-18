@@ -2,7 +2,9 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.models.Transfer;
 import com.babas.utilities.Utilities;
+import com.babas.views.dialogs.DTraslade;
 import com.babas.views.tabs.TabBranchs;
 import com.babas.views.tabs.TabNewTraslade;
 import com.babas.views.tabs.TabRecordTransfers;
@@ -18,7 +20,6 @@ public class MenuTraslade {
     private FlatToggleButton btnRecordTraslades;
     private JPanel contentPane;
     private TabbedPane tabbedPane;
-    private TabNewTraslade tabNewTraslade;
     private TabRecordTransfers tabRecordTransfers;
 
     public MenuTraslade(TabbedPane tabbedPane){
@@ -37,17 +38,8 @@ public class MenuTraslade {
         });
     }
     public void loadNewTraslade(){
-        Utilities.despintarButton(btnRecordTraslades);
-        Utilities.buttonSelected(btnNewTraslade);
-        if (tabNewTraslade == null) {
-            tabNewTraslade = new TabNewTraslade();
-        }
-        if (tabbedPane.indexOfTab(tabNewTraslade.getTabPane().getTitle())==-1) {
-            tabNewTraslade = new TabNewTraslade();
-            tabNewTraslade.getTabPane().setOption(btnNewTraslade);
-            tabbedPane.addTab(tabNewTraslade.getTabPane().getTitle(), tabNewTraslade.getTabPane().getIcon(), tabNewTraslade.getTabPane());
-        }
-        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabNewTraslade.getTabPane().getTitle()));
+        DTraslade dTraslade=new DTraslade(new Transfer(),false);
+        dTraslade.setVisible(true);
     }
 
     public void loadRecordTraslades(){

@@ -6,14 +6,14 @@ import java.awt.*;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
 
-public class ProductCellRendered extends DefaultTableCellRenderer {
+public class DetailTransferCellRendered extends DefaultTableCellRenderer {
 
-    public ProductCellRendered(){
+    public DetailTransferCellRendered(){
 
     }
 
     public static void setCellRenderer(JTable table){
-        ProductCellRendered cellRendered=new ProductCellRendered();
+        DetailTransferCellRendered cellRendered=new DetailTransferCellRendered();
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -35,7 +35,8 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
                 case "COLOR":
                 case "GÉNERO":
                 case "TALLA":
-                case "TOTAL-STOCK":
+                case "T-STOCK":
+                case "CANTIDAD":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);

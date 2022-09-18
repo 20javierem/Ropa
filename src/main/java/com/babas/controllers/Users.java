@@ -29,4 +29,10 @@ public class Users extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
+    public static User getByUserName(String userName){
+        criteria = builder.createQuery(User.class);
+        root=criteria.from(User.class);
+        criteria.select(root).where(builder.equal(root.get("userName"), userName));
+        return session.createQuery(criteria).uniqueResult();
+    }
 }
