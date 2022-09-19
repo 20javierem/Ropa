@@ -11,6 +11,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
 import com.babas.views.frames.FLogin;
+import com.babas.views.frames.FPrincipal;
 import com.babas.views.frames.PruebaList;
 
 import java.util.Date;
@@ -27,8 +28,6 @@ public class App
         Utilities.propiedades=new Propiedades();
         Babas.initialize();
         Utilities.loadTheme();
-//        PruebaList pruebaList=new PruebaList();
-//        pruebaList.setVisible(true);
         FLogin fLogin=new FLogin();
         fLogin.setVisible(true);
     }

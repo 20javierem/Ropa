@@ -71,6 +71,7 @@ public class DSize extends JDialog{
             size.save();
             if(!update){
                 FPrincipal.sizes.add(size);
+                FPrincipal.sizesWithAll.add(size);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 size=new Size();

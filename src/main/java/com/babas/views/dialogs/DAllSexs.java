@@ -1,6 +1,7 @@
 package com.babas.views.dialogs;
 
 import com.babas.models.Color;
+import com.babas.models.Sex;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorColor;
@@ -62,6 +63,7 @@ public class DAllSexs extends JDialog{
         setResizable(false);
         setLocationRelativeTo(getOwner());
     }
+
     private void loadTable(){
         model=new SexAbstractModel(FPrincipal.sexs);
         table.setModel(model);
@@ -71,8 +73,8 @@ public class DAllSexs extends JDialog{
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorSex(true));
     }
     private void loadNew(){
-        DColor dColor=new DColor(new Color());
-        dColor.setVisible(true);
+        DSex dSex=new DSex(new Sex());
+        dSex.setVisible(true);
     }
     private void onHecho(){
         Utilities.getActionsOfDialog().removeActionListener(actionListener);

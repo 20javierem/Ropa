@@ -3,6 +3,7 @@ package com.babas.views.tabs;
 import com.babas.App;
 import com.babas.custom.TabPane;
 import com.babas.models.Sale;
+import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import javax.swing.*;
@@ -25,10 +26,10 @@ public class TabNewSale {
     private Sale sale;
 
     public TabNewSale(){
-        initComponents();
+        init();
     }
 
-    private void initComponents(){
+    private void init(){
         tabPane.setTitle("Nueva venta");
         ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("Images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
         lblLogo.setIcon(logo);

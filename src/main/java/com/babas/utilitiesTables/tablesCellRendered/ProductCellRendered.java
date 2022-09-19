@@ -3,17 +3,19 @@ package com.babas.utilitiesTables.tablesCellRendered;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
 
 public class ProductCellRendered extends DefaultTableCellRenderer {
+    private Map<Integer, String> listaFiltros;
 
-    public ProductCellRendered(){
-
+    public ProductCellRendered(Map<Integer, String> listaFiltros){
+        this.listaFiltros=listaFiltros;
     }
 
-    public static void setCellRenderer(JTable table){
-        ProductCellRendered cellRendered=new ProductCellRendered();
+    public static void setCellRenderer(JTable table,Map<Integer,String> listaFiltros){
+        ProductCellRendered cellRendered=new ProductCellRendered(listaFiltros);
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -30,16 +32,31 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,component);
+            JTextField componente=buscarTexto(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
-                case "COLOR":
                 case "GÉNERO":
-                case "TALLA":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
+                    break;
                 case "TOTAL-STOCK":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    break;
+                case "COLOR":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(75);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(75);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(75);
+                    break;
+                case "TALLA":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(60);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(60);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(60);
                     break;
                 case "PRECIO":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -49,9 +66,9 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
                     break;
                 case "CÓDIGO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(70);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(70);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(70);
                     break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.LEFT);

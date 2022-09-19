@@ -7,11 +7,15 @@ import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorBrand;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailTransfer;
 import com.babas.utilitiesTables.tablesCellRendered.DetailTransferCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailTransferAbstractModel;
+import com.babas.views.dialogs.DAddProductToTransfer;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextArea;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,8 +27,7 @@ import java.util.Vector;
 public class TabNewTraslade {
     private TabPane tabPane;
     private JButton btnAddProducts;
-    private FlatTable tabla;
-    private JLabel lblTotalPesos;
+    private FlatTable table;
     private JButton btnConfirm;
     private JLabel lblLogo;
     private FlatTextArea txtDescription;
@@ -56,8 +59,34 @@ public class TabNewTraslade {
                 filterBySource();
             }
         });
+        btnAddProducts.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadAddProducts();
+            }
+        });
     }
 
+    private void loadAddProducts(){
+        DAddProductToTransfer dAddProductToTransfer;
+        switch (cbbTypeTransfer.getSelectedIndex()){
+            case 0:
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Debe seleccionar el tipo de transferencia");
+                break;
+            case 1:
+                dAddProductToTransfer=new DAddProductToTransfer(transfer,null);
+                dAddProductToTransfer.setVisible(true);
+                break;
+            case 2:
+                if(cbbBranchSource.getSelectedIndex()!=-1){
+                    dAddProductToTransfer = new DAddProductToTransfer(transfer, (Branch) cbbBranchSource.getSelectedItem());
+                    dAddProductToTransfer.setVisible(true);
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Debe seleccionar el origen");
+                }
+                break;
+        }
+    }
     private void filterBySource(){
         if(olBranchSource==null){
             olBranchSource= (Branch) cbbBranchSource.getSelectedItem();
@@ -125,6 +154,7 @@ public class TabNewTraslade {
             load();
         }
         loadTable();
+        getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
     }
 
     private void loadCombos(){
@@ -153,9 +183,10 @@ public class TabNewTraslade {
 
     public void loadTable(){
         model=new DetailTransferAbstractModel(transfer.getDetailTransfers());
-        tabla.setModel(model);
-        DetailTransferCellRendered.setCellRenderer(tabla);
-        UtilitiesTables.headerNegrita(tabla);
+        table.setModel(model);
+        DetailTransferCellRendered.setCellRenderer(table);
+        UtilitiesTables.headerNegrita(table);
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorDetailTransfer());
     }
 
     public TabPane getTabPane(){

@@ -3,6 +3,10 @@ package com.babas.views.dialogs;
 import com.babas.custom.ImageSlide;
 import com.babas.models.Product;
 import com.babas.utilities.Utilities;
+import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
+import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
+import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -14,6 +18,9 @@ public class DImageProduct extends JDialog{
     private JButton btnPrevious;
     private ImageSlide imageSlide;
     private JLabel lblTextImage;
+    private JTabbedPane tabbedPane1;
+    private StockProductAbstractModel model;
+    private FlatTable table;
 
     public DImageProduct(Product product){
         super(Utilities.getJFrame(),product.getStyle().getName()+", "+product.getStyle().getBrand().getName()+", "+product.getSize().getName()+", "+product.getColor().getName(),true);
@@ -49,10 +56,17 @@ public class DImageProduct extends JDialog{
     private void init(){
         setContentPane(contentPane);
         loadImages();
+        loadTable();
         pack();
         setLocationRelativeTo(getOwner());
     }
-
+    private void loadTable(){
+        model=new StockProductAbstractModel(product.getStocks());
+        table.setModel(model);
+        StockCellRendered.setCellRenderer(table,null);
+        UtilitiesTables.headerNegrita(table);
+        table.removeColumn(table.getColumn("PRODUCTO"));
+    }
     private void loadImages(){
         product.getImages().forEach(img->{
             imageSlide.addImage(new ImageIcon(Utilities.getImage(img)));

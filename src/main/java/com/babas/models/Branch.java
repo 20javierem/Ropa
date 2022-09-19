@@ -31,6 +31,8 @@ public class Branch extends Babas {
     private List<Transfer> transfers_sources =new ArrayList<>();
     @OneToMany(mappedBy = "destiny")
     private List<Transfer> transfers_destinys =new ArrayList<>();
+    @OneToMany(mappedBy = "branch")
+    private List<Stock> stocks =new ArrayList<>();
     private Date created=new Date();
     private Date updated;
     @OneToMany(mappedBy = "branch")
@@ -101,6 +103,10 @@ public class Branch extends Babas {
 
     public List<Sale> getSales() {
         return sales;
+    }
+
+    public List<Stock> getStocks() {
+        return stocks;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

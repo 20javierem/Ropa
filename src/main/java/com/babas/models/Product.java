@@ -27,6 +27,8 @@ public class Product extends Babas {
     @CollectionTable(name="Images", joinColumns=@JoinColumn(name="product_id"))
     @Column(name="image")
     private List<String> images=new ArrayList<>();
+    @OneToMany(mappedBy = "product")
+    private List<Stock> stocks=new ArrayList<>();
     private Date created=new Date();
     private Date updated;
     private Integer stockTotal=0;
@@ -96,6 +98,10 @@ public class Product extends Babas {
 
     public Long getBarcode() {
         return barcode;
+    }
+
+    public List<Stock> getStocks() {
+        return stocks;
     }
 
     @Override

@@ -71,6 +71,7 @@ public class DSex extends JDialog{
             sex.save();
             if(!update){
                 FPrincipal.sexs.add(sex);
+                FPrincipal.sexsWithAll.add(sex);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 sex=new Sex();

@@ -9,8 +9,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class DetailTransferAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"CÓDIGO","PRODUCTO","COLOR","TALLA","CANTIDAD","",""};
-    private final Class[] typeColumns={Long.class,String.class,String.class,String.class,Integer.class, JButton.class,JButton.class};
+    private final String[] nameColumns={"CÓDIGO","PRODUCTO","COLOR","TALLA","CANTIDAD",""};
+    private final Class[] typeColumns={Long.class,String.class,String.class,String.class,Integer.class, JButton.class};
     private final List<DetailTransfer> list;
 
     public DetailTransferAbstractModel(List<DetailTransfer> list){
@@ -52,8 +52,6 @@ public class DetailTransferAbstractModel extends AbstractTableModel {
                 return detailTransfer.getProduct().getSize().getName();
             case 4:
                 return detailTransfer.getQuantity();
-            case 5:
-                return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");
         }
