@@ -58,6 +58,7 @@ public class FPrincipal extends JFrame{
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
+    public static Vector<Stock> stocks;
     public static Vector<Branch> branchs;
     public static Vector<Branch> branchesWithAll;
     public static Vector<User> users;
@@ -76,7 +77,7 @@ public class FPrincipal extends JFrame{
     public static Vector<Style> styles;
 
     public FPrincipal(){
-        initComponents();
+        init();
         btnSales.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -189,7 +190,8 @@ public class FPrincipal extends JFrame{
     private void loadMenuReserves(){
         splitPane.setRightComponent(menuReserves.getContentPane());
     }
-    private void initComponents(){
+
+    private void init(){
         setContentPane(contentPane);
         setTitle("Software-Tienda");
         Utilities.setJFrame(this);
@@ -213,6 +215,7 @@ public class FPrincipal extends JFrame{
 
     private void loadLists(){
         users=Users.getActives();
+        stocks=Stocks.getTodos();
         branchs=Branchs.getActives();
         branchesWithAll=new Vector<>(branchs);
         branchesWithAll.add(0,new Branch("TODAS"));
