@@ -55,7 +55,7 @@
                   <text value="Limpiar filtros"/>
                 </properties>
               </component>
-              <component id="3f78d" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+              <component id="3f78d" class="javax.swing.JComboBox" binding="cbbBrand">
                 <constraints>
                   <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -89,7 +89,7 @@
                   <text value="Categoría:"/>
                 </properties>
               </component>
-              <component id="1ecaf" class="javax.swing.JComboBox" default-binding="true">
+              <component id="1ecaf" class="javax.swing.JComboBox" binding="cbbSex">
                 <constraints>
                   <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -99,7 +99,7 @@
                   </model>
                 </properties>
               </component>
-              <component id="5718b" class="javax.swing.JComboBox" default-binding="true">
+              <component id="5718b" class="javax.swing.JComboBox" binding="cbbCategory">
                 <constraints>
                   <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -117,7 +117,7 @@
                   <text value="Talla:"/>
                 </properties>
               </component>
-              <component id="1e490" class="javax.swing.JComboBox" default-binding="true">
+              <component id="1e490" class="javax.swing.JComboBox" binding="cbbSize">
                 <constraints>
                   <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -135,7 +135,7 @@
                   <text value="Color:"/>
                 </properties>
               </component>
-              <component id="6c7dc" class="javax.swing.JComboBox" default-binding="true">
+              <component id="6c7dc" class="javax.swing.JComboBox" binding="cbbColor">
                 <constraints>
                   <grid row="0" column="12" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -163,7 +163,7 @@
                   <text value="Sucursal:"/>
                 </properties>
               </component>
-              <component id="47dd2" class="javax.swing.JComboBox" default-binding="true">
+              <component id="47dd2" class="javax.swing.JComboBox" binding="cbbBranch">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>

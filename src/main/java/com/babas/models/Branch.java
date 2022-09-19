@@ -36,6 +36,13 @@ public class Branch extends Babas {
     @OneToMany(mappedBy = "branch")
     private List<Sale> sales=new ArrayList<>();
 
+    public Branch(){
+
+    }
+
+    public Branch(String name){
+        this.name=name;
+    }
     public Long getId() {
         return id;
     }

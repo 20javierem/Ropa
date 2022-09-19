@@ -26,6 +26,14 @@ public class Sex extends Babas {
     @OneToMany(mappedBy = "sex")
     private List<Product> products=new ArrayList<>();
 
+    public Sex(){
+
+    }
+
+    public Sex(String name){
+        this.name=name;
+    }
+
     public Long getId() {
         return id;
     }

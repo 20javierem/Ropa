@@ -28,6 +28,14 @@ public class Size extends Babas {
     @OneToMany(mappedBy = "size")
     private List<Product> products=new ArrayList<>();
 
+    public Size(){
+
+    }
+
+    public Size(String name){
+        this.name=name;
+    }
+
     public Long getId() {
         return id;
     }

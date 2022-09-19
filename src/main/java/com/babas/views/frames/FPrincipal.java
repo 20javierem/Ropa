@@ -59,13 +59,20 @@ public class FPrincipal extends JFrame{
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
     public static Vector<Branch> branchs;
+    public static Vector<Branch> branchesWithAll;
     public static Vector<User> users;
+    public static Vector<User> usersWithAll;
     public static Vector<Product> products;
     public static Vector<Category> categories;
+    public static Vector<Category> categoriesWithAll;
     public static Vector<Color> colors;
+    public static Vector<Color> colorsWithAll;
     public static Vector<Brand> brands;
+    public static Vector<Brand> brandsWithAll;
     public static Vector<Size> sizes;
+    public static Vector<Size> sizesWithAll;
     public static Vector<Sex> sexs;
+    public static Vector<Sex> sexsWithAll;
     public static Vector<Style> styles;
 
     public FPrincipal(){
@@ -207,11 +214,23 @@ public class FPrincipal extends JFrame{
     private void loadLists(){
         users=Users.getActives();
         branchs=Branchs.getActives();
+        branchesWithAll=new Vector<>(branchs);
+        branchesWithAll.add(0,new Branch("TODAS"));
         categories= Categorys.getActives();
+        categoriesWithAll=new Vector<>(categories);
+        categoriesWithAll.add(0,new Category("TODAS"));
         colors= Colors.getActives();
+        colorsWithAll=new Vector<>(colors);
+        colorsWithAll.add(0,new Color("TODOS"));
         sizes= Sizes.getActives();
+        sizesWithAll=new Vector<>(sizes);
+        sizesWithAll.add(0,new Size("TODAS"));
         brands=Brands.getActives();
+        brandsWithAll=new Vector<>(brands);
+        brandsWithAll.add(0,new Brand("TODAS"));
         sexs= Sexs.getActives();
+        sexsWithAll=new Vector<>(sexs);
+        sexsWithAll.add(0,new Sex("TODOS"));
         products= Products.getActives();
         styles=Styles.getTodos();
     }

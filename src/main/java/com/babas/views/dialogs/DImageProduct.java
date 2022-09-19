@@ -14,10 +14,9 @@ public class DImageProduct extends JDialog{
     private JButton btnPrevious;
     private ImageSlide imageSlide;
     private JLabel lblTextImage;
-    private JLabel lblProduct;
 
     public DImageProduct(Product product){
-        super(Utilities.getJFrame(),"Imagenes",true);
+        super(Utilities.getJFrame(),product.getStyle().getName()+", "+product.getStyle().getBrand().getName()+", "+product.getSize().getName()+", "+product.getColor().getName(),true);
         this.product=product;
         init();
         btnPrevious.addActionListener(new ActionListener() {
@@ -55,7 +54,6 @@ public class DImageProduct extends JDialog{
     }
 
     private void loadImages(){
-        lblProduct.setText(product.getStyle().getName()+", Marca "+product.getStyle().getBrand().getName()+", Color "+product.getColor().getName());
         product.getImages().forEach(img->{
             imageSlide.addImage(new ImageIcon(Utilities.getImage(img)));
         });

@@ -26,6 +26,14 @@ public class Color extends Babas {
     @OneToMany(mappedBy = "color")
     private List<Product> products=new ArrayList<>();
 
+    public Color(){
+
+    }
+
+    public Color(String name){
+        this.name=name;
+    }
+
     public Long getId() {
         return id;
     }

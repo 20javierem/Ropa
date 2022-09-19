@@ -32,7 +32,7 @@ public class ImageSlide extends JComponent {
                 imageSplit = null;
             }
         };
-        animator = new Animator(2000, target);
+        animator = new Animator(1500, target);
         animator.setResolution(1);
         animator.setInterpolator(new Interpolator() {
             @Override

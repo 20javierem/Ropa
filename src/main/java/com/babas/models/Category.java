@@ -27,6 +27,13 @@ public class Category extends Babas {
     @OneToMany(mappedBy = "category")
     private List<Style> styles=new ArrayList<>();
 
+    public Category(){
+
+    }
+
+    public Category(String name){
+        this.name=name;
+    }
     public Long getId() {
         return id;
     }
