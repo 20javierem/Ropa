@@ -250,6 +250,7 @@ public class FPrincipal extends JFrame{
         btnHistorialVentas.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnTraslades.setCursor(new Cursor(Cursor.HAND_CURSOR));
         paneNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnReserves.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {
