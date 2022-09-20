@@ -100,6 +100,13 @@ public class DAddProductToTransfer extends JDialog{
                 addProduct();
             }
         });
+        ((JButton)txtSearchProduct.getComponent(0)).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtSearchProduct.setText(null);
+                filtrar();
+            }
+        });
     }
     private void addProduct(){
         DetailTransfer detailTransfer=new DetailTransfer();

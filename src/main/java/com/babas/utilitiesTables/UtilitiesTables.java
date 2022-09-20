@@ -31,7 +31,7 @@ public class UtilitiesTables {
         componente.setBackground(component.getBackground());
         componente.setForeground(component.getForeground());
         if(value instanceof Date){
-            componente.setText(Utilities.formatoFecha.format(value));
+            componente.setText(Utilities.formatoFechaHora.format(value));
         }else{
             if(value instanceof Double){
                 componente.setText(Utilities.moneda.format(value));
@@ -66,7 +66,7 @@ public class UtilitiesTables {
     public static JPanel buscarTexto2(Map<Integer, String> listaFiltros, Object value, int column, Component component) {
         DesingTxtTable desingTxtTable=new DesingTxtTable(component);
         if(value instanceof Date){
-            desingTxtTable.setString0(Utilities.formatoFecha.format(value));
+            desingTxtTable.setString0(Utilities.formatoFechaHora.format(value));
             desingTxtTable.setString1(null);
             desingTxtTable.setString2(null);
         }else{

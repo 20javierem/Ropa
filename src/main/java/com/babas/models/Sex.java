@@ -71,7 +71,7 @@ public class Sex extends Babas {
             if (value instanceof Sex) {
                 value = ((Sex) value).getName();
             }else{
-                value="Seleccione";
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

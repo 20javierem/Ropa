@@ -69,7 +69,7 @@ public class Brand extends Babas {
             if (value instanceof Brand) {
                 value = ((Brand) value).getName();
             }else{
-                value="Seleccione";
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

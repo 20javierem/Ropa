@@ -76,7 +76,7 @@ public class Category extends Babas {
             if (value instanceof Category) {
                 value = ((Category) value).getName();
             }else{
-                value="Seleccione";
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

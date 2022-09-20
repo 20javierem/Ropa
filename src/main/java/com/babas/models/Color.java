@@ -71,7 +71,7 @@ public class Color extends Babas {
             if (value instanceof Color) {
                 value = ((Color) value).getName();
             }else{
-                value="Seleccione";
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

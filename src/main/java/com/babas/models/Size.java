@@ -73,7 +73,7 @@ public class Size extends Babas {
             if (value instanceof Size) {
                 value = ((Size) value).getName();
             }else{
-                value="Seleccione";
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

@@ -8,19 +8,30 @@ import com.babas.custom.FondoPanel;
 import com.babas.custom.TabbedPane;
 import com.babas.models.*;
 import com.babas.models.Color;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
 import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DSettings;
+import com.babas.views.dialogs.DTransfersOnWait;
 import com.babas.views.menus.*;
+import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
+import com.formdev.flatlaf.icons.FlatFileChooserUpFolderIcon;
+import com.formdev.flatlaf.icons.FlatWindowRestoreIcon;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.plaf.IconUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 
 public class FPrincipal extends JFrame{
@@ -58,7 +69,6 @@ public class FPrincipal extends JFrame{
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
-    public static Vector<Stock> stocks;
     public static Vector<Branch> branchs;
     public static Vector<Branch> branchesWithAll;
     public static Vector<User> users;
@@ -75,6 +85,8 @@ public class FPrincipal extends JFrame{
     public static Vector<Sex> sexs;
     public static Vector<Sex> sexsWithAll;
     public static Vector<Style> styles;
+    public static List<Transfer> transfersOnWait;
+    public static List<Transfer> transfers;
 
     public FPrincipal(){
         init();
@@ -111,7 +123,7 @@ public class FPrincipal extends JFrame{
         paneNotify.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                lblNotify.setVisible(!lblNotify.isVisible());
+                loadDialogTransfers();
             }
         });
         btnAlmacen.addActionListener(new ActionListener() {
@@ -138,6 +150,33 @@ public class FPrincipal extends JFrame{
                 loadMenuReserves();
             }
         });
+        btnActualizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                reloadData();
+            }
+        });
+    }
+    private void reloadData(){
+        btnActualizar.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        branchs.forEach(Babas::refresh);
+        users.forEach(Babas::refresh);
+        products.forEach(Babas::refresh);
+        categories.forEach(Babas::refresh);
+        colors.forEach(Babas::refresh);
+        brands.forEach(Babas::refresh);
+        sizes.forEach(Babas::refresh);;
+        sexs.forEach(Babas::refresh);
+        styles.forEach(Babas::refresh);
+        btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        tabbedPane.updateTab();
+        loadTransferOnWait();
+    }
+    private void loadDialogTransfers(){
+        if(!transfersOnWait.isEmpty()){
+            DTransfersOnWait dTransfersOnWait=new DTransfersOnWait(transfersOnWait);
+            dTransfersOnWait.setVisible(true);
+        }
     }
     private void exit(){
         FLogin fLogin =new FLogin();
@@ -211,11 +250,31 @@ public class FPrincipal extends JFrame{
         loadMenuItems();
         loadMenuSales();
         menuSales.loadNewSale();
+        loadTransferOnWait();
     }
 
+    public void loadTransferOnWait(){
+        transfersOnWait=new ArrayList<>();
+        final int[] count = {0};
+        Babas.user.getBranchs().forEach(branch -> branch.getTransfers_destinys().forEach(transfer -> {
+            if(transfer.getState()==0){
+                transfersOnWait.add(transfer);
+                count[0]++;
+            }
+        }));
+        if(count[0]>0){
+            lblNotify.setVisible(true);
+            if(count[0]>9){
+                lblNotify.setText("+9");
+            }else{
+                lblNotify.setText(String.valueOf(count[0]));
+            }
+        }else{
+            lblNotify.setVisible(false);
+        }
+    }
     private void loadLists(){
         users=Users.getActives();
-        stocks=Stocks.getTodos();
         branchs=Branchs.getActives();
         branchesWithAll=new Vector<>(branchs);
         branchesWithAll.add(0,new Branch("TODAS"));
@@ -236,6 +295,9 @@ public class FPrincipal extends JFrame{
         sexsWithAll.add(0,new Sex("TODOS"));
         products= Products.getActives();
         styles=Styles.getTodos();
+        Calendar calendar=Calendar.getInstance();
+        calendar.set(Calendar.DATE,1);
+        transfers=Transfers.getAfter(calendar.getTime());
     }
     private void cargarCursores(){
         btnAjustes.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -255,7 +317,7 @@ public class FPrincipal extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        paneNotify=new FondoPanel("Icons/x32/notificacion.png",new Dimension(32,32));
+        paneNotify=new FondoPanel("icons/x32/notificacion.png",new Dimension(32,32));
         panelControles=new CustomPane(2);
         panelControles.updateUI();
         cPane=new CustomPane(2);

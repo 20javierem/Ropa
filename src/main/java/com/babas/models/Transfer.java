@@ -1,5 +1,6 @@
 package com.babas.models;
 
+import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,6 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "transfer_tbl")
 public class Transfer extends Babas {
@@ -23,9 +25,9 @@ public class Transfer extends Babas {
     @NotEmpty(message = "Productos")
     @OneToMany(mappedBy = "transfer")
     private List<DetailTransfer> detailTransfers=new ArrayList<>();
-    private Integer state=0;
+    @NotNull(message = "Tipo de transferencia")
+    private Integer state;
     private Integer productsTransfers=0;
-    private Double total=0.0;
     private String description="";
     private Date created=new Date();
     private Date updated;
@@ -36,10 +38,6 @@ public class Transfer extends Babas {
 
     public List<DetailTransfer> getDetailTransfers() {
         return detailTransfers;
-    }
-
-    public void setDetailTransfers(List<DetailTransfer> detailTransfers) {
-        this.detailTransfers = detailTransfers;
     }
 
     public Integer getState() {
@@ -54,16 +52,11 @@ public class Transfer extends Babas {
         return productsTransfers;
     }
 
-    public void setProductsTransfers(Integer productsTransfers) {
-        this.productsTransfers = productsTransfers;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
+    public void calculateTotalProuctsTransfers(){
+        productsTransfers=0;
+        getDetailTransfers().forEach(detailTransfer -> {
+            productsTransfers+=detailTransfer.getQuantity();
+        });
     }
 
     public Branch getSource() {
@@ -100,6 +93,48 @@ public class Transfer extends Babas {
 
     public void setUpdated(Date updated) {
         this.updated = updated;
+    }
+
+    @Override
+    public void save() {
+        super.save();
+        getDetailTransfers().forEach(Babas::save);
+        getSource().getTransfers_sources().add(Transfer.this);
+        getDestiny().getTransfers_destinys().add(Transfer.this);
+        switch (getState()){
+            case 0:
+                getDetailTransfers().forEach(detailTransfer -> {
+                    Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
+                    stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
+                    stock.save();
+                });
+                break;
+            case 1:
+                getDetailTransfers().forEach(detailTransfer -> {
+                    if(Objects.equals(getSource().getId(), getDestiny().getId())){
+                        detailTransfer.getProduct().setStockTotal(detailTransfer.getProduct().getStockTotal()+detailTransfer.getQuantity());
+                        detailTransfer.getProduct().save();
+                    }
+                    Stock stock= Stocks.getStock(getDestiny(),detailTransfer.getProduct());
+                    if(stock==null){
+                        stock=new Stock();
+                        stock.setProduct(detailTransfer.getProduct());
+                        stock.setBranch(getDestiny());
+                        getDestiny().getStocks().add(stock);
+                        detailTransfer.getProduct().getStocks().add(stock);
+                    }
+                    stock.setQuantity(stock.getQuantity()+detailTransfer.getQuantity());
+                    stock.save();
+                });
+                break;
+            case 2:
+                getDetailTransfers().forEach(detailTransfer -> {
+                    Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
+                    stock.setQuantity(stock.getQuantity()+detailTransfer.getQuantity());
+                    stock.save();
+                });
+                break;
+        }
     }
 }
 

@@ -283,8 +283,8 @@
                               <foreground color="-1"/>
                               <horizontalAlignment value="0"/>
                               <horizontalTextPosition value="0"/>
-                              <icon value="com/babas/Icons/x22/circleNotify.png"/>
-                              <text value="9+"/>
+                              <icon value="com/babas/icons/x22/circleNotify.png"/>
+                              <text value=""/>
                               <visible value="true"/>
                             </properties>
                           </component>

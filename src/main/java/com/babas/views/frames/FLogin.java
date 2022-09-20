@@ -9,6 +9,7 @@ import com.babas.utilities.Utilities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Date;
 
 public class FLogin extends JFrame {
     private JPanel contentPane;
@@ -55,6 +56,8 @@ public class FLogin extends JFrame {
             User user=Users.getByUserName(userName);
             if(user!=null){
                 if(user.getUserPassword().equals(userPassword)){
+                    user.setLastLogin(new Date());
+                    user.save();
                     Babas.user=user;
                     saveUser();
                     FPrincipal fPrincipal=new FPrincipal();

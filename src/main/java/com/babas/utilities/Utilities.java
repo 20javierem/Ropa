@@ -4,6 +4,7 @@ import ch.swaechter.smbjwrapper.SmbConnection;
 import ch.swaechter.smbjwrapper.SmbDirectory;
 import ch.swaechter.smbjwrapper.SmbFile;
 import com.babas.custom.TabbedPane;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
@@ -47,7 +48,7 @@ import java.util.*;
 
 public class Utilities {
     public static DateFormat formatoFecha=new SimpleDateFormat("dd-MM-yyyy");
-    public static DateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy: h:mm a");
+    public static DateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy: h:mm");
     public static DateFormat formatoHora=new SimpleDateFormat("HH:mm a");
     public static DateFormat año=new SimpleDateFormat("yyyy");
     public static NumberFormat moneda = NumberFormat.getCurrencyInstance();
@@ -523,7 +524,12 @@ public class Utilities {
         }
     }
     public static String desencriptar(String contraseña){
-        return decrypt(contraseña,getSecretKey());
+        if(contraseña!=null){
+            return decrypt(contraseña,getSecretKey());
+        }else{
+            return null;
+        }
+
     }
     public static String encrypt(String dataToEncrypt, SecretKeySpec key) {
         try {

@@ -9,6 +9,7 @@ import java.util.Date;
 @Entity(name = "stock_tbl")
 public class Stock extends Babas {
     @Id
+    @GeneratedValue(generator = "increment")
     private Long id;
     @NotNull
     @ManyToOne
@@ -17,7 +18,7 @@ public class Stock extends Babas {
     @ManyToOne
     private Branch branch;
     @NotNull
-    private Integer quantity;
+    private Integer quantity=0;
     private Date created=new Date();
     private Date updated;
 
@@ -25,16 +26,8 @@ public class Stock extends Babas {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Long getId() {
@@ -67,5 +60,11 @@ public class Stock extends Babas {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

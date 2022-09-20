@@ -114,11 +114,19 @@ public class Branch extends Babas {
             if (value instanceof Branch) {
                 value = ((Branch) value).getName();
             }else{
-                value="Seleccione";
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;
         }
+    }
+
+    public List<Transfer> getTransfers_sources() {
+        return transfers_sources;
+    }
+
+    public List<Transfer> getTransfers_destinys() {
+        return transfers_destinys;
     }
 
     @Override

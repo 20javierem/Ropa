@@ -113,4 +113,8 @@ public class Product extends Babas {
             super.save();
         }
     }
+
+    public void setStockTotal(Integer stockTotal) {
+        this.stockTotal=stockTotal;
+    }
 }

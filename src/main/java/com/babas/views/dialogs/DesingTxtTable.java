@@ -16,8 +16,8 @@ public class DesingTxtTable {
         contentPane.setBackground(component.getBackground());
         this.string0.setForeground(component.getForeground());
         this.string0.setBackground(component.getBackground());
-        this.string1.setBackground(new JTextField().getSelectionColor().darker());
-        this.string1.setForeground(new JTextField().getSelectedTextColor().brighter());
+        this.string1.setBackground(new JTextField().getSelectionColor());
+        this.string1.setForeground(new JTextField().getSelectedTextColor());
         this.string2.setForeground(component.getForeground());
         this.string2.setBackground(component.getBackground());
     }

@@ -18,7 +18,6 @@ public class TabCatalogue {
     private FlatTextField flatTextField;
     private JButton btnClearFilters;
     private JComboBox cbbBrand;
-    private JComboBox cbbBranch;
     private JComboBox cbbSex;
     private JComboBox cbbCategory;
     private JComboBox cbbSize;
@@ -36,8 +35,6 @@ public class TabCatalogue {
         getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
     }
     private void loadCombos(){
-        cbbBranch.setModel(new DefaultComboBoxModel(FPrincipal.branchesWithAll));
-        cbbBranch.setRenderer(new Branch.ListCellRenderer());
         cbbBrand.setModel(new DefaultComboBoxModel(FPrincipal.brandsWithAll));
         cbbBrand.setRenderer(new Brand.ListCellRenderer());
         cbbCategory.setModel(new DefaultComboBoxModel(FPrincipal.categoriesWithAll));

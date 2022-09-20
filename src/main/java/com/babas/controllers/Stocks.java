@@ -1,5 +1,7 @@
 package com.babas.controllers;
 
+import com.babas.models.Branch;
+import com.babas.models.Product;
 import com.babas.models.Sex;
 import com.babas.models.Stock;
 import com.babas.utilities.Babas;
@@ -22,4 +24,13 @@ public class Stocks extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
+    public static Stock getStock(Branch branch, Product product){
+        criteria = builder.createQuery(Stock.class);
+        root=criteria.from(Stock.class);
+        criteria.select(root).where(builder.and(
+                builder.equal(root.get("branch"), branch)),
+                builder.equal(root.get("product"),product));
+        return session.createQuery(criteria).getSingleResultOrNull();
+
+    }
 }

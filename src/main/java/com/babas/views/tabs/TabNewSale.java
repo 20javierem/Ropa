@@ -2,12 +2,15 @@ package com.babas.views.tabs;
 
 import com.babas.App;
 import com.babas.custom.TabPane;
+import com.babas.models.Branch;
 import com.babas.models.Sale;
+import com.babas.utilities.Babas;
 import com.formdev.flatlaf.extras.components.FlatLabel;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Vector;
 
 public class TabNewSale {
     private TabPane tabPane;
@@ -33,6 +36,12 @@ public class TabNewSale {
         tabPane.setTitle("Nueva venta");
         ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("Images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
         lblLogo.setIcon(logo);
+        loadCombos();
+    }
+    private void loadCombos(){
+        cbbBranchs.setModel(new DefaultComboBoxModel(new Vector(Babas.user.getBranchs())));
+        cbbBranchs.setRenderer(new Branch.ListCellRenderer());
+        cbbBranchs.setSelectedIndex(-1);
     }
     public TabPane getTabPane(){
         return tabPane;
