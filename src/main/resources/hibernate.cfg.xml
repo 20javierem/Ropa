@@ -5,12 +5,9 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.mariadb.jdbc.Driver</property>
-<!--        <property name="connection.url">jdbc:mariadb://192.168.0.119:3306/db</property>-->
-<!--        <property name="connection.user">javier</property>-->
-<!--        <property name="connection.password">ernestomoreno</property>-->
-        <property name="connection.url">jdbc:mariadb://localhost/db</property>
-        <property name="connection.user">root</property>
-        <property name="connection.password"></property>
+        <property name="connection.url">jdbc:mariadb://192.168.0.119:3306/db</property>
+        <property name="connection.user">javier</property>
+        <property name="connection.password">ernestomoreno</property>
         <property name="connection.pool_size">5</property>
         <property name="hibernate.show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MariaDBDialect</property>

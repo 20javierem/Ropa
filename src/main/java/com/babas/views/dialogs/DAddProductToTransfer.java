@@ -146,6 +146,32 @@ public class DAddProductToTransfer extends JDialog{
             lblProduct.setText(null);
         }
     }
+    public void filtrar() {
+        String busqueda;
+        busqueda = txtSearchProduct.getText().trim();
+        if(branchSource==null){
+            filtros1.clear();
+            filtros1.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,3,4,5));
+            listaFiltros.put(0, busqueda);
+            listaFiltros.put(1, busqueda);
+            listaFiltros.put(2, busqueda);
+            listaFiltros.put(3, busqueda);
+            listaFiltros.put(4, busqueda);
+            filtroand = RowFilter.andFilter(filtros1);
+            modeloOrdenado1.setRowFilter(filtroand);
+        }else{
+            filtros2.clear();
+            filtros2.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,3,4,5));
+            listaFiltros.put(0, busqueda);
+            listaFiltros.put(1, busqueda);
+            listaFiltros.put(2, busqueda);
+            listaFiltros.put(3, busqueda);
+            listaFiltros.put(4, busqueda);
+            filtroand = RowFilter.andFilter(filtros2);
+            modeloOrdenado2.setRowFilter(filtroand);
+        }
+
+    }
     private void init(){
         setContentPane(contentPane);
         setUndecorated(true);
@@ -170,30 +196,6 @@ public class DAddProductToTransfer extends JDialog{
         table.removeColumn(table.getColumn(""));
         modeloOrdenado1 = new TableRowSorter<>(productAbstractModel);
         table.setRowSorter(modeloOrdenado1);
-    }
-    public void filtrar() {
-        String busqueda;
-        busqueda = txtSearchProduct.getText().trim();
-        if(branchSource==null){
-            filtros1.clear();
-            filtros1.add(RowFilter.regexFilter("(?i)" +busqueda,1,2,3,4,5));
-            listaFiltros.put(0, busqueda);
-            listaFiltros.put(1, busqueda);
-            listaFiltros.put(2, busqueda);
-            listaFiltros.put(3, busqueda);
-            filtroand = RowFilter.andFilter(filtros1);
-            modeloOrdenado1.setRowFilter(filtroand);
-        }else{
-            filtros2.clear();
-            filtros2.add(RowFilter.regexFilter("(?i)" +busqueda,1,2,3,4,5));
-            listaFiltros.put(0, busqueda);
-            listaFiltros.put(1, busqueda);
-            listaFiltros.put(2, busqueda);
-            listaFiltros.put(3, busqueda);
-            filtroand = RowFilter.andFilter(filtros2);
-            modeloOrdenado2.setRowFilter(filtroand);
-        }
-
     }
     private void loadTable2(){
         stockProductAbstractModel=new StockProductAbstractModel(branchSource.getStocks());
