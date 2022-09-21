@@ -85,7 +85,7 @@ public class FPrincipal extends JFrame{
     public static Vector<Sex> sexs;
     public static Vector<Sex> sexsWithAll;
     public static Vector<Style> styles;
-    public static List<Transfer> transfersOnWait;
+    public static List<Transfer> transfersOnWait=new ArrayList<>();
     public static List<Transfer> transfers;
 
     public FPrincipal(){
@@ -154,6 +154,12 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 reloadData();
+            }
+        });
+        btnHistorialTransfers.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuTraslade.loadRecordTraslades();
             }
         });
     }
@@ -254,9 +260,9 @@ public class FPrincipal extends JFrame{
     }
 
     public void loadTransferOnWait(){
-        transfersOnWait=new ArrayList<>();
+        transfersOnWait.clear();
         final int[] count = {0};
-        Babas.user.getBranchs().forEach(branch -> branch.getTransfers_destinys().forEach(transfer -> {
+        Babas.user.getBranchs().forEach(branch -> branch.getTransfers().forEach(transfer -> {
             if(transfer.getState()==0){
                 transfersOnWait.add(transfer);
                 count[0]++;

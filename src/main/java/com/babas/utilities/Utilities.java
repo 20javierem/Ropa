@@ -48,7 +48,7 @@ import java.util.*;
 
 public class Utilities {
     public static DateFormat formatoFecha=new SimpleDateFormat("dd-MM-yyyy");
-    public static DateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy: h:mm");
+    public static DateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy: H:mm");
     public static DateFormat formatoHora=new SimpleDateFormat("HH:mm a");
     public static DateFormat año=new SimpleDateFormat("yyyy");
     public static NumberFormat moneda = NumberFormat.getCurrencyInstance();

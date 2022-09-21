@@ -158,7 +158,7 @@ public class DAddProductToTransfer extends JDialog{
         busqueda = txtSearchProduct.getText().trim();
         if(branchSource==null){
             filtros1.clear();
-            filtros1.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,3,4,5));
+            filtros1.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,2,6,7));
             listaFiltros.put(0, busqueda);
             listaFiltros.put(1, busqueda);
             listaFiltros.put(2, busqueda);
@@ -168,7 +168,7 @@ public class DAddProductToTransfer extends JDialog{
             modeloOrdenado1.setRowFilter(filtroand);
         }else{
             filtros2.clear();
-            filtros2.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,3,4,5));
+            filtros2.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,2,6,7));
             listaFiltros.put(0, busqueda);
             listaFiltros.put(1, busqueda);
             listaFiltros.put(2, busqueda);
@@ -198,6 +198,8 @@ public class DAddProductToTransfer extends JDialog{
         ProductCellRendered.setCellRenderer(table,listaFiltros);
         table.removeColumn(table.getColumn("PRECIO"));
         table.removeColumn(table.getColumn("TOTAL-STOCK"));
+        table.removeColumn(table.getColumn("CATEGORÍA"));
+        table.removeColumn(table.getColumn("MARCA"));
         table.removeColumn(table.getColumn(""));
         table.removeColumn(table.getColumn(""));
         table.removeColumn(table.getColumn(""));

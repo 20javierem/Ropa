@@ -36,12 +36,15 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
             JPanel componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "GÉNERO":
-//                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                case "PRECIO":
+//                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
+                    //                    componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(110);
                     table.getColumn(table.getColumnName(column)).setMinWidth(110);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "TOTAL-STOCK":
+                case "CATEGORÍA":
 //                    componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
@@ -58,12 +61,6 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMaxWidth(60);
                     table.getColumn(table.getColumnName(column)).setMinWidth(60);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(60);
-                    break;
-                case "PRECIO":
-//                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "CÓDIGO":
 //                    componente.setHorizontalAlignment(SwingConstants.CENTER);

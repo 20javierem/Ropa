@@ -22,7 +22,7 @@ public class Category extends Babas {
     @NotBlank(message = "Nombre")
     private String name;
     private boolean active=true;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     @OneToMany(mappedBy = "category")
     private List<Style> styles=new ArrayList<>();
@@ -58,13 +58,8 @@ public class Category extends Babas {
         return created;
     }
 
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public List<Style> getStyles() {
@@ -81,5 +76,14 @@ public class Category extends Babas {
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;
         }
+    }
+
+    @Override
+    public void save() {
+        if(created==null){
+            created=new Date();
+        }
+        updated=new Date();
+        super.save();
     }
 }

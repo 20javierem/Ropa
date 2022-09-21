@@ -66,7 +66,6 @@ public class DCategory extends JDialog{
     }
     private void onSave(){
         category.setName(txtName.getText());
-        category.setUpdated(new Date());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(category);
         if(constraintViolationSet.isEmpty()){
             category.save();

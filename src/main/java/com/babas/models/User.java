@@ -29,7 +29,7 @@ public class User extends Babas {
     private Sex sex;
     @NotBlank(message = "Contraseña")
     private String userPassword;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     private Date lastLogin;
     private boolean active=true;
@@ -148,6 +148,9 @@ public class User extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
     }

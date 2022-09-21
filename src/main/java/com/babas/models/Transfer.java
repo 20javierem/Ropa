@@ -29,7 +29,7 @@ public class Transfer extends Babas {
     private Integer state;
     private Integer productsTransfers=0;
     private String description="";
-    private Date created=new Date();
+    private Date created;
     private Date updated;
 
     public Long getId() {
@@ -97,6 +97,9 @@ public class Transfer extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         super.save();
         getDetailTransfers().forEach(Babas::save);
         getSource().getTransfers_sources().add(Transfer.this);

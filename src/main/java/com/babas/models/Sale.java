@@ -24,7 +24,7 @@ public class Sale extends Babas {
     private Double total=0.0;
     private Double discount=0.0;
     private Double totalCurrent=0.0;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     @ManyToOne
     @NotNull
@@ -104,6 +104,9 @@ public class Sale extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
     }

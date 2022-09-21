@@ -31,9 +31,11 @@ public class Branch extends Babas {
     private List<Transfer> transfers_sources =new ArrayList<>();
     @OneToMany(mappedBy = "destiny")
     private List<Transfer> transfers_destinys =new ArrayList<>();
+    @Transient
+    private List<Transfer> transfers=new ArrayList<>();
     @OneToMany(mappedBy = "branch")
     private List<Stock> stocks =new ArrayList<>();
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     @OneToMany(mappedBy = "branch")
     private List<Sale> sales=new ArrayList<>();
@@ -109,6 +111,14 @@ public class Branch extends Babas {
         return stocks;
     }
 
+    public List<Transfer> getTransfers_sources() {
+        return transfers_sources;
+    }
+
+    public List<Transfer> getTransfers_destinys() {
+        return transfers_destinys;
+    }
+
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Branch) {
@@ -121,16 +131,24 @@ public class Branch extends Babas {
         }
     }
 
-    public List<Transfer> getTransfers_sources() {
-        return transfers_sources;
-    }
-
-    public List<Transfer> getTransfers_destinys() {
-        return transfers_destinys;
+    public List<Transfer> getTransfers() {
+        if(transfers.size()!=(transfers_destinys.size()+transfers_sources.size())){
+            transfers.clear();
+            transfers.addAll(transfers_sources);
+            transfers_destinys.forEach(transfer -> {
+                if(!transfers.contains(transfer)){
+                    transfers.add(transfer);
+                }
+            });
+        }
+        return transfers;
     }
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
     }

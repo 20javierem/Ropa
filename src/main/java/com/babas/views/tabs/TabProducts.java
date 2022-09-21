@@ -20,7 +20,6 @@ import java.awt.event.ActionListener;
 
 public class TabProducts {
     private TabPane tabPane;
-    private JButton btnClearFilters;
     private FlatTable table;
     private FlatTextField flatTextField;
     private JButton btnCategorys;

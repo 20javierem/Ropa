@@ -20,7 +20,7 @@ public class Brand extends Babas {
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     private boolean active=true;
     @OneToMany(mappedBy = "brand")
@@ -78,6 +78,9 @@ public class Brand extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
     }

@@ -57,7 +57,7 @@
               </component>
               <component id="3f78d" class="javax.swing.JComboBox" binding="cbbBrand">
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <model>
@@ -67,46 +67,10 @@
               </component>
               <component id="bf826" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Marca:"/>
-                </properties>
-              </component>
-              <component id="30252" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Género:"/>
-                </properties>
-              </component>
-              <component id="53a7" class="javax.swing.JLabel">
-                <constraints>
                   <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Categoría:"/>
-                </properties>
-              </component>
-              <component id="1ecaf" class="javax.swing.JComboBox" binding="cbbSex">
-                <constraints>
-                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <model>
-                    <item value="--Seleccione--"/>
-                  </model>
-                </properties>
-              </component>
-              <component id="5718b" class="javax.swing.JComboBox" binding="cbbCategory">
-                <constraints>
-                  <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <model>
-                    <item value="--Seleccione--"/>
-                  </model>
+                  <text value="Marca:"/>
                 </properties>
               </component>
               <component id="6d232" class="javax.swing.JLabel">
@@ -145,7 +109,7 @@
                   </model>
                 </properties>
               </component>
-              <component id="dbb9f" class="com.formdev.flatlaf.extras.components.FlatTextField" binding="flatTextField">
+              <component id="dbb9f" class="com.formdev.flatlaf.extras.components.FlatTextField" binding="txtSearch">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -153,6 +117,42 @@
                   <placeholderText value="Producto..."/>
                   <showClearButton value="true"/>
                   <text value=""/>
+                </properties>
+              </component>
+              <component id="30252" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Género:"/>
+                </properties>
+              </component>
+              <component id="1ecaf" class="javax.swing.JComboBox" binding="cbbSex">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <model>
+                    <item value="--Seleccione--"/>
+                  </model>
+                </properties>
+              </component>
+              <component id="53a7" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Categoría:"/>
+                </properties>
+              </component>
+              <component id="5718b" class="javax.swing.JComboBox" binding="cbbCategory">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <model>
+                    <item value="--Seleccione--"/>
+                  </model>
                 </properties>
               </component>
             </children>

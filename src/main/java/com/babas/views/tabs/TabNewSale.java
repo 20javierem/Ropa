@@ -41,7 +41,6 @@ public class TabNewSale {
     private void loadCombos(){
         cbbBranchs.setModel(new DefaultComboBoxModel(new Vector(Babas.user.getBranchs())));
         cbbBranchs.setRenderer(new Branch.ListCellRenderer());
-        cbbBranchs.setSelectedIndex(-1);
     }
     public TabPane getTabPane(){
         return tabPane;

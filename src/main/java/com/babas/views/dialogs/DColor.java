@@ -7,6 +7,7 @@ import com.babas.views.frames.FPrincipal;
 import com.moreno.Notify;
 import com.moreno.Principal;
 import jakarta.validation.ConstraintViolation;
+import org.jdesktop.swingx.plaf.basic.BasicTaskPaneUI;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -26,6 +27,17 @@ public class DColor extends JDialog{
         this.color=color;
         update=color.getId()!=null;
         init();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onHecho();
+            }
+        });
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         btnHecho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -38,17 +50,6 @@ public class DColor extends JDialog{
                 onSave();
             }
         });
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                onHecho();
-            }
-        });
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
     private void init(){

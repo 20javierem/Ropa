@@ -12,7 +12,7 @@ import java.util.List;
 public class Client extends Babas {
     @Id
     private Long id;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     private String dni;
     private String names;
@@ -23,16 +23,8 @@ public class Client extends Babas {
         return created;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Long getId() {
@@ -59,4 +51,13 @@ public class Client extends Babas {
         return sales;
     }
 
+
+    @Override
+    public void save() {
+        if(created==null){
+            created=new Date();
+        }
+        updated=new Date();
+        super.save();
+    }
 }

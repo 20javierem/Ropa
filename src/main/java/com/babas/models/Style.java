@@ -27,7 +27,7 @@ public class Style extends Babas {
     @NotEmpty(message = "Presentaciones")
     @OneToMany(mappedBy = "style")
     private List<Presentation> presentations=new ArrayList<>();
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     @ManyToOne
     @NotNull(message = "Categoría")
@@ -121,6 +121,9 @@ public class Style extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
         getPresentations().forEach(Presentation::save);

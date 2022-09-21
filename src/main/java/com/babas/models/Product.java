@@ -29,7 +29,7 @@ public class Product extends Babas {
     private List<String> images=new ArrayList<>();
     @OneToMany(mappedBy = "product")
     private List<Stock> stocks=new ArrayList<>();
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     private Integer stockTotal=0;
     private boolean active=true;
@@ -71,7 +71,6 @@ public class Product extends Babas {
         return updated;
     }
 
-
     public Size getSize() {
         return size;
     }
@@ -106,6 +105,9 @@ public class Product extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
         if(barcode==null){

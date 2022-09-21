@@ -27,7 +27,6 @@ public class TabUsers {
     private JButton btnNewUser;
     private FlatTable table;
     private FlatTextField flatTextField;
-    private JButton btnClearFilters;
     private UserAbstractModel model;
 
     public TabUsers(){

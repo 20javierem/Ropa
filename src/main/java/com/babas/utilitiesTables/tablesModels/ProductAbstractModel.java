@@ -8,8 +8,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class ProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"CÓDIGO","NOMBRE","PRECIO","COLOR","GÉNERO","TALLA","TOTAL-STOCK","","",""};
-    private final Class[] typeColumns={Long.class,String.class,Double.class,String.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"CÓDIGO","NOMBRE","GÉNERO","CATEGORÍA","MARCA","PRECIO","TALLA","COLOR","TOTAL-STOCK","","",""};
+    private final Class[] typeColumns={Long.class,String.class,String.class,String.class,String.class,Double.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
     private final List<Product> list;
 
     public ProductAbstractModel(List<Product> list){
@@ -45,18 +45,22 @@ public class ProductAbstractModel extends AbstractTableModel {
             case 1:
                 return product.getStyle().getName();
             case 2:
-                return product.getStyle().getPresentationDefault().getPriceDefault().getPrice();
-            case 3:
-                return product.getColor().getName();
-            case 4:
                 return product.getSex().getName();
+            case 3:
+                return product.getStyle().getCategory().getName();
+            case 4:
+                return product.getStyle().getBrand().getName();
             case 5:
-                return product.getSize().getName();
+                return product.getStyle().getPresentationDefault().getPriceDefault().getPrice();
             case 6:
-                return product.getStockTotal();
+                return product.getSize().getName();
             case 7:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return product.getColor().getName();
             case 8:
+                return product.getStockTotal();
+            case 9:
+                return new JButtonAction("x16/mostrarContraseña.png");
+            case 10:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");

@@ -23,7 +23,6 @@ public class TabBranchs {
     private JButton btnNewBranch;
     private FlatTable table;
     private FlatTextField flatTextField;
-    private JButton btnClearFilters;
     private BranchAbstractModel model;
 
     public TabBranchs(){

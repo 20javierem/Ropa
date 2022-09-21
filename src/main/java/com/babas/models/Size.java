@@ -23,7 +23,7 @@ public class Size extends Babas {
     @NotBlank(message = "Nombre")
     private String name;
     private boolean active=true;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
     @OneToMany(mappedBy = "size")
     private List<Product> products=new ArrayList<>();
@@ -82,6 +82,9 @@ public class Size extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
     }

@@ -19,7 +19,7 @@ public class Stock extends Babas {
     private Branch branch;
     @NotNull
     private Integer quantity=0;
-    private Date created=new Date();
+    private Date created;
     private Date updated;
 
     public Date getCreated() {
@@ -64,6 +64,9 @@ public class Stock extends Babas {
 
     @Override
     public void save() {
+        if(created==null){
+            created=new Date();
+        }
         updated=new Date();
         super.save();
     }
