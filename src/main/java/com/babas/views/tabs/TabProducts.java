@@ -116,7 +116,7 @@ public class TabProducts {
         ProductCellRendered.setCellRenderer(table,null);
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorProduct("delete"));
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorProduct("edit"));
-        table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorProduct("images"));
+        table.removeColumn(table.getColumn(""));
     }
     private void filter(){
 

@@ -40,8 +40,14 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(210);
                     break;
                 case "PRODUCTOS":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(95);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(95);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(95);
+                    break;
                 case "CREADO":
                 case "ACTUALIZADO":
+                case "ESTADO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);

@@ -50,6 +50,8 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                 case "edit":
                     DProduct dProduct=new DProduct(product);
                     dProduct.setVisible(true);
+                    Utilities.updateDialog();
+                    Utilities.getTabbedPane().updateTab();
                     break;
                 case "delete":
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Producto",JOptionPane.YES_NO_OPTION)==0;
@@ -58,6 +60,8 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                         product.save();
                         FPrincipal.products.remove(product);
                         product.getStyle().getProducts().remove(product);
+                        Utilities.updateDialog();
+                        Utilities.getTabbedPane().updateTab();
                     }
                     break;
                 case "images":
@@ -65,8 +69,6 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                     dImageProduct.setVisible(true);
                     break;
             }
-            Utilities.updateDialog();
-            Utilities.getTabbedPane().updateTab();
             fireEditingStopped();
         }
     }

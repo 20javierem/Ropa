@@ -18,14 +18,26 @@ public class DImageProduct extends JDialog{
     private JButton btnPrevious;
     private ImageSlide imageSlide;
     private JLabel lblTextImage;
-    private JTabbedPane tabbedPane1;
     private StockProductAbstractModel model;
     private FlatTable table;
+    private JTabbedPane tabbedPane;
+    private int pX,pY;
 
     public DImageProduct(Product product){
         super(Utilities.getJFrame(),product.getStyle().getName()+", "+product.getStyle().getBrand().getName()+", "+product.getSize().getName()+", "+product.getColor().getName(),true);
         this.product=product;
         init();
+        tabbedPane.addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent me) {
+                pX=me.getX();
+                pY=me.getY();
+            }
+        });
+        tabbedPane.addMouseMotionListener(new MouseAdapter(){
+            public void mouseDragged(MouseEvent me) {
+                setLocation(getLocation().x+me.getX()-pX,getLocation().y+me.getY()-pY);
+            }
+        });
         btnPrevious.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,6 +66,7 @@ public class DImageProduct extends JDialog{
     }
 
     private void init(){
+        setUndecorated(true);
         setContentPane(contentPane);
         loadImages();
         loadTable();

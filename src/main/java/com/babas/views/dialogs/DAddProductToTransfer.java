@@ -46,6 +46,17 @@ public class DAddProductToTransfer extends JDialog{
         this.transfer=transfer;
         this.branchSource=branchSource;
         init();
+        addMouseListener(new MouseAdapter(){
+            public void mousePressed(MouseEvent me) {
+                pX=me.getX();
+                pY=me.getY();
+            }
+        });
+        addMouseMotionListener(new MouseAdapter(){
+            public void mouseDragged(MouseEvent me) {
+                setLocation(getLocation().x+me.getX()-pX,getLocation().y+me.getY()-pY);
+            }
+        });
         btnHecho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,17 +94,6 @@ public class DAddProductToTransfer extends JDialog{
                 onHecho();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        addMouseListener(new MouseAdapter(){
-            public void mousePressed(MouseEvent me) {
-                pX=me.getX();
-                pY=me.getY();
-            }
-        });
-        addMouseMotionListener(new MouseAdapter(){
-            public void mouseDragged(MouseEvent me) {
-                setLocation(getLocation().x+me.getX()-pX,getLocation().y+me.getY()-pY);
-            }
-        });
         btnAddProduct.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

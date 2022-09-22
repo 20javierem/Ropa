@@ -17,9 +17,11 @@ public class MenuManage {
     private FlatToggleButton btnUsers;
     private FlatToggleButton btnBranchs;
     private JPanel contentPane;
+    private FlatToggleButton btnProducts;
     private TabbedPane tabbedPane;
     private TabUsers tabUsers;
     private TabBranchs tabBranchs;
+    private TabProducts tabProducts;
 
     public MenuManage(TabbedPane tabbedPane){
         this.tabbedPane=tabbedPane;
@@ -35,8 +37,29 @@ public class MenuManage {
                 loadBranchs();
             }
         });
+        btnProducts.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadProducts();
+            }
+        });
+    }
+    public void loadProducts(){
+        Utilities.despintarButton(btnUsers);
+        Utilities.despintarButton(btnBranchs);
+        Utilities.buttonSelected(btnProducts);
+        if (tabProducts == null) {
+            tabProducts = new TabProducts();
+        }
+        if (tabbedPane.indexOfTab(tabProducts.getTabPane().getTitle())==-1) {
+            tabProducts = new TabProducts();
+            tabProducts.getTabPane().setOption(btnProducts);
+            tabbedPane.addTab(tabProducts.getTabPane().getTitle(), tabProducts.getTabPane().getIcon(), tabProducts.getTabPane());
+        }
+        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabProducts.getTabPane().getTitle()));
     }
     public void loadUsers(){
+        Utilities.despintarButton(btnProducts);
         Utilities.despintarButton(btnBranchs);
         Utilities.buttonSelected(btnUsers);
         if (tabUsers == null) {
@@ -50,6 +73,7 @@ public class MenuManage {
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabUsers.getTabPane().getTitle()));
     }
     public void loadBranchs(){
+        Utilities.despintarButton(btnProducts);
         Utilities.despintarButton(btnUsers);
         Utilities.buttonSelected(btnBranchs);
         if (tabBranchs == null) {

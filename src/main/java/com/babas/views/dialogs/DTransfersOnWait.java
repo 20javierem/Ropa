@@ -48,6 +48,7 @@ public class DTransfersOnWait extends JDialog {
         loadTable();
         Utilities.getActionsOfDialog().addActionListener(e -> dispose());
         pack();
+        setResizable(false);
         setLocationRelativeTo(getOwner());
     }
 
@@ -56,8 +57,12 @@ public class DTransfersOnWait extends JDialog {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         TransferCellRendered.setCellRenderer(table);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorTransfer());
         table.removeColumn(table.getColumn("ESTADO"));
         table.removeColumn(table.getColumn("DESCRIPCIÓN"));
+        table.removeColumn(table.getColumn("ORIGEN"));
+        table.removeColumn(table.getColumn("ACTUALIZADO"));
+        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount() - 1));
+//        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount() -1));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorTransfer(true));
     }
 }

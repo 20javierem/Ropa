@@ -29,10 +29,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.*;
 import java.util.List;
-import java.util.Vector;
 
 public class FPrincipal extends JFrame{
     private JPanel contentPane;
@@ -64,7 +62,6 @@ public class FPrincipal extends JFrame{
     private FlatToggleButton btnReserves;
     private Propiedades propiedades;
     private MenuSales menuSales;
-    private MenuInventory menuInventory;
     private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
@@ -94,12 +91,6 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadMenuSales();
-            }
-        });
-        btnInventary.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadMenuInventory();
             }
         });
         btnExit.addActionListener(new ActionListener() {
@@ -217,9 +208,6 @@ public class FPrincipal extends JFrame{
         DCompany dCompany=new DCompany();
         dCompany.setVisible(true);
     }
-    private void loadMenuInventory() {
-        splitPane.setRightComponent(menuInventory.getContentPane());
-    }
     private void loadMenuAlmacen() {
         splitPane.setRightComponent(menuAlmacen.getContentPane());
     }
@@ -247,7 +235,6 @@ public class FPrincipal extends JFrame{
         setLocationRelativeTo(null);
         loadLists();
         menuSales=new MenuSales(tabbedPane);
-        menuInventory=new MenuInventory(tabbedPane);
         menuAlmacen=new MenuAlmacen(tabbedPane);
         menuManage=new MenuManage(tabbedPane);
         menuTraslade=new MenuTraslade(tabbedPane);
@@ -263,9 +250,11 @@ public class FPrincipal extends JFrame{
         transfersOnWait.clear();
         final int[] count = {0};
         Babas.user.getBranchs().forEach(branch -> branch.getTransfers().forEach(transfer -> {
-            if(transfer.getState()==0){
-                transfersOnWait.add(transfer);
-                count[0]++;
+            if(Objects.equals(transfer.getDestiny().getId(), branch.getId())){
+                if(transfer.getState()==0){
+                    transfersOnWait.add(transfer);
+                    count[0]++;
+                }
             }
         }));
         if(count[0]>0){
