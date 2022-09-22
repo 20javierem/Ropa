@@ -29,6 +29,9 @@ public class App
         Utilities.propiedades=new Propiedades();
         Babas.initialize();
         Utilities.loadTheme();
+//        Babas.user=new User();
+//        FPrincipal fPrincipal=new FPrincipal();
+//        fPrincipal.setVisible(true);
         FLogin fLogin=new FLogin();
         fLogin.setVisible(true);
     }

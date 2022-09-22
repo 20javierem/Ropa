@@ -18,6 +18,10 @@ public class ImageSlide extends JComponent {
     private final Animator animator;
     private float animate;
 
+    public void clear(){
+        images.clear();
+    }
+
     public ImageSlide() {
         images = new ArrayList<>();
         TimingTarget target = new TimingTargetAdapter() {
@@ -68,6 +72,9 @@ public class ImageSlide extends JComponent {
     public String getImagePosition(){
         int index=indexOld+1;
         return "Mostrando "+index+" de "+images.size();
+    }
+    public int getIndexPosition(){
+        return indexOld;
     }
     private void showImage(int index) {
         if (index < images.size()) {

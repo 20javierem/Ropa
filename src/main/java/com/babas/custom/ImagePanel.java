@@ -166,12 +166,12 @@ public class ImagePanel extends JPanel {
         int width=Math.abs(x1 - x2);
         int heigth=Math.abs(y1 - y2);
 
-        if(width>700&&shape!=null){
+        if(width>750&&shape!=null){
             width=shape.getBounds().width;
         }else{
             startX=Math.min(x1,x2);
         }
-        if(heigth>600&&shape!=null){
+        if(heigth>750&&shape!=null){
             heigth=shape.getBounds().height;
         }else{
             startY=Math.min(y1,y2);

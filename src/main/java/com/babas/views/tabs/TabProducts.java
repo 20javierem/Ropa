@@ -2,10 +2,8 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.Product;
-import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorSize;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.dialogs.*;
@@ -17,21 +15,20 @@ import com.formdev.flatlaf.icons.FlatSearchIcon;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.InputMethodListener;
 
 public class TabProducts {
     private TabPane tabPane;
     private FlatTable table;
     private FlatTextField flatTextField;
     private JButton btnCategorys;
-    private JButton btnStyles;
     private JButton btnSizes;
     private JButton btnColors;
-    private JButton btnNewProduct;
+    private JButton btnNewStyle;
     private JButton btnAllSexs;
     private JButton btnBrands;
     private JButton btnStades;
     private JButton btnDimentions;
+    private JButton btnNewProduct;
     private ProductAbstractModel model;
 
     public TabProducts(){
@@ -60,7 +57,7 @@ public class TabProducts {
                 loadSizes();
             }
         });
-        btnNewProduct.addActionListener(new ActionListener() {
+        btnNewStyle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadNewProduct();

@@ -48,7 +48,7 @@
                   <text value="Tallas"/>
                 </properties>
               </component>
-              <component id="260a8" class="javax.swing.JButton" binding="btnNewProduct">
+              <component id="260a8" class="javax.swing.JButton" binding="btnNewStyle">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -77,12 +77,12 @@
                   <text value="Marcas"/>
                 </properties>
               </component>
-              <component id="8f1dc" class="javax.swing.JButton" binding="btnStyles">
+              <component id="8f1dc" class="javax.swing.JButton" binding="btnNewProduct">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Estilos"/>
+                  <text value="Nueva variación"/>
                 </properties>
               </component>
               <component id="ff9f4" class="javax.swing.JButton" binding="btnStades">

@@ -51,6 +51,7 @@ public class DProduct extends JDialog{
     private JComboBox cbbDimention;
     private JXHyperlink btnNewDimention;
     private JComboBox cbbStade;
+    private JXHyperlink btnRemoveImage;
     private Product product;
     private final boolean update;
     private PresentationsAbstractModel model;
@@ -157,6 +158,24 @@ public class DProduct extends JDialog{
                 loadNewDimention();
             }
         });
+        btnRemoveImage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                removeImage();
+            }
+        });
+    }
+    private void removeImage(){
+        if(!product.getImages().isEmpty()){
+            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Eliminar imagen",JOptionPane.YES_NO_OPTION)==0;
+            if(si){
+                product.getImages().remove(imageSlide.getIndexPosition());
+                loadImages();
+                imageSlide.toNext();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Imagen eliminada");
+            }
+
+        }
     }
     private void loadNewDimention(){
         DDimention dDimention=new DDimention(new Dimention());
@@ -182,6 +201,7 @@ public class DProduct extends JDialog{
                     product.save();
                     imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage)));
                     loadQuantityImages();
+                    imageSlide.toNext();
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
                 }
@@ -217,13 +237,15 @@ public class DProduct extends JDialog{
     private void loadStyle(){
         if(cbbStyle.getSelectedItem() instanceof Style){
             style= (Style) cbbStyle.getSelectedItem();
-            cbbCategory.setSelectedItem(style.getCategory());
+            if(!update){
+                cbbCategory.setSelectedItem(style.getCategory());
+            }
         }else{
-            style=new Style();
-            cbbCategory.setSelectedIndex(-1);
+            if(!update){
+                style=new Style();
+                cbbCategory.setSelectedIndex(-1);
+            }
         }
-        loadTable();
-        model.fireTableDataChanged();
     }
     private void init(){
         setContentPane(contentPane);
@@ -247,7 +269,10 @@ public class DProduct extends JDialog{
         cbbDimention.setRenderer(new Dimention.ListCellRenderer());
         cbbStade.setModel(new DefaultComboBoxModel(FPrincipal.stades));
         cbbStade.setRenderer(new Stade.ListCellRenderer());
-        cbbStyle.setModel(new DefaultComboBoxModel(FPrincipal.styles));
+        if(!update){
+            cbbStyle.setModel(new DefaultComboBoxModel(FPrincipal.styles));
+            AutoCompleteDecorator.decorate(cbbStyle);
+        }
         cbbStyle.setRenderer(new Style.ListCellRenderer());
         cbbCategory.setModel(new DefaultComboBoxModel(FPrincipal.categories));
         cbbCategory.setRenderer(new Category.ListCellRenderer());
@@ -267,7 +292,6 @@ public class DProduct extends JDialog{
         cbbBrand.setSelectedIndex(-1);
         cbbDimention.setSelectedIndex(-1);
         cbbStade.setSelectedIndex(-1);
-        AutoCompleteDecorator.decorate(cbbStyle);
     }
     private void load(){
         cbbStyle.setSelectedItem(product.getStyle());
@@ -279,11 +303,11 @@ public class DProduct extends JDialog{
         cbbStade.setSelectedItem(product.getStade());
         cbbDimention.setSelectedItem(product.getDimention());
         loadImages();
-        loadQuantityImages();
         style=product.getStyle();
     }
 
     private void loadImages(){
+        imageSlide.clear();
         product.getImages().forEach(img->{
             Image image=Utilities.getImage(img);
             if(image!=null){
@@ -293,6 +317,7 @@ public class DProduct extends JDialog{
                 return;
             }
         });
+        loadQuantityImages();
     }
 
     private void loadQuantityImages(){
@@ -308,10 +333,8 @@ public class DProduct extends JDialog{
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorPresentation(true));
     }
     private void onSave(){
-        boolean createdStyle=true;
         if((cbbStyle.getSelectedItem() instanceof Style)){
             style= (Style) cbbStyle.getSelectedItem();
-            createdStyle=false;
         }else{
             style.setName(String.valueOf(cbbStyle.getEditor().getItem()));
         }
@@ -323,15 +346,16 @@ public class DProduct extends JDialog{
         product.setStade((Stade) cbbStade.getSelectedItem());
         product.setBrand((Brand) cbbBrand.getSelectedItem());
         product.setDimention((Dimention) cbbDimention.getSelectedItem());
-        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(style);
-        constraintViolationSet.addAll(ProgramValidator.loadViolations(product));
+        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(product);
+        constraintViolationSet.addAll(ProgramValidator.loadViolations(style));
         if(constraintViolationSet.isEmpty()){
-            style.save();
-            product.save();
-            if(createdStyle){
+            if(style.getId()==null){
                 FPrincipal.styles.add(style);
             }
+            style.save();
+            product.save();
             if(!update){
+                style.getProducts().add(product);
                 FPrincipal.products.add(product);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
@@ -352,6 +376,7 @@ public class DProduct extends JDialog{
     private void clear(){
         cbbStyle.setSelectedIndex(-1);
         cbbCategory.setSelectedIndex(-1);
+        cbbBrand.setSelectedIndex(-1);
         cbbSize.setSelectedIndex(-1);
         cbbColor.setSelectedIndex(-1);
         cbbSex.setSelectedIndex(-1);
