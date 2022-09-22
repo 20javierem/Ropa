@@ -56,11 +56,6 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
                     if(si){
                         transfer.setState(2);
                         transfer.setUpdated(new Date());
-                        transfer.getDetailTransfers().forEach(detailTransfer -> {
-                            Stock stock= Stocks.getStock(transfer.getDestiny(),detailTransfer.getProduct());
-                            stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
-                            stock.save();
-                        });
                         transfer.save();
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia cancelada");
                     }

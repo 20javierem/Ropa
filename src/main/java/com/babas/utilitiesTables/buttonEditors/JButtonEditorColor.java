@@ -43,12 +43,12 @@ public class JButtonEditorColor extends AbstractCellEditor implements TableCellE
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Color",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
                     color.refresh();
+                    FPrincipal.colors.remove(color);
+                    FPrincipal.colorsWithAll.remove(color);
                     if(color.getProducts().isEmpty()){
-                        FPrincipal.colors.remove(color);
                         color.delete();
                     }else{
                         color.setActive(false);
-                        FPrincipal.colors.remove(color);
                     }
                 }
             }

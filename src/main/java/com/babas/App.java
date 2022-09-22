@@ -7,6 +7,7 @@ import com.babas.controllers.Styles;
 import com.babas.models.Brand;
 import com.babas.models.Sex;
 import com.babas.models.Style;
+import com.babas.models.User;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;

@@ -9,6 +9,7 @@ import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 
 public class DImageProduct extends JDialog{
@@ -24,7 +25,7 @@ public class DImageProduct extends JDialog{
     private int pX,pY;
 
     public DImageProduct(Product product){
-        super(Utilities.getJFrame(),product.getStyle().getName()+", "+product.getStyle().getBrand().getName()+", "+product.getSize().getName()+", "+product.getColor().getName(),true);
+        super(Utilities.getJFrame(),product.getStyle().getName()+", "+product.getBrand().getName()+", "+product.getSize().getName()+", "+product.getColor().getName(),true);
         this.product=product;
         init();
         tabbedPane.addMouseListener(new MouseAdapter(){
@@ -82,7 +83,13 @@ public class DImageProduct extends JDialog{
     }
     private void loadImages(){
         product.getImages().forEach(img->{
-            imageSlide.addImage(new ImageIcon(Utilities.getImage(img)));
+            Image image=Utilities.getImage(img);
+            if(image!=null){
+                ImageIcon icon=new ImageIcon(image);
+                imageSlide.addImage(icon);
+            }else{
+                return;
+            }
         });
         lblTextImage.setText(imageSlide.getImagePosition());
     }

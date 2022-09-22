@@ -46,12 +46,12 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Talla",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
                     size.refresh();
+                    FPrincipal.sizes.remove(size);
+                    FPrincipal.sizesWithAll.remove(size);
                     if(size.getProducts().isEmpty()){
-                        FPrincipal.sizes.remove(size);
                         size.delete();
                     }else{
                         size.setActive(false);
-                        FPrincipal.sizes.remove(size);
                     }
                 }
             }

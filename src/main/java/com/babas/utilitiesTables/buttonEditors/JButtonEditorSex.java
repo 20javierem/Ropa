@@ -47,12 +47,12 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Género",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
                     sex.refresh();
+                    FPrincipal.sexs.remove(sex);
+                    FPrincipal.sexsWithAll.remove(sex);
                     if(sex.getProducts().isEmpty()){
-                        FPrincipal.sexs.remove(sex);
                         sex.delete();
                     }else{
                         sex.setActive(false);
-                        FPrincipal.sexs.remove(sex);
                     }
                 }
             }

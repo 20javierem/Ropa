@@ -50,13 +50,14 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                         user.getBranchs().remove(branch);
                         user.save();
                     });
+                    FPrincipal.branchs.remove(branch);
+                    FPrincipal.branchesWithAll.remove(branch);
                     if(branch.getSales().isEmpty()){
                         branch.delete();
                     }else{
                         branch.setActive(false);
                         branch.save();
                     }
-                    FPrincipal.branchs.remove(branch);
                 }
             }
             Utilities.updateDialog();

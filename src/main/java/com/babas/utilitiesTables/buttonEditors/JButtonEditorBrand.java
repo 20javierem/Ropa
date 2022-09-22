@@ -46,12 +46,12 @@ public class JButtonEditorBrand extends AbstractCellEditor implements TableCellE
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Marca",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
                     brand.refresh();
-                    if(brand.getStyles().isEmpty()){
-                        FPrincipal.brands.remove(brand);
+                    FPrincipal.brands.remove(brand);
+                    FPrincipal.brandsWithAll.remove(brand);
+                    if(brand.getProducts().isEmpty()){
                         brand.delete();
                     }else{
                         brand.setActive(false);
-                        FPrincipal.brands.remove(brand);
                     }
                 }
             }

@@ -13,6 +13,7 @@ import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.moreno.Notify;
 import jakarta.validation.ConstraintViolation;
+import org.jdesktop.swingx.JXHyperlink;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import javax.imageio.ImageIO;
@@ -20,9 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.*;
-import java.util.Arrays;
 import java.util.Set;
 
 public class DProduct extends JDialog{
@@ -31,23 +30,27 @@ public class DProduct extends JDialog{
     private JButton btnHecho;
     private JButton btnSave;
     private JComboBox cbbCategory;
-    private JButton btnNewCategory;
-    private JButton btnNewSize;
-    private JButton btnNewColor;
+    private JXHyperlink btnNewCategory;
+    private JXHyperlink btnNewSize;
+    private JXHyperlink btnNewColor;
     private JComboBox cbbSize;
     private JComboBox cbbColor;
     private FlatTable table;
     private JButton btnNewPresentation;
     private JComboBox cbbStyle;
     private JComboBox cbbSex;
-    private JButton btnNewSex;
+    private JXHyperlink btnNewSex;
     private ImageSlide imageSlide;
     private JButton btnAddImage;
     private JLabel quantityImages;
     private JButton btnNext;
     private JButton btnPrevious;
     private JComboBox cbbBrand;
-    private JButton btnNewBrand;
+    private JXHyperlink btnNewBrand;
+    private JXHyperlink btnNewStade;
+    private JComboBox cbbDimention;
+    private JXHyperlink btnNewDimention;
+    private JComboBox cbbStade;
     private Product product;
     private final boolean update;
     private PresentationsAbstractModel model;
@@ -142,6 +145,26 @@ public class DProduct extends JDialog{
                 onHecho();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        btnNewStade.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewStade();
+            }
+        });
+        btnNewDimention.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewDimention();
+            }
+        });
+    }
+    private void loadNewDimention(){
+        DDimention dDimention=new DDimention(new Dimention());
+        dDimention.setVisible(true);
+    }
+    private void loadNewStade(){
+        DStade dStade=new DStade(new Stade());
+        dStade.setVisible(true);
     }
     private void loadAddNewImage() {
         DCrop dCrop=new DCrop();
@@ -168,7 +191,7 @@ public class DProduct extends JDialog{
         }
     }
     private void loadNewPresentation(){
-        DPresentation dPresentation=new DPresentation(new Presentation(style));
+        DPresentation dPresentation=new DPresentation(new Presentation(product));
         dPresentation.setVisible(true);
     }
     private void loadNewSex(){
@@ -220,6 +243,10 @@ public class DProduct extends JDialog{
     }
 
     private void loadCombos(){
+        cbbDimention.setModel(new DefaultComboBoxModel(FPrincipal.dimentions));
+        cbbDimention.setRenderer(new Dimention.ListCellRenderer());
+        cbbStade.setModel(new DefaultComboBoxModel(FPrincipal.stades));
+        cbbStade.setRenderer(new Stade.ListCellRenderer());
         cbbStyle.setModel(new DefaultComboBoxModel(FPrincipal.styles));
         cbbStyle.setRenderer(new Style.ListCellRenderer());
         cbbCategory.setModel(new DefaultComboBoxModel(FPrincipal.categories));
@@ -238,6 +265,8 @@ public class DProduct extends JDialog{
         cbbColor.setSelectedIndex(-1);
         cbbSex.setSelectedIndex(-1);
         cbbBrand.setSelectedIndex(-1);
+        cbbDimention.setSelectedIndex(-1);
+        cbbStade.setSelectedIndex(-1);
         AutoCompleteDecorator.decorate(cbbStyle);
     }
     private void load(){
@@ -246,7 +275,9 @@ public class DProduct extends JDialog{
         cbbColor.setSelectedItem(product.getColor());
         cbbSize.setSelectedItem(product.getSize());
         cbbSex.setSelectedItem(product.getSex());
-        cbbBrand.setSelectedItem(product.getStyle().getBrand());
+        cbbBrand.setSelectedItem(product.getBrand());
+        cbbStade.setSelectedItem(product.getStade());
+        cbbDimention.setSelectedItem(product.getDimention());
         loadImages();
         loadQuantityImages();
         style=product.getStyle();
@@ -254,15 +285,22 @@ public class DProduct extends JDialog{
 
     private void loadImages(){
         product.getImages().forEach(img->{
-            imageSlide.addImage(new ImageIcon(Utilities.getImage(img)));
+            Image image=Utilities.getImage(img);
+            if(image!=null){
+                ImageIcon icon=new ImageIcon(image);
+                imageSlide.addImage(icon);
+            }else{
+                return;
+            }
         });
     }
 
     private void loadQuantityImages(){
         quantityImages.setText(String.valueOf(product.getImages().size()));
     }
+
     private void loadTable(){
-        model=new PresentationsAbstractModel(style.getPresentations());
+        model=new PresentationsAbstractModel(product.getPresentations());
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         PresentationCellRendered.setCellRenderer(table);
@@ -277,12 +315,14 @@ public class DProduct extends JDialog{
         }else{
             style.setName(String.valueOf(cbbStyle.getEditor().getItem()));
         }
-        style.setBrand((Brand) cbbBrand.getSelectedItem());
         style.setCategory((Category) cbbCategory.getSelectedItem());
         product.setStyle(style);
         product.setColor((Color) cbbColor.getSelectedItem());
         product.setSex((Sex) cbbSex.getSelectedItem());
         product.setSize((Size) cbbSize.getSelectedItem());
+        product.setStade((Stade) cbbStade.getSelectedItem());
+        product.setBrand((Brand) cbbBrand.getSelectedItem());
+        product.setDimention((Dimention) cbbDimention.getSelectedItem());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(style);
         constraintViolationSet.addAll(ProgramValidator.loadViolations(product));
         if(constraintViolationSet.isEmpty()){
@@ -315,6 +355,8 @@ public class DProduct extends JDialog{
         cbbSize.setSelectedIndex(-1);
         cbbColor.setSelectedIndex(-1);
         cbbSex.setSelectedIndex(-1);
+        cbbDimention.setSelectedIndex(-1);
+        cbbStade.setSelectedIndex(-1);
         loadStyle();
     }
     private void onHecho(){

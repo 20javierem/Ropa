@@ -18,6 +18,14 @@ public class DetailTransferAbstractModel extends AbstractTableModel {
     }
 
     @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        DetailTransfer detailTransfer=list.get(rowIndex);
+        if(columnIndex==4){
+            detailTransfer.setQuantity((Integer) aValue);
+        }
+    }
+
+    @Override
     public String getColumnName(int col) {
         return nameColumns[col];
     }
@@ -35,7 +43,7 @@ public class DetailTransferAbstractModel extends AbstractTableModel {
     }
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return typeColumns[columnIndex].equals(JButton.class);
+        return columnIndex == 4 || typeColumns[columnIndex].equals(JButton.class);
     }
 
     @Override

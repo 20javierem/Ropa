@@ -16,7 +16,7 @@ public class Presentation extends Babas {
     private Long id;
     @NotNull
     @ManyToOne
-    private Style style;
+    private Product product;
     @NotNull
     private Integer quantity;
     @NotEmpty(message = "Precios")
@@ -28,8 +28,8 @@ public class Presentation extends Babas {
     @Transient
     private Price priceDefault;
 
-    public Presentation(Style style){
-        this.style=style;
+    public Presentation(Product product){
+        this.product=product;
     }
 
     public Presentation() {
@@ -48,8 +48,8 @@ public class Presentation extends Babas {
         return id;
     }
 
-    public Style getStyle() {
-        return style;
+    public Product getProduct() {
+        return product;
     }
 
     public Integer getQuantity() {

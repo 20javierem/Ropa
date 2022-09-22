@@ -117,6 +117,7 @@ public class TabRecordTransfers {
     }
     private void init(){
         tabPane.setTitle("Historial de traslados");
+        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
         loadTable();
         loadCombos();
     }

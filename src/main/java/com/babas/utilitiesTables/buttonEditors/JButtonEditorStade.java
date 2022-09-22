@@ -1,12 +1,12 @@
 package com.babas.utilitiesTables.buttonEditors;
 
-import com.babas.models.Category;
 import com.babas.models.Color;
+import com.babas.models.Stade;
 import com.babas.utilities.Utilities;
-import com.babas.utilitiesTables.tablesModels.CategoryAbstractModel;
 import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
-import com.babas.views.dialogs.DCategory;
+import com.babas.utilitiesTables.tablesModels.StadeAbstractModel;
 import com.babas.views.dialogs.DColor;
+import com.babas.views.dialogs.DStade;
 import com.babas.views.frames.FPrincipal;
 
 import javax.swing.*;
@@ -15,11 +15,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class JButtonEditorCategory extends AbstractCellEditor implements TableCellEditor, ActionListener {
+public class JButtonEditorStade extends AbstractCellEditor implements TableCellEditor, ActionListener {
     private JButtonAction button;
     private boolean edit;
 
-    public JButtonEditorCategory(boolean edit) {
+    public JButtonEditorStade(boolean edit) {
         this.edit=edit;
         if(edit){
             button=new JButtonAction("x16/editar.png");
@@ -38,20 +38,20 @@ public class JButtonEditorCategory extends AbstractCellEditor implements TableCe
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
-            Category category=((CategoryAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            Stade stade=((StadeAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
-                DCategory dCategory=new DCategory(category);
-                dCategory.setVisible(true);
+                DStade dStade=new DStade(stade);
+                dStade.setVisible(true);
             }else{
-                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Categoría",JOptionPane.YES_NO_OPTION)==0;
+                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Estado",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
-                    category.refresh();
-                    FPrincipal.categories.remove(category);
-                    FPrincipal.categoriesWithAll.remove(category);
-                    if(category.getStyles().isEmpty()){
-                        category.delete();
+                    stade.refresh();
+                    FPrincipal.stades.remove(stade);
+                    FPrincipal.stadesWithAll.remove(stade);
+                    if(stade.getProducts().isEmpty()){
+                        stade.delete();
                     }else{
-                        category.setActive(false);
+                        stade.setActive(false);
                     }
                 }
             }

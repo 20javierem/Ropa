@@ -45,15 +45,15 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                 DPresentation dPresentation=new DPresentation(presentation);
                 dPresentation.setVisible(true);
             }else{
-                if (presentation.getStyle().getPresentations().size()>1){
+                if (presentation.getProduct().getPresentations().size()>1){
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Presentación",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         presentation.refresh();
-                        presentation.getStyle().getPresentations().remove(presentation);
+                        presentation.getProduct().getPresentations().remove(presentation);
                         if(presentation.isDefault()){
-                            presentation.getStyle().getPresentations().get(0).setDefault(true);
-                            presentation.getStyle().getPresentations().get(0).save();
-                            presentation.getStyle().setPresentationDefault(presentation.getStyle().getPresentations().get(0));
+                            presentation.getProduct().getPresentations().get(0).setDefault(true);
+                            presentation.getProduct().getPresentations().get(0).save();
+                            presentation.getProduct().setPresentationDefault(presentation.getProduct().getPresentations().get(0));
                         }
                         presentation.getPrices().forEach(Babas::delete);
                         presentation.delete();

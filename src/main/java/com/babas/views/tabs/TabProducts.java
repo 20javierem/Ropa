@@ -17,6 +17,7 @@ import com.formdev.flatlaf.icons.FlatSearchIcon;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputMethodListener;
 
 public class TabProducts {
     private TabPane tabPane;
@@ -29,6 +30,8 @@ public class TabProducts {
     private JButton btnNewProduct;
     private JButton btnAllSexs;
     private JButton btnBrands;
+    private JButton btnStades;
+    private JButton btnDimentions;
     private ProductAbstractModel model;
 
     public TabProducts(){
@@ -75,6 +78,26 @@ public class TabProducts {
                 loadBrands();
             }
         });
+        btnDimentions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadDimentions();
+            }
+        });
+        btnStades.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadStades();
+            }
+        });
+    }
+    private void loadDimentions(){
+        DAllDimentions dAllDimentions=new DAllDimentions();
+        dAllDimentions.setVisible(true);
+    }
+    private void loadStades(){
+        DAllStades dAllStades=new DAllStades();
+        dAllStades.setVisible(true);
     }
     private void loadBrands(){
         DAllBrands dAllBrands=new DAllBrands();

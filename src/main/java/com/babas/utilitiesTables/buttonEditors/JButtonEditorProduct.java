@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.dialogs.DCategory;
 import com.babas.views.dialogs.DImageProduct;
 import com.babas.views.dialogs.DProduct;
+import com.babas.views.dialogs.DProductCatalogue;
 import com.babas.views.frames.FPrincipal;
 
 import javax.swing.*;
@@ -65,7 +66,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                     }
                     break;
                 case "images":
-                    DImageProduct dImageProduct=new DImageProduct(product);
+                    DProductCatalogue dImageProduct=new DProductCatalogue(product);
                     dImageProduct.setVisible(true);
                     break;
             }

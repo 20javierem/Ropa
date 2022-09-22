@@ -31,6 +31,15 @@ public class Transfer extends Babas {
     private String description="";
     private Date created;
     private Date updated;
+    @Transient
+    private Boolean acept;
+
+    public Boolean isAcept() {
+        if(acept==null){
+            acept=state==1;
+        }
+        return acept;
+    }
 
     public Long getId() {
         return id;
@@ -106,6 +115,7 @@ public class Transfer extends Babas {
         getDestiny().getTransfers_destinys().add(Transfer.this);
         switch (getState()){
             case 0:
+                acept=true;
                 getDetailTransfers().forEach(detailTransfer -> {
                     Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
                     stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
@@ -113,12 +123,7 @@ public class Transfer extends Babas {
                 });
                 break;
             case 1:
-                if(Objects.equals(getSource().getId(), getDestiny().getId())){
-                    getDetailTransfers().forEach(detailTransfer -> {
-                        detailTransfer.getProduct().setStockTotal(detailTransfer.getProduct().getStockTotal()+detailTransfer.getQuantity());
-                        detailTransfer.getProduct().save();
-                    });
-                }
+                acept=true;
                 getDetailTransfers().forEach(detailTransfer -> {
                     if(Objects.equals(getSource().getId(), getDestiny().getId())){
                         detailTransfer.getProduct().setStockTotal(detailTransfer.getProduct().getStockTotal()+detailTransfer.getQuantity());
@@ -142,12 +147,25 @@ public class Transfer extends Babas {
                         detailTransfer.getProduct().setStockTotal(detailTransfer.getProduct().getStockTotal()-detailTransfer.getQuantity());
                         detailTransfer.getProduct().save();
                     });
+                    getDetailTransfers().forEach(detailTransfer -> {
+                        Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
+                        stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
+                        stock.save();
+                    });
+                }else{
+                    getDetailTransfers().forEach(detailTransfer -> {
+                        Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
+                        stock.setQuantity(stock.getQuantity()+detailTransfer.getQuantity());
+                        stock.save();
+                    });
+                    if(isAcept()){
+                        getDetailTransfers().forEach(detailTransfer -> {
+                            Stock stock= Stocks.getStock(getDestiny(),detailTransfer.getProduct());
+                            stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
+                            stock.save();
+                        });
+                    }
                 }
-                getDetailTransfers().forEach(detailTransfer -> {
-                    Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
-                    stock.setQuantity(stock.getQuantity()+detailTransfer.getQuantity());
-                    stock.save();
-                });
                 break;
         }
     }

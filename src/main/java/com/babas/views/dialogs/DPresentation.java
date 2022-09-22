@@ -110,35 +110,35 @@ public class DPresentation extends JDialog{
 
     private void onSave(){
         presentation.setQuantity((Integer) spinnerQuantity.getValue());
-        if(presentation.getStyle().getPresentations().size()<2){
+        if(presentation.getProduct().getPresentations().size()<2){
             presentation.setDefault(true);
         }else{
             presentation.setDefault(ckDefault.isSelected());
         }
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(presentation);
         if(constraintViolationSet.isEmpty()){
-            if(presentation.getStyle().getId()!=null){
+            if(presentation.getProduct().getId()!=null){
                 presentation.save();
                 if(presentation.isDefault()&&presentation.getPriceDefault()!=null){
-                    presentation.getStyle().getPresentationDefault().setDefault(false);
-                    presentation.getStyle().getPresentationDefault().save();
-                    presentation.getStyle().setPresentationDefault(presentation);
+                    presentation.getProduct().getPresentationDefault().setDefault(false);
+                    presentation.getProduct().getPresentationDefault().save();
+                    presentation.getProduct().setPresentationDefault(presentation);
                     presentation.setDefault(true);
                     presentation.save();
                 }
             }
             if(!update){
-                presentation.getStyle().getPresentations().add(presentation);
+                presentation.getProduct().getPresentations().add(presentation);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
-                presentation=new Presentation(presentation.getStyle());
+                presentation=new Presentation(presentation.getProduct());
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación registrada");
             }else{
                 if(presentation.isDefault()){
-                    presentation.getStyle().getPresentationDefault().setDefault(false);
-                    presentation.getStyle().getPresentationDefault().save();
-                    presentation.getStyle().setPresentationDefault(presentation);
+                    presentation.getProduct().getPresentationDefault().setDefault(false);
+                    presentation.getProduct().getPresentationDefault().save();
+                    presentation.getProduct().setPresentationDefault(presentation);
                     presentation.setDefault(true);
                     presentation.save();
                 }

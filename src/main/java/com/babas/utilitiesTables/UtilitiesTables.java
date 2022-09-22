@@ -63,32 +63,22 @@ public class UtilitiesTables {
         return componente;
     }
 
-    public static JPanel buscarTexto2(Map<Integer, String> listaFiltros, Object value, int column, Component component) {
+    public static DesingTxtTable buscarTexto2(Map<Integer, String> listaFiltros, Object value, int column, Component component) {
         DesingTxtTable desingTxtTable=new DesingTxtTable(component);
+        String contenido;
         if(value instanceof Date){
+            contenido=Utilities.formatoFechaHora.format(value);
             desingTxtTable.setString0(Utilities.formatoFechaHora.format(value));
-            desingTxtTable.setString1(null);
-            desingTxtTable.setString2(null);
         }else{
-            if(value instanceof Double){
-                desingTxtTable.setString0(Utilities.moneda.format(value));
-                desingTxtTable.setString1(null);
-                desingTxtTable.setString2(null);
-            }else{
-                desingTxtTable.setString0(String.valueOf(value));
-                desingTxtTable.setString1(null);
-                desingTxtTable.setString2(null);
-            }
+            contenido=String.valueOf(value);
+            desingTxtTable.setString0(String.valueOf(value));
         }
+        desingTxtTable.setString1(null);
+        desingTxtTable.setString2(null);
         if(listaFiltros!=null){
             if(listaFiltros.get(column)!=null){
                 String s = listaFiltros.get(column).toLowerCase();
-                if (s.length() > 0) {
-                    String contenido = String.valueOf(value);
-                    desingTxtTable.setString0(contenido);
-                    desingTxtTable.setString1(null);
-                    desingTxtTable.setString2(null);
-                    System.out.println(contenido);
+                if (s.length() > 0){
                     int index = contenido.toLowerCase().indexOf(s);
                     if (index >= 0) {
                         int end = index + s.length();
@@ -99,7 +89,7 @@ public class UtilitiesTables {
                 }
             }
         }
-        return desingTxtTable.getContentPane();
+        return desingTxtTable;
     }
 
     public static void pintarComponente(Component component,boolean estado,boolean isSelected){

@@ -74,6 +74,10 @@ public class FPrincipal extends JFrame{
     public static Vector<Category> categories;
     public static Vector<Category> categoriesWithAll;
     public static Vector<Color> colors;
+    public static Vector<Stade> stades;
+    public static Vector<Stade> stadesWithAll;
+    public static Vector<Dimention> dimentions;
+    public static Vector<Dimention> dimentionsWithAll;
     public static Vector<Color> colorsWithAll;
     public static Vector<Brand> brands;
     public static Vector<Brand> brandsWithAll;
@@ -271,6 +275,12 @@ public class FPrincipal extends JFrame{
     private void loadLists(){
         users=Users.getActives();
         branchs=Branchs.getActives();
+        stades=Stades.getActives();
+        stadesWithAll=new Vector<>(stades);
+        stadesWithAll.add(0,new Stade("TODAS"));
+        dimentions=Dimentions.getActives();
+        dimentionsWithAll=new Vector<>(dimentions);
+        dimentionsWithAll.add(0,new Dimention("TODAS"));
         branchesWithAll=new Vector<>(branchs);
         branchesWithAll.add(0,new Branch("TODAS"));
         categories= Categorys.getActives();

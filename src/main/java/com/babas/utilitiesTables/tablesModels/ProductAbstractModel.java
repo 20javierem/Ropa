@@ -1,6 +1,7 @@
 package com.babas.utilitiesTables.tablesModels;
 
 import com.babas.models.Product;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -49,9 +50,9 @@ public class ProductAbstractModel extends AbstractTableModel {
             case 3:
                 return product.getStyle().getCategory().getName();
             case 4:
-                return product.getStyle().getBrand().getName();
+                return product.getBrand().getName();
             case 5:
-                return product.getStyle().getPresentationDefault().getPriceDefault().getPrice();
+                return Utilities.moneda.format(product.getPresentationDefault().getPriceDefault().getPrice());
             case 6:
                 return product.getSize().getName();
             case 7:

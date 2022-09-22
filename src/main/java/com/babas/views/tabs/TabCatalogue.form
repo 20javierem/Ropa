@@ -33,7 +33,9 @@
                 <children>
                   <component id="9080d" class="com.formdev.flatlaf.extras.components.FlatTable" binding="table">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <rowHeight value="25"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

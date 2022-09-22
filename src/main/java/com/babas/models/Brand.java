@@ -24,7 +24,7 @@ public class Brand extends Babas {
     private Date updated;
     private boolean active=true;
     @OneToMany(mappedBy = "brand")
-    private List<Style> styles=new ArrayList<>();
+    private List<Product> products=new ArrayList<>();
 
     public Brand(String name) {
         this.name=name;
@@ -60,8 +60,8 @@ public class Brand extends Babas {
         this.active = active;
     }
 
-    public List<Style> getStyles() {
-        return styles;
+    public List<Product> getProducts() {
+        return products;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

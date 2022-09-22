@@ -1,6 +1,8 @@
 package com.babas.views.dialogs;
 
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +12,7 @@ public class DesingTxtTable {
     private JLabel string0;
     private JLabel string1;
     private JLabel string2;
+    private JPanel pane;
 
     public DesingTxtTable(Component component) {
         contentPane.setBorder(null);
@@ -20,6 +23,16 @@ public class DesingTxtTable {
         this.string1.setForeground(new JTextField().getSelectedTextColor());
         this.string2.setForeground(component.getForeground());
         this.string2.setBackground(component.getBackground());
+    }
+    public void setAligmentLeft(){
+    }
+    public void setAligmentRigth(){
+        GridLayoutManager gridLayoutManager= (GridLayoutManager) contentPane.getLayout();
+        gridLayoutManager.addLayoutComponent(pane,new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+    }
+    public void setAligmentCenter(){
+        GridLayoutManager gridLayoutManager= (GridLayoutManager) contentPane.getLayout();
+        gridLayoutManager.addLayoutComponent(pane,new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
     public void setString0(String string0){
         this.string0.setText(string0);

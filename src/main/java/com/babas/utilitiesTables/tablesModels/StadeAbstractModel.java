@@ -1,19 +1,19 @@
 package com.babas.utilitiesTables.tablesModels;
 
 import com.babas.models.Brand;
-import com.babas.models.Color;
+import com.babas.models.Stade;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
-public class BrandAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","ESTILOS","",""};
+public class StadeAbstractModel extends AbstractTableModel {
+    private final String[] nameColumns={"NOMBRE","PRODUCTOS","",""};
     private final Class[] typeColumns={String.class,Integer.class,JButton.class,JButton.class};
-    private final List<Brand> list;
+    private final List<Stade> list;
 
-    public BrandAbstractModel(List<Brand> list){
+    public StadeAbstractModel(List<Stade> list){
         this.list=list;
     }
 
@@ -39,12 +39,12 @@ public class BrandAbstractModel extends AbstractTableModel {
     }
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Brand brand= list.get(rowIndex);
+        Stade stade= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return brand.getName();
+                return stade.getName();
             case 1:
-                return brand.getProducts().size();
+                return stade.getProducts().size();
             case 2:
                 return new JButtonAction("x16/editar.png");
             default:
@@ -52,7 +52,7 @@ public class BrandAbstractModel extends AbstractTableModel {
         }
     }
 
-    public List<Brand> getList(){
+    public List<Stade> getList(){
         return list;
     }
 }

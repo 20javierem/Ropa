@@ -1,5 +1,7 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.views.dialogs.DesingTxtTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
@@ -33,46 +35,56 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JPanel componente=buscarTexto2(listaFiltros,value,column,component);
+            DesingTxtTable desingTxtTable=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "GÉNERO":
+                    desingTxtTable.setAligmentCenter();
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
+                    break;
+                case "MARCA":
+                    desingTxtTable.setAligmentCenter();
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
+                    break;
                 case "PRECIO":
-//                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    //                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    desingTxtTable.setAligmentRigth();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(110);
                     table.getColumn(table.getColumnName(column)).setMinWidth(110);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "TOTAL-STOCK":
                 case "CATEGORÍA":
-//                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    desingTxtTable.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "COLOR":
-//                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    desingTxtTable.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(75);
                     table.getColumn(table.getColumnName(column)).setMinWidth(75);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(75);
                     break;
                 case "TALLA":
-//                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    desingTxtTable.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(60);
                     table.getColumn(table.getColumnName(column)).setMinWidth(60);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(60);
                     break;
                 case "CÓDIGO":
-//                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    desingTxtTable.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(70);
                     table.getColumn(table.getColumnName(column)).setMinWidth(70);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(70);
                     break;
                 default:
-//                    componente.setHorizontalAlignment(SwingConstants.LEFT);
+                    desingTxtTable.setAligmentLeft();
                     break;
             }
-            return componente;
+            return desingTxtTable.getContentPane();
         }
     }
 

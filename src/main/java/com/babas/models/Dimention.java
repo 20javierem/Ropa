@@ -1,13 +1,11 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.AssertTrue;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.OrderBy;
-import org.hibernate.annotations.Where;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,23 +13,25 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "style_tbl")
-public class Style extends Babas {
-
+@Entity(name = "dimention_tbl")
+public class Dimention extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
     private Long id;
-    @NotBlank(message = "Nombre")
-    @NotNull(message = "Nombre")
+    @NotBlank
     private String name;
     private Date created;
     private Date updated;
-    @ManyToOne
-    @NotNull(message = "Categoría")
-    private Category category;
-    @OneToMany(mappedBy = "style")
-    @Where(clause = "active=true")
+    private boolean active=true;
+    @OneToMany(mappedBy = "dimention")
     private List<Product> products=new ArrayList<>();
+
+    public Dimention(){
+
+    }
+    public Dimention(String name){
+        this.name=name;
+    }
 
     public Long getId() {
         return id;
@@ -53,32 +53,28 @@ public class Style extends Babas {
         return updated;
     }
 
-    public Category getCategory() {
-        return category;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public List<Product> getProducts() {
         return products;
     }
 
-
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            if (value instanceof Style) {
-                value = ((Style) value).getName();
+            if (value instanceof Dimention) {
+                value = ((Dimention) value).getName();
+            }else{
+                value="--SELECCIONE--";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;
         }
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     @Override
@@ -90,5 +86,3 @@ public class Style extends Babas {
         super.save();
     }
 }
-
-

@@ -239,6 +239,7 @@ public class TabNewTraslade {
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Crear transferencia",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
                     transfer.save();
+                    FPrincipal.transfers.add(transfer);
                     Utilities.getTabbedPane().updateTab();
                     ((FPrincipal)Utilities.getJFrame()).loadTransferOnWait();
                     transfer=new Transfer();

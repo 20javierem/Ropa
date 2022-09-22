@@ -143,6 +143,9 @@
       <item class="com.formdev.flatlaf.extras.components.FlatLabel" icon="/com/intellij/uiDesigner/icons/label.png" removable="true" auto-create-binding="true" can-attach-label="true">
         <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
       </item>
+      <item class="org.jdesktop.swingx.JXHyperlink" icon="/com/intellij/uiDesigner/icons/button.png" removable="true" auto-create-binding="true" can-attach-label="true">
+        <default-constraints vsize-policy="3" hsize-policy="3" anchor="0" fill="0" />
+      </item>
     </group>
   </component>
 </project>

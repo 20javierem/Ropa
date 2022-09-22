@@ -2,9 +2,12 @@ package com.babas.models;
 
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 @Entity(name = "product_tbl")
 public class Product extends Babas {
@@ -34,6 +37,17 @@ public class Product extends Babas {
     private Integer stockTotal=0;
     private boolean active=true;
     private Long barcode;
+    @ManyToOne
+    private Stade stade;
+    @ManyToOne
+    private Dimention dimention;
+    @ManyToOne
+    private Brand brand;
+    @NotEmpty(message = "Presentaciones")
+    @OneToMany(mappedBy = "product")
+    private List<Presentation> presentations=new ArrayList<>();
+    @Transient
+    private Presentation presentationDefault;
 
     public Long getId() {
         return id;
@@ -103,6 +117,48 @@ public class Product extends Babas {
         return stocks;
     }
 
+    public Stade getStade() {
+        return stade;
+    }
+
+    public void setStade(Stade stade) {
+        this.stade = stade;
+    }
+
+    public Dimention getDimention() {
+        return dimention;
+    }
+
+    public Brand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Brand brand) {
+        this.brand = brand;
+    }
+
+    public void setDimention(Dimention dimention) {
+        this.dimention = dimention;
+    }
+
+    public List<Presentation> getPresentations() {
+        return presentations;
+    }
+    public void setPresentationDefault(Presentation presentationDefault){
+        this.presentationDefault=presentationDefault;
+    }
+    public Presentation getPresentationDefault() {
+        if(presentationDefault==null){
+            for (Presentation presentation : getPresentations()) {
+                if(presentation.isDefault()){
+                    presentationDefault=presentation;
+                    return presentationDefault;
+                }
+            }
+        }
+        return presentationDefault;
+    }
+
     @Override
     public void save() {
         if(created==null){
@@ -114,6 +170,7 @@ public class Product extends Babas {
             barcode=1000+getId();
             super.save();
         }
+        getPresentations().forEach(Presentation::save);
     }
 
     public void setStockTotal(Integer stockTotal) {
