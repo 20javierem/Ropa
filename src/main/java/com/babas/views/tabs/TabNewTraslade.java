@@ -254,24 +254,41 @@ public class TabNewTraslade {
             if(acept){
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar transferencia",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
-                    transfer.setState(1);
-                    transfer.setUpdated(new Date());
-                    transfer.save();
-                    ((FPrincipal)Utilities.getJFrame()).loadTransferOnWait();
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia aceptada");
+                    transfer.refresh();
+                    if(transfer.getState()!=0){
+                        transfer.setState(1);
+                        transfer.setUpdated(new Date());
+                        transfer.save();
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia aceptada");
+                    }else{
+                        if(transfer.getState()==1){
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"MENSAJE","La transferencia ya fue aceptada por otro usuario");
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"MENSAJE","La transferencia ya fue rechazada por otro usuario");
+                        }
+                    }
                     btnRechase.setVisible(false);
                     btnConfirm.setVisible(false);
+                    ((FPrincipal)Utilities.getJFrame()).loadTransferOnWait();
                 }
             }else{
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Rechazar transferencia",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
-                    transfer.setState(2);
-                    transfer.setUpdated(new Date());
-                    transfer.save();
-                    ((FPrincipal)Utilities.getJFrame()).loadTransferOnWait();
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia rechazada");
+                    if(transfer.getState()!=0){
+                        transfer.setState(2);
+                        transfer.setUpdated(new Date());
+                        transfer.save();
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia rechazada");
+                    }else{
+                        if(transfer.getState()==1){
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"MENSAJE","La transferencia ya fue aceptada por otro usuario");
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"MENSAJE","La transferencia ya fue rechazada por otro usuario");
+                        }
+                    }
                     btnRechase.setVisible(false);
                     btnConfirm.setVisible(false);
+                    ((FPrincipal)Utilities.getJFrame()).loadTransferOnWait();
                 }
             }
         }
