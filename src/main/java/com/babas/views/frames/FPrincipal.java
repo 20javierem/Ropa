@@ -15,15 +15,9 @@ import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DSettings;
 import com.babas.views.dialogs.DTransfersOnWait;
 import com.babas.views.menus.*;
-import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
-import com.formdev.flatlaf.icons.FlatFileChooserUpFolderIcon;
-import com.formdev.flatlaf.icons.FlatWindowRestoreIcon;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.plaf.IconUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -60,12 +54,14 @@ public class FPrincipal extends JFrame{
     private JPanel cPane;
     private FlatToggleButton btnTraslades;
     private FlatToggleButton btnReserves;
+    private FlatToggleButton btnRentals;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
+    private MenuRentals menuRentals;
     public static Vector<Branch> branchs;
     public static Vector<Branch> branchesWithAll;
     public static Vector<User> users;
@@ -157,6 +153,12 @@ public class FPrincipal extends JFrame{
                 menuTraslade.loadRecordTraslades();
             }
         });
+        btnRentals.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadMenuRentals();
+            }
+        });
     }
     private void reloadData(){
         btnActualizar.setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -227,7 +229,9 @@ public class FPrincipal extends JFrame{
     private void loadMenuReserves(){
         splitPane.setRightComponent(menuReserves.getContentPane());
     }
-
+    private void loadMenuRentals(){
+        splitPane.setRightComponent(menuRentals.getContentPane());
+    }
     private void init(){
         setContentPane(contentPane);
         setTitle("Software-Tienda");
@@ -244,6 +248,7 @@ public class FPrincipal extends JFrame{
         menuManage=new MenuManage(tabbedPane);
         menuTraslade=new MenuTraslade(tabbedPane);
         menuReserves=new MenuReserves(tabbedPane);
+        menuRentals=new MenuRentals(tabbedPane);
         setExtendedState(MAXIMIZED_BOTH);
         loadMenuItems();
         loadMenuSales();
@@ -319,6 +324,7 @@ public class FPrincipal extends JFrame{
         btnTraslades.setCursor(new Cursor(Cursor.HAND_CURSOR));
         paneNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReserves.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRentals.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {
@@ -336,5 +342,6 @@ public class FPrincipal extends JFrame{
         btnAdministrador=new CToggleButton();
         btnTraslades=new CToggleButton();
         btnReserves=new CToggleButton();
+        btnRentals =new CToggleButton();
     }
 }

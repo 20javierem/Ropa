@@ -34,9 +34,13 @@ public class User extends Babas {
     private Date lastLogin;
     private boolean active=true;
     private boolean staff=true;
-
     private Date birthday;
     @ManyToMany
+    @JoinTable(
+            name = "user_branch_tbl",
+            joinColumns = {@JoinColumn(name = "fk_user")},
+            inverseJoinColumns = {@JoinColumn(name = "fk_branch")}
+    )
     private List<Branch> branchs=new ArrayList<>();
     @OneToMany(mappedBy = "user")
     private List<Sale> sales=new ArrayList<>();

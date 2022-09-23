@@ -2,23 +2,20 @@ package com.babas.views.dialogs;
 
 import com.babas.models.Presentation;
 import com.babas.models.Price;
-import com.babas.models.Product;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorColor;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorPrice;
 import com.babas.utilitiesTables.tablesCellRendered.PriceCellRendered;
 import com.babas.utilitiesTables.tablesModels.PriceAbstractModel;
 import com.babas.validators.ProgramValidator;
-import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
+import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.moreno.Notify;
 import jakarta.validation.ConstraintViolation;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Objects;
 import java.util.Set;
 
 public class DPresentation extends JDialog{
@@ -30,6 +27,7 @@ public class DPresentation extends JDialog{
     private FlatSpinner spinnerPriceNew;
     private JButton btnNewPrice;
     private JCheckBox ckDefault;
+    private FlatTextField txtName;
     private Presentation presentation;
     private boolean update;
     private PriceAbstractModel model;
@@ -93,6 +91,7 @@ public class DPresentation extends JDialog{
 
     private void load(){
         spinnerQuantity.setValue(presentation.getQuantity());
+        txtName.setText(presentation.getName());
         if(update){
             ckDefault.setSelected(presentation.isDefault());
             ckDefault.setEnabled(!presentation.isDefault());
@@ -110,6 +109,7 @@ public class DPresentation extends JDialog{
 
     private void onSave(){
         presentation.setQuantity((Integer) spinnerQuantity.getValue());
+        presentation.setName(txtName.getText());
         if(presentation.getProduct().getPresentations().size()<2){
             presentation.setDefault(true);
         }else{

@@ -20,6 +20,7 @@ public class ImageSlide extends JComponent {
 
     public void clear(){
         images.clear();
+        indexOld=-1;
     }
 
     public ImageSlide() {
@@ -36,7 +37,7 @@ public class ImageSlide extends JComponent {
                 imageSplit = null;
             }
         };
-        animator = new Animator(1500, target);
+        animator = new Animator(1000, target);
         animator.setResolution(1);
         animator.setInterpolator(new Interpolator() {
             @Override

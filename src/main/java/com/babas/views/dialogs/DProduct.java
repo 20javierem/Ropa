@@ -170,6 +170,7 @@ public class DProduct extends JDialog{
             boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Eliminar imagen",JOptionPane.YES_NO_OPTION)==0;
             if(si){
                 product.getImages().remove(imageSlide.getIndexPosition());
+                product.getIcons().remove(imageSlide.getIndexPosition());
                 loadImages();
                 imageSlide.toNext();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Imagen eliminada");
@@ -198,7 +199,10 @@ public class DProduct extends JDialog{
                 if(Utilities.newImage(inputStream, nameImage)){
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
                     product.getImages().add(nameImage);
-                    product.save();
+                    product.getIcons().add(new ImageIcon(Utilities.getImage(nameImage)));
+                    if(update){
+                        product.save();
+                    }
                     imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage)));
                     loadQuantityImages();
                     imageSlide.toNext();
@@ -308,20 +312,16 @@ public class DProduct extends JDialog{
 
     private void loadImages(){
         imageSlide.clear();
-        product.getImages().forEach(img->{
-            Image image=Utilities.getImage(img);
-            if(image!=null){
-                ImageIcon icon=new ImageIcon(image);
+        product.getIcons().forEach(icon->{
+            if(icon!=null){
                 imageSlide.addImage(icon);
-            }else{
-                return;
             }
         });
         loadQuantityImages();
     }
 
     private void loadQuantityImages(){
-        quantityImages.setText(String.valueOf(product.getImages().size()));
+        quantityImages.setText(String.valueOf(product.getIcons().size()));
     }
 
     private void loadTable(){

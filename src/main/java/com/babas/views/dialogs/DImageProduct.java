@@ -82,13 +82,9 @@ public class DImageProduct extends JDialog{
         table.removeColumn(table.getColumn("PRODUCTO"));
     }
     private void loadImages(){
-        product.getImages().forEach(img->{
-            Image image=Utilities.getImage(img);
-            if(image!=null){
-                ImageIcon icon=new ImageIcon(image);
+        product.getIcons().forEach(icon->{
+            if(icon!=null){
                 imageSlide.addImage(icon);
-            }else{
-                return;
             }
         });
         lblTextImage.setText(imageSlide.getImagePosition());

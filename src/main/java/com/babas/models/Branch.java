@@ -26,7 +26,7 @@ public class Branch extends Babas {
     private String phone;
     @NotNull
     private boolean active=true;
-    @ManyToMany
+    @ManyToMany(mappedBy = "branchs")
     private List<User> users =new ArrayList<>();
     @OneToMany(mappedBy = "source")
     @Where(clause = "state=0")

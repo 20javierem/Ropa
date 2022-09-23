@@ -14,6 +14,7 @@ import com.formdev.flatlaf.extras.components.FlatTable;
 import com.moreno.Notify;
 import com.toedter.calendar.JDateChooser;
 import jakarta.validation.ConstraintViolation;
+import org.jdesktop.swingx.JXHyperlink;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -39,6 +40,7 @@ public class DUser extends JDialog{
     private JButton btnAddBranch;
     private JTextField txtPhone;
     private JCheckBox ckActive;
+    private JXHyperlink btnNewSex;
     private User user;
     private boolean update;
     private BranchAbstractModel modelBranchs;
@@ -84,8 +86,17 @@ public class DUser extends JDialog{
                 onHecho();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        btnNewSex.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewSex();
+            }
+        });
     }
-
+    private void loadNewSex(){
+        DSex dSex=new DSex(new Sex());
+        dSex.setVisible(true);
+    }
     private void addBranch(){
         if(tableBranchs.getSelectedRow()!=-1){
             Branch branch=modelBranchs.getList().get(tableBranchs.convertRowIndexToModel(tableBranchs.getSelectedRow()));

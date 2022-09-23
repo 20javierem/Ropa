@@ -2,13 +2,14 @@ package com.babas.views.dialogs;
 
 import com.babas.custom.ImageSlide;
 import com.babas.models.*;
-import com.babas.models.Color;
 import com.babas.utilities.Utilities;
+import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
+import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
+import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
-import java.util.List;
 import java.util.Vector;
 
 public class DProductCatalogue extends JDialog{
@@ -17,16 +18,20 @@ public class DProductCatalogue extends JDialog{
     private JButton btnPrevious;
     private JButton btnNext;
     private JPanel contentPane;
-    private JComboBox cbbBrands;
+    private JComboBox cbbBrand;
     private JLabel lblProduct;
-    private JComboBox cbbColors;
-    private JComboBox cbbSizes;
-    private JComboBox cbbStades;
-    private JComboBox cbbDimentions;
-    private JComboBox cbbQuantity;
+    private JComboBox cbbColor;
+    private JComboBox cbbSize;
+    private JComboBox cbbStade;
+    private JComboBox cbbDimention;
+    private JComboBox cbbPresentation;
     private JComboBox cbbPrice;
     private JComboBox cbbSex;
+    private JComboBox cbbStyle;
+    private JLabel lblCode;
+    private FlatTable table;
     private Product product;
+    private StockProductAbstractModel model;
     private int pX,pY;
 
     public DProductCatalogue(Product product){
@@ -75,103 +80,107 @@ public class DProductCatalogue extends JDialog{
 
             }
         });
+        cbbStyle.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadProduct();
+            }
+        });
+        cbbPresentation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadPrices();
+            }
+        });
     }
-    private void filter(){
 
-    }
     private void init(){
         setUndecorated(true);
         setContentPane(contentPane);
-        loadStyle();
+        loadProducts();
         loadProduct();
-        loadImages();
         pack();
         setLocationRelativeTo(getOwner());
         setResizable(false);
     }
 
     private void loadProduct(){
+        product= (Product) cbbStyle.getSelectedItem();
+        cbbBrand.removeAllItems();
         if(product.getBrand()!=null){
-            cbbBrands.setSelectedItem(product.getBrand());
+            cbbBrand.addItem(product.getBrand().getName());
+        }else{
+            cbbBrand.addItem("N/A");
         }
-        if(product.getColor()!=null){
-            cbbColors.setSelectedItem(product.getColor());
-        }
-        if(product.getSize()!=null){
-            cbbSizes.setSelectedItem(product.getSize());
-        }
-        if(product.getStade()!=null){
-            cbbStades.setSelectedItem(product.getStade());
-        }
-        if(product.getDimention()!=null){
-            cbbDimentions.setSelectedItem(product.getDimention());
-        }
+        cbbSex.removeAllItems();
         if(product.getSex()!=null){
-            cbbDimentions.setSelectedItem(product.getSex());
+            cbbSex.addItem(product.getSex().getName());
+        }else{
+            cbbSex.addItem("N/A");
         }
-        cbbQuantity.setModel(new DefaultComboBoxModel(new Vector(product.getPresentations())));
-        cbbQuantity.setRenderer(new Presentation.ListCellRenderer());
-        cbbPrice.setModel(new DefaultComboBoxModel(new Vector(((Presentation)cbbQuantity.getSelectedItem()).getPrices())));
+        cbbColor.removeAllItems();
+        if(product.getColor()!=null){
+            cbbColor.addItem(product.getColor().getName());
+        }else{
+            cbbColor.addItem("N/A");
+        }
+        cbbSize.removeAllItems();
+        if(product.getSize()!=null){
+            cbbSize.addItem(product.getSize().getName());
+        }else{
+            cbbSize.addItem("N/A");
+        }
+        cbbDimention.removeAllItems();
+        if(product.getDimention()!=null){
+            cbbDimention.addItem(product.getDimention().getName());
+        }else{
+            cbbDimention.addItem("N/A");
+        }
+        cbbStade.removeAllItems();
+        if(product.getStade()!=null){
+            cbbStade.addItem(product.getStade().getName());
+        }else{
+            cbbStade.addItem("N/A");
+        }
+        cbbPresentation.setModel(new DefaultComboBoxModel(new Vector(product.getPresentations())));
+        cbbPresentation.setRenderer(new Presentation.ListCellRenderer());
+        loadPrices();
+        lblCode.setText(String.valueOf(product.getBarcode()));
+        loadImages();
+        loadTable();
+    }
+    private void loadPrices(){
+        cbbPrice.setModel(new DefaultComboBoxModel(new Vector(((Presentation) cbbPresentation.getSelectedItem()).getPrices())));
         cbbPrice.setRenderer(new Price.ListCellRenderer());
     }
-    private void loadStyle(){
+    private void loadProducts(){
         lblProduct.setText(product.getStyle().getName());
-        Vector<Brand> brands=new Vector<>();
-//        brands.add(new Brand("--TODAS--"));
-        Vector<Color> colors=new Vector<>();
-//        colors.add(new Color("--TODOS--"));
-        Vector<Size> sizes=new Vector<>();
-//        sizes.add(new Size("--TODOS--"));
-        Vector<Stade> stades=new Vector<>();
-//        stades.add(new Stade("--TODOS--"));
-        Vector<Dimention> dimentions=new Vector<>();
-//        dimentions.add(new Dimention("--TODAS--"));
-        Vector<Sex> sexs=new Vector<>();
-        product.getStyle().getProducts().forEach(product1 -> {
-            if(product1.getBrand()!=null&&!brands.contains(product1.getBrand())){
-                brands.add(product1.getBrand());
-            }
-            if(product1.getColor()!=null&&!colors.contains(product1.getColor())){
-                colors.add(product1.getColor());
-            }
-            if(product1.getSize()!=null&&!sizes.contains(product1.getSize())){
-                sizes.add(product1.getSize());
-            }
-            if(product1.getStade()!=null&&!stades.contains(product1.getStade())){
-                stades.add(product1.getStade());
-            }
-            if(product1.getDimention()!=null&&!dimentions.contains(product1.getDimention())){
-                dimentions.add(product1.getDimention());
-            }
-            if(product1.getSex()!=null&&!sexs.contains(product1.getSex())){
-                sexs.add(product1.getSex());
-            }
-        });
-        cbbSex.setModel(new DefaultComboBoxModel(sexs));
-        cbbSex.setRenderer(new Sex.ListCellRenderer());
-        cbbBrands.setModel(new DefaultComboBoxModel(brands));
-        cbbBrands.setRenderer(new Brand.ListCellRenderer());
-        cbbColors.setModel(new DefaultComboBoxModel(colors));
-        cbbColors.setRenderer(new Color.ListCellRenderer());
-        cbbSizes.setModel(new DefaultComboBoxModel(sizes));
-        cbbSizes.setRenderer(new Size.ListCellRenderer());
-        cbbStades.setModel(new DefaultComboBoxModel(stades));
-        cbbStades.setRenderer(new Stade.ListCellRenderer());
-        cbbDimentions.setModel(new DefaultComboBoxModel(dimentions));
-        cbbDimentions.setRenderer(new Dimention.ListCellRenderer());
+        cbbStyle.setModel(new DefaultComboBoxModel(new Vector(product.getStyle().getProducts())));
+        cbbStyle.setRenderer(new Product.ListCellRenderer());
+        cbbStyle.setSelectedItem(product);
     }
 
     private void loadImages(){
-        product.getImages().forEach(img->{
-            Image image=Utilities.getImage(img);
-            if(image!=null){
-                ImageIcon icon=new ImageIcon(image);
+        imageSlide.clear();
+        product.getIcons().forEach(icon-> {
+            if(icon!=null){
                 imageSlide.addImage(icon);
-            }else{
-                return;
             }
         });
         lblTextImage.setText(imageSlide.getImagePosition());
+        try {
+            imageSlide.toNext();
+        }catch (Exception ignored){
+
+        }
+    }
+
+    private void loadTable(){
+        model=new StockProductAbstractModel(product.getStocks());
+        table.setModel(model);
+        StockCellRendered.setCellRenderer(table,null);
+        UtilitiesTables.headerNegrita(table);
+        table.removeColumn(table.getColumn("PRODUCTO"));
     }
 
 }

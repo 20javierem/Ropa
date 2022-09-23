@@ -3,6 +3,7 @@ package com.babas.models;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,6 +21,8 @@ public class Presentation extends Babas {
     @NotNull
     @ManyToOne
     private Product product;
+    @NotBlank(message = "Nombre")
+    private String name;
     @NotNull
     private Integer quantity;
     @NotEmpty(message = "Precios")
@@ -37,6 +40,14 @@ public class Presentation extends Babas {
 
     public Presentation() {
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getCreated() {
@@ -82,7 +93,7 @@ public class Presentation extends Babas {
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Presentation) {
-                value = ((Presentation) value).getQuantity();
+                value = ((Presentation) value).getName();
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

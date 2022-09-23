@@ -36,7 +36,7 @@ public class Products extends Babas {
         criteria = builder.createQuery(Product.class);
         root=criteria.from(Product.class);
         criteria.select(root)
-                .where(builder.and((Predicate) getPredicates(style,color,size,sex,brand,stade,dimention).spliterator()));
+                .where(builder.and());
         return new Vector<>(session.createQuery(criteria).getResultList());
     };
 

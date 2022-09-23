@@ -198,7 +198,7 @@
               <color color="-4473925"/>
             </border>
             <children>
-              <grid id="616d0" binding="panelControles" custom-create="true" layout-manager="GridLayoutManager" row-count="8" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="0">
+              <grid id="616d0" binding="panelControles" custom-create="true" layout-manager="GridLayoutManager" row-count="9" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="0">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <splitpane position="left"/>
@@ -208,14 +208,14 @@
                 <children>
                   <component id="9821e" class="javax.swing.JSeparator">
                     <constraints>
-                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties/>
                   </component>
                   <grid id="2b785" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="2" left="0" bottom="2" right="0"/>
                     <constraints>
-                      <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <opaque value="false"/>
@@ -248,13 +248,13 @@
                   </grid>
                   <vspacer id="f3876">
                     <constraints>
-                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
                   <grid id="2f755" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                     <margin top="0" left="0" bottom="10" right="0"/>
                     <constraints>
-                      <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                      <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <opaque value="false"/>
@@ -315,7 +315,7 @@
                   </component>
                   <component id="82e7d" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnManagement" custom-create="true">
                     <constraints>
-                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <buttonType value="tab"/>
@@ -335,7 +335,7 @@
                   </component>
                   <component id="c68e9" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnReserves" custom-create="true">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <buttonType value="tab"/>
@@ -355,7 +355,7 @@
                   </component>
                   <component id="5d0af" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnTraslades" custom-create="true">
                     <constraints>
-                      <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <buttonType value="tab"/>
@@ -370,6 +370,26 @@
                       <tabUnderlineHeight value="5"/>
                       <tabUnderlinePlacement value="2"/>
                       <text value="Traslados"/>
+                      <verticalTextPosition value="3"/>
+                    </properties>
+                  </component>
+                  <component id="b1dfc" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnRentals" custom-create="true">
+                    <constraints>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <buttonType value="tab"/>
+                      <focusable value="false"/>
+                      <font style="1"/>
+                      <horizontalTextPosition value="0"/>
+                      <icon value="com/babas/icons/x32/gestionarSelected.png"/>
+                      <iconTextGap value="-2"/>
+                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <rolloverEnabled value="false"/>
+                      <selectedIcon value="com/babas/icons/x32/gestionarDefault.png"/>
+                      <tabUnderlineHeight value="5"/>
+                      <tabUnderlinePlacement value="2"/>
+                      <text value="Alquileres"/>
                       <verticalTextPosition value="3"/>
                     </properties>
                   </component>
@@ -441,6 +461,7 @@
       <member id="54a19"/>
       <member id="5d0af"/>
       <member id="c68e9"/>
+      <member id="b1dfc"/>
     </group>
   </buttonGroups>
 </form>

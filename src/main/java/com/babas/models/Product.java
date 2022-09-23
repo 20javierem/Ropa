@@ -1,10 +1,12 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
@@ -48,6 +50,8 @@ public class Product extends Babas {
     private List<Presentation> presentations=new ArrayList<>();
     @Transient
     private Presentation presentationDefault;
+    @Transient
+    private List<Icon> icons=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -147,6 +151,22 @@ public class Product extends Babas {
     public void setPresentationDefault(Presentation presentationDefault){
         this.presentationDefault=presentationDefault;
     }
+    public static class ListCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            if (value instanceof Product) {
+                Product product=(Product) value;
+                value = product.getBrand().getName()+" / "+product.getSex().getName()+" / "+product.getSize().getName()+" / "+product.getColor().getName();
+                if(product.getStade()!=null){
+                   value+=" / "+product.getStade().getName();
+                }
+                if(product.getDimention()!=null){
+                    value+=" / "+product.getDimention().getName();
+                }
+            }
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            return this;
+        }
+    }
     public Presentation getPresentationDefault() {
         if(presentationDefault==null){
             for (Presentation presentation : getPresentations()) {
@@ -158,7 +178,22 @@ public class Product extends Babas {
         }
         return presentationDefault;
     }
-
+    public List<Icon> getIcons(){
+        if(icons.size()==images.size()){
+            return  icons;
+        }else{
+            icons.clear();
+            images.forEach(image->{
+                Image img=Utilities.getImage(image);
+                if(img!=null){
+                    icons.add(new ImageIcon(img));
+                }else{
+                    icons.add(null);
+                }
+            });
+            return icons;
+        }
+    }
     @Override
     public void save() {
         if(created==null){
