@@ -4,6 +4,7 @@ import com.babas.controllers.Stocks;
 import com.babas.models.Category;
 import com.babas.models.Stock;
 import com.babas.models.Transfer;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.CategoryAbstractModel;
 import com.babas.utilitiesTables.tablesModels.TransferAbstractModel;
@@ -55,6 +56,7 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar transferencia",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         transfer.refresh();
+                        transfer.getDetailTransfers().forEach( detailTransfer -> detailTransfer.getProduct().getStocks().forEach(Babas::refresh));
                         if(transfer.getState()!=2){
                             transfer.setState(2);
                             transfer.setUpdated(new Date());
