@@ -8,7 +8,6 @@ import com.babas.utilities.Utilities;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -24,6 +23,9 @@ public class DProductCatalogue extends JDialog{
     private JComboBox cbbSizes;
     private JComboBox cbbStades;
     private JComboBox cbbDimentions;
+    private JComboBox cbbQuantity;
+    private JComboBox cbbPrice;
+    private JComboBox cbbSex;
     private Product product;
     private int pX,pY;
 
@@ -67,8 +69,16 @@ public class DProductCatalogue extends JDialog{
                 dispose();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-    }
+        cbbSex.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+    }
+    private void filter(){
+
+    }
     private void init(){
         setUndecorated(true);
         setContentPane(contentPane);
@@ -96,20 +106,27 @@ public class DProductCatalogue extends JDialog{
         if(product.getDimention()!=null){
             cbbDimentions.setSelectedItem(product.getDimention());
         }
-
+        if(product.getSex()!=null){
+            cbbDimentions.setSelectedItem(product.getSex());
+        }
+        cbbQuantity.setModel(new DefaultComboBoxModel(new Vector(product.getPresentations())));
+        cbbQuantity.setRenderer(new Presentation.ListCellRenderer());
+        cbbPrice.setModel(new DefaultComboBoxModel(new Vector(((Presentation)cbbQuantity.getSelectedItem()).getPrices())));
+        cbbPrice.setRenderer(new Price.ListCellRenderer());
     }
     private void loadStyle(){
         lblProduct.setText(product.getStyle().getName());
         Vector<Brand> brands=new Vector<>();
-        brands.add(new Brand("--TODAS--"));
+//        brands.add(new Brand("--TODAS--"));
         Vector<Color> colors=new Vector<>();
-        colors.add(new Color("--TODOS--"));
+//        colors.add(new Color("--TODOS--"));
         Vector<Size> sizes=new Vector<>();
-        sizes.add(new Size("--TODOS--"));
+//        sizes.add(new Size("--TODOS--"));
         Vector<Stade> stades=new Vector<>();
-        stades.add(new Stade("--TODOS--"));
+//        stades.add(new Stade("--TODOS--"));
         Vector<Dimention> dimentions=new Vector<>();
-        dimentions.add(new Dimention("--TODAS--"));
+//        dimentions.add(new Dimention("--TODAS--"));
+        Vector<Sex> sexs=new Vector<>();
         product.getStyle().getProducts().forEach(product1 -> {
             if(product1.getBrand()!=null&&!brands.contains(product1.getBrand())){
                 brands.add(product1.getBrand());
@@ -126,7 +143,12 @@ public class DProductCatalogue extends JDialog{
             if(product1.getDimention()!=null&&!dimentions.contains(product1.getDimention())){
                 dimentions.add(product1.getDimention());
             }
+            if(product1.getSex()!=null&&!sexs.contains(product1.getSex())){
+                sexs.add(product1.getSex());
+            }
         });
+        cbbSex.setModel(new DefaultComboBoxModel(sexs));
+        cbbSex.setRenderer(new Sex.ListCellRenderer());
         cbbBrands.setModel(new DefaultComboBoxModel(brands));
         cbbBrands.setRenderer(new Brand.ListCellRenderer());
         cbbColors.setModel(new DefaultComboBoxModel(colors));

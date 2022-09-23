@@ -4,6 +4,7 @@ import com.babas.utilities.Babas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.Where;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,8 +29,10 @@ public class Branch extends Babas {
     @ManyToMany
     private List<User> users =new ArrayList<>();
     @OneToMany(mappedBy = "source")
+    @Where(clause = "state=0")
     private List<Transfer> transfers_sources =new ArrayList<>();
     @OneToMany(mappedBy = "destiny")
+    @Where(clause = "state=0")
     private List<Transfer> transfers_destinys =new ArrayList<>();
     @Transient
     private List<Transfer> transfers=new ArrayList<>();

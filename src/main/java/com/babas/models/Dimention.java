@@ -70,7 +70,7 @@ public class Dimention extends Babas {
             if (value instanceof Dimention) {
                 value = ((Dimention) value).getName();
             }else{
-                value="--SELECCIONE--";
+                value="N/A";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

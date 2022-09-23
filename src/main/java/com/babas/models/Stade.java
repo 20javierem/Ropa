@@ -69,7 +69,7 @@ public class Stade extends Babas {
             if (value instanceof Stade) {
                 value = ((Stade) value).getName();
             }else{
-                value="--SELECCIONE--";
+                value="N/A";
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
             return this;

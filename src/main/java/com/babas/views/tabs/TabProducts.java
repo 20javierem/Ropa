@@ -28,7 +28,6 @@ public class TabProducts {
     private JButton btnBrands;
     private JButton btnStades;
     private JButton btnDimentions;
-    private JButton btnNewProduct;
     private ProductAbstractModel model;
 
     public TabProducts(){
