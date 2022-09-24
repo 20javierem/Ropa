@@ -162,6 +162,7 @@ public class FPrincipal extends JFrame{
             }
         });
     }
+
     private void reloadData(){
         btnActualizar.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         branchs.forEach(Babas::refresh);
@@ -177,6 +178,7 @@ public class FPrincipal extends JFrame{
         tabbedPane.updateTab();
         loadTransferOnWait();
     }
+
     private void loadDialogTransfers(){
         if(!transfersOnWait.isEmpty()){
             DTransfersOnWait dTransfersOnWait=new DTransfersOnWait(transfersOnWait);
@@ -219,18 +221,22 @@ public class FPrincipal extends JFrame{
         btnMenuInicio.add(menuCompany);
         btnMenuBox.add(menuBox);
     }
+
     private void loadBox(){
         DBox dBox=new DBox();
         dBox.setVisible(true);
     }
+
     private void loadSettings(){
         DSettings dSettings=new DSettings(this);
         dSettings.setVisible(true);
     }
+
     private void loadCompany(){
         DCompany dCompany=new DCompany();
         dCompany.setVisible(true);
     }
+
     private void loadMenuAlmacen() {
         splitPane.setRightComponent(menuAlmacen.getContentPane());
     }
