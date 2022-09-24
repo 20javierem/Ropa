@@ -26,6 +26,7 @@ public class Sale extends Babas {
     private Double totalCurrent=0.0;
     private Date created;
     private Date updated;
+    private boolean active=true;
     @ManyToOne
     @NotNull
     private Branch branch;
@@ -100,6 +101,14 @@ public class Sale extends Babas {
 
     public void setBranch(Branch branch) {
         this.branch = branch;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

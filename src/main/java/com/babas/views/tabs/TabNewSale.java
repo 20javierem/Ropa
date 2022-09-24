@@ -17,15 +17,14 @@ public class TabNewSale {
     private JButton btnAddProducts;
     private JTable tabla;
     private JComboBox cbbBranchs;
-    private JComboBox cbbTipoClient;
     private JLabel lblTotalUSD;
     private JLabel lblTotalPesos;
     private JButton btnSaleWithCash;
-    private JButton btnSaleWithTransfer;
-    private JComboBox cbbVendedor;
     private JLabel lblLogo;
     private FlatTextField txtDocument;
     private FlatTextField txtRazonSocial;
+    private FlatTextField txtPhone;
+    private FlatTextField txtMail;
     private Sale sale;
 
     public TabNewSale(){

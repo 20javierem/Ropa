@@ -16,6 +16,9 @@ public class Client extends Babas {
     private Date updated;
     private String dni;
     private String names;
+    private String mail;
+    private String phone;
+
     @OneToMany(mappedBy = "client")
     private List<Sale> sales=new ArrayList<>();
 
@@ -51,6 +54,21 @@ public class Client extends Babas {
         return sales;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     @Override
     public void save() {

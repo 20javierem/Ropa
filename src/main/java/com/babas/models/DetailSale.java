@@ -1,10 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
@@ -18,13 +15,15 @@ public class DetailSale extends Babas {
     @ManyToOne
     @NotNull(message = "Producto")
     private Product product;
-    @ManyToOne
+    @Transient
     @NotNull(message = "Producto")
     private Presentation presentation;
     @Min(value = 1,message = "Cantidad")
     private Integer quantity;
     private Double subtotal=0.0;
-    private Double priceUnity;
+    private Double priceUnity=0.0;
+    private String namePresentation;
+    private Integer quantityPresentation;
 
     public Long getId() {
         return id;
@@ -76,5 +75,21 @@ public class DetailSale extends Babas {
 
     public void setPriceUnity(Double priceUnity) {
         this.priceUnity = priceUnity;
+    }
+
+    public String getNamePresentation() {
+        return namePresentation;
+    }
+
+    public void setNamePresentation(String namePresentation) {
+        this.namePresentation = namePresentation;
+    }
+
+    public Integer getQuantityPresentation() {
+        return quantityPresentation;
+    }
+
+    public void setQuantityPresentation(Integer quantityPresentation) {
+        this.quantityPresentation = quantityPresentation;
     }
 }
