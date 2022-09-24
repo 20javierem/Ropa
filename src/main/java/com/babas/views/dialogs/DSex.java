@@ -73,7 +73,11 @@ public class DSex extends JDialog{
                 FPrincipal.sexs.add(sex);
                 FPrincipal.sexsWithAll.add(sex);
                 Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
+                if(Utilities.getTabbedPane()!=null){
+                    Utilities.getTabbedPane().updateTab();
+                }else{
+                    onHecho();
+                }
                 sex=new Sex();
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Género registrado");

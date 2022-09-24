@@ -62,7 +62,9 @@ public class Utilities {
     public static Propiedades propiedades;
     public static SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
     public static List<JTable> tables=new ArrayList<>();
-    public static JLabel lblIzquiera;
+    private static JLabel lblIzquierda;
+    private static JLabel lblCentro;
+    private static JLabel lblDerecha;
     public static JButton actions=new JButton();
 
     public static JButton getActionsOfDialog(){
@@ -346,6 +348,30 @@ public class Utilities {
         return jFrame;
     }
 
+    public static JLabel getLblIzquierda() {
+        return lblIzquierda;
+    }
+
+    public static void setLblIzquierda(JLabel lblIzquierda) {
+        Utilities.lblIzquierda = lblIzquierda;
+    }
+
+    public static JLabel getLblCentro() {
+        return lblCentro;
+    }
+
+    public static void setLblCentro(JLabel lblCentro) {
+        Utilities.lblCentro = lblCentro;
+    }
+
+    public static JLabel getLblDerecha() {
+        return lblDerecha;
+    }
+
+    public static void setLblDerecha(JLabel lblDerecha) {
+        Utilities.lblDerecha = lblDerecha;
+    }
+
     public static TabbedPane getTabbedPane() {
         return tabbedPane;
     }
@@ -520,11 +546,7 @@ public class Utilities {
         return new SecretKeySpec(keyTmp.getEncoded(), "AES");
     }
     public static String encriptar(String contraseña){
-        if(contraseña!=null){
-            return encrypt(contraseña,getSecretKey());
-        }else{
-            return null;
-        }
+        return encrypt(contraseña,getSecretKey());
     }
     public static String desencriptar(String contraseña){
         if(contraseña!=null){

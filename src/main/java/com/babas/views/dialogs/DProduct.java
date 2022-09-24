@@ -63,6 +63,17 @@ public class DProduct extends JDialog{
         this.product=product;
         update=product.getId()!=null;
         init();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onHecho();
+            }
+        });
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         cbbStyle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -135,17 +146,6 @@ public class DProduct extends JDialog{
                 imageSlide.toNext();
             }
         });
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                onHecho();
-            }
-        });
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         btnNewStade.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

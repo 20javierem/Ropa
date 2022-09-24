@@ -24,6 +24,8 @@ public class Branch extends Babas {
     private String direction;
     @NotBlank(message = "Celular")
     private String phone;
+    @ManyToOne
+    private Company company;
     @NotNull
     private boolean active=true;
     @ManyToMany(mappedBy = "branchs")
@@ -120,6 +122,14 @@ public class Branch extends Babas {
 
     public List<Transfer> getTransfers_destinys() {
         return transfers_destinys;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

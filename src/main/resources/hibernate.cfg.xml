@@ -34,5 +34,7 @@
         <mapping class="com.babas.models.Brand"/>
         <mapping class="com.babas.models.Dimention"/>
         <mapping class="com.babas.models.Stade"/>
+        <mapping class="com.babas.models.Company"/>
+        <mapping class="com.babas.models.Box"/>
     </session-factory>
 </hibernate-configuration>

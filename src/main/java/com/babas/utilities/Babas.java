@@ -1,5 +1,7 @@
 package com.babas.utilities;
 
+import com.babas.models.Box;
+import com.babas.models.Company;
 import com.babas.models.User;
 import com.moreno.Notify;
 import com.thoughtworks.qdox.model.expression.Not;
@@ -18,7 +20,9 @@ public class Babas {
     public static boolean state;
     private static SessionFactory sessionFactory;
     public static User user;
-
+    public static Box box=new Box();
+    public static Company company=new Company();
+    
     public static void initialize() {
         buildSessionFactory();
         state=true;

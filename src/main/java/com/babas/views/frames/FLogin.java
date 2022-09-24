@@ -41,7 +41,7 @@ public class FLogin extends JFrame {
     private void loadUserSaved(){
         String userName=Utilities.propiedades.getUserName();
         String userPassword=Utilities.propiedades.getUserPassword();;
-        if(userName!=null){
+        if(!userName.isBlank()){
             fieldUser.setText(userName);
             fieldPasword.setText(userPassword);
             ckRememberUser.setSelected(true);
@@ -55,7 +55,7 @@ public class FLogin extends JFrame {
         if(!userName.isBlank()&&!userPassword.isBlank()){
             User user=Users.getByUserName(userName);
             if(user!=null){
-                if(user.getUserPassword().equals(userPassword)){
+                if(user.getUserName().equals(userName)&&user.getUserPassword().equals(userPassword)){
                     user.setLastLogin(new Date());
                     user.save();
                     Babas.user=user;
@@ -83,8 +83,8 @@ public class FLogin extends JFrame {
             Utilities.propiedades.setUserName(fieldUser.getText().trim());
             Utilities.propiedades.setUserPassword(new String(fieldPasword.getPassword()));
         }else{
-            Utilities.propiedades.setUserName(null);
-            Utilities.propiedades.setUserPassword(null);
+            Utilities.propiedades.setUserName("");
+            Utilities.propiedades.setUserPassword("");
         }
         Utilities.propiedades.guardar();
     }

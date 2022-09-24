@@ -2,7 +2,9 @@ package com.babas.views.dialogs;
 
 import com.babas.utilities.Utilities;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatComboBox;
+import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -105,7 +107,6 @@ public class DSettings extends JDialog{
     private void onDispose(){
         dispose();
     }
-
     private void onCancel(){
         Utilities.loadTheme();
         Utilities.updateUI();

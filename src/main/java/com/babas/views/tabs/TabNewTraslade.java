@@ -163,7 +163,7 @@ public class TabNewTraslade {
     }
     private void init(){
         tabPane.setTitle("Nuevo traslado");
-        ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("Images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+        ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
         lblLogo.setIcon(logo);
         loadCombos();
         paneTraslade.setVisible(false);

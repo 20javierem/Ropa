@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="963" height="863"/>
+      <xy x="20" y="20" width="932" height="589"/>
     </constraints>
     <properties/>
     <border type="none" title=""/>
@@ -12,8 +12,8 @@
         <margin top="10" left="10" bottom="10" right="10"/>
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <minimum-size width="750" height="750"/>
-            <preferred-size width="750" height="750"/>
+            <minimum-size width="550" height="350"/>
+            <preferred-size width="550" height="350"/>
           </grid>
         </constraints>
         <properties/>
@@ -265,7 +265,9 @@
           </component>
           <scrollpane id="b098">
             <constraints>
-              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="9" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                <preferred-size width="-1" height="250"/>
+              </grid>
             </constraints>
             <properties/>
             <border type="none"/>

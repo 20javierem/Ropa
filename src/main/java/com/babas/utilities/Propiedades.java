@@ -62,7 +62,7 @@ public class Propiedades {
 
     public String getUserPassword(){
         String pasword=properties.getProperty("userPassword");
-        return pasword==null?"":Utilities.desencriptar(pasword);
+        return pasword.isEmpty()?"":Utilities.desencriptar(pasword);
     }
     public void setUserPassword(String password){
         properties.put("userPassword",Utilities.encriptar(password));

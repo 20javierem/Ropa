@@ -11,6 +11,7 @@ import com.babas.models.Color;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
+import com.babas.views.dialogs.DBox;
 import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DSettings;
 import com.babas.views.dialogs.DTransfersOnWait;
@@ -34,9 +35,9 @@ public class FPrincipal extends JFrame{
     private JButton btnNuevoInventario;
     private JButton btnHistorialTransfers;
     private JButton btnActualizar;
-    private JLabel lblCentro;
-    private JLabel lblDerecha;
-    private JLabel lblSucursal;
+    private JLabel lblCenter;
+    private JLabel lblRigth;
+    private JLabel lblLeft;
     private JSplitPane splitPane;
     private JPanel panelControles;
     private FlatToggleButton btnInventary;
@@ -55,6 +56,7 @@ public class FPrincipal extends JFrame{
     private FlatToggleButton btnTraslades;
     private FlatToggleButton btnReserves;
     private FlatToggleButton btnRentals;
+    private JMenu btnMenuBox;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
@@ -62,28 +64,28 @@ public class FPrincipal extends JFrame{
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
     private MenuRentals menuRentals;
-    public static Vector<Branch> branchs;
-    public static Vector<Branch> branchesWithAll;
-    public static Vector<User> users;
-    public static Vector<User> usersWithAll;
-    public static Vector<Product> products;
-    public static Vector<Category> categories;
-    public static Vector<Category> categoriesWithAll;
-    public static Vector<Color> colors;
-    public static Vector<Stade> stades;
-    public static Vector<Stade> stadesWithAll;
-    public static Vector<Dimention> dimentions;
-    public static Vector<Dimention> dimentionsWithAll;
-    public static Vector<Color> colorsWithAll;
-    public static Vector<Brand> brands;
-    public static Vector<Brand> brandsWithAll;
-    public static Vector<Size> sizes;
-    public static Vector<Size> sizesWithAll;
-    public static Vector<Sex> sexs;
-    public static Vector<Sex> sexsWithAll;
-    public static Vector<Style> styles;
+    public static Vector<Branch> branchs=new Vector<>();
+    public static Vector<Branch> branchesWithAll=new Vector<>();
+    public static Vector<User> users=Users.getActives();
+    public static Vector<User> usersWithAll=new Vector<>();
+    public static Vector<Product> products=new Vector<>();
+    public static Vector<Category> categories=new Vector<>();
+    public static Vector<Category> categoriesWithAll=new Vector<>();
+    public static Vector<Color> colors=new Vector<>();
+    public static Vector<Stade> stades=new Vector<>();
+    public static Vector<Stade> stadesWithAll=new Vector<>();
+    public static Vector<Dimention> dimentions=new Vector<>();
+    public static Vector<Dimention> dimentionsWithAll=new Vector<>();
+    public static Vector<Color> colorsWithAll=new Vector<>();
+    public static Vector<Brand> brands=new Vector<>();
+    public static Vector<Brand> brandsWithAll=new Vector<>();
+    public static Vector<Size> sizes=new Vector<>();
+    public static Vector<Size> sizesWithAll=new Vector<>();
+    public static Vector<Sex> sexs=new Vector<>();
+    public static Vector<Sex> sexsWithAll=new Vector<>();
+    public static Vector<Style> styles=new Vector<>();
     public static List<Transfer> transfersOnWait=new ArrayList<>();
-    public static List<Transfer> transfers;
+    public static List<Transfer> transfers=new ArrayList<>();
 
     public FPrincipal(){
         init();
@@ -181,16 +183,20 @@ public class FPrincipal extends JFrame{
             dTransfersOnWait.setVisible(true);
         }
     }
+
     private void exit(){
         FLogin fLogin =new FLogin();
         dispose();
         fLogin.setVisible(true);
     }
+
     private void loadMenuItems(){
         JMenuItem menuSettings=new JMenuItem("Configuraciones");
         JMenuItem menuCompany=new JMenuItem("Compañia");
-        menuSettings.setIcon(new ImageIcon(App.class.getResource("Icons/x16/settings.png")));
-        menuCompany.setIcon(new ImageIcon(App.class.getResource("Icons/x16/settings.png")));
+        JMenuItem menuBox=new JMenuItem("Apertura/Cierre de caja");
+        menuSettings.setIcon(new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        menuCompany.setIcon(new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        menuBox.setIcon(new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
         menuCompany.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -203,8 +209,19 @@ public class FPrincipal extends JFrame{
                 loadSettings();
             }
         });
+        menuBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadBox();
+            }
+        });
         btnMenuInicio.add(menuSettings);
         btnMenuInicio.add(menuCompany);
+        btnMenuBox.add(menuBox);
+    }
+    private void loadBox(){
+        DBox dBox=new DBox();
+        dBox.setVisible(true);
     }
     private void loadSettings(){
         DSettings dSettings=new DSettings(this);
@@ -237,6 +254,9 @@ public class FPrincipal extends JFrame{
         setTitle("Software-Tienda");
         Utilities.setJFrame(this);
         Utilities.setTabbedPane(tabbedPane);
+        Utilities.setLblIzquierda(lblLeft);
+        Utilities.setLblCentro(lblCenter);
+        Utilities.setLblDerecha(lblRigth);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarCursores();
         pack();
@@ -279,7 +299,6 @@ public class FPrincipal extends JFrame{
         }
     }
     private void loadLists(){
-        users=Users.getActives();
         branchs=Branchs.getActives();
         stades=Stades.getActives();
         stadesWithAll=new Vector<>(stades);

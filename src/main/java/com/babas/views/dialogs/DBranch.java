@@ -2,6 +2,7 @@ package com.babas.views.dialogs;
 
 import com.babas.models.Branch;
 import com.babas.models.User;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
@@ -156,13 +157,18 @@ public class DBranch extends JDialog{
         branch.setDirection(txtDirection.getText().trim());
         branch.setEmail(txtEmail.getText().trim());
         branch.setName(txtName.getText().trim());
+        branch.setCompany(Babas.company);
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(branch);
         if(constraintViolationSet.isEmpty()){
             branch.save();
             if(!update){
                 FPrincipal.branchs.add(branch);
                 Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
+                if(Utilities.getTabbedPane()!=null){
+                    Utilities.getTabbedPane().updateTab();
+                }else{
+                    onHecho();
+                }
                 branch=new Branch();
                 load();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Color registrado");

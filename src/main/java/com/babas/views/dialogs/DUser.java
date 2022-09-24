@@ -47,7 +47,7 @@ public class DUser extends JDialog{
     private BranchAbstractModel modelBranchsUsers;
 
     public DUser(User user){
-        super(Utilities.getJFrame(),true);
+        super(Utilities.getJFrame(),"Registrar usuario",true);
         this.user=user;
         update=user.getId()!=null;
         init();
@@ -201,7 +201,11 @@ public class DUser extends JDialog{
             if(!update){
                 FPrincipal.users.add(user);
                 Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
+                if(Utilities.getTabbedPane()!=null){
+                    Utilities.getTabbedPane().updateTab();
+                }else{
+                    onHecho();
+                }
                 user=new User();
                 load();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario registrado");
