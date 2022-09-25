@@ -1,12 +1,8 @@
 package com.babas.utilitiesTables.buttonEditors;
 
-import com.babas.models.Category;
 import com.babas.models.Product;
 import com.babas.utilities.Utilities;
-import com.babas.utilitiesTables.tablesModels.CategoryAbstractModel;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
-import com.babas.views.dialogs.DCategory;
-import com.babas.views.dialogs.DImageProduct;
 import com.babas.views.dialogs.DProduct;
 import com.babas.views.dialogs.DProductCatalogue;
 import com.babas.views.frames.FPrincipal;

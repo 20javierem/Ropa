@@ -170,7 +170,6 @@ public class DProduct extends JDialog{
             boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Eliminar imagen",JOptionPane.YES_NO_OPTION)==0;
             if(si){
                 product.getImages().remove(imageSlide.getIndexPosition());
-                product.getIcons().remove(imageSlide.getIndexPosition());
                 loadImages();
                 imageSlide.toNext();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Imagen eliminada");

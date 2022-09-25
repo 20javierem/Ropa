@@ -14,6 +14,7 @@ import jakarta.validation.ConstraintViolation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -101,7 +102,10 @@ public class DCompany extends JDialog {
                 if(Utilities.newImage(inputStream, nameImage)){
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
                     company.setLogo(nameImage);
-                    lblLogo.setIcon(new ImageIcon(Utilities.getImage(nameImage)));
+                    Image image=Utilities.getImage(nameImage);
+                    image=image.getScaledInstance(lblLogo.getWidth(),lblLogo.getHeight(),Image.SCALE_SMOOTH);
+                    Icon icon=new ImageIcon(image);
+                    lblLogo.setIcon(icon);
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
                 }

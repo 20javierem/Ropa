@@ -32,29 +32,4 @@ public class Products extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    private List<Product> getByAtributes(Style style, Color color, Size size, Sex sex,Brand brand,Stade stade,Dimention dimention){
-        criteria = builder.createQuery(Product.class);
-        root=criteria.from(Product.class);
-        criteria.select(root)
-                .where(builder.and());
-        return new Vector<>(session.createQuery(criteria).getResultList());
-    };
-
-    private List<Predicate> getPredicates(Style style, Color color, Size size, Sex sex, Brand brand, Stade stade, Dimention dimention){
-        List<Predicate> predicates=new ArrayList<>();
-        predicates.add(builder.equal(root.get("style"),style));
-        if(color!=null){
-            predicates.add(builder.equal(root.get("color"),color));
-        }
-        if(color!=null){
-            predicates.add(builder.equal(root.get("color"),color));
-        }
-        if(color!=null){
-            predicates.add(builder.equal(root.get("color"),color));
-        }
-        if(color!=null){
-            predicates.add(builder.equal(root.get("color"),color));
-        }
-        return predicates;
-    }
 }

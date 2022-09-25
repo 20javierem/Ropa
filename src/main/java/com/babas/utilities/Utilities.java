@@ -79,12 +79,12 @@ public class Utilities {
     }
 
     public static boolean newImage(InputStream imageImput,String imageName){
-        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
+        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
 //        eder ederhibernate
 //        "192.168.1.49"
 //        javier ernestomoreno
 //        "192.168.0.119"
-        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
+        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
             SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
             OutputStream out = file.getOutputStream();
@@ -99,8 +99,8 @@ public class Utilities {
     }
 
     public static Image getImage(String imageName){
-        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
+        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
             SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
             return ImageIO.read(file.getInputStream());
