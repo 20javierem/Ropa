@@ -41,6 +41,12 @@ public class ColorCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMinWidth(40);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(40);
                     break;
+                case "CREACIÓN":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(100);
+                    break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     break;

@@ -44,6 +44,8 @@ public class Branch extends Babas {
     private Date updated;
     @OneToMany(mappedBy = "branch")
     private List<Sale> sales=new ArrayList<>();
+    @OneToMany(mappedBy = "branch")
+    private List<Box> boxs=new ArrayList<>();
 
     public Branch(){
 
@@ -155,6 +157,10 @@ public class Branch extends Babas {
             });
         }
         return transfers;
+    }
+
+    public List<Box> getBoxs() {
+        return boxs;
     }
 
     @Override

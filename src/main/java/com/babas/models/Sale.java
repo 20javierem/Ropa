@@ -21,6 +21,9 @@ public class Sale extends Babas {
     private User user;
     @ManyToOne
     private Client client;
+    @ManyToOne
+    @NotNull(message = "Caja")
+    private BoxSesion boxSesion;
     private Double total=0.0;
     private Double discount=0.0;
     private Double totalCurrent=0.0;
@@ -111,6 +114,20 @@ public class Sale extends Babas {
         this.active = active;
     }
 
+    public BoxSesion getBoxSesion() {
+        return boxSesion;
+    }
+
+    public void setBoxSesion(BoxSesion boxSesion) {
+        this.boxSesion = boxSesion;
+    }
+
+    public void calculateTotal(){
+        total=0.0;
+        detailSales.forEach(detailSale -> {
+            total+=detailSale.getSubtotal();
+        });
+    }
     @Override
     public void save() {
         if(created==null){

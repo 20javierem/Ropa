@@ -11,7 +11,7 @@ import com.babas.models.Color;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
-import com.babas.views.dialogs.DBox;
+import com.babas.views.dialogs.DBoxSesion;
 import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DSettings;
 import com.babas.views.dialogs.DTransfersOnWait;
@@ -223,8 +223,8 @@ public class FPrincipal extends JFrame{
     }
 
     private void loadBox(){
-        DBox dBox=new DBox();
-        dBox.setVisible(true);
+        DBoxSesion dBoxSesion =new DBoxSesion();
+        dBoxSesion.setVisible(true);
     }
 
     private void loadSettings(){

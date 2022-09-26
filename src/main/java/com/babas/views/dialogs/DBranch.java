@@ -1,11 +1,16 @@
 package com.babas.views.dialogs;
 
+import com.babas.models.Box;
 import com.babas.models.Branch;
 import com.babas.models.User;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorBox;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorBrand;
+import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
+import com.babas.utilitiesTables.tablesModels.BoxAbstractModel;
 import com.babas.utilitiesTables.tablesModels.UserAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
@@ -33,10 +38,14 @@ public class DBranch extends JDialog{
     private FlatTextField txtDirection;
     private FlatTextField txtEmail;
     private FlatTextField txtPhone;
+    private FlatTable tableBoxs;
+    private JButton btnNewBox;
     private Branch branch;
     private boolean update;
     private UserAbstractModel modelUsersBranchs;
     private UserAbstractModel modelUsers;
+    private BoxAbstractModel modelBoxs;
+    private ActionListener actionListener;
 
     public DBranch(Branch branch){
         super(Utilities.getJFrame(),"Nueva sucursal",true);
@@ -67,6 +76,12 @@ public class DBranch extends JDialog{
                 addUser();
             }
         });
+        btnNewBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadNewBox();
+            }
+        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -79,7 +94,10 @@ public class DBranch extends JDialog{
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
-
+    private void loadNewBox(){
+        DBox dBox=new DBox(new Box(branch));
+        dBox.setVisible(true);
+    }
     private void addUser(){
         if(tableUsers.getSelectedRow()!=-1){
             User user=modelUsers.getList().get(tableUsers.convertRowIndexToModel(tableUsers.getSelectedRow()));
@@ -108,6 +126,8 @@ public class DBranch extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
+        actionListener= e -> modelBoxs.fireTableDataChanged();
+        Utilities.getActionsOfDialog().addActionListener(actionListener);
         if(update){
             setTitle("Actualizar Usuario");
             btnSave.setText("Guardar");
@@ -150,6 +170,12 @@ public class DBranch extends JDialog{
         tableUsers.removeColumn(tableUsers.getColumn("SUCURSALES"));
         tableUsers.removeColumn(tableUsers.getColumn(""));
         tableUsers.removeColumn(tableUsers.getColumn(""));
+        modelBoxs=new BoxAbstractModel(branch.getBoxs());
+        tableBoxs.setModel(modelBoxs);
+        ColorCellRendered.setCellRenderer(tableBoxs);
+        UtilitiesTables.headerNegrita(tableBoxs);
+        tableBoxs.getColumnModel().getColumn(modelBoxs.getColumnCount() - 1).setCellEditor(new JButtonEditorBox(false));
+        tableBoxs.getColumnModel().getColumn(modelBoxs.getColumnCount() - 2).setCellEditor(new JButtonEditorBox(true));
     }
 
     private void onSave(){
@@ -188,6 +214,7 @@ public class DBranch extends JDialog{
         if(update){
             branch.refresh();
         }
+        Utilities.getActionsOfDialog().removeActionListener(actionListener);
         dispose();
     }
 }

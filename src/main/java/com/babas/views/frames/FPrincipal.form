@@ -169,7 +169,7 @@
             <properties>
               <font size="16"/>
               <foreground color="-1"/>
-              <text value="Caja: S/0.00"/>
+              <text value="Monto caja: S/0.00"/>
             </properties>
           </component>
           <component id="1840a" class="javax.swing.JLabel" binding="lblLeft">

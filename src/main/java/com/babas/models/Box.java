@@ -1,12 +1,14 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "box_tbl")
 public class Box extends Babas {
@@ -14,27 +16,25 @@ public class Box extends Babas {
     @GeneratedValue(generator = "increment")
     private Long id;
     @ManyToOne
-    private User user;
-    @ManyToOne
     private Branch branch;
+    @NotBlank(message = "Nombre")
+    private String name;
     private Date created;
     private Date updated;
-    private Double startingAmount=0.0;
-    private Double amountDelivered=0.0;
-    private Double amountToDeliver=0.0;
-
+    private boolean active=true;
+    private boolean deleted=false;
+    @OneToMany(mappedBy = "box")
+    private List<BoxSesion> boxSesions=new ArrayList<>();
     public Long getId() {
         return id;
     }
 
-    public User getUser() {
-        return user;
+    public Box(Branch branch){
+        this.branch=branch;
     }
+    public Box(){
 
-    public void setUser(User user) {
-        this.user = user;
     }
-
     public Branch getBranch() {
         return branch;
     }
@@ -59,29 +59,44 @@ public class Box extends Babas {
         this.updated = updated;
     }
 
-    public Double getStartingAmount() {
-        return startingAmount;
+    public String getName() {
+        return name;
     }
 
-    public void setStartingAmount(Double startingAmount) {
-        this.startingAmount = startingAmount;
-        this.amountToDeliver = startingAmount;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Double getAmountDelivered() {
-        return amountDelivered;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setAmountDelivered(Double amountDelivered) {
-        this.amountDelivered = amountDelivered;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
-    public Double getAmountToDeliver() {
-        return amountToDeliver;
+    public boolean isDeleted() {
+        return deleted;
     }
 
-    public void setAmountToDeliver(Double amountToDeliver) {
-        this.amountToDeliver = amountToDeliver;
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<BoxSesion> getBoxSesions() {
+        return boxSesions;
+    }
+
+    public static class ListCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            if (value instanceof Box) {
+                value = ((Box) value).getName()+" / "+((Box) value).getBranch().getName();
+            }else{
+                value="--SELECCIONE--";
+            }
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            return this;
+        }
     }
 
     @Override

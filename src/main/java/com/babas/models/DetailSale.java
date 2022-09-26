@@ -19,8 +19,9 @@ public class DetailSale extends Babas {
     @NotNull(message = "Producto")
     private Presentation presentation;
     @Min(value = 1,message = "Cantidad")
-    private Integer quantity;
+    private Integer quantity=0;
     private Double subtotal=0.0;
+    private Double price=0.0;
     private Double priceUnity=0.0;
     private String namePresentation;
     private Integer quantityPresentation;
@@ -59,14 +60,11 @@ public class DetailSale extends Babas {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+        this.subtotal= quantity*price ;
     }
 
     public Double getSubtotal() {
         return subtotal;
-    }
-
-    public void setSubtotal(Double subtotal) {
-        this.subtotal = subtotal;
     }
 
     public Double getPriceUnity() {
@@ -91,5 +89,14 @@ public class DetailSale extends Babas {
 
     public void setQuantityPresentation(Integer quantityPresentation) {
         this.quantityPresentation = quantityPresentation;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+        this.subtotal= quantity*price ;
     }
 }

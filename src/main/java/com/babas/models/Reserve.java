@@ -3,6 +3,7 @@ package com.babas.models;
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -16,6 +17,12 @@ public class Reserve extends Babas {
     private Long id;
     @ManyToOne
     private Client client;
+    @ManyToOne
+    @NotNull(message = "Caja")
+    private BoxSesion boxSesion;
+    @ManyToOne
+    @NotNull
+    private Branch branch;
     private Date created=new Date();
     private Date ends;
     private Date updated;
@@ -65,4 +72,19 @@ public class Reserve extends Babas {
     }
 
 
+    public BoxSesion getBoxSesion() {
+        return boxSesion;
+    }
+
+    public void setBoxSesion(BoxSesion boxSesion) {
+        this.boxSesion = boxSesion;
+    }
+
+    public Branch getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Branch branch) {
+        this.branch = branch;
+    }
 }

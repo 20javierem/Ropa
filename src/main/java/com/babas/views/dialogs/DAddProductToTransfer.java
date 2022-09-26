@@ -57,6 +57,17 @@ public class DAddProductToTransfer extends JDialog{
                 setLocation(getLocation().x+me.getX()-pX,getLocation().y+me.getY()-pY);
             }
         });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                onHecho();
+            }
+        });
+        contentPane.registerKeyboardAction(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         btnHecho.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -83,17 +94,6 @@ public class DAddProductToTransfer extends JDialog{
                 loadProduct();
             }
         });
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                onHecho();
-            }
-        });
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         btnAddProduct.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -110,8 +110,8 @@ public class DAddProductToTransfer extends JDialog{
     }
     private void addProduct(){
         DetailTransfer detailTransfer=new DetailTransfer();
-        detailTransfer.setProduct(product);
         detailTransfer.setTransfer(transfer);
+        detailTransfer.setProduct(product);
         detailTransfer.setQuantity((Integer) spinerQuantity.getValue());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(detailTransfer);
         if(constraintViolationSet.isEmpty()){
