@@ -16,7 +16,9 @@ import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DSettings;
 import com.babas.views.dialogs.DTransfersOnWait;
 import com.babas.views.menus.*;
+import com.babas.views.tabs.TabBoxSesion;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import java.awt.*;
@@ -196,9 +198,11 @@ public class FPrincipal extends JFrame{
         JMenuItem menuSettings=new JMenuItem("Configuraciones");
         JMenuItem menuCompany=new JMenuItem("Compañia");
         JMenuItem menuBox=new JMenuItem("Apertura/Cierre de caja");
+        JMenuItem menuShowBox=new JMenuItem("Ver movimientos de caja");
         menuSettings.setIcon(new ImageIcon(App.class.getResource("icons/x16/settings.png")));
         menuCompany.setIcon(new ImageIcon(App.class.getResource("icons/x16/settings.png")));
         menuBox.setIcon(new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuShowBox.setIcon(new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
         menuCompany.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -217,11 +221,28 @@ public class FPrincipal extends JFrame{
                 loadBox();
             }
         });
+        menuShowBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadBoxSesion();
+            }
+        });
         btnMenuInicio.add(menuSettings);
         btnMenuInicio.add(menuCompany);
         btnMenuBox.add(menuBox);
+        btnMenuBox.add(menuShowBox);
     }
-
+    private void loadBoxSesion(){
+        if(Babas.boxSesion.getId()!=null){
+            if(tabbedPane.indexOfTab("Caja")==-1){
+                TabBoxSesion tabBoxSesion=new TabBoxSesion();
+                tabbedPane.addTab(tabBoxSesion.getTabPane().getTitle(),tabBoxSesion.getTabPane());
+            }
+            tabbedPane.setSelectedIndex(tabbedPane.indexOfTab("Caja"));
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"Mensaje","No aperturó una caja");
+        }
+    }
     private void loadBox(){
         DBoxSesion dBoxSesion =new DBoxSesion();
         dBoxSesion.setVisible(true);

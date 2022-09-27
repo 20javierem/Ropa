@@ -38,7 +38,6 @@ public class TabNewSale {
     private FlatTextField txtPhone;
     private FlatTextField txtMail;
     private FlatTable table;
-    private JLabel lblIgv;
     private JButton btnSaleWithCash;
     private JButton btnSaleWithTrasnfer;
     private FlatSpinner spinnerDiscount;

@@ -134,7 +134,6 @@ public class Sale extends Babas {
             created=new Date();
         }
         updated=new Date();
-        getBranch().getStocks().forEach(Babas::refresh);
         super.save();
         numberSale=1000+id;
         super.save();

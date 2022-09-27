@@ -18,6 +18,10 @@ public class BoxSesion extends Babas {
     @ManyToOne
     @NotNull(message = "Caja")
     private Box box;
+    private Double totalSales=0.0;
+    private Double totalRentals=0.0;
+    private Double totalReserves=0.0;
+    private Double totalMovements=0.0;
     private Double amountInitial=0.0;
     private Double amountToDelivered=0.0;
     private Double amountDelivered=0.0;
@@ -27,9 +31,10 @@ public class BoxSesion extends Babas {
     private List<Rental> rentals=new ArrayList<>();
     @OneToMany(mappedBy = "boxSesion")
     private List<Reserve> reserves=new ArrayList<>();
+    @OneToMany(mappedBy = "boxSesion")
+    private List<Movement> movements=new ArrayList<>();
     private Date created;
     private Date updated;
-
     public Long getId() {
         return id;
     }
@@ -111,6 +116,10 @@ public class BoxSesion extends Babas {
         this.updated = updated;
     }
 
+    public List<Movement> getMovements() {
+        return movements;
+    }
+
     @Override
     public void save() {
         if(created==null){
@@ -119,10 +128,33 @@ public class BoxSesion extends Babas {
         super.save();
     }
 
+    public Double getTotalSales() {
+        return totalSales;
+    }
+
+    public Double getTotalRentals() {
+        return totalRentals;
+    }
+
+    public Double getTotalReserves() {
+        return totalReserves;
+    }
+
+    public Double getTotalMovements() {
+        return totalMovements;
+    }
+
     public void calculateTotals() {
         amountToDelivered=amountInitial;
-        getSales().forEach(sale -> {
-            amountToDelivered+=sale.getTotalCurrent();
-        });
+        totalSales=0.0;
+        getSales().forEach(sale -> totalSales+=sale.getTotalCurrent());
+        totalRentals=0.0;
+        getRentals().forEach(rental -> totalRentals+=rental.getAmount());
+        totalReserves=0.0;
+        getReserves().forEach(reserve -> totalReserves+=reserve.getTotal());
+        totalMovements=0.0;
+        getMovements().forEach(movement -> totalMovements+=movement.getAmount());
+        amountToDelivered+=totalSales+totalRentals+totalReserves+totalMovements;
+        save();
     }
 }

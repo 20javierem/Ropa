@@ -97,6 +97,9 @@ public class DetailSale extends Babas {
     public void save() {
         super.save();
         Stock stock= Stocks.getStock(getSale().getBranch(),getProduct());
+        stock.getProduct().refresh();
+        stock.getProduct().setStockTotal(stock.getProduct().getStockTotal()-getQuantity());
+        stock.getProduct().save();
         stock.setQuantity(stock.getQuantity()-getQuantity()*getQuantityPresentation());
         stock.save();
     }

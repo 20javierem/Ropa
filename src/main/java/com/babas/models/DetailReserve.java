@@ -22,6 +22,39 @@ public class DetailReserve extends Babas {
     private Integer quantity;
     private Double total=0.0;
 
+    public Long getId() {
+        return id;
+    }
 
+    public Reserve getReserve() {
+        return reserve;
+    }
 
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

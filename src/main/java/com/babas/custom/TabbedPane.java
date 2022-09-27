@@ -227,6 +227,7 @@ public class TabbedPane extends FlatTabbedPane {
 
     public TabbedPane() {
         super();
+        setShowTabSeparators(true);
         setTabsClosable(true);
         setTabCloseCallback(JTabbedPane::removeTabAt);
         insertarButtons();
