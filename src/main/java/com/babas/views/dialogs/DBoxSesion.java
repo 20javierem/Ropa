@@ -31,7 +31,7 @@ public class DBoxSesion extends JDialog{
     public DBoxSesion(){
         super(Utilities.getJFrame(),"Apertura de caja",true);
         boxSesion=Babas.boxSesion;
-        update=boxSesion!=null;
+        update=boxSesion.getId()!=null;
         init();
         addWindowListener(new WindowAdapter() {
             @Override
@@ -61,14 +61,12 @@ public class DBoxSesion extends JDialog{
     private void init(){
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        if(!update){
-            boxSesion=new BoxSesion();
-        }
         cbbUser.addItem(Babas.user.getUserName());
         if(update){
             load();
             btnSave.setText("Cerrar caja");
         }else{
+            boxSesion.setUser(Babas.user);
             spinnerAmountDelivered.setEnabled(false);
             Vector<Box> boxes=new Vector<>();
             Babas.user.getBranchs().forEach(branch -> {
@@ -109,6 +107,7 @@ public class DBoxSesion extends JDialog{
             if(update){
                 Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(0.00));
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja cerrada");
+                Babas.boxSesion=new BoxSesion();
             }else{
                 Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(boxSesion.getAmountToDelivered()));
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja aperturada");

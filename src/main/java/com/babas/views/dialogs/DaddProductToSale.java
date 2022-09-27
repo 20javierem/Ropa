@@ -111,9 +111,7 @@ public class DaddProductToSale extends JDialog{
     private void loadPrices(){
         Presentation presentation= (Presentation) cbbPresentation.getSelectedItem();
         cbbPrice.removeAllItems();
-        presentation.getPrices().forEach(price -> {
-            cbbPrice.addItem(price.getPrice());
-        });
+        presentation.getPrices().forEach(price -> cbbPrice.addItem(price.getPrice()));
         cbbPrice.setSelectedItem(presentation.getPriceDefault().getPrice());
     }
     private void init(){

@@ -11,6 +11,7 @@ import java.util.List;
 @Entity(name = "client_tbl")
 public class Client extends Babas {
     @Id
+    @GeneratedValue(generator = "increment")
     private Long id;
     private Date created;
     private Date updated;

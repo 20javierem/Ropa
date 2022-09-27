@@ -21,7 +21,7 @@ public class Babas {
     public static boolean state;
     private static SessionFactory sessionFactory;
     public static User user;
-    public static BoxSesion boxSesion;
+    public static BoxSesion boxSesion=new BoxSesion();
     public static Company company=new Company();
     
     public static void initialize() {

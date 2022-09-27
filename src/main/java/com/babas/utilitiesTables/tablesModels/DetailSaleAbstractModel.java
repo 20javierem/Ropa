@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DetailSaleAbstractModel extends AbstractTableModel {
     private final String[] nameColumns={"CÓDIGO","PRODUCTO","COLOR","TALLA","CANTIDAD","PRESENTACIÓN","PRECIO","SUBTOTAL",""};
-    private final Class[] typeColumns={Long.class,String.class,String.class,String.class,Integer.class,String.class,Double.class,Double.class, JButton.class};
+    private final Class[] typeColumns={Long.class,String.class,String.class,String.class,Integer.class,String.class,DetailSale.class,DetailSale.class, JButton.class};
     private final List<DetailSale> list;
 
     public DetailSaleAbstractModel(List<DetailSale> list){
@@ -65,9 +65,8 @@ public class DetailSaleAbstractModel extends AbstractTableModel {
             case 4:
                 return detailSale.getQuantity();
             case 5:
-                return detailSale.getPresentation().getName();
             case 6:
-                return detailSale.getPrice();
+                return detailSale;
             case 7:
                 return detailSale.getSubtotal();
             default:

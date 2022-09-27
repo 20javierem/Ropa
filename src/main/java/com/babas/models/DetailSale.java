@@ -1,5 +1,6 @@
 package com.babas.models;
 
+import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
@@ -22,9 +23,8 @@ public class DetailSale extends Babas {
     private Integer quantity=0;
     private Double subtotal=0.0;
     private Double price=0.0;
-    private Double priceUnity=0.0;
+    private Integer quantityPresentation=0;
     private String namePresentation;
-    private Integer quantityPresentation;
 
     public Long getId() {
         return id;
@@ -52,6 +52,7 @@ public class DetailSale extends Babas {
 
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
+        quantityPresentation=presentation.getQuantity();
     }
 
     public Integer getQuantity() {
@@ -60,19 +61,11 @@ public class DetailSale extends Babas {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.subtotal= quantity*price ;
+        this.subtotal= quantity*price;
     }
 
     public Double getSubtotal() {
         return subtotal;
-    }
-
-    public Double getPriceUnity() {
-        return priceUnity;
-    }
-
-    public void setPriceUnity(Double priceUnity) {
-        this.priceUnity = priceUnity;
     }
 
     public String getNamePresentation() {
@@ -98,5 +91,13 @@ public class DetailSale extends Babas {
     public void setPrice(Double price) {
         this.price = price;
         this.subtotal= quantity*price ;
+    }
+
+    @Override
+    public void save() {
+        super.save();
+        Stock stock= Stocks.getStock(getSale().getBranch(),getProduct());
+        stock.setQuantity(stock.getQuantity()-getQuantity()*getQuantityPresentation());
+        stock.save();
     }
 }

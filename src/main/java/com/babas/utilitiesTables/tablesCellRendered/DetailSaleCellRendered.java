@@ -1,7 +1,13 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.models.DetailSale;
+import com.babas.models.Price;
+import com.babas.utilities.Utilities;
+
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.text.JTextComponent;
 import java.awt.*;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
@@ -31,6 +37,7 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
             return button;
         }else{
             JTextField componente=buscarTexto(null,value,column,component);
+            DetailSale detailSale;
             switch(table.getColumnName(column)){
                 case "COLOR":
                 case "GÉNERO":
@@ -55,11 +62,24 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "PRESENTACIÓN":
-                case "PRECIO":
+                    detailSale=(DetailSale) value;
                     JComboBox comboBox=new JComboBox();
+                    comboBox.setBorder(null);
                     comboBox.setForeground(component.getForeground());
                     comboBox.setBackground(component.getBackground());
-                    comboBox.addItem(value);
+                    comboBox.addItem(detailSale.getPresentation().getName());
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    return comboBox;
+                case "PRECIO":
+                    detailSale = (DetailSale) value;
+                    comboBox = new JComboBox();
+                    comboBox.setBorder(null);
+                    comboBox.setForeground(component.getForeground());
+                    comboBox.setBackground(component.getBackground());
+                    comboBox.setRenderer(new Price.ListCellRenderer());
+                    comboBox.addItem(detailSale.getPrice());
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);

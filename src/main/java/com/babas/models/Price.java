@@ -66,8 +66,11 @@ public class Price extends Babas {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Price) {
                 value = Utilities.moneda.format(((Price) value).getPrice());
+            }else{
+                value = Utilities.moneda.format(value);
             }
             super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            setHorizontalAlignment(JLabel.RIGHT);
             return this;
         }
     }

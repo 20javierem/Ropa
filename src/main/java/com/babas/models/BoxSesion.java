@@ -118,4 +118,11 @@ public class BoxSesion extends Babas {
         }
         super.save();
     }
+
+    public void calculateTotals() {
+        amountToDelivered=amountInitial;
+        getSales().forEach(sale -> {
+            amountToDelivered+=sale.getTotalCurrent();
+        });
+    }
 }

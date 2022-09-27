@@ -77,7 +77,9 @@ public class Utilities {
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         return new JSpinner.NumberEditor(spinner, "###,###,###.##");
     }
-
+    public static JSpinner.NumberEditor getEditorPrice2(FlatSpinner spinner) {
+        return new JSpinner.NumberEditor(spinner, "S/###,###,###.##");
+    }
     public static boolean newImage(InputStream imageImput,String imageName){
         AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
 //        eder ederhibernate

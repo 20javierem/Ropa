@@ -2,31 +2,34 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.models.DetailSale;
 import com.babas.models.Presentation;
-import com.babas.models.Price;
-import com.babas.models.Sale;
 import com.babas.utilities.Utilities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 public class JButtonEditorDetailSale extends DefaultCellEditor {
-    private Sale sale;
-    private boolean presentation;
 
-    public JButtonEditorDetailSale(Sale sale,boolean presentation) {
+    public JButtonEditorDetailSale() {
         super(new JComboBox());
-        this.sale=sale;
-        this.presentation=presentation;
     }
 
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         JComboBox comboBox=new JComboBox();
-        DetailSale detailSale=sale.getDetailSales().get(row);
-        if(presentation){
+        comboBox.setBorder(null);
+        DetailSale detailSale= (DetailSale) value;
+        comboBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                stopCellEditing();
+            }
+        });
+        if(column == 5){
             comboBox.setEditable(false);
             comboBox.setModel(new DefaultComboBoxModel(new Vector(detailSale.getProduct().getPresentations())));
             comboBox.setRenderer(new Presentation.ListCellRenderer());

@@ -27,8 +27,10 @@ public class Sale extends Babas {
     private Double total=0.0;
     private Double discount=0.0;
     private Double totalCurrent=0.0;
+    private boolean cash;
     private Date created;
     private Date updated;
+    private Long numberSale;
     private boolean active=true;
     @ManyToOne
     @NotNull
@@ -42,16 +44,8 @@ public class Sale extends Babas {
         return detailSales;
     }
 
-    public void setDetailSales(List<DetailSale> detailSales) {
-        this.detailSales = detailSales;
-    }
-
     public Double getTotal() {
         return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
     }
 
     public Double getDiscount() {
@@ -60,14 +54,11 @@ public class Sale extends Babas {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+        calculateTotal();
     }
 
     public Double getTotalCurrent() {
         return totalCurrent;
-    }
-
-    public void setTotalCurrent(Double totalCurrent) {
-        this.totalCurrent = totalCurrent;
     }
 
     public Client getClient() {
@@ -84,10 +75,6 @@ public class Sale extends Babas {
 
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public User getUser() {
@@ -122,11 +109,24 @@ public class Sale extends Babas {
         this.boxSesion = boxSesion;
     }
 
+    public boolean isCash() {
+        return cash;
+    }
+
+    public void setCash(boolean cash) {
+        this.cash = cash;
+    }
+
+    public Long getNumberSale() {
+        return numberSale;
+    }
+
     public void calculateTotal(){
         total=0.0;
         detailSales.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
+        totalCurrent=total+discount;
     }
     @Override
     public void save() {
@@ -134,6 +134,10 @@ public class Sale extends Babas {
             created=new Date();
         }
         updated=new Date();
+        getBranch().getStocks().forEach(Babas::refresh);
         super.save();
+        numberSale=1000+id;
+        super.save();
+        getDetailSales().forEach(Babas::save);
     }
 }
