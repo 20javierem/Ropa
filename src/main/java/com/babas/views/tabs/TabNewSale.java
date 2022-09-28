@@ -3,7 +3,6 @@ package com.babas.views.tabs;
 import com.babas.App;
 import com.babas.controllers.Clients;
 import com.babas.custom.TabPane;
-import com.babas.models.Box;
 import com.babas.models.Client;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
@@ -15,7 +14,6 @@ import com.babas.utilitiesTables.tablesCellRendered.DetailSaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailSaleAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.dialogs.DaddProductToSale;
-import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -106,8 +104,8 @@ public class TabNewSale {
         }
     }
     private void loadAddProducts(){
-        if(Babas.boxSesion.getId()!=null){
-            sale.setBranch(Babas.boxSesion.getBox().getBranch());
+        if(Babas.boxSession.getId()!=null){
+            sale.setBranch(Babas.boxSession.getBox().getBranch());
         }else{
             sale.setBranch(null);
         }
@@ -135,7 +133,7 @@ public class TabNewSale {
     }
 
     private void loadTotals(){
-        if(Babas.boxSesion.getId()==null){
+        if(Babas.boxSession.getId()==null){
             sale.getDetailSales().clear();
             sale.setBranch(null);
         }
@@ -156,23 +154,23 @@ public class TabNewSale {
     }
 
     private void onSave(boolean isCash){
-        if(Babas.boxSesion.getId()!=null){
+        if(Babas.boxSession.getId()!=null){
             if(getClient()){
-                sale.setBranch(Babas.boxSesion.getBox().getBranch());
+                sale.setBranch(Babas.boxSession.getBox().getBranch());
                 sale.setCash(isCash);
-                sale.setBoxSesion(Babas.boxSesion);
+                sale.setBoxSession(Babas.boxSession);
                 sale.setUser(Babas.user);
                 Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(sale);
                 if(constraintViolationSet.isEmpty()){
                     sale.save();
-                    Babas.boxSesion.getSales().add(sale);
-                    Babas.boxSesion.calculateTotals();
-                    sale.getBranch().getSales().add(sale);
-                    sale.getUser().getSales().add(sale);
+                    Babas.boxSession.getSales().add(0,sale);
+                    Babas.boxSession.calculateTotals();
+                    sale.getBranch().getSales().add(0,sale);
+                    sale.getUser().getSales().add(0,sale);
                     sale=new Sale();
                     clear();
                     Utilities.getTabbedPane().updateTab();
-                    Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSesion.getAmountToDelivered()));
+                    Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta registrada");
                 }else{
                     ProgramValidator.mostrarErrores(constraintViolationSet);

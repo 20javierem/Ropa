@@ -1,11 +1,14 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.views.dialogs.DesingTxtTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
+import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class StockCellRendered extends DefaultTableCellRenderer {
 
@@ -33,25 +36,19 @@ public class StockCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(listaFiltros,value,column,component);
+            DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
-                case "PRODUCTO":
-                    componente.setHorizontalAlignment(SwingConstants.LEFT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(200);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(200);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(200);
-                    break;
                 case "STOCK":
-                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    componente.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(65);
                     table.getColumn(table.getColumnName(column)).setMinWidth(65);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(65);
                     break;
                 default:
-                    componente.setHorizontalAlignment(SwingConstants.LEFT);
+                    componente.setAligmentLeft();
                     break;
             }
-            return componente;
+            return componente.getContentPane();
         }
     }
 

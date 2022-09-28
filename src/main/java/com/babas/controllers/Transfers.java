@@ -1,5 +1,6 @@
 package com.babas.controllers;
 
+import com.babas.models.Branch;
 import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
@@ -24,24 +25,32 @@ public class Transfers extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    public static Vector<Transfer> getByRangeOfDate(Date start,Date end){
+    public static Vector<Transfer> getByRangeOfDate(Branch branch,Date start,Date end){
         criteria = builder.createQuery(Transfer.class);
         root=criteria.from(Transfer.class);
-        criteria.select(root).where(builder.between(root.get("created"),Utilities.getDateStart(start),Utilities.getDateEnd(end)));
+        criteria.select(root).where(builder.between(
+                root.get("created"),Utilities.getDateStart(start),Utilities.getDateEnd(end)))
+                .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    public static Vector<Transfer> getBefore(Date end){
+    public static Vector<Transfer> getBefore(Branch branch,Date end){
         criteria = builder.createQuery(Transfer.class);
         root=criteria.from(Transfer.class);
-        criteria.select(root).where(builder.lessThan(root.get("created"),Utilities.getDateLessThan(end)));
+        criteria.select(root).where(builder.and(
+                builder.lessThan(root.get("created"),Utilities.getDateLessThan(end)))
+                ,builder.equal(root.get("branch"),branch))
+                .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    public static Vector<Transfer> getAfter(Date start){
+    public static Vector<Transfer> getAfter(Branch branch,Date start){
         criteria = builder.createQuery(Transfer.class);
         root=criteria.from(Transfer.class);
-        criteria.select(root).where(builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start)));
+        criteria.select(root).where(builder.and(
+                builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start)))
+                ,builder.equal(root.get("branch"),branch))
+                .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 }

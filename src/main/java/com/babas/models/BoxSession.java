@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity(name = "box_sesion_tbl")
-public class BoxSesion extends Babas {
+@Entity(name = "box_session_tbl")
+public class BoxSession extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
     private Long id;
@@ -25,13 +25,17 @@ public class BoxSesion extends Babas {
     private Double amountInitial=0.0;
     private Double amountToDelivered=0.0;
     private Double amountDelivered=0.0;
-    @OneToMany(mappedBy = "boxSesion")
+    @OneToMany(mappedBy = "boxSession")
+    @OrderBy(value = "id DESC")
     private List<Sale> sales=new ArrayList<>();
-    @OneToMany(mappedBy = "boxSesion")
+    @OneToMany(mappedBy = "boxSession")
+    @OrderBy(value = "id DESC")
     private List<Rental> rentals=new ArrayList<>();
-    @OneToMany(mappedBy = "boxSesion")
+    @OneToMany(mappedBy = "boxSession")
+    @OrderBy(value = "id DESC")
     private List<Reserve> reserves=new ArrayList<>();
-    @OneToMany(mappedBy = "boxSesion")
+    @OneToMany(mappedBy = "boxSession")
+    @OrderBy(value = "id DESC")
     private List<Movement> movements=new ArrayList<>();
     private Date created;
     private Date updated;

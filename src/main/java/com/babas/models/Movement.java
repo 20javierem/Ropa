@@ -18,7 +18,7 @@ public class Movement extends Babas {
     private Double amount=0.0;
     @ManyToOne
     @NotNull(message = "Caja")
-    private BoxSesion boxSesion;
+    private BoxSession boxSession;
     private Date created;
     private Date updated;
     private String description;
@@ -36,12 +36,12 @@ public class Movement extends Babas {
         this.amount = amount;
     }
 
-    public BoxSesion getBoxSesion() {
-        return boxSesion;
+    public BoxSession getBoxSesion() {
+        return boxSession;
     }
 
-    public void setBoxSesion(BoxSesion boxSesion) {
-        this.boxSesion = boxSesion;
+    public void setBoxSesion(BoxSession boxSession) {
+        this.boxSession = boxSession;
     }
 
     public Date getCreated() {
@@ -78,7 +78,7 @@ public class Movement extends Babas {
         }
         updated=new Date();
         super.save();
-        boxSesion.getMovements().add(this);
-        boxSesion.calculateTotals();
+        boxSession.getMovements().add(this);
+        boxSession.calculateTotals();
     }
 }

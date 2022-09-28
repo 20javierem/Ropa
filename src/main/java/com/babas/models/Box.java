@@ -24,7 +24,7 @@ public class Box extends Babas {
     private boolean active=true;
     private boolean deleted=false;
     @OneToMany(mappedBy = "box")
-    private List<BoxSesion> boxSesions=new ArrayList<>();
+    private List<BoxSession> boxSessions =new ArrayList<>();
     public Long getId() {
         return id;
     }
@@ -83,8 +83,8 @@ public class Box extends Babas {
         this.deleted = deleted;
     }
 
-    public List<BoxSesion> getBoxSesions() {
-        return boxSesions;
+    public List<BoxSession> getBoxSesions() {
+        return boxSessions;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

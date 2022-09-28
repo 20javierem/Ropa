@@ -16,7 +16,7 @@ public class Rental extends Babas {
     private Long id;
     @ManyToOne
     @NotNull(message = "Caja")
-    private BoxSesion boxSesion;
+    private BoxSession boxSession;
     private Double amount=0.0;
     @ManyToOne
     private Client client;
@@ -27,12 +27,12 @@ public class Rental extends Babas {
         return id;
     }
 
-    public BoxSesion getBoxSesion() {
-        return boxSesion;
+    public BoxSession getBoxSession() {
+        return boxSession;
     }
 
-    public void setBoxSesion(BoxSesion boxSesion) {
-        this.boxSesion = boxSesion;
+    public void setBoxSession(BoxSession boxSession) {
+        this.boxSession = boxSession;
     }
 
     public Double getAmount() {

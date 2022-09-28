@@ -41,7 +41,7 @@ public class StockProductAbstractModel extends AbstractTableModel {
             case 0:
                 return stock.getBranch().getName();
             case 1:
-                return stock.getProduct().getStyle().getName();
+                return stock.getProduct().getStyle().getName()+" / "+stock.getProduct().getSex().getName()+" / "+stock.getProduct().getBrand().getName()+" / "+stock.getProduct().getSize().getName()+" / "+stock.getProduct().getColor().getName();
             default:
                 return stock.getQuantity();
         }

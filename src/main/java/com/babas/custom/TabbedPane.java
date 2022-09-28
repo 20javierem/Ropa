@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
+import static com.formdev.flatlaf.util.ColorFunctions.lighten;
+
 public class TabbedPane extends FlatTabbedPane {
 
     public static final long serialVersionUID = 1L;

@@ -3,43 +3,35 @@
   <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="887" height="677"/>
+      <xy x="20" y="20" width="1158" height="677"/>
     </constraints>
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="18436" class="com.babas.custom.TabPane" binding="tabPane" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
-        <margin top="10" left="10" bottom="10" right="10"/>
+      <grid id="18436" class="com.babas.custom.TabPane" binding="tabPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="5">
+        <margin top="5" left="10" bottom="10" right="10"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="9198f" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="9198f" binding="paneCloseBoxSession" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="82a14" class="javax.swing.JButton" binding="btnNewMovement">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Nuevo Retiro/Ingreso"/>
-                </properties>
-              </component>
               <hspacer id="7effd">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
               <component id="ff7e0" class="javax.swing.JButton" binding="btnCloseBoxSesion">
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Cerrar caja"/>
@@ -50,7 +42,7 @@
           <grid id="dfa8f" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -60,7 +52,10 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
+                  <hasFullBorder value="false"/>
+                  <leadingComponent value="9b7b2"/>
                   <tabAreaAlignment value="center"/>
+                  <trailingComponent value="9198f"/>
                 </properties>
                 <border type="none"/>
                 <children>
@@ -81,7 +76,9 @@
                         <children>
                           <component id="a46f" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tableSales">
                             <constraints/>
-                            <properties/>
+                            <properties>
+                              <rowHeight value="25"/>
+                            </properties>
                           </component>
                         </children>
                       </scrollpane>
@@ -104,7 +101,9 @@
                         <children>
                           <component id="13119" class="com.formdev.flatlaf.extras.components.FlatTable" default-binding="true">
                             <constraints/>
-                            <properties/>
+                            <properties>
+                              <rowHeight value="25"/>
+                            </properties>
                           </component>
                         </children>
                       </scrollpane>
@@ -127,7 +126,9 @@
                         <children>
                           <component id="d1861" class="com.formdev.flatlaf.extras.components.FlatTable" default-binding="true">
                             <constraints/>
-                            <properties/>
+                            <properties>
+                              <rowHeight value="25"/>
+                            </properties>
                           </component>
                         </children>
                       </scrollpane>
@@ -150,7 +151,9 @@
                         <children>
                           <component id="f94f4" class="com.formdev.flatlaf.extras.components.FlatTable" default-binding="true">
                             <constraints/>
-                            <properties/>
+                            <properties>
+                              <rowHeight value="25"/>
+                            </properties>
                           </component>
                         </children>
                       </scrollpane>
@@ -163,7 +166,7 @@
           <grid id="a1e6e" layout-manager="GridLayoutManager" row-count="1" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="-1">
             <margin top="0" left="10" bottom="0" right="10"/>
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
@@ -227,6 +230,29 @@
                   <text value="Monto inicial: S/0.00"/>
                 </properties>
               </component>
+            </children>
+          </grid>
+          <grid id="9b7b2" binding="paneNewMomevent" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="7bd8" class="javax.swing.JButton" binding="btnNewMovement">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Nuevo Retiro/Ingreso"/>
+                </properties>
+              </component>
+              <hspacer id="edc1">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
         </children>

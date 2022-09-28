@@ -1,12 +1,8 @@
 package com.babas.utilities;
 
-import com.babas.models.Box;
-import com.babas.models.BoxSesion;
+import com.babas.models.BoxSession;
 import com.babas.models.Company;
 import com.babas.models.User;
-import com.moreno.Notify;
-import com.thoughtworks.qdox.model.expression.Not;
-import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
@@ -21,7 +17,7 @@ public class Babas {
     public static boolean state;
     private static SessionFactory sessionFactory;
     public static User user;
-    public static BoxSesion boxSesion=new BoxSesion();
+    public static BoxSession boxSession =new BoxSession();
     public static Company company=new Company();
     
     public static void initialize() {

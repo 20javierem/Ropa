@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class Reserve extends Babas {
     private Client client;
     @ManyToOne
     @NotNull(message = "Caja")
-    private BoxSesion boxSesion;
+    private BoxSession boxSession;
     @ManyToOne
     @NotNull
     private Branch branch;
@@ -72,12 +71,12 @@ public class Reserve extends Babas {
     }
 
 
-    public BoxSesion getBoxSesion() {
-        return boxSesion;
+    public BoxSession getBoxSession() {
+        return boxSession;
     }
 
-    public void setBoxSesion(BoxSesion boxSesion) {
-        this.boxSesion = boxSesion;
+    public void setBoxSession(BoxSession boxSession) {
+        this.boxSession = boxSession;
     }
 
     public Branch getBranch() {

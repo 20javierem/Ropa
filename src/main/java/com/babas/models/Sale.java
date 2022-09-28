@@ -2,6 +2,7 @@ package com.babas.models;
 
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Sale extends Babas {
     @GeneratedValue(generator = "increment")
     private Long id;
     @OneToMany(mappedBy = "sale")
+    @NotEmpty(message = "Productos")
     private List<DetailSale> detailSales=new ArrayList<>();
     @ManyToOne
     @NotNull(message = "Usuario")
@@ -23,7 +25,7 @@ public class Sale extends Babas {
     private Client client;
     @ManyToOne
     @NotNull(message = "Caja")
-    private BoxSesion boxSesion;
+    private BoxSession boxSession;
     private Double total=0.0;
     private Double discount=0.0;
     private Double totalCurrent=0.0;
@@ -101,12 +103,12 @@ public class Sale extends Babas {
         this.active = active;
     }
 
-    public BoxSesion getBoxSesion() {
-        return boxSesion;
+    public BoxSession getBoxSession() {
+        return boxSession;
     }
 
-    public void setBoxSesion(BoxSesion boxSesion) {
-        this.boxSesion = boxSesion;
+    public void setBoxSession(BoxSession boxSession) {
+        this.boxSession = boxSession;
     }
 
     public boolean isCash() {

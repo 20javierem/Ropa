@@ -11,6 +11,7 @@ import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import jakarta.validation.ConstraintViolation;
+import org.apache.xmlbeans.impl.common.NameUtil;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
@@ -119,19 +120,16 @@ public class DaddProductToSale extends JDialog{
         setContentPane(contentPane);
         loadTables();
         pack();
+        lblProduct.setText(null);
         setLocationRelativeTo(getOwner());
     }
 
     public void filtrar() {
-        String busqueda;
-        busqueda = txtSearchProduct.getText().trim();
+        String busqueda = txtSearchProduct.getText().trim();
         filtros.clear();
-        filtros.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,2,6,7));
+        filtros.add(RowFilter.regexFilter("(?i)" +busqueda,1,2));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
-        listaFiltros.put(2, busqueda);
-        listaFiltros.put(3, busqueda);
-        listaFiltros.put(4, busqueda);
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
     }
@@ -139,8 +137,9 @@ public class DaddProductToSale extends JDialog{
     private void loadTables(){
         model=new StockProductAbstractModel(sale.getBranch().getStocks());
         table.setModel(model);
-        StockCellRendered.setCellRenderer(table,null);
+        StockCellRendered.setCellRenderer(table,listaFiltros);
         UtilitiesTables.headerNegrita(table);
+        table.removeColumn(table.getColumn("SUCURSAL"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -161,7 +160,6 @@ public class DaddProductToSale extends JDialog{
             cbbPresentation.setRenderer(new DefaultListCellRenderer());
             cbbPrice.removeAllItems();
         }
-        pack();
     }
     private void addProduct(){
         DetailSale detailSale=new DetailSale();

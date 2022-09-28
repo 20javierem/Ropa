@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class SaleAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO","FECHA","ACTUALIZADO","CLIENTE","SUBTOTAL","DESCUENTO","TOTAL","",""};
+    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","CLIENTE","SUBTOTAL","DESCUENTO","TOTAL","",""};
     private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class, Double.class,Double.class,Double.class,JButton.class,JButton.class};
     private final List<Sale> list;
 
@@ -51,7 +51,7 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 2:
                 return sale.getUpdated();
             case 3:
-                return sale.getClient()!=null?sale.getClient().getNames():"--Sin cliente--";
+                return sale.getClient()!=null?sale.getClient().getNames():"-- Sin cliente --";
             case 4:
                 return sale.getTotal();
             case 5:

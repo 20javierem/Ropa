@@ -233,7 +233,7 @@ public class FPrincipal extends JFrame{
         btnMenuBox.add(menuShowBox);
     }
     private void loadBoxSesion(){
-        if(Babas.boxSesion.getId()!=null){
+        if(Babas.boxSession.getId()!=null){
             if(tabbedPane.indexOfTab("Caja")==-1){
                 TabBoxSesion tabBoxSesion=new TabBoxSesion();
                 tabbedPane.addTab(tabBoxSesion.getTabPane().getTitle(),tabBoxSesion.getTabPane());
@@ -354,7 +354,10 @@ public class FPrincipal extends JFrame{
         styles=Styles.getTodos();
         Calendar calendar=Calendar.getInstance();
         calendar.set(Calendar.DATE,1);
-        transfers=Transfers.getAfter(calendar.getTime());
+        transfers.clear();
+        for (Branch branch : Babas.user.getBranchs()) {
+            FPrincipal.transfers.addAll(Transfers.getAfter(branch,calendar.getTime()));
+        }
     }
     private void cargarCursores(){
         btnAjustes.setCursor(new Cursor(Cursor.HAND_CURSOR));

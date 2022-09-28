@@ -149,17 +149,23 @@ public class TabRecordTransfers {
         }
         if(start!=null&&end!=null){
             FPrincipal.transfers.clear();
-            FPrincipal.transfers.addAll(Transfers.getByRangeOfDate(start,end));
+            for (Branch branch : Babas.user.getBranchs()) {
+                FPrincipal.transfers.addAll(Transfers.getByRangeOfDate(branch,start,end));
+            }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJ","Ventas cargadas");
             model.fireTableDataChanged();
         }else if(start!=null){
             FPrincipal.transfers.clear();
-            FPrincipal.transfers.addAll(Transfers.getAfter(start));
+            for (Branch branch : Babas.user.getBranchs()) {
+                FPrincipal.transfers.addAll(Transfers.getAfter(branch,start));
+            }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJ","Ventas cargadas");
             model.fireTableDataChanged();
         }else if(end!=null){
             FPrincipal.transfers.clear();
-            FPrincipal.transfers.addAll(Transfers.getBefore(end));
+            for (Branch branch : Babas.user.getBranchs()) {
+                FPrincipal.transfers.addAll(Transfers.getBefore(branch,end));
+            }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJ","Ventas cargadas");
             model.fireTableDataChanged();
         }else{

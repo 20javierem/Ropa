@@ -42,7 +42,7 @@ public class User extends Babas {
             inverseJoinColumns = {@JoinColumn(name = "fk_branch")}
     )
     private List<Branch> branchs=new ArrayList<>();
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Sale> sales=new ArrayList<>();
 
     public Long getId() {

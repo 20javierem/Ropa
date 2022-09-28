@@ -3,6 +3,7 @@ package com.babas.views.frames;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.custom.JPanelGradiente;
+import com.babas.models.BoxSession;
 import com.babas.models.User;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
@@ -59,6 +60,7 @@ public class FLogin extends JFrame {
                     user.setLastLogin(new Date());
                     user.save();
                     Babas.user=user;
+                    Babas.boxSession=new BoxSession();
                     saveUser();
                     FPrincipal fPrincipal=new FPrincipal();
                     fPrincipal.setVisible(true);

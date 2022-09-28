@@ -42,7 +42,7 @@ public class Branch extends Babas {
     private List<Stock> stocks =new ArrayList<>();
     private Date created;
     private Date updated;
-    @OneToMany(mappedBy = "branch")
+    @OneToMany
     private List<Sale> sales=new ArrayList<>();
     @OneToMany(mappedBy = "branch")
     private List<Box> boxs=new ArrayList<>();
