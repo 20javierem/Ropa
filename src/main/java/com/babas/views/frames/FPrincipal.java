@@ -2,10 +2,7 @@ package com.babas.views.frames;
 
 import com.babas.App;
 import com.babas.controllers.*;
-import com.babas.custom.CToggleButton;
-import com.babas.custom.CustomPane;
-import com.babas.custom.FondoPanel;
-import com.babas.custom.TabbedPane;
+import com.babas.custom.*;
 import com.babas.models.*;
 import com.babas.models.Color;
 import com.babas.utilities.Babas;
