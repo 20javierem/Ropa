@@ -97,6 +97,22 @@ public class DSettings extends JDialog{
         Utilities.propiedades.guardar();
         Utilities.loadTheme();
         Utilities.updateUI();
+        ((JTextField)cbbFontSize.getEditor().getEditorComponent()).getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                verify();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                verify();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                verify();
+            }
+        });
     }
 
     private void save(){

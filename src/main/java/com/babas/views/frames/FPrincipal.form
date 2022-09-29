@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="734" height="924"/>
+      <xy x="20" y="20" width="1182" height="924"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -77,24 +77,45 @@
                   <text value="Nueva venta"/>
                 </properties>
               </component>
-              <component id="11bf6" class="javax.swing.JButton" binding="btnHistorialVentas">
+              <component id="e9a60" class="javax.swing.JButton" binding="btnNewRental">
+                <constraints/>
+                <properties>
+                  <icon value="com/babas/icons/x32/reserveSelected.png"/>
+                  <text value="Nuevo alquiler"/>
+                </properties>
+              </component>
+              <component id="6153f" class="javax.swing.JButton" binding="btnNewReserve">
+                <constraints/>
+                <properties>
+                  <icon value="com/babas/icons/x32/reserveSelected.png"/>
+                  <text value="Nueva reserva"/>
+                </properties>
+              </component>
+              <component id="f13bc" class="javax.swing.JButton" binding="btnCatalogue">
+                <constraints/>
+                <properties>
+                  <icon value="com/babas/icons/x32/catalogue.png"/>
+                  <text value="Catálogo"/>
+                </properties>
+              </component>
+              <component id="d05a0" class="javax.swing.JButton" binding="btnBoxSesion">
+                <constraints/>
+                <properties>
+                  <icon value="com/babas/icons/x32/caja-registradora.png"/>
+                  <text value="Movimientos de caja"/>
+                </properties>
+              </component>
+              <component id="11bf6" class="javax.swing.JButton" binding="btnRecordSales">
                 <constraints/>
                 <properties>
                   <icon value="com/babas/icons/x32/historialVentas.png"/>
                   <text value="Historial de ventas"/>
                 </properties>
               </component>
-              <component id="f13bc" class="javax.swing.JButton" binding="btnNuevoInventario">
+              <component id="72cb3" class="javax.swing.JButton" binding="btnRecordTransfers">
                 <constraints/>
                 <properties>
-                  <icon value="com/babas/icons/x32/inventario.png"/>
-                  <text value="Inventario"/>
-                </properties>
-              </component>
-              <component id="72cb3" class="javax.swing.JButton" binding="btnHistorialTransfers">
-                <constraints/>
-                <properties>
-                  <icon value="com/babas/icons/x32/inventario.png"/>
+                  <icon value="com/babas/icons/x32/recordTransactions.png"/>
                   <text value="Historial de transferencias"/>
                 </properties>
               </component>
@@ -356,11 +377,11 @@
                       <focusable value="false"/>
                       <font style="1"/>
                       <horizontalTextPosition value="0"/>
-                      <icon value="com/babas/icons/x32/gestionarSelected.png"/>
+                      <icon value="com/babas/icons/x32/reserveSelected.png"/>
                       <iconTextGap value="-2"/>
                       <margin top="10" left="10" bottom="10" right="10"/>
                       <rolloverEnabled value="false"/>
-                      <selectedIcon value="com/babas/icons/x32/gestionarDefault.png"/>
+                      <selectedIcon value="com/babas/icons/x32/reserveDefault.png"/>
                       <tabUnderlineHeight value="5"/>
                       <tabUnderlinePlacement value="2"/>
                       <text value="Reservas"/>
@@ -376,11 +397,11 @@
                       <focusable value="false"/>
                       <font style="1"/>
                       <horizontalTextPosition value="0"/>
-                      <icon value="com/babas/icons/x32/gestionarSelected.png"/>
+                      <icon value="com/babas/icons/x32/transferirDefault.png"/>
                       <iconTextGap value="-2"/>
                       <margin top="10" left="10" bottom="10" right="10"/>
                       <rolloverEnabled value="false"/>
-                      <selectedIcon value="com/babas/icons/x32/gestionarDefault.png"/>
+                      <selectedIcon value="com/babas/icons/x32/transferirSelected.png"/>
                       <tabUnderlineHeight value="5"/>
                       <tabUnderlinePlacement value="2"/>
                       <text value="Traslados"/>
@@ -396,11 +417,11 @@
                       <focusable value="false"/>
                       <font style="1"/>
                       <horizontalTextPosition value="0"/>
-                      <icon value="com/babas/icons/x32/gestionarSelected.png"/>
+                      <icon value="com/babas/icons/x32/reserveSelected.png"/>
                       <iconTextGap value="-2"/>
                       <margin top="10" left="10" bottom="10" right="10"/>
                       <rolloverEnabled value="false"/>
-                      <selectedIcon value="com/babas/icons/x32/gestionarDefault.png"/>
+                      <selectedIcon value="com/babas/icons/x32/reserveDefault.png"/>
                       <tabUnderlineHeight value="5"/>
                       <tabUnderlinePlacement value="2"/>
                       <text value="Alquileres"/>

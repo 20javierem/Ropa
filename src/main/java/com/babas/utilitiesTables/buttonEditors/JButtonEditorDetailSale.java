@@ -48,7 +48,11 @@ public class JButtonEditorDetailSale extends DefaultCellEditor {
             });
             comboBox.setSelectedItem(detailSale.getPrice());
             comboBox.addActionListener(e -> {
-                detailSale.setPrice(Double.valueOf(((JTextField)comboBox.getEditor().getEditorComponent()).getText()));
+                try{
+                    detailSale.setPrice(Double.valueOf(((JTextField)comboBox.getEditor().getEditorComponent()).getText()));
+                }catch (NumberFormatException ignored){
+
+                }
                 stopCellEditing();
                 Utilities.getTabbedPane().updateTab();
             });
@@ -56,7 +60,11 @@ public class JButtonEditorDetailSale extends DefaultCellEditor {
                 @Override
                 public void keyPressed(KeyEvent e) {
                     if(e.getKeyCode()==KeyEvent.VK_ENTER){
-                        detailSale.setPrice(Double.valueOf(((JTextField)comboBox.getEditor().getEditorComponent()).getText()));
+                        try{
+                            detailSale.setPrice(Double.valueOf(((JTextField)comboBox.getEditor().getEditorComponent()).getText()));
+                        }catch (NumberFormatException ignored){
+
+                        }
                         stopCellEditing();
                         Utilities.getTabbedPane().updateTab();
                     }

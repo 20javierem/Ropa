@@ -22,10 +22,7 @@ import com.moreno.Notify;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -33,9 +30,9 @@ public class FPrincipal extends JFrame{
     private JPanel contentPane;
     private JMenu btnMenuInicio;
     private JButton btnNewSale;
-    private JButton btnHistorialVentas;
-    private JButton btnNuevoInventario;
-    private JButton btnHistorialTransfers;
+    private JButton btnRecordSales;
+    private JButton btnCatalogue;
+    private JButton btnRecordTransfers;
     private JButton btnActualizar;
     private JLabel lblCenter;
     private JLabel lblRigth;
@@ -59,6 +56,9 @@ public class FPrincipal extends JFrame{
     private FlatToggleButton btnReserves;
     private FlatToggleButton btnRentals;
     private JMenu btnMenuBox;
+    private JButton btnBoxSesion;
+    private JButton btnNewReserve;
+    private JButton btnNewRental;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
@@ -108,7 +108,7 @@ public class FPrincipal extends JFrame{
                 menuSales.loadNewSale();
             }
         });
-        btnHistorialVentas.addActionListener(new ActionListener() {
+        btnRecordSales.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuSales.loadRecordSales();
@@ -150,7 +150,7 @@ public class FPrincipal extends JFrame{
                 reloadData();
             }
         });
-        btnHistorialTransfers.addActionListener(new ActionListener() {
+        btnRecordTransfers.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuTraslade.loadRecordTraslades();
@@ -160,6 +160,18 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadMenuRentals();
+            }
+        });
+        btnBoxSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadBoxSesion();
+            }
+        });
+        btnCatalogue.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuSales.loadCatalogue();
             }
         });
     }
@@ -360,13 +372,16 @@ public class FPrincipal extends JFrame{
         btnManagement.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAdministrador.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewSale.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnNuevoInventario.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnHistorialTransfers.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnHistorialVentas.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnCatalogue.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRecordTransfers.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnRecordSales.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnTraslades.setCursor(new Cursor(Cursor.HAND_CURSOR));
         paneNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReserves.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnRentals.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnBoxSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnNewRental.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnNewReserve.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {
