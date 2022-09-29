@@ -95,6 +95,9 @@ public class DetailSale extends Babas {
 
     @Override
     public void save() {
+        if(presentation!=null){
+            namePresentation=presentation.getName();
+        }
         super.save();
         Stock stock= Stocks.getStock(getSale().getBranch(),getProduct());
         stock.getProduct().refresh();

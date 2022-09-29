@@ -1,46 +1,198 @@
 package com.babas.views.tabs;
 
+import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
+import com.babas.models.Branch;
+import com.babas.models.Sale;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorTransfer;
+import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
+import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
+import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
+import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.components.FlatTable;
+import com.moreno.Notify;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.*;
+import java.util.List;
 
 public class TabRecordSales {
     private TabPane tabPane;
-    private JComboBox cbbTipo;
-    private JComboBox cbbVendedor;
-    private JPanel paneEntre;
-    private JTextField txtMinimo;
-    private JTextField txtMaximo;
-    private JPanel paneMenorque;
-    private JTextField txtMayor;
-    private JPanel paneMayorque;
-    private JTextField txtMenor;
-    private JComboBox cbbPrecio;
-    private JButton btnExportar;
-    private JPanel paneEntreFecha;
+    private JComboBox cbbType;
     private JDateChooser fechaInicio;
     private JDateChooser fechaFin;
-    private JPanel paneHastaFecha;
     private JDateChooser fechaHasta;
-    private JPanel paneDesdeFecha;
     private JDateChooser fechaDesde;
-    private JButton btnBuscar;
-    private JButton btnLimpiarFiltros;
-    private JComboBox cbbFecha;
-    private JComboBox cbbSucursal;
-    private JTable tabla;
     private JLabel lblTotalEfectivo;
     private JLabel lblTotalTransferencias;
-
+    private JPanel paneEntreFecha;
+    private JPanel paneHastaFecha;
+    private JPanel paneDesdeFecha;
+    private JButton btnSearch;
+    private FlatTable table;
+    private JComboBox cbbBranch;
+    private JComboBox cbbDate;
+    private JComboBox cbbState;
+    private List<Sale> sales;
+    private SaleAbstractModel model;
+    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
+    private TableRowSorter<SaleAbstractModel> modeloOrdenado;
+    private List<RowFilter<SaleAbstractModel, String>> filtros = new ArrayList<>();
+    private RowFilter filtroand;
 
     public TabRecordSales(){
-        initComponents();
+        init();
+        cbbDate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filterByType();
+            }
+        });
+        btnSearch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getSales();
+            }
+        });
+        cbbBranch.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
+        cbbState.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
+        cbbType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
     }
-    private void initComponents(){
+    private void init(){
         tabPane.setTitle("Historial de ventas");
+        loadTable();
+        loadCombos();
     }
+
+    private void filterByType(){
+        switch (cbbDate.getSelectedIndex()) {
+            case 0:
+                paneEntreFecha.setVisible(false);
+                paneDesdeFecha.setVisible(false);
+                paneHastaFecha.setVisible(false);
+                break;
+            case 1:
+                paneEntreFecha.setVisible(true);
+                paneDesdeFecha.setVisible(false);
+                paneHastaFecha.setVisible(false);
+                break;
+            case 2:
+                paneEntreFecha.setVisible(false);
+                paneDesdeFecha.setVisible(true);
+                paneHastaFecha.setVisible(false);
+                break;
+            case 3:
+                paneEntreFecha.setVisible(false);
+                paneDesdeFecha.setVisible(false);
+                paneHastaFecha.setVisible(true);
+                break;
+        }
+    }
+    private void loadCombos(){
+        cbbBranch.setModel(new DefaultComboBoxModel(FPrincipal.branchesWithAll));
+        cbbBranch.setRenderer(new Branch.ListCellRenderer());
+    }
+    private void loadTable() {
+        sales=new ArrayList<>();
+        for (Branch branch : Babas.user.getBranchs()) {
+            sales.addAll(Sales.getAfter(branch,new Date()));
+        }
+        model = new SaleAbstractModel(sales);
+        table.setModel(model);
+        UtilitiesTables.headerNegrita(table);
+        SaleCellRendered.setCellRenderer(table);
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorTransfer(false));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorTransfer(true));
+        modeloOrdenado = new TableRowSorter<>(model);
+        table.setRowSorter(modeloOrdenado);
+    }
+    private void filter(){
+        filtros.clear();
+        if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
+            Branch branch = (Branch) cbbBranch.getSelectedItem();
+            filtros.add(RowFilter.regexFilter(branch.getName(), 3));
+        }
+        if(cbbType.getSelectedIndex()!=0){
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 5));
+        }
+        if (cbbState.getSelectedIndex()!=0) {
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 6));
+        }
+        filtroand = RowFilter.andFilter(filtros);
+        modeloOrdenado.setRowFilter(filtroand);
+    }
+    private void getSales(){
+        btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        Date start = null;
+        Date end = null;
+        if(paneEntreFecha.isVisible()){
+            if(fechaInicio.getDate()!=null){
+                start=fechaInicio.getDate();
+            }
+            if(fechaFin.getDate()!=null){
+                end=fechaFin.getDate();
+            }
+        }
+        if(paneDesdeFecha.isVisible()){
+            if(fechaDesde.getDate()!=null){
+                start=fechaDesde.getDate();
+            }
+        }
+        if(paneHastaFecha.isVisible()){
+            if(fechaHasta.getDate()!=null){
+                end=fechaHasta.getDate();
+            }
+        }
+        if(start!=null&&end!=null){
+            sales.clear();
+            for (Branch branch : Babas.user.getBranchs()) {
+                sales.addAll(Sales.getByRangeOfDate(branch,start,end));
+            }
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            model.fireTableDataChanged();
+        }else if(start!=null){
+            sales.clear();
+            for (Branch branch : Babas.user.getBranchs()) {
+                sales.addAll(Sales.getAfter(branch,start));
+            }
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            model.fireTableDataChanged();
+        }else if(end!=null){
+            sales.clear();
+            for (Branch branch : Babas.user.getBranchs()) {
+                sales.addAll(Sales.getBefore(branch,end));
+            }
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            model.fireTableDataChanged();
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");
+        }
+        btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
+
     public TabPane getTabPane() {
         return tabPane;
     }

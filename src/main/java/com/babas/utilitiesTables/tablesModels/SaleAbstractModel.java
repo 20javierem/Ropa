@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class SaleAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","CLIENTE","SUBTOTAL","DESCUENTO","TOTAL","",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class, Double.class,Double.class,Double.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","DESCUENTO","TOTAL","",""};
+    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,JButton.class,JButton.class};
     private final List<Sale> list;
 
     public SaleAbstractModel(List<Sale> list){
@@ -51,14 +51,20 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 2:
                 return sale.getUpdated();
             case 3:
-                return sale.getClient()!=null?sale.getClient().getNames():"-- Sin cliente --";
+                return sale.getBranch().getName();
             case 4:
-                return sale.getTotal();
+                return sale.getClient()!=null?sale.getClient().getNames():"-- Sin cliente --";
             case 5:
-                return sale.getDiscount();
+                return sale.isCash()?"EFECTIVO":"TRANSFERENCIA";
             case 6:
-                return sale.getTotalCurrent();
+                return sale.isCash()?"REALIZADA":"CANCELADA";
             case 7:
+                return sale.getTotal();
+            case 8:
+                return sale.getDiscount();
+            case 9:
+                return sale.getTotalCurrent();
+            case 10:
                 return new JButtonAction("x16/mostrarContraseña.png");
             default:
                 return new JButtonAction("x16/remove.png");

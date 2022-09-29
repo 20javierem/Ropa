@@ -50,6 +50,12 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
+                case "TIPO/PAGO":
+                    componente.setHorizontalAlignment(SwingConstants.LEFT);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;

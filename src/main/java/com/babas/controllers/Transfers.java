@@ -28,8 +28,9 @@ public class Transfers extends Babas {
     public static Vector<Transfer> getByRangeOfDate(Branch branch,Date start,Date end){
         criteria = builder.createQuery(Transfer.class);
         root=criteria.from(Transfer.class);
-        criteria.select(root).where(builder.between(
-                root.get("created"),Utilities.getDateStart(start),Utilities.getDateEnd(end)))
+        criteria.select(root).where(builder.and(
+                builder.between(root.get("created"),Utilities.getDateStart(start),Utilities.getDateEnd(end)),
+                        builder.or(builder.equal(root.get("source"),branch),builder.equal(root.get("destiny"),branch))))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
@@ -38,8 +39,8 @@ public class Transfers extends Babas {
         criteria = builder.createQuery(Transfer.class);
         root=criteria.from(Transfer.class);
         criteria.select(root).where(builder.and(
-                builder.lessThan(root.get("created"),Utilities.getDateLessThan(end)))
-                ,builder.equal(root.get("branch"),branch))
+                builder.lessThan(root.get("created"),Utilities.getDateLessThan(end))),
+                        builder.or(builder.equal(root.get("source"),branch),builder.equal(root.get("destiny"),branch)))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
@@ -48,8 +49,8 @@ public class Transfers extends Babas {
         criteria = builder.createQuery(Transfer.class);
         root=criteria.from(Transfer.class);
         criteria.select(root).where(builder.and(
-                builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start)))
-                ,builder.equal(root.get("branch"),branch))
+                builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start))),
+                        builder.or(builder.equal(root.get("source"),branch),builder.equal(root.get("destiny"),branch)))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }

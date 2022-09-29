@@ -87,7 +87,6 @@ public class FPrincipal extends JFrame{
     public static Vector<Sex> sexsWithAll=new Vector<>();
     public static Vector<Style> styles=new Vector<>();
     public static List<Transfer> transfersOnWait=new ArrayList<>();
-    public static List<Transfer> transfers=new ArrayList<>();
 
     public FPrincipal(){
         init();
@@ -352,12 +351,6 @@ public class FPrincipal extends JFrame{
         sexsWithAll.add(0,new Sex("TODOS"));
         products= Products.getActives();
         styles=Styles.getTodos();
-        Calendar calendar=Calendar.getInstance();
-        calendar.set(Calendar.DATE,1);
-        transfers.clear();
-        for (Branch branch : Babas.user.getBranchs()) {
-            FPrincipal.transfers.addAll(Transfers.getAfter(branch,calendar.getTime()));
-        }
     }
     private void cargarCursores(){
         btnAjustes.setCursor(new Cursor(Cursor.HAND_CURSOR));

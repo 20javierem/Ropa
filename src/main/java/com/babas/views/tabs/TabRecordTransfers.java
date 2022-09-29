@@ -45,6 +45,7 @@ public class TabRecordTransfers {
     private TableRowSorter<TransferAbstractModel> modeloOrdenado;
     private List<RowFilter<TransferAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
+    private List<Transfer> transfers;
 
     public TabRecordTransfers(){
         init();
@@ -52,18 +53,6 @@ public class TabRecordTransfers {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filterByType();
-            }
-        });
-        cbbBranch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        cbbState.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
             }
         });
         btnSearch.addActionListener(new ActionListener() {
@@ -148,31 +137,44 @@ public class TabRecordTransfers {
             }
         }
         if(start!=null&&end!=null){
-            FPrincipal.transfers.clear();
+            transfers.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                FPrincipal.transfers.addAll(Transfers.getByRangeOfDate(branch,start,end));
+                Transfers.getByRangeOfDate(branch,start,end).forEach(transfer -> {
+                    if(!transfers.contains(transfer)){
+                        transfers.add(transfer);
+                    }
+                });
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJ","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Transferencias cargadas");
             model.fireTableDataChanged();
         }else if(start!=null){
-            FPrincipal.transfers.clear();
+            transfers.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                FPrincipal.transfers.addAll(Transfers.getAfter(branch,start));
+                Transfers.getAfter(branch,start).forEach(transfer -> {
+                    if(!transfers.contains(transfer)){
+                        transfers.add(transfer);
+                    }
+                });
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJ","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Transferencias cargadas");
             model.fireTableDataChanged();
         }else if(end!=null){
-            FPrincipal.transfers.clear();
+            transfers.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                FPrincipal.transfers.addAll(Transfers.getBefore(branch,end));
+                Transfers.getBefore(branch,end).forEach(transfer -> {
+                    if(!transfers.contains(transfer)){
+                        transfers.add(transfer);
+                    }
+                });
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJ","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Transferencias cargadas");
             model.fireTableDataChanged();
         }else{
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe se leccionar un rango de fecha");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
+
     private void filter(){
         filtros.clear();
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
@@ -185,12 +187,21 @@ public class TabRecordTransfers {
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
     }
+
     public TabPane getTabPane(){
         return tabPane;
     }
 
     private void loadTable() {
-        model = new TransferAbstractModel(FPrincipal.transfers);
+        transfers=new ArrayList<>();
+        for (Branch branch : Babas.user.getBranchs()) {
+            Transfers.getAfter(branch,new Date()).forEach(transfer -> {
+                if(!transfers.contains(transfer)){
+                    transfers.add(transfer);
+                }
+            });
+        }
+        model = new TransferAbstractModel(transfers);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         TransferCellRendered.setCellRenderer(table);

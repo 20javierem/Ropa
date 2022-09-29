@@ -165,8 +165,6 @@ public class TabNewSale {
                     sale.save();
                     Babas.boxSession.getSales().add(0,sale);
                     Babas.boxSession.calculateTotals();
-                    sale.getBranch().getSales().add(0,sale);
-                    sale.getUser().getSales().add(0,sale);
                     sale=new Sale();
                     clear();
                     Utilities.getTabbedPane().updateTab();
