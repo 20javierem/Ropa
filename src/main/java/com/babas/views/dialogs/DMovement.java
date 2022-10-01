@@ -87,21 +87,26 @@ public class DMovement extends JDialog{
         spinnerAmount.setValue(movement.getAmount());
     }
     private void onSave(){
-        movement.setDescription(txtDescription.getText().trim());
-        movement.setEntrance(ckEntrance.isSelected());
-        movement.setBoxSesion(Babas.boxSession);
-        movement.setAmount((Double) spinnerAmount.getValue());
-        Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(movement);
-        if(constraintViolationSet.isEmpty()){
-            movement.save();
-            if(!updated){
-                movement.getBoxSesion().getMovements().add(movement);
+        if(Babas.boxSession.getId()!=null){
+            movement.setDescription(txtDescription.getText().trim());
+            movement.setEntrance(ckEntrance.isSelected());
+            movement.setBoxSesion(Babas.boxSession);
+            movement.setAmount((Double) spinnerAmount.getValue());
+            Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(movement);
+            if(constraintViolationSet.isEmpty()){
+                movement.save();
+                if(!updated){
+                    movement.getBoxSesion().getMovements().add(movement);
+                }
+                movement.getBoxSesion().calculateTotals();
+                Utilities.getTabbedPane().updateTab();
+            }else{
+                ProgramValidator.mostrarErrores(constraintViolationSet);
             }
-            movement.getBoxSesion().calculateTotals();
-            Utilities.getTabbedPane().updateTab();
         }else{
-            ProgramValidator.mostrarErrores(constraintViolationSet);
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
         }
+
     }
     private void onHecho(){
         if(updated){

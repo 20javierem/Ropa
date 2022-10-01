@@ -1,5 +1,6 @@
 package com.babas.views.tabs;
 
+import com.babas.App;
 import com.babas.custom.TabPane;
 import com.babas.utilities.Utilities;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
@@ -7,6 +8,7 @@ import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class TabNewReserve {
     private TabPane tabPane;
@@ -29,6 +31,8 @@ public class TabNewReserve {
     }
     private void init(){
         tabPane.setTitle("Nueva reserva");
+        ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+        lblLogo.setIcon(logo);
     }
 
     public TabPane getTabPane() {

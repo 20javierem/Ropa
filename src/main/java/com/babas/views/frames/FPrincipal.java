@@ -171,6 +171,18 @@ public class FPrincipal extends JFrame{
                 menuSales.loadCatalogue();
             }
         });
+        btnNewRental.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuRentals.loadNewRental();
+            }
+        });
+        btnNewReserve.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuReserves.loadNewReserve();
+            }
+        });
     }
 
     private void reloadData(){
