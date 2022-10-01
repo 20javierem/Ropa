@@ -100,7 +100,6 @@ public class DPrice extends JDialog{
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Precio actualizado");
                 onHecho();
             }
-
         }else{
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }

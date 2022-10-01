@@ -15,12 +15,12 @@ public class Movement extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
     private Long id;
-    private Double amount=0.0;
     @ManyToOne
     @NotNull(message = "Caja")
     private BoxSession boxSession;
     private Date created;
     private Date updated;
+    private Double amount=0.0;
     private String description;
     private boolean entrance;
 
@@ -73,12 +73,7 @@ public class Movement extends Babas {
         if(created==null){
             created=new Date();
         }
-        if(!isEntrance()){
-            amount=-amount;
-        }
         updated=new Date();
         super.save();
-        boxSession.getMovements().add(this);
-        boxSession.calculateTotals();
     }
 }

@@ -57,7 +57,7 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 5:
                 return sale.isCash()?"EFECTIVO":"TRANSFERENCIA";
             case 6:
-                return sale.isCash()?"REALIZADA":"CANCELADA";
+                return sale.isActive()?"REALIZADA":"CANCELADA";
             case 7:
                 return sale.getTotal();
             case 8:

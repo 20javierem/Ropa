@@ -56,7 +56,6 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar transferencia",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         transfer.refresh();
-                        transfer.getDetailTransfers().forEach( detailTransfer -> detailTransfer.getProduct().getStocks().forEach(Babas::refresh));
                         if(transfer.getState()!=2){
                             transfer.setState(2);
                             transfer.setUpdated(new Date());
@@ -74,7 +73,6 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
             fireEditingStopped();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
-
         }
     }
 

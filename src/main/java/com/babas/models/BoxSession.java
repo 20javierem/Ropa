@@ -157,8 +157,14 @@ public class BoxSession extends Babas {
         totalReserves=0.0;
         getReserves().forEach(reserve -> totalReserves+=reserve.getTotal());
         totalMovements=0.0;
-        getMovements().forEach(movement -> totalMovements+=movement.getAmount());
-        amountToDelivered+=totalSales+totalRentals+totalReserves+totalMovements;
+        getMovements().forEach(movement -> {
+            if(movement.isEntrance()){
+                totalMovements+=movement.getAmount();
+            }else{
+                totalMovements-=movement.getAmount();
+            }
+        });
+        amountToDelivered+=(totalSales+totalRentals+totalReserves+totalMovements);
         save();
     }
 }

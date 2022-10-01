@@ -162,14 +162,17 @@ public class TabNewSale {
                 sale.setUser(Babas.user);
                 Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(sale);
                 if(constraintViolationSet.isEmpty()){
-                    sale.save();
-                    Babas.boxSession.getSales().add(0,sale);
-                    Babas.boxSession.calculateTotals();
-                    sale=new Sale();
-                    clear();
-                    Utilities.getTabbedPane().updateTab();
-                    Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta registrada");
+                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar venta",JOptionPane.YES_NO_OPTION)==0;
+                    if(si){
+                        sale.save();
+                        Babas.boxSession.getSales().add(0,sale);
+                        Babas.boxSession.calculateTotals();
+                        sale=new Sale();
+                        clear();
+                        Utilities.getTabbedPane().updateTab();
+                        Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta registrada");
+                    }
                 }else{
                     ProgramValidator.mostrarErrores(constraintViolationSet);
                 }
@@ -177,7 +180,7 @@ public class TabNewSale {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe introducir NOMBRE y DNI");
             }
         }else{
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe abrir caja para realizar la venta");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
         }
     }
     private void clear(){

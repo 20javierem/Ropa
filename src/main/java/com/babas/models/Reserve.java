@@ -22,13 +22,18 @@ public class Reserve extends Babas {
     @ManyToOne
     @NotNull
     private Branch branch;
-    private Date created=new Date();
-    private Date ends;
+    private Date created;
     private Date updated;
+    @NotNull(message = "Fecha de inicio")
+    private Double started;
+    @NotNull(message = "Fecha de finalización")
+    private Double ended;
     @OneToMany(mappedBy = "reserve")
     @NotEmpty(message = "Productos")
     private List<DetailReserve> detailReserves=new ArrayList<>();
     private Double total=0.0;
+    private Double advance=0.0;
+    private Double toCancel=0.0;
 
     public Long getId() {
         return id;
@@ -44,14 +49,6 @@ public class Reserve extends Babas {
 
     public Date getCreated() {
         return created;
-    }
-
-    public Date getEnds() {
-        return ends;
-    }
-
-    public void setEnds(Date ends) {
-        this.ends = ends;
     }
 
     public Date getUpdated() {
@@ -85,5 +82,46 @@ public class Reserve extends Babas {
 
     public void setBranch(Branch branch) {
         this.branch = branch;
+    }
+
+    public Double getAdvance() {
+        return advance;
+    }
+
+    public void setAdvance(Double advance) {
+        this.advance = advance;
+    }
+
+    public Double getToCancel() {
+        return toCancel;
+    }
+
+    public void setToCancel(Double toCancel) {
+        this.toCancel = toCancel;
+    }
+
+    public Double getStarted() {
+        return started;
+    }
+
+    public void setStarted(Double started) {
+        this.started = started;
+    }
+
+    public Double getEnded() {
+        return ended;
+    }
+
+    public void setEnded(Double ended) {
+        this.ended = ended;
+    }
+
+    @Override
+    public void save() {
+        if(created==null){
+            created=new Date();
+        }
+        updated=new Date();
+        super.save();
     }
 }

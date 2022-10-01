@@ -113,6 +113,7 @@ public class Transfer extends Babas {
         getDetailTransfers().forEach(Babas::save);
         getSource().getTransfers_sources().add(Transfer.this);
         getDestiny().getTransfers_destinys().add(Transfer.this);
+        getDetailTransfers().forEach( detailTransfer -> detailTransfer.getProduct().getStocks().forEach(Babas::refresh));
         switch (getState()){
             case 0:
                 acept=true;

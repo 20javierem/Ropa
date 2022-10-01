@@ -43,4 +43,6 @@ public class DetailTransfer extends Babas {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+
 }

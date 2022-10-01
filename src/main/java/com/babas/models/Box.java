@@ -32,6 +32,7 @@ public class Box extends Babas {
     public Box(Branch branch){
         this.branch=branch;
     }
+
     public Box(){
 
     }
@@ -104,6 +105,7 @@ public class Box extends Babas {
         if(created==null){
             created=new Date();
         }
+        updated=new Date();
         super.save();
     }
 }

@@ -4,6 +4,8 @@ import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabBranchs;
+import com.babas.views.tabs.TabNewRental;
+import com.babas.views.tabs.TabNewReserve;
 import com.babas.views.tabs.TabUsers;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 
@@ -16,8 +18,7 @@ public class MenuReserves {
     private FlatToggleButton btnRecordReserves;
     private JPanel contentPane;
     private TabbedPane tabbedPane;
-    private TabUsers tabUsers;
-    private TabBranchs tabBranchs;
+    private TabNewReserve tabNewReserve;
 
     public MenuReserves(TabbedPane tabbedPane){
         this.tabbedPane=tabbedPane;
@@ -30,36 +31,24 @@ public class MenuReserves {
         btnRecordReserves.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadRecordReserves();
+
             }
         });
     }
     public void loadNewReserve(){
         Utilities.despintarButton(btnRecordReserves);
         Utilities.buttonSelected(btnNewReserve);
-        if (tabUsers == null) {
-            tabUsers = new TabUsers();
+        if (tabNewReserve == null) {
+            tabNewReserve = new TabNewReserve();
         }
-        if (tabbedPane.indexOfTab(tabUsers.getTabPane().getTitle())==-1) {
-            tabUsers = new TabUsers();
-            tabUsers.getTabPane().setOption(btnNewReserve);
-            tabbedPane.addTab(tabUsers.getTabPane().getTitle(), tabUsers.getTabPane().getIcon(), tabUsers.getTabPane());
+        if (tabbedPane.indexOfTab(tabNewReserve.getTabPane().getTitle())==-1) {
+            tabNewReserve = new TabNewReserve();
+            tabNewReserve.getTabPane().setOption(btnNewReserve);
+            tabbedPane.addTab(tabNewReserve.getTabPane().getTitle(), tabNewReserve.getTabPane().getIcon(), tabNewReserve.getTabPane());
         }
-        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabUsers.getTabPane().getTitle()));
+        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabNewReserve.getTabPane().getTitle()));
     }
-    public void loadRecordReserves(){
-        Utilities.despintarButton(btnNewReserve);
-        Utilities.buttonSelected(btnRecordReserves);
-        if (tabBranchs == null) {
-            tabBranchs = new TabBranchs();
-        }
-        if (tabbedPane.indexOfTab(tabBranchs.getTabPane().getTitle())==-1) {
-            tabBranchs = new TabBranchs();
-            tabBranchs.getTabPane().setOption(btnRecordReserves);
-            tabbedPane.addTab(tabBranchs.getTabPane().getTitle(), tabBranchs.getTabPane().getIcon(), tabBranchs.getTabPane());
-        }
-        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabBranchs.getTabPane().getTitle()));
-    }
+
     public JPanel getContentPane() {
         contentPane.updateUI();
         btnRecordReserves.updateUI();
