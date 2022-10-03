@@ -88,7 +88,7 @@ public class FLogin extends JFrame {
             Utilities.propiedades.setUserName("");
             Utilities.propiedades.setUserPassword("");
         }
-        Utilities.propiedades.guardar();
+        Utilities.propiedades.save();
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here

@@ -37,10 +37,10 @@ public class Propiedades {
             properties.load(inputStream);
             inputStream.close();
             setKey("2QXDJJUCSSUW2GC");
-            guardar();
+            save();
             setTema("Claro");
             setFont(String.valueOf(new JTextField().getFont().getSize()));
-            guardar();
+            save();
         }else{
             inputStream = new FileInputStream(archivo.getAbsolutePath());
             properties= new Properties();
@@ -49,7 +49,7 @@ public class Propiedades {
         }
     }
 
-    public void guardar() {
+    public void save() {
         try {
             FileOutputStream outputStream = new FileOutputStream(archivo);
             properties.store(outputStream, "[Config file]");

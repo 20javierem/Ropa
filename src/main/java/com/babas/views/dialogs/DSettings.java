@@ -87,14 +87,14 @@ public class DSettings extends JDialog{
 
     private void apply(){
         Utilities.propiedades.setFont(String.valueOf(cbbFontSize.getSelectedItem()));
-        Utilities.propiedades.guardar();
+        Utilities.propiedades.save();
         changeTheme();
         Utilities.updateUI();
         pack();
     }
     private void changeTheme(){
         Utilities.propiedades.setTema(String.valueOf(cbbThemes.getSelectedItem()));
-        Utilities.propiedades.guardar();
+        Utilities.propiedades.save();
         Utilities.loadTheme();
         Utilities.updateUI();
         ((JTextField)cbbFontSize.getEditor().getEditorComponent()).getDocument().addDocumentListener(new DocumentListener() {
