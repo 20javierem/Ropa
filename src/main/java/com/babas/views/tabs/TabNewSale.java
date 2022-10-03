@@ -89,7 +89,7 @@ public class TabNewSale {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        sale.setDiscount(-(Double) spinnerDiscount.getValue());
+                        sale.setDiscount((Double) spinnerDiscount.getValue());
                         loadTotals();
                     }
                 });
@@ -163,7 +163,7 @@ public class TabNewSale {
                 sale.setUser(Babas.user);
                 Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(sale);
                 if(constraintViolationSet.isEmpty()){
-                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar venta",JOptionPane.YES_NO_OPTION)==0;
+                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar Venta",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         sale.save();
                         Babas.boxSession.getSales().add(0,sale);

@@ -38,6 +38,7 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
                 case "DESCUENTO":
                 case "TOTAL":
                 case "MONTO":
+                case "GARANTÍA":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(95);
                     table.getColumn(table.getColumnName(column)).setMinWidth(95);

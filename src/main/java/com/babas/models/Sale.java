@@ -128,7 +128,7 @@ public class Sale extends Babas {
         detailSales.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        totalCurrent=total+discount;
+        totalCurrent=total-discount;
     }
     @Override
     public void save() {

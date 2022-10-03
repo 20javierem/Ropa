@@ -10,6 +10,7 @@ import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
 import com.babas.utilitiesTables.tablesModels.MovementAbstractModel;
+import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.dialogs.DMovement;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane;
@@ -33,9 +34,11 @@ public class TabBoxSesion {
     private JPanel paneCloseBoxSession;
     private JButton btnNewMovement;
     private JPanel paneNewMomevent;
+    private FlatTable tableRentals;
     private FlatTabbedPane flatTabbedPane;
     private SaleAbstractModel saleAbstractModel;
     private MovementAbstractModel movementAbstractModel;
+    private RentalAbstractModel rentalAbstractModel;
 
     public TabBoxSesion(){
         init();
@@ -57,10 +60,16 @@ public class TabBoxSesion {
         SaleCellRendered.setCellRenderer(tableSales);
         tableSales.getColumnModel().getColumn(saleAbstractModel.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
         tableSales.getColumnModel().getColumn(saleAbstractModel.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+
         movementAbstractModel=new MovementAbstractModel(Babas.boxSession.getMovements());
         tableMovements.setModel(movementAbstractModel);
         UtilitiesTables.headerNegrita(tableMovements);
         SaleCellRendered.setCellRenderer(tableMovements);
+
+        rentalAbstractModel=new RentalAbstractModel(Babas.boxSession.getRentals());
+        tableRentals.setModel(rentalAbstractModel);
+        UtilitiesTables.headerNegrita(tableRentals);
+        SaleCellRendered.setCellRenderer(tableRentals);
     }
     private void init(){
         tabPane.setTitle("Caja");
@@ -69,6 +78,7 @@ public class TabBoxSesion {
             public void actionPerformed(ActionEvent e) {
                 saleAbstractModel.fireTableDataChanged();
                 movementAbstractModel.fireTableDataChanged();
+                rentalAbstractModel.fireTableDataChanged();
                 loadTotals();
             }
         });

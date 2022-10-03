@@ -153,7 +153,7 @@ public class BoxSession extends Babas {
         totalSales=0.0;
         getSales().forEach(sale -> totalSales+=sale.getTotalCurrent());
         totalRentals=0.0;
-        getRentals().forEach(rental -> totalRentals+=rental.getAmount());
+        getRentals().forEach(rental -> totalRentals+=rental.getTotalCurrent());
         totalReserves=0.0;
         getReserves().forEach(reserve -> totalReserves+=reserve.getTotal());
         totalMovements=0.0;

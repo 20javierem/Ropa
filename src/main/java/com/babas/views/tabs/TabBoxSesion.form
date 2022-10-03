@@ -125,7 +125,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <component id="d1861" class="com.formdev.flatlaf.extras.components.FlatTable" default-binding="true">
+                          <component id="d1861" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tableRentals">
                             <constraints/>
                             <properties>
                               <rowHeight value="25"/>
