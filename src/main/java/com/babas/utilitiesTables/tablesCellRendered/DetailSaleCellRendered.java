@@ -3,14 +3,13 @@ package com.babas.utilitiesTables.tablesCellRendered;
 import com.babas.models.DetailSale;
 import com.babas.models.Price;
 import com.babas.utilities.Utilities;
+import com.babas.views.dialogs.DesingTxtTable;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxEditor;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.text.JTextComponent;
 import java.awt.*;
 
-import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
+import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class DetailSaleCellRendered extends DefaultTableCellRenderer {
 
@@ -36,7 +35,7 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(null,value,column,component);
             DetailSale detailSale;
             switch(table.getColumnName(column)){
                 case "COLOR":
@@ -67,7 +66,7 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                     comboBox.setBorder(null);
                     comboBox.setForeground(component.getForeground());
                     comboBox.setBackground(component.getBackground());
-                    comboBox.addItem(detailSale.getPresentation().getName());
+                    comboBox.addItem(detailSale.getNamePresentation());
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
@@ -88,7 +87,7 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;
             }
-            return componente;
+            return componente.getContentPane();
         }
     }
 

@@ -10,6 +10,7 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
 import com.babas.validators.ProgramValidator;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -112,6 +113,7 @@ public class TabFinishRental {
                     }else{
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","El alquiler ya fue finalizado por otro usuario");
                     }
+                    FPrincipal.rentalsActives.remove(rental);
                     btnFinishRental.setVisible(false);
                     jDateFinish.setEnabled(false);
                     spinnerPenalty.setEnabled(false);

@@ -1,10 +1,12 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.views.dialogs.DesingTxtTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
+import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class PriceCellRendered extends DefaultTableCellRenderer {
 
@@ -30,7 +32,7 @@ public class PriceCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(null,value,column,component);
             if ("DEFECTO".equals(table.getColumnName(column))) {
                 componente.setHorizontalAlignment(SwingConstants.CENTER);
                 table.getColumn(table.getColumnName(column)).setMaxWidth(80);
@@ -39,7 +41,7 @@ public class PriceCellRendered extends DefaultTableCellRenderer {
             }else{
                 componente.setHorizontalAlignment(SwingConstants.RIGHT);
             }
-            return componente;
+            return componente.getContentPane();
         }
     }
 

@@ -147,7 +147,7 @@ public class TabRecordRentals {
         filtros.clear();
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(branch.getName(), 3));
+            filtros.add(RowFilter.regexFilter(branch.getName(), 2));
         }
         if(cbbType.getSelectedIndex()!=0){
             filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));

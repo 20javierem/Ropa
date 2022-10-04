@@ -7,7 +7,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Map;
 
-import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class ProductCellRendered extends DefaultTableCellRenderer {
@@ -38,50 +37,50 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
             DesingTxtTable desingTxtTable=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "GÉNERO":
-                    desingTxtTable.setAligmentCenter();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(110);
                     table.getColumn(table.getColumnName(column)).setMinWidth(110);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "MARCA":
-                    desingTxtTable.setAligmentCenter();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(150);
                     table.getColumn(table.getColumnName(column)).setMinWidth(150);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
                     break;
                 case "PRECIO":
-                    desingTxtTable.setAligmentRigth();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.RIGHT);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(110);
                     table.getColumn(table.getColumnName(column)).setMinWidth(110);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "TOTAL-STOCK":
                 case "CATEGORÍA":
-                    desingTxtTable.setAligmentCenter();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "COLOR":
-                    desingTxtTable.setAligmentCenter();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(75);
                     table.getColumn(table.getColumnName(column)).setMinWidth(75);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(75);
                     break;
                 case "TALLA":
-                    desingTxtTable.setAligmentCenter();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(60);
                     table.getColumn(table.getColumnName(column)).setMinWidth(60);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(60);
                     break;
                 case "CÓDIGO":
-                    desingTxtTable.setAligmentCenter();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(70);
                     table.getColumn(table.getColumnName(column)).setMinWidth(70);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(70);
                     break;
                 default:
-                    desingTxtTable.setAligmentLeft();
+                    desingTxtTable.setHorizontalAlignment(SwingConstants.LEFT);
                     break;
             }
             return desingTxtTable.getContentPane();

@@ -2,6 +2,7 @@ package com.babas.utilitiesTables.tablesModels;
 
 import com.babas.models.Rental;
 import com.babas.models.Sale;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -56,17 +57,17 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 5:
                 return rental.isActive() ? "EN ALQUILER" : "FINALIZADA";
             case 6:
-                return rental.getTotal();
+                return Utilities.moneda.format(rental.getTotal());
             case 7:
-                return rental.getWarranty();
+                return Utilities.moneda.format(rental.getWarranty());
             case 8:
-                return rental.getDiscount();
+                return Utilities.moneda.format(rental.getDiscount());
             case 9:
-                return rental.getTotalCurrent();
+                return Utilities.moneda.format(rental.getTotalCurrent());
             case 10:
-                return rental.getPenalty();
+                return Utilities.moneda.format(rental.getPenalty());
             case 11:
-                return rental.getTotalCurrentWithPenalty();
+                return Utilities.moneda.format(rental.getTotalCurrentWithPenalty());
             default:
                 return new JButtonAction("x16/mostrarContraseña.png");
         }

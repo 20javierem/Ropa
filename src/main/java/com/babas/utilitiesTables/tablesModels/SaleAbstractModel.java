@@ -2,6 +2,7 @@ package com.babas.utilitiesTables.tablesModels;
 
 import com.babas.models.Sale;
 import com.babas.models.Transfer;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -59,11 +60,11 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 6:
                 return sale.isActive()?"REALIZADA":"CANCELADA";
             case 7:
-                return sale.getTotal();
+                return Utilities.moneda.format(sale.getTotal());
             case 8:
-                return sale.getDiscount();
+                return Utilities.moneda.format(sale.getDiscount());
             case 9:
-                return sale.getTotalCurrent();
+                return Utilities.moneda.format(sale.getTotalCurrent());
             case 10:
                 return new JButtonAction("x16/mostrarContraseña.png");
             default:

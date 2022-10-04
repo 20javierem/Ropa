@@ -52,7 +52,10 @@ public class DetailRental extends Babas {
 
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
-        quantityPresentation=presentation.getQuantity();
+        if(presentation!=null){
+            quantityPresentation=presentation.getQuantity();
+            namePresentation=presentation.getName();
+        }
     }
 
     public Integer getQuantity() {
@@ -70,10 +73,6 @@ public class DetailRental extends Babas {
 
     public String getNamePresentation() {
         return namePresentation;
-    }
-
-    public void setNamePresentation(String namePresentation) {
-        this.namePresentation = namePresentation;
     }
 
     public Integer getQuantityPresentation() {
@@ -102,14 +101,12 @@ public class DetailRental extends Babas {
         Stock stock= Stocks.getStock(getRental().getBranch(),getProduct());
         stock.getProduct().refresh();
         if (getRental().isActive()){
-            stock.getProduct().setStockTotal(stock.getProduct().getStockTotal()-getQuantity());
-            stock.getProduct().save();
             stock.setQuantity(stock.getQuantity()-getQuantity()*getQuantityPresentation());
+            stock.addNumberRental();
             stock.save();
         }else{
-            stock.getProduct().setStockTotal(stock.getProduct().getStockTotal()+getQuantity());
-            stock.getProduct().save();
             stock.setQuantity(stock.getQuantity()+getQuantity()*getQuantityPresentation());
+            stock.removeNumberRental();
             stock.save();
         }
     }

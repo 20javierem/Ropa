@@ -148,9 +148,11 @@ public class Product extends Babas {
     public List<Presentation> getPresentations() {
         return presentations;
     }
+
     public void setPresentationDefault(Presentation presentationDefault){
         this.presentationDefault=presentationDefault;
     }
+
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Product) {

@@ -8,6 +8,10 @@ import com.babas.models.Rental;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailRental;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailRental2;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale2;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
 import com.babas.validators.ProgramValidator;
@@ -146,9 +150,9 @@ public class TabNewRental {
         table.setModel(model);
         DetailRentalCellRendered.setCellRenderer(table);
         UtilitiesTables.headerNegrita(table);
-//        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorDetailSale2());
-//        table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailSale());
-//        table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailSale());
+        table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorDetailRental2());
+        table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailRental());
+        table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailRental());
     }
 
     private void loadTotals(){
@@ -189,7 +193,7 @@ public class TabNewRental {
                     ProgramValidator.mostrarErrores(constraintViolationSet);
                 }
             }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe introducir NOMBRE y DNI");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe ingresar el cliente");
             }
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");

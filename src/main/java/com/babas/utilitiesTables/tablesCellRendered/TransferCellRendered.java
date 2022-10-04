@@ -1,10 +1,12 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.views.dialogs.DesingTxtTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
+import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class TransferCellRendered extends DefaultTableCellRenderer {
 
@@ -30,7 +32,7 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(null,value,column,component);
             switch(table.getColumnName(column)){
                 case "ORIGEN":
                 case "DESTINO":
@@ -57,7 +59,7 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;
             }
-            return componente;
+            return componente.getContentPane();
         }
     }
 

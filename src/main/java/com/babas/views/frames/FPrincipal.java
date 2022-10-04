@@ -189,6 +189,7 @@ public class FPrincipal extends JFrame{
     private void reloadData(){
         btnActualizar.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         branchs.forEach(Babas::refresh);
+        branchs.forEach(branch -> branch.getStocks().forEach(Babas::refresh));
         users.forEach(Babas::refresh);
         products.forEach(Babas::refresh);
         categories.forEach(Babas::refresh);
@@ -210,9 +211,12 @@ public class FPrincipal extends JFrame{
     }
 
     private void exit(){
-        FLogin fLogin =new FLogin();
-        dispose();
-        fLogin.setVisible(true);
+        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Cerrar sesión",JOptionPane.YES_NO_OPTION)==0;
+        if(si){
+            FLogin fLogin =new FLogin();
+            dispose();
+            fLogin.setVisible(true);
+        }
     }
 
     private void loadMenuItems(){

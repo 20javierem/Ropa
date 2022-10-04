@@ -124,7 +124,7 @@
                   <model>
                     <item value="TODAS"/>
                     <item value="EN ALQUILER"/>
-                    <item value="CANCELADA"/>
+                    <item value="FINALIZADA"/>
                   </model>
                 </properties>
               </component>

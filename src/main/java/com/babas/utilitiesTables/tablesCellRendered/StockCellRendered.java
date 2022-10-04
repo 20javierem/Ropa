@@ -7,7 +7,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 import java.util.Map;
 
-import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class StockCellRendered extends DefaultTableCellRenderer {
@@ -38,14 +37,15 @@ public class StockCellRendered extends DefaultTableCellRenderer {
         }else{
             DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
-                case "STOCK":
-                    componente.setAligmentCenter();
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(65);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(65);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(65);
+                case "STOCK-ACTUAL":
+                case "ALQUILADOS":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 default:
-                    componente.setAligmentLeft();
+                    componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;
             }
             return componente.getContentPane();

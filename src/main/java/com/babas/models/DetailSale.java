@@ -52,7 +52,10 @@ public class DetailSale extends Babas {
 
     public void setPresentation(Presentation presentation) {
         this.presentation = presentation;
-        quantityPresentation=presentation.getQuantity();
+        if(presentation!=null){
+            quantityPresentation=presentation.getQuantity();
+            namePresentation=presentation.getName();
+        }
     }
 
     public Integer getQuantity() {
@@ -70,10 +73,6 @@ public class DetailSale extends Babas {
 
     public String getNamePresentation() {
         return namePresentation;
-    }
-
-    public void setNamePresentation(String namePresentation) {
-        this.namePresentation = namePresentation;
     }
 
     public Integer getQuantityPresentation() {

@@ -1,14 +1,14 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
 import com.babas.models.DetailRental;
-import com.babas.models.DetailSale;
 import com.babas.models.Price;
+import com.babas.views.dialogs.DesingTxtTable;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
 
-import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
+import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class DetailRentalCellRendered extends DefaultTableCellRenderer {
 
@@ -34,7 +34,7 @@ public class DetailRentalCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(null,value,column,component);
             DetailRental detailRental;
             switch(table.getColumnName(column)){
                 case "COLOR":
@@ -86,7 +86,7 @@ public class DetailRentalCellRendered extends DefaultTableCellRenderer {
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;
             }
-            return componente;
+            return componente.getContentPane();
         }
     }
 

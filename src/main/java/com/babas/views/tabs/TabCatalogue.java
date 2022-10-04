@@ -132,7 +132,7 @@ public class TabCatalogue {
     private void filter(){
         filtros.clear();
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,2,3,4,5,6,7));
+        filtros.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,2,3,4,5,6,7,8));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
@@ -141,6 +141,7 @@ public class TabCatalogue {
         listaFiltros.put(5, busqueda);
         listaFiltros.put(6, busqueda);
         listaFiltros.put(7, busqueda);
+        listaFiltros.put(8, busqueda);
         if (((Sex) cbbSex.getSelectedItem()).getId() != null) {
             Sex sex = (Sex) cbbSex.getSelectedItem();
             filtros.add(RowFilter.regexFilter(sex.getName(), 2));

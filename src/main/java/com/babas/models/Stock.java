@@ -21,6 +21,7 @@ public class Stock extends Babas {
     private Integer quantity=0;
     private Date created;
     private Date updated;
+    private Integer numberRentals=0;
 
     public Date getCreated() {
         return created;
@@ -60,6 +61,18 @@ public class Stock extends Babas {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getNumberRentals() {
+        return numberRentals;
+    }
+
+    public void addNumberRental(){
+        numberRentals++;
+    }
+
+    public void removeNumberRental(){
+        numberRentals--;
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.babas.views.dialogs;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,15 +23,19 @@ public class DesingTxtTable {
         this.string2.setForeground(component.getForeground());
         this.string2.setBackground(component.getBackground());
     }
-    public void setAligmentLeft(){
-    }
-    public void setAligmentRigth(){
-        GridLayoutManager gridLayoutManager= (GridLayoutManager) contentPane.getLayout();
-        gridLayoutManager.addLayoutComponent(pane,new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-    }
-    public void setAligmentCenter(){
-        GridLayoutManager gridLayoutManager= (GridLayoutManager) contentPane.getLayout();
-        gridLayoutManager.addLayoutComponent(pane,new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+    public void setHorizontalAlignment(int aligment){
+        switch (aligment){
+            case 0:
+                GridLayoutManager gridLayoutManager= (GridLayoutManager) contentPane.getLayout();
+                gridLayoutManager.addLayoutComponent(pane,new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+                break;
+            case 4:
+                gridLayoutManager = (GridLayoutManager) contentPane.getLayout();
+                gridLayoutManager.addLayoutComponent(pane,new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+                break;
+            default:
+                break;
+        }
     }
     public void setString0(String string0){
         this.string0.setText(string0);
