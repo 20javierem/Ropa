@@ -44,6 +44,7 @@ public class TabRecordRentals {
     private JComboBox cbbBranch;
     private JComboBox cbbDate;
     private JComboBox cbbState;
+    private JButton btnClearFilters;
     private List<Rental> rentals;
     private RentalAbstractModel model;
     private TableRowSorter<RentalAbstractModel> modeloOrdenado;
@@ -82,13 +83,25 @@ public class TabRecordRentals {
                 filter();
             }
         });
+        btnClearFilters.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearFilters();
+            }
+        });
     }
     private void init(){
         tabPane.setTitle("Historial de alquileres");
         loadTable();
         loadCombos();
     }
-
+    private void clearFilters(){
+        cbbState.setSelectedIndex(0);
+        cbbType.setSelectedIndex(0);
+        cbbBranch.setSelectedIndex(0);
+        cbbType.setSelectedIndex(0);
+        filter();
+    }
     private void filterByType(){
         switch (cbbDate.getSelectedIndex()) {
             case 0:
@@ -125,7 +138,7 @@ public class TabRecordRentals {
         model = new RentalAbstractModel(rentals);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
-        SaleCellRendered.setCellRenderer(table);
+        SaleCellRendered.setCellRenderer(table,null);
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental());
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
@@ -137,10 +150,10 @@ public class TabRecordRentals {
             filtros.add(RowFilter.regexFilter(branch.getName(), 3));
         }
         if(cbbType.getSelectedIndex()!=0){
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 5));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));
         }
         if (cbbState.getSelectedIndex()!=0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 6));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 5));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);

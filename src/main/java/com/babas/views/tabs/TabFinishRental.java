@@ -1,22 +1,31 @@
 package com.babas.views.tabs;
 
+import com.babas.App;
 import com.babas.custom.TabPane;
+import com.babas.models.Movement;
 import com.babas.models.Rental;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
+import com.babas.validators.ProgramValidator;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import com.moreno.Notify;
+import com.thoughtworks.qdox.model.expression.Not;
 import com.toedter.calendar.JDateChooser;
+import jakarta.validation.ConstraintViolation;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 public class TabFinishRental {
     private TabPane tabPane;
@@ -32,8 +41,7 @@ public class TabFinishRental {
     private JLabel lblWarranty;
     private JLabel lblTotal;
     private JLabel lblTotalCurrent;
-    private JButton btnSaleWithTrasnfer;
-    private JButton btnSaleWithCash;
+    private JButton btnFinishRental;
     private JLabel lblLogo;
     private JLabel lblPenalty;
     private JLabel lblTotalWithPenalty;
@@ -60,13 +68,61 @@ public class TabFinishRental {
                 });
             }
         });
+        btnFinishRental.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onSave();
+            }
+        });
     }
     private void init(){
         tabPane.setTitle("Finalización alquiler Nro. "+rental.getNumberRental());
+        ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+        lblLogo.setIcon(logo);
         load();
         loadTotals();
     }
-
+    private void onSave(){
+        if(Babas.boxSession.getId()!=null){
+            if(jDateFinish.getDate()!=null){
+                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar Alquiler",JOptionPane.YES_NO_OPTION)==0;
+                if(si){
+                    rental.refresh();
+                    if(rental.isActive()){
+                        rental.setPenalty((Double) spinnerPenalty.getValue());
+                        rental.calculateTotal();
+                        rental.setDelivery(jDateFinish.getDate());
+                        rental.setActive(false);
+                        rental.save();
+                        Movement movement=new Movement();
+                        if(rental.getPenalty()>rental.getWarranty()){
+                            movement.setEntrance(true);
+                            movement.setAmount(rental.getPenalty()-rental.getWarranty());
+                        }else{
+                            movement.setEntrance(false);
+                            movement.setAmount(rental.getWarranty()-rental.getPenalty());
+                        }
+                        movement.setBoxSesion(Babas.boxSession);
+                        movement.setDescription("ALQUILER FINALIZADO NRO: "+rental.getNumberRental());
+                        movement.save();
+                        movement.getBoxSesion().getMovements().add(movement);
+                        movement.getBoxSesion().calculateTotals();
+                        Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler finalizado");
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","El alquiler ya fue finalizado por otro usuario");
+                    }
+                    btnFinishRental.setVisible(false);
+                    jDateFinish.setEnabled(false);
+                    spinnerPenalty.setEnabled(false);
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe introducir fecha de entrega");
+            }
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
+        }
+    }
     private void load(){
         model=new DetailRentalAbstractModel(rental.getDetailRentals());
         table.setModel(model);
@@ -76,17 +132,28 @@ public class TabFinishRental {
         txtNameClient.setText(rental.getClient().getNames());
         txtPhone.setText(rental.getClient().getPhone());
         txtMail.setText(rental.getClient().getMail());
+        table.removeColumn(table.getColumn(""));
+        if(!rental.isActive()){
+            spinnerPenalty.setValue(rental.getPenalty());
+            jDateFinish.setDate(rental.getDelivery());
+            btnFinishRental.setVisible(false);
+            jDateFinish.setEnabled(false);
+            spinnerPenalty.setEnabled(false);
+        }
     }
 
     private void loadTotals(){
         rental.calculateTotal();
-        lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
+
+        lblTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
-        lblWarranty2.setText(Utilities.moneda.format(rental.getWarranty()));
-        lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent()+rental.getDiscount()-rental.getWarranty()));
+        lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
-        table.removeColumn(table.getColumn(""));
+
+        lblWarranty2.setText(Utilities.moneda.format(rental.getWarranty()));
+        lblPenalty.setText(Utilities.moneda.format(rental.getPenalty()));
+        lblTotalWithPenalty.setText(Utilities.moneda.format(rental.getWarranty()-rental.getPenalty()));
     }
 
     public TabPane getTabPane() {
@@ -100,6 +167,5 @@ public class TabFinishRental {
         spinnerPenalty.setEditor(Utilities.getEditorPrice(spinnerPenalty));
         jDateFinish=new JDateChooser(new Date());
         jDateFinish.setDateFormatString(Utilities.getFormatoFecha());
-        jDateFinish.setEnabled(false);
     }
 }

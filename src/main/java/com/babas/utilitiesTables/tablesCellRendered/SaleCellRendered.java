@@ -1,15 +1,25 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.views.dialogs.DesingTxtTable;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto;
+import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class SaleCellRendered extends DefaultTableCellRenderer {
+    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
 
-    public static void setCellRenderer(JTable table){
-        SaleCellRendered cellRendered=new SaleCellRendered();
+    public SaleCellRendered(Map<Integer, String> listaFiltros) {
+        this.listaFiltros = listaFiltros;
+    }
+
+    public static void setCellRenderer(JTable table,Map<Integer, String> listaFiltros){
+        SaleCellRendered cellRendered=new SaleCellRendered(listaFiltros);
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -26,20 +36,22 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
             button.setBackground(component.getBackground());
             return button;
         }else{
-            JTextField componente=buscarTexto(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "NRO.":
-                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    componente.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(90);
                     table.getColumn(table.getColumnName(column)).setMinWidth(90);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
                     break;
                 case "SUBTOTAL":
+                case "MULTA":
                 case "DESCUENTO":
                 case "TOTAL":
+                case "TOTAL-ACTUAL":
                 case "MONTO":
                 case "GARANTÍA":
-                    componente.setHorizontalAlignment(SwingConstants.RIGHT);
+                    componente.setAligmentRigth();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(95);
                     table.getColumn(table.getColumnName(column)).setMinWidth(95);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(95);
@@ -48,22 +60,22 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
                 case "ACTUALIZADO":
                 case "ESTADO":
                 case "TIPO":
-                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    componente.setAligmentCenter();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "TIPO/PAGO":
-                    componente.setHorizontalAlignment(SwingConstants.LEFT);
+                    componente.setAligmentLeft();
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 default:
-                    componente.setHorizontalAlignment(SwingConstants.LEFT);
+                    componente.setAligmentLeft();
                     break;
             }
-            return componente;
+            return componente.getContentPane();
         }
     }
 

@@ -38,7 +38,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
             if(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle())==-1){
                 Utilities.getTabbedPane().addTab(tabFinishRental.getTabPane().getTitle(),tabFinishRental.getTabPane());
             }
-            Utilities.getTabbedPane().setSelectedComponent(tabFinishRental.getTabPane());
+            Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle()));
             fireEditingStopped();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();

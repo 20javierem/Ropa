@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL-ACTUAL",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class};
     private final List<Rental> list;
 
     public RentalAbstractModel(List<Rental> list){
@@ -48,23 +48,25 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 1:
                 return rental.getCreated();
             case 2:
-                return rental.getUpdated();
-            case 3:
                 return rental.getBranch().getName();
-            case 4:
+            case 3:
                 return rental.getClient().getNames();
-            case 5:
+            case 4:
                 return rental.isCash() ? "EFECTIVO" : "TRANSFERENCIA";
+            case 5:
+                return rental.isActive() ? "EN ALQUILER" : "FINALIZADA";
             case 6:
-                return rental.isActive() ? "REALIZADA" : "FINALIZADA";
-            case 7:
                 return rental.getTotal();
-            case 8:
+            case 7:
                 return rental.getWarranty();
-            case 9:
+            case 8:
                 return rental.getDiscount();
-            case 10:
+            case 9:
                 return rental.getTotalCurrent();
+            case 10:
+                return rental.getPenalty();
+            case 11:
+                return rental.getTotalCurrentWithPenalty();
             default:
                 return new JButtonAction("x16/mostrarContraseña.png");
         }

@@ -57,19 +57,19 @@ public class TabBoxSesion {
         saleAbstractModel=new SaleAbstractModel(Babas.boxSession.getSales());
         tableSales.setModel(saleAbstractModel);
         UtilitiesTables.headerNegrita(tableSales);
-        SaleCellRendered.setCellRenderer(tableSales);
+        SaleCellRendered.setCellRenderer(tableSales,null);
         tableSales.getColumnModel().getColumn(saleAbstractModel.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
         tableSales.getColumnModel().getColumn(saleAbstractModel.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
 
         movementAbstractModel=new MovementAbstractModel(Babas.boxSession.getMovements());
         tableMovements.setModel(movementAbstractModel);
         UtilitiesTables.headerNegrita(tableMovements);
-        SaleCellRendered.setCellRenderer(tableMovements);
+        SaleCellRendered.setCellRenderer(tableMovements,null);
 
         rentalAbstractModel=new RentalAbstractModel(Babas.boxSession.getRentals());
         tableRentals.setModel(rentalAbstractModel);
         UtilitiesTables.headerNegrita(tableRentals);
-        SaleCellRendered.setCellRenderer(tableRentals);
+        SaleCellRendered.setCellRenderer(tableRentals,null);
     }
     private void init(){
         tabPane.setTitle("Caja");

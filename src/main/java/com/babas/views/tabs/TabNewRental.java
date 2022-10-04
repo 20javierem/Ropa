@@ -12,6 +12,7 @@ import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.dialogs.DaddProductToRental;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -175,6 +176,7 @@ public class TabNewRental {
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar Alquiler",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         rental.save();
+                        FPrincipal.rentalsActives.add(rental);
                         Babas.boxSession.getRentals().add(0,rental);
                         Babas.boxSession.calculateTotals();
                         rental=new Rental();
@@ -198,6 +200,8 @@ public class TabNewRental {
         txtDocument.setText(null);
         txtPhone.setText(null);
         txtNameClient.setText(null);
+        spinnerWarranty.setValue(0.0);
+        spinnerDiscount.setValue(0.0);
         loadTable();
         loadTotals();
     }

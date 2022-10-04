@@ -27,6 +27,7 @@ public class Rental extends Babas {
     private Client client;
     private Date created;
     private Date updated;
+    private Date delivery;
     @NotNull(message = "Fecha fin")
     private Date ended;
     private Long numberRental;
@@ -37,6 +38,7 @@ public class Rental extends Babas {
     private Double total=0.0;
     private Double discount=0.0;
     private Double totalCurrent=0.0;
+    private Double totalCurrentWithPenalty=0.0;
     private Double warranty=0.0;
     private Double penalty=0.0;
     @ManyToOne
@@ -69,10 +71,6 @@ public class Rental extends Babas {
 
     public Date getUpdated() {
         return updated;
-    }
-
-    public void setUpdated(Date updated) {
-        this.updated = updated;
     }
 
     public Branch getBranch() {
@@ -136,7 +134,12 @@ public class Rental extends Babas {
         detailRentals.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        totalCurrent=total+warranty+penalty-discount;
+        totalCurrent=total+warranty-discount;
+        totalCurrentWithPenalty=totalCurrent+penalty;
+    }
+
+    public Double getTotalCurrentWithPenalty() {
+        return totalCurrentWithPenalty;
     }
 
     public Double getWarranty() {
@@ -161,6 +164,14 @@ public class Rental extends Babas {
 
     public void setPenalty(Double penalty) {
         this.penalty = penalty;
+    }
+
+    public Date getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(Date delivery) {
+        this.delivery = delivery;
     }
 
     @Override
