@@ -14,10 +14,13 @@ import com.babas.views.dialogs.DSettings;
 import com.babas.views.dialogs.DTransfersOnWait;
 import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
+import com.formdev.flatlaf.IntelliJTheme;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 import com.moreno.Notify;
 
 import javax.swing.*;
+import javax.swing.plaf.IconUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -326,6 +329,7 @@ public class FPrincipal extends JFrame{
         loadMenuSales();
         menuSales.loadNewSale();
         loadTransferOnWait();
+        btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/buildLoadChanges.svg")));
     }
 
     public void loadTransferOnWait(){
