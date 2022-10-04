@@ -9,10 +9,9 @@ import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorTransfer;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
-import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
@@ -28,7 +27,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 import java.util.List;
 
-public class TabRecordSales {
+public class TabRecordRentals {
     private TabPane tabPane;
     private JComboBox cbbType;
     private JDateChooser fechaInicio;
@@ -45,13 +44,13 @@ public class TabRecordSales {
     private JComboBox cbbBranch;
     private JComboBox cbbDate;
     private JComboBox cbbState;
-    private List<Sale> sales;
-    private SaleAbstractModel model;
-    private TableRowSorter<SaleAbstractModel> modeloOrdenado;
-    private List<RowFilter<SaleAbstractModel, String>> filtros = new ArrayList<>();
+    private List<Rental> rentals;
+    private RentalAbstractModel model;
+    private TableRowSorter<RentalAbstractModel> modeloOrdenado;
+    private List<RowFilter<RentalAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
 
-    public TabRecordSales(){
+    public TabRecordRentals(){
         init();
         cbbDate.addActionListener(new ActionListener() {
             @Override
@@ -85,7 +84,7 @@ public class TabRecordSales {
         });
     }
     private void init(){
-        tabPane.setTitle("Historial de ventas");
+        tabPane.setTitle("Historial de alquileres");
         loadTable();
         loadCombos();
     }
@@ -119,16 +118,15 @@ public class TabRecordSales {
         cbbBranch.setRenderer(new Branch.ListCellRenderer());
     }
     private void loadTable() {
-        sales=new ArrayList<>();
+        rentals=new ArrayList<>();
         for (Branch branch : Babas.user.getBranchs()) {
-            sales.addAll(Sales.getAfter(branch,new Date()));
+            rentals.addAll(Rentals.getAfter(branch,new Date()));
         }
-        model = new SaleAbstractModel(sales);
+        model = new RentalAbstractModel(rentals);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         SaleCellRendered.setCellRenderer(table);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental());
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -170,23 +168,23 @@ public class TabRecordSales {
             }
         }
         if(start!=null&&end!=null){
-            sales.clear();
+            rentals.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(Sales.getByRangeOfDate(branch,start,end));
+                rentals.addAll(Rentals.getByRangeOfDate(branch,start,end));
             }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
             model.fireTableDataChanged();
         }else if(start!=null){
-            sales.clear();
+            rentals.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(Sales.getAfter(branch,start));
+                rentals.addAll(Rentals.getAfter(branch,start));
             }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
             model.fireTableDataChanged();
         }else if(end!=null){
-            sales.clear();
+            rentals.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(Sales.getBefore(branch,end));
+                rentals.addAll(Rentals.getBefore(branch,end));
             }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
             model.fireTableDataChanged();
@@ -212,3 +210,4 @@ public class TabRecordSales {
         fechaHasta.setDateFormatString(Utilities.getFormatoFecha());
     }
 }
+

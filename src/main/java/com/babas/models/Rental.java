@@ -38,6 +38,7 @@ public class Rental extends Babas {
     private Double discount=0.0;
     private Double totalCurrent=0.0;
     private Double warranty=0.0;
+    private Double penalty=0.0;
     @ManyToOne
     @NotNull(message ="Usuario")
     private User user;
@@ -135,7 +136,7 @@ public class Rental extends Babas {
         detailRentals.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        totalCurrent=total+warranty-discount;
+        totalCurrent=total+warranty-discount+penalty;
     }
 
     public Double getWarranty() {
@@ -152,6 +153,14 @@ public class Rental extends Babas {
 
     public void setEnded(Date ended) {
         this.ended = ended;
+    }
+
+    public Double getPenalty() {
+        return penalty;
+    }
+
+    public void setPenalty(Double penalty) {
+        this.penalty = penalty;
     }
 
     @Override

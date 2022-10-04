@@ -65,7 +65,7 @@ public class DetailRentalCellRendered extends DefaultTableCellRenderer {
                     comboBox.setBorder(null);
                     comboBox.setForeground(component.getForeground());
                     comboBox.setBackground(component.getBackground());
-                    comboBox.addItem(detailRental.getPresentation().getName());
+                    comboBox.addItem(detailRental.getNamePresentation());
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);

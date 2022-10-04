@@ -5,6 +5,7 @@ import com.babas.custom.TabbedPane;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabNewRental;
 import com.babas.views.tabs.TabNewSale;
+import com.babas.views.tabs.TabRecordRentals;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 
 import javax.swing.*;
@@ -15,8 +16,10 @@ public class MenuRentals {
     private JPanel contentPane;
     private FlatToggleButton btnNewRental;
     private FlatToggleButton btnRecordRentals;
+    private FlatToggleButton btnRentalsActives;
     private TabbedPane tabbedPane;
     private TabNewRental tabNewRental;
+    private TabRecordRentals tabRecordRentals;
 
     public MenuRentals(TabbedPane tabbedPane) {
         this.tabbedPane = tabbedPane;
@@ -24,6 +27,12 @@ public class MenuRentals {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadNewRental();
+            }
+        });
+        btnRecordRentals.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadRecordRentals();
             }
         });
     }
@@ -42,6 +51,19 @@ public class MenuRentals {
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabNewRental.getTabPane().getTitle()));
     }
 
+    public void loadRecordRentals(){
+        Utilities.despintarButton(btnNewRental);
+        Utilities.buttonSelected(btnRecordRentals);
+        if (tabRecordRentals == null) {
+            tabRecordRentals = new TabRecordRentals();
+        }
+        if (tabbedPane.indexOfTab(tabRecordRentals.getTabPane().getTitle())==-1) {
+            tabRecordRentals = new TabRecordRentals();
+            tabRecordRentals.getTabPane().setOption(btnRecordRentals);
+            tabbedPane.addTab(tabRecordRentals.getTabPane().getTitle(), tabRecordRentals.getTabPane().getIcon(), tabRecordRentals.getTabPane());
+        }
+        tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordRentals.getTabPane().getTitle()));
+    }
     public JPanel getContentPane() {
         contentPane.updateUI();
         btnNewRental.updateUI();
