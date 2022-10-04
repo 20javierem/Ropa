@@ -136,7 +136,7 @@ public class Rental extends Babas {
         detailRentals.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        totalCurrent=total+warranty-discount+penalty;
+        totalCurrent=total+warranty+penalty-discount;
     }
 
     public Double getWarranty() {

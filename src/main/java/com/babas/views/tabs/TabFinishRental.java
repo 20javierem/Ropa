@@ -13,6 +13,8 @@ import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -42,6 +44,22 @@ public class TabFinishRental {
     public TabFinishRental(Rental rental){
         this.rental=rental;
         init();
+        ((JSpinner.NumberEditor) spinnerPenalty.getEditor()).getTextField().addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    JTextField textField = (JTextField) e.getSource();
+                    textField.selectAll();
+                });
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                SwingUtilities.invokeLater(() -> {
+                    rental.setPenalty((Double) spinnerPenalty.getValue());
+                    loadTotals();
+                });
+            }
+        });
     }
     private void init(){
         tabPane.setTitle("Finalización alquiler Nro. "+rental.getNumberRental());
@@ -65,7 +83,7 @@ public class TabFinishRental {
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
         lblWarranty2.setText(Utilities.moneda.format(rental.getWarranty()));
-        lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent()+rental.getDiscount()));
+        lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent()+rental.getDiscount()-rental.getWarranty()));
         lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
         table.removeColumn(table.getColumn(""));
