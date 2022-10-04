@@ -68,7 +68,7 @@ public class DetailRentalAbstractModel extends AbstractTableModel {
             case 6:
                 return detailRental;
             case 7:
-                return detailRental.getSubtotal();
+                return Utilities.moneda.format(detailRental.getSubtotal());
             default:
                 return new JButtonAction("x16/remove.png");
         }
