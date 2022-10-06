@@ -15,7 +15,11 @@ public class Reserve extends Babas {
     @GeneratedValue(generator = "increment")
     private Long id;
     @ManyToOne
+    @NotNull(message = "Cliente")
     private Client client;
+    @ManyToOne
+    @NotNull(message = "Usuario")
+    private User user;
     @ManyToOne
     @NotNull(message = "Caja")
     private BoxSession boxSession;
@@ -24,16 +28,33 @@ public class Reserve extends Babas {
     private Branch branch;
     private Date created;
     private Date updated;
-    @NotNull(message = "Fecha de inicio")
-    private Double started;
-    @NotNull(message = "Fecha de finalización")
-    private Double ended;
+    @NotNull(message = "Fecha de entrega")
+    private Date started;
     @OneToMany(mappedBy = "reserve")
     @NotEmpty(message = "Productos")
     private List<DetailReserve> detailReserves=new ArrayList<>();
     private Double total=0.0;
     private Double advance=0.0;
     private Double toCancel=0.0;
+    private Long numberReserve;
+    private boolean active=true;
+    private boolean cash;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public boolean isCash() {
+        return cash;
+    }
+
+    public void setCash(boolean cash) {
+        this.cash = cash;
+    }
 
     public Long getId() {
         return id;
@@ -63,11 +84,6 @@ public class Reserve extends Babas {
         return total;
     }
 
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-
     public BoxSession getBoxSession() {
         return boxSession;
     }
@@ -95,25 +111,32 @@ public class Reserve extends Babas {
     public Double getToCancel() {
         return toCancel;
     }
-
-    public void setToCancel(Double toCancel) {
-        this.toCancel = toCancel;
+    public void calculateTotal(){
+        total=0.0;
+        detailReserves.forEach(detailSale -> {
+            total+=detailSale.getSubtotal();
+        });
+        toCancel=total-advance;
     }
 
-    public Double getStarted() {
+    public Date getStarted() {
         return started;
     }
 
-    public void setStarted(Double started) {
+    public void setStarted(Date started) {
         this.started = started;
     }
 
-    public Double getEnded() {
-        return ended;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setEnded(Double ended) {
-        this.ended = ended;
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public Long getNumberReserve() {
+        return numberReserve;
     }
 
     @Override
@@ -123,5 +146,8 @@ public class Reserve extends Babas {
         }
         updated=new Date();
         super.save();
+        numberReserve=1000+id;
+        super.save();
+        getDetailReserves().forEach(Babas::save);
     }
 }

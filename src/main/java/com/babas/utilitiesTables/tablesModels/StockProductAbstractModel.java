@@ -45,7 +45,7 @@ public class StockProductAbstractModel extends AbstractTableModel {
             case 2:
                 return stock.getQuantity();
             default:
-                return stock.getNumberRentals();
+                return stock.getOnRental();
         }
     }
 

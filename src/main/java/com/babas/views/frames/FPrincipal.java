@@ -88,6 +88,7 @@ public class FPrincipal extends JFrame{
     public static Vector<Style> styles=new Vector<>();
     public static List<Transfer> transfersOnWait=new ArrayList<>();
     public static List<Rental>  rentalsActives=new ArrayList<>();
+    public static List<Reserve> reservesActives=new ArrayList<>();
 
     public FPrincipal(){
         init();
@@ -381,7 +382,8 @@ public class FPrincipal extends JFrame{
         sexsWithAll.add(0,new Sex("TODOS"));
         products= Products.getActives();
         styles=Styles.getTodos();
-        Babas.user.getBranchs().forEach(branch -> rentalsActives.addAll(Rentals.getRentalsActives(branch)));
+        Babas.user.getBranchs().forEach(branch -> rentalsActives.addAll(Rentals.getActives(branch)));
+        Babas.user.getBranchs().forEach(branch -> reservesActives.addAll(Reserves.getActives(branch)));
     }
     private void cargarCursores(){
         btnAjustes.setCursor(new Cursor(Cursor.HAND_CURSOR));

@@ -99,14 +99,15 @@ public class DetailRental extends Babas {
         }
         super.save();
         Stock stock= Stocks.getStock(getRental().getBranch(),getProduct());
+        stock.refresh();
         stock.getProduct().refresh();
         if (getRental().isActive()){
             stock.setQuantity(stock.getQuantity()-getQuantity()*getQuantityPresentation());
-            stock.addNumberRental();
+            stock.addOnRental();
             stock.save();
         }else{
             stock.setQuantity(stock.getQuantity()+getQuantity()*getQuantityPresentation());
-            stock.removeNumberRental();
+            stock.removeOnRental();
             stock.save();
         }
     }

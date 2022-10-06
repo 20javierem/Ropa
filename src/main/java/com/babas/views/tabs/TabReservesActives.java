@@ -3,15 +3,16 @@ package com.babas.views.tabs;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
 import com.babas.models.Rental;
-import com.babas.utilities.Utilities;
+import com.babas.models.Reserve;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
+import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
+import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
-import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
@@ -24,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TabRentalsActives {
+public class TabReservesActives {
     private TabPane tabPane;
     private FlatTable table;
     private JLabel lblTotalTransferencias;
@@ -33,14 +34,14 @@ public class TabRentalsActives {
     private JComboBox cbbType;
     private FlatTextField txtSearch;
     private JButton btnClearFilters;
-    private List<Rental> rentals;
-    private RentalAbstractModel model;
-    private TableRowSorter<RentalAbstractModel> modeloOrdenado;
+    private List<Reserve> reserves;
+    private ReserveAbstractModel model;
+    private TableRowSorter<ReserveAbstractModel> modeloOrdenado;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
-    private List<RowFilter<RentalAbstractModel, String>> filtros = new ArrayList<>();
+    private List<RowFilter<ReserveAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
 
-    public TabRentalsActives(){
+    public TabReservesActives(){
         init();
         txtSearch.addKeyListener(new KeyAdapter() {
             @Override
@@ -76,7 +77,7 @@ public class TabRentalsActives {
     }
 
     private void init(){
-        tabPane.setTitle("Alquileres activos");
+        tabPane.setTitle("Reservas activas");
         tabPane.getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,10 +93,10 @@ public class TabRentalsActives {
         cbbBranch.setRenderer(new Branch.ListCellRenderer());
     }
     private void loadTables(){
-        model=new RentalAbstractModel(FPrincipal.rentalsActives);
+        model=new ReserveAbstractModel(FPrincipal.reservesActives);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
-        SaleCellRendered.setCellRenderer(table,listaFiltros);
+        ReserveCellRendered.setCellRenderer(table,listaFiltros);
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental());
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
@@ -123,10 +124,10 @@ public class TabRentalsActives {
         listaFiltros.put(7, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(branch.getName(), 2));
+            filtros.add(RowFilter.regexFilter(branch.getName(), 3));
         }
         if(cbbType.getSelectedIndex()!=0){
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 5));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);

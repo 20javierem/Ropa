@@ -93,6 +93,7 @@ public class MenuRentals {
         contentPane.updateUI();
         btnNewRental.updateUI();
         btnRecordRentals.updateUI();
+        btnRentalsActives.updateUI();
         return contentPane;
     }
     private void createUIComponents() {

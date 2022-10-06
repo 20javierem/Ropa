@@ -37,6 +37,8 @@ public class Sale extends Babas {
     @ManyToOne
     @NotNull
     private Branch branch;
+    @OneToOne
+    private Reserve reserve;
 
     public Long getId() {
         return id;
@@ -123,12 +125,23 @@ public class Sale extends Babas {
         return numberSale;
     }
 
+    public Reserve getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
     public void calculateTotal(){
         total=0.0;
         detailSales.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
         totalCurrent=total-discount;
+        if(reserve!=null){
+            total=totalCurrent- reserve.getAdvance();
+        }
     }
     @Override
     public void save() {

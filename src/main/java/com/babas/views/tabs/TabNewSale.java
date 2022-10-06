@@ -41,6 +41,7 @@ public class TabNewSale {
     private JButton btnSaleWithTrasnfer;
     private FlatSpinner spinnerDiscount;
     private JLabel lblDiscount;
+    private JLabel lblReserve;
     private Sale sale;
     private DetailSaleAbstractModel model;
 
@@ -125,7 +126,6 @@ public class TabNewSale {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.fireTableDataChanged();
-                sale.calculateTotal();
                 loadTotals();
             }
         });
@@ -138,6 +138,7 @@ public class TabNewSale {
             sale.getDetailSales().clear();
             sale.setBranch(null);
         }
+        sale.calculateTotal();
         lblSubTotal.setText(Utilities.moneda.format(sale.getTotal()));
         lblDiscount.setText(Utilities.moneda.format(sale.getDiscount()));
         lblTotal.setText(Utilities.moneda.format(sale.getTotalCurrent()));

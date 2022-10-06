@@ -49,6 +49,7 @@ public class TabNewRental {
     private FlatSpinner spinnerWarranty;
     private JLabel lblTotalCurrent;
     private JLabel lblWarranty;
+    private JLabel lblReserve;
     private Rental rental;
     private DetailRentalAbstractModel model;
 
@@ -117,7 +118,6 @@ public class TabNewRental {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.fireTableDataChanged();
-                rental.calculateTotal();
                 loadTotals();
             }
         });
@@ -169,9 +169,9 @@ public class TabNewRental {
     }
     private void onSave(boolean isCash){
         if(Babas.boxSession.getId()!=null){
-            if(getClient()){
                 rental.setBranch(Babas.boxSession.getBox().getBranch());
                 rental.setCash(isCash);
+                rental.setClient(getClient());
                 rental.setBoxSession(Babas.boxSession);
                 rental.setUser(Babas.user);
                 rental.setEnded(jDateFinish.getDate());
@@ -192,12 +192,25 @@ public class TabNewRental {
                 }else{
                     ProgramValidator.mostrarErrores(constraintViolationSet);
                 }
-            }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe ingresar el cliente");
-            }
+
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
         }
+    }
+    private Client getClient(){
+        Client client = null;
+        if(!txtDocument.getText().isBlank()&&!txtNameClient.getText().isBlank()){
+            client= Clients.getByDNI(txtDocument.getText().trim());
+            if(client==null){
+                client=new Client();
+                client.setDni(txtDocument.getText().trim());
+            }
+            client.setNames(txtNameClient.getText().trim());
+            client.setMail(txtMail.getText().trim());
+            client.setPhone(txtPhone.getText().trim());
+            client.save();
+        }
+        return client;
     }
     private void clear(){
         txtMail.setText(null);
@@ -209,22 +222,7 @@ public class TabNewRental {
         loadTable();
         loadTotals();
     }
-    private boolean getClient(){
-        if(!txtDocument.getText().isBlank()&&!txtNameClient.getText().isBlank()){
-            Client client= Clients.getByDNI(txtDocument.getText().trim());
-            if(client==null){
-                client=new Client();
-                client.setDni(txtDocument.getText().trim());
-            }
-            client.setNames(txtNameClient.getText().trim());
-            client.setMail(txtMail.getText().trim());
-            client.setPhone(txtPhone.getText().trim());
-            client.save();
-            rental.setClient(client);
-            return true;
-        }
-        return false;
-    }
+
     public TabPane getTabPane() {
         return tabPane;
     }
