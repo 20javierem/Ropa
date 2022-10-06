@@ -128,8 +128,8 @@ public class TabRecordReserves {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ReserveCellRendered.setCellRenderer(table,null);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+//        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
+//        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

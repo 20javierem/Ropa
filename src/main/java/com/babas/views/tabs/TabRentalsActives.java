@@ -74,7 +74,7 @@ public class TabRentalsActives {
             }
         });
     }
-
+    
     private void init(){
         tabPane.setTitle("Alquileres activos");
         tabPane.getActions().addActionListener(new ActionListener() {

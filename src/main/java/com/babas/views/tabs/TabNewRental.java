@@ -53,7 +53,8 @@ public class TabNewRental {
     private Rental rental;
     private DetailRentalAbstractModel model;
 
-    public TabNewRental(){
+    public TabNewRental(Rental rental){
+        this.rental=rental;
         init();
         btnAddProducts.addActionListener(new ActionListener() {
             @Override
@@ -111,18 +112,27 @@ public class TabNewRental {
     }
 
     private void init(){
-        tabPane.setTitle("Nuevo alquiler");
-        rental=new Rental();
-        loadTable();
-        tabPane.getActions().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                model.fireTableDataChanged();
-                loadTotals();
-            }
+        if(rental.getReserve()!=null){
+            tabPane.setTitle("Alquiler/Reserva Nro: "+rental.getReserve().getNumberReserve());
+            lblReserve.setText(Utilities.moneda.format(rental.getReserve().getAdvance()));
+            txtDocument.setText(rental.getReserve().getClient().getDni());
+            searchClient();
+        }else{
+            tabPane.setTitle("Nuevo alquiler");
+        }
+        load();
+        loadTotals();
+        tabPane.getActions().addActionListener(e -> {
+            model.fireTableDataChanged();
+            loadTotals();
         });
-        ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-        lblLogo.setIcon(logo);
+        if(!Babas.company.getLogo().isBlank()){
+            ImageIcon logo=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+            lblLogo.setIcon(logo);
+        }else{
+            ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/logo.jpeg")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+            lblLogo.setIcon(logo);
+        }
     }
     private void searchClient(){
         Client client= Clients.getByDNI(txtDocument.getText().trim());
@@ -145,7 +155,9 @@ public class TabNewRental {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe abrir caja para comenzar");
         }
     }
-    private void loadTable(){
+
+    private void load(){
+        System.out.println("detalles: "+rental.getDetailRentals().size());
         model=new DetailRentalAbstractModel(rental.getDetailRentals());
         table.setModel(model);
         DetailRentalCellRendered.setCellRenderer(table);
@@ -153,6 +165,8 @@ public class TabNewRental {
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorDetailRental2());
         table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailRental());
         table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailRental());
+        loadTotals();
+        model.fireTableDataChanged();
     }
 
     private void loadTotals(){
@@ -160,10 +174,14 @@ public class TabNewRental {
             rental.getDetailRentals().clear();
             rental.setBranch(null);
         }
-        rental.calculateTotal();
+        rental.calculateTotals();
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
-        lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent()+rental.getDiscount()));
+        if(rental.getReserve() ==null){
+            lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent()+rental.getDiscount()));
+        }else{
+            lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent()+rental.getDiscount()+rental.getReserve().getAdvance()));
+        }
         lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
     }
@@ -219,7 +237,7 @@ public class TabNewRental {
         txtNameClient.setText(null);
         spinnerWarranty.setValue(0.0);
         spinnerDiscount.setValue(0.0);
-        loadTable();
+        load();
         loadTotals();
     }
 

@@ -30,9 +30,12 @@ public class JButtonEditorDetailRental2 extends AbstractCellEditor implements Ta
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
             fireEditingStopped();
-            DetailRental detailRental=((DetailRentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-            detailRental.getRental().getDetailRentals().remove(detailRental);
-            Utilities.getTabbedPane().updateTab();
+            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Quitar producto",JOptionPane.YES_NO_OPTION)==0;
+            if(si){
+                DetailRental detailRental=((DetailRentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+                detailRental.getRental().getDetailRentals().remove(detailRental);
+                Utilities.getTabbedPane().updateTab();
+            }
         }
     }
 

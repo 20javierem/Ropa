@@ -100,7 +100,7 @@
                         <properties/>
                         <border type="none"/>
                         <children>
-                          <component id="13119" class="com.formdev.flatlaf.extras.components.FlatTable" default-binding="true">
+                          <component id="13119" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tableReserves">
                             <constraints/>
                             <properties>
                               <rowHeight value="25"/>

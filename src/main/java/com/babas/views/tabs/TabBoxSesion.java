@@ -7,10 +7,12 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
+import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
 import com.babas.utilitiesTables.tablesModels.MovementAbstractModel;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
+import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.dialogs.DMovement;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane;
@@ -35,10 +37,12 @@ public class TabBoxSesion {
     private JButton btnNewMovement;
     private JPanel paneNewMomevent;
     private FlatTable tableRentals;
+    private FlatTable tableReserves;
     private FlatTabbedPane flatTabbedPane;
     private SaleAbstractModel saleAbstractModel;
     private MovementAbstractModel movementAbstractModel;
     private RentalAbstractModel rentalAbstractModel;
+    private ReserveAbstractModel reserveAbstractModel;
 
     public TabBoxSesion(){
         init();
@@ -58,8 +62,8 @@ public class TabBoxSesion {
         tableSales.setModel(saleAbstractModel);
         UtilitiesTables.headerNegrita(tableSales);
         SaleCellRendered.setCellRenderer(tableSales,null);
-        tableSales.getColumnModel().getColumn(saleAbstractModel.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
-        tableSales.getColumnModel().getColumn(saleAbstractModel.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+        tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-1));
+        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(true));
 
         movementAbstractModel=new MovementAbstractModel(Babas.boxSession.getMovements());
         tableMovements.setModel(movementAbstractModel);
@@ -70,6 +74,13 @@ public class TabBoxSesion {
         tableRentals.setModel(rentalAbstractModel);
         UtilitiesTables.headerNegrita(tableRentals);
         SaleCellRendered.setCellRenderer(tableRentals,null);
+        tableRentals.removeColumn(tableRentals.getColumn("MULTA"));
+        tableRentals.removeColumn(tableRentals.getColumn("TOTAL-ACTUAL"));
+
+        reserveAbstractModel=new ReserveAbstractModel(Babas.boxSession.getReserves());
+        tableReserves.setModel(reserveAbstractModel);
+        UtilitiesTables.headerNegrita(tableReserves);
+        ReserveCellRendered.setCellRenderer(tableReserves,null);
     }
     private void init(){
         tabPane.setTitle("Caja");

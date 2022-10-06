@@ -2,6 +2,7 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.models.Rental;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabNewRental;
 import com.babas.views.tabs.TabNewSale;
@@ -50,10 +51,10 @@ public class MenuRentals {
         Utilities.despintarButton(btnRentalsActives);
         Utilities.buttonSelected(btnNewRental);
         if (tabNewRental == null) {
-            tabNewRental = new TabNewRental();
+            tabNewRental = new TabNewRental(new Rental());
         }
         if (tabbedPane.indexOfTab(tabNewRental.getTabPane().getTitle())==-1) {
-            tabNewRental = new TabNewRental();
+            tabNewRental = new TabNewRental(new Rental());
             tabNewRental.getTabPane().setOption(btnNewRental);
             tabbedPane.addTab(tabNewRental.getTabPane().getTitle(), tabNewRental.getTabPane().getIcon(), tabNewRental.getTabPane());
         }

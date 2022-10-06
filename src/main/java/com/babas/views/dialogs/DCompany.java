@@ -33,6 +33,7 @@ public class DCompany extends JDialog {
     private FlatTextField txtTradeName;
     private FlatTextField txtFiscalAdress;
     private JLabel lblLogo;
+    private FlatTextField txtCity;
     private FlatTextField txtLogo;
     private Company company;
 
@@ -76,6 +77,7 @@ public class DCompany extends JDialog {
         company.setRuc(txtRuc.getText().trim());
         company.setTradeName(txtTradeName.getText().trim());
         company.setSlogan(txtSlogan.getText().trim());
+        company.setCity(txtCity.getText().trim());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(company);
         if(constraintViolationSet.isEmpty()){
             company.save();
@@ -134,6 +136,7 @@ public class DCompany extends JDialog {
         txtTradeName.setText(company.getTradeName());
         txtFiscalAdress.setText(company.getDirectionPrincipal());
         txtSlogan.setText(company.getSlogan());
+        txtCity.setText(company.getCity());
         if(company.getLogo()!=null){
             lblLogo.setIcon(new ImageIcon(Utilities.getImage(company.getLogo())));
         }

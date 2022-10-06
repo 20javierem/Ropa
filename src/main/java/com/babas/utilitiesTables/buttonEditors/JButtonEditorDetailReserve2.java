@@ -30,9 +30,12 @@ public class JButtonEditorDetailReserve2 extends AbstractCellEditor implements T
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
             fireEditingStopped();
-            DetailReserve detailReserve=((DetailReserveAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-            detailReserve.getReserve().getDetailReserves().remove(detailReserve);
-            Utilities.getTabbedPane().updateTab();
+            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Quitar producto",JOptionPane.YES_NO_OPTION)==0;
+            if(si){
+                DetailReserve detailReserve=((DetailReserveAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+                detailReserve.getReserve().getDetailReserves().remove(detailReserve);
+                Utilities.getTabbedPane().updateTab();
+            }
         }
     }
 

@@ -66,7 +66,7 @@ public class DetailReserveCellRendered extends DefaultTableCellRenderer {
                     comboBox.setBorder(null);
                     comboBox.setForeground(component.getForeground());
                     comboBox.setBackground(component.getBackground());
-                    comboBox.addItem(detailReserve.getNamePresentation());
+                    comboBox.addItem(detailReserve.getPresentation().getName());
                     table.getColumn(table.getColumnName(column)).setMaxWidth(120);
                     table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);

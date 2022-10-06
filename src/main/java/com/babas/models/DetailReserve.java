@@ -16,7 +16,7 @@ public class DetailReserve extends Babas {
     @ManyToOne
     @NotNull(message = "Producto")
     private Product product;
-    @Transient
+    @ManyToOne
     @NotNull(message = "Producto")
     private Presentation presentation;
     @Min(value = 1,message = "Cantidad")
@@ -24,7 +24,6 @@ public class DetailReserve extends Babas {
     private Double subtotal=0.0;
     private Double price=0.0;
     private Integer quantityPresentation=0;
-    private String namePresentation;
 
     public Long getId() {
         return id;
@@ -54,7 +53,6 @@ public class DetailReserve extends Babas {
         this.presentation = presentation;
         if(presentation!=null){
             quantityPresentation=presentation.getQuantity();
-            namePresentation=presentation.getName();
         }
     }
 
@@ -69,10 +67,6 @@ public class DetailReserve extends Babas {
 
     public Double getSubtotal() {
         return subtotal;
-    }
-
-    public String getNamePresentation() {
-        return namePresentation;
     }
 
     public Integer getQuantityPresentation() {
@@ -92,11 +86,4 @@ public class DetailReserve extends Babas {
         this.subtotal= quantity*price ;
     }
 
-    @Override
-    public void save() {
-        if(presentation!=null){
-            namePresentation=presentation.getName();
-        }
-        super.save();
-    }
 }

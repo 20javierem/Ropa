@@ -1,5 +1,7 @@
 package com.babas.utilitiesTables.tablesModels;
 import com.babas.models.Movement;
+import com.babas.utilities.Utilities;
+import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -8,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 public class MovementAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","DESCRIPCIÓN","TIPO","MONTO","",""};
-    private final Class[] typeColumns={Long.class, Date.class,String.class,String.class,Double.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","DESCRIPCIÓN","TIPO","MONTO"};
+    private final Class[] typeColumns={Long.class, Date.class,String.class,String.class,Double.class};
     private final List<Movement> list;
 
     public MovementAbstractModel(List<Movement> list){
@@ -49,12 +51,8 @@ public class MovementAbstractModel extends AbstractTableModel {
                 return movement.getDescription();
             case 3:
                 return movement.isEntrance()?"INGRESO":"EGRESO";
-            case 4:
-                return movement.getAmount();
-            case 5:
-                return new JButtonAction("x16/editar.png");
             default:
-                return new JButtonAction("x16/remove.png");
+                return Utilities.moneda.format(movement.getAmount());
         }
     }
 

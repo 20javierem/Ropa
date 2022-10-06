@@ -1,6 +1,8 @@
 package com.babas.models;
 
+import com.babas.controllers.Rentals;
 import com.babas.utilities.Babas;
+import com.babas.views.frames.FPrincipal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -41,10 +43,29 @@ public class Rental extends Babas {
     private Double totalCurrentWithPenalty=0.0;
     private Double warranty=0.0;
     private Double penalty=0.0;
+    @OneToOne
+    private Reserve reserve;
     @ManyToOne
     @NotNull(message ="Usuario")
     private User user;
 
+    public Rental(){
+
+    }
+
+    public Rental(Reserve reserve){
+        this.reserve=reserve;
+        for (DetailReserve detailReserve : reserve.getDetailReserves()) {
+            DetailRental detailRental=new DetailRental();
+            detailRental.setRental(this);
+            detailRental.setPrice(detailReserve.getPrice());
+            detailRental.setQuantity(detailReserve.getQuantity());
+            detailRental.setPresentation(detailReserve.getPresentation());
+            detailRental.setProduct(detailReserve.getProduct());
+            detailRentals.add(detailRental);
+        }
+        calculateTotals();
+    }
     public Long getId() {
         return id;
     }
@@ -129,12 +150,15 @@ public class Rental extends Babas {
         this.user = user;
     }
 
-    public void calculateTotal(){
+    public void calculateTotals(){
         total=0.0;
         detailRentals.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
         totalCurrent=total+warranty-discount;
+        if(reserve!=null){
+            totalCurrent=totalCurrent-reserve.getAdvance();
+        }
         totalCurrentWithPenalty=totalCurrent+penalty;
     }
 
@@ -174,6 +198,14 @@ public class Rental extends Babas {
         this.delivery = delivery;
     }
 
+    public Reserve getReserve() {
+        return reserve;
+    }
+
+    public void setReserve(Reserve reserve) {
+        this.reserve = reserve;
+    }
+
     @Override
     public void save() {
         if(created==null){
@@ -183,6 +215,12 @@ public class Rental extends Babas {
         super.save();
         numberRental=1000+id;
         super.save();
+        if(reserve!=null){
+            reserve.setRental(Rental.this);
+            reserve.setActive(false);
+            reserve.save();
+            FPrincipal.reservesActives.remove(reserve);
+        }
         getDetailRentals().forEach(Babas::save);
     }
 }

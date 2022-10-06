@@ -24,6 +24,7 @@ public class Branch extends Babas {
     private String direction;
     @NotBlank(message = "Celular")
     private String phone;
+    private String message="";
     @ManyToOne
     private Company company;
     @NotNull
@@ -132,6 +133,14 @@ public class Branch extends Babas {
 
     public void setCompany(Company company) {
         this.company = company;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

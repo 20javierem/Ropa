@@ -20,6 +20,11 @@
 
   <dependencies>
     <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>6.20.0</version>
+    </dependency>
+    <dependency>
       <groupId>org.mariadb.jdbc</groupId>
       <artifactId>mariadb-java-client</artifactId>
       <version>3.0.6</version>

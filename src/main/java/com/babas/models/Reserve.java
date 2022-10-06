@@ -37,6 +37,8 @@ public class Reserve extends Babas {
     private Double advance=0.0;
     private Double toCancel=0.0;
     private Long numberReserve;
+    @OneToOne
+    private Rental rental;
     private boolean active=true;
     private boolean cash;
 
@@ -137,6 +139,14 @@ public class Reserve extends Babas {
 
     public Long getNumberReserve() {
         return numberReserve;
+    }
+
+    public Rental getRental() {
+        return rental;
+    }
+
+    public void setRental(Rental rental) {
+        this.rental = rental;
     }
 
     @Override

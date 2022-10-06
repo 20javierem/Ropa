@@ -3,6 +3,7 @@ package com.babas.utilitiesTables.tablesModels;
 import com.babas.models.DetailSale;
 import com.babas.models.DetailTransfer;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -68,7 +69,7 @@ public class DetailSaleAbstractModel extends AbstractTableModel {
             case 6:
                 return detailSale;
             case 7:
-                return detailSale.getSubtotal();
+                return Utilities.moneda.format(detailSale.getSubtotal());
             default:
                 return new JButtonAction("x16/remove.png");
         }

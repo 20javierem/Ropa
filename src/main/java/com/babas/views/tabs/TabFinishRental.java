@@ -78,8 +78,13 @@ public class TabFinishRental {
     }
     private void init(){
         tabPane.setTitle("Finalización alquiler Nro. "+rental.getNumberRental());
-        ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/lojoJmoreno (1).png")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-        lblLogo.setIcon(logo);
+        if(!Babas.company.getLogo().isBlank()){
+            ImageIcon logo=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+            lblLogo.setIcon(logo);
+        }else{
+            ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/logo.jpeg")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+            lblLogo.setIcon(logo);
+        }
         load();
         loadTotals();
     }
@@ -91,7 +96,7 @@ public class TabFinishRental {
                     rental.refresh();
                     if(rental.isActive()){
                         rental.setPenalty((Double) spinnerPenalty.getValue());
-                        rental.calculateTotal();
+                        rental.calculateTotals();
                         rental.setDelivery(jDateFinish.getDate());
                         rental.setActive(false);
                         rental.save();
@@ -145,7 +150,7 @@ public class TabFinishRental {
     }
 
     private void loadTotals(){
-        rental.calculateTotal();
+        rental.calculateTotals();
 
         lblTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));

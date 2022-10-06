@@ -2,6 +2,8 @@ package com.babas.models;
 
 import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -66,7 +68,15 @@ public class DetailSale extends Babas {
         this.quantity = quantity;
         this.subtotal= quantity*price;
     }
-
+    public String getProductString(){
+        return product.getStyle().getName();
+    }
+    public String getSub_totalString(){
+        return Utilities.moneda.format(getSubtotal());
+    }
+    public String getPriceString(){
+        return Utilities.moneda.format(getPrice());
+    }
     public Double getSubtotal() {
         return subtotal;
     }

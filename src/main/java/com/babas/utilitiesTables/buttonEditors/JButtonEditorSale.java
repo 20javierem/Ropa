@@ -5,6 +5,7 @@ import com.babas.models.Sale;
 import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.utilitiesTables.tablesModels.TransferAbstractModel;
 import com.babas.views.tabs.TabNewSale;
@@ -44,11 +45,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
         if(table.getSelectedRow()!=-1){
             Sale sale=((SaleAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(show){
-//                TabNewSale tabNewTraslade=new TabNewSale(sale);
-//                if(Utilities.getTabbedPane().indexOfTab(tabNewTraslade.getTabPane().getTitle())==-1){
-//                    Utilities.getTabbedPane().addTab(tabNewTraslade.getTabPane().getTitle(),tabNewTraslade.getTabPane());
-//                }
-//                Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabNewTraslade.getTabPane().getTitle()));
+                UtilitiesReports.generateTicketSale(sale);
             }else{
                 if(Babas.boxSession.getId()!=null){
                     if(sale.isActive()){
