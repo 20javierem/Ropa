@@ -2,17 +2,19 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.*;
+import com.babas.models.Color;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
+import com.babas.views.ModelProduct;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -32,11 +34,13 @@ public class TabCatalogue {
     private JComboBox cbbCategory;
     private JComboBox cbbSize;
     private JComboBox cbbColor;
+    private JScrollPane scrollPane;
     private ProductAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
     private TableRowSorter<ProductAbstractModel> modeloOrdenado;
     private List<RowFilter<ProductAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
+    private boolean tableView=true;
 
     public TabCatalogue(){
         init();
