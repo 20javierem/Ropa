@@ -16,6 +16,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 import java.io.InputStream;
 import java.util.List;
 import java.util.*;
@@ -24,6 +25,8 @@ public class UtilitiesReports {
 
     public static void generateTicketSale(Sale sale) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/ticket-sale.jasper");
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
                 List<DetailSale> list=new ArrayList<>(new Vector<>(sale.getDetailSales()));
@@ -32,15 +35,15 @@ public class UtilitiesReports {
                 JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
                 Map<String,Object> parameters=new HashMap<>();
                 parameters.put("ruc",Babas.company.getRuc());
-                parameters.put("ciudad",Babas.company.getCity());
                 parameters.put("direccion",sale.getBranch().getDirection());
                 parameters.put("telefono",sale.getBranch().getPhone());
                 parameters.put("email",sale.getBranch().getEmail());
+                parameters.put("logo",logo);
                 parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
                 parameters.put("nameTicket","Ticket de venta");
                 parameters.put("numberTicket",sale.getNumberSale());
                 parameters.put("detalles",sp);
-//                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getCreated()).toUpperCase());
+                parameters.put("nameCompany",Babas.company.getTradeName());
                 parameters.put("fechaEmision", sale.getCreated());
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("nombreCliente",sale.getClient()!=null?sale.getClient().getNames():"");
@@ -81,19 +84,22 @@ public class UtilitiesReports {
             Font font=new Font(new JTextField().getFont().getFontName(),Font.PLAIN,14);
             ((JPanel)visor.getComponent(2)).getComponent(0).setFont(font);
             for (Component component: toolbar.getComponents()){
-                if(component instanceof JTextField||component instanceof JComboBox){
+                if(component instanceof JComboBox){
+                    component.setMaximumSize(new Dimension(component.getMaximumSize().width+5,40));
+                    component.setPreferredSize(new Dimension(component.getPreferredSize().width+5,40));
+                    component.setMinimumSize(new Dimension(component.getMinimumSize().width+5,40));
+                }else if(component instanceof JTextField){
                     component.setMaximumSize(new Dimension(component.getMaximumSize().width,40));
                     component.setPreferredSize(new Dimension(component.getPreferredSize().width,40));
                     component.setMinimumSize(new Dimension(component.getMinimumSize().width,40));
-                }else {
-                    component.setMaximumSize(new Dimension(40,40));
-                    component.setPreferredSize(new Dimension(40,40));
-                    component.setMinimumSize(new Dimension(40,40));
-                }
-                if(component instanceof JPanel){
+                }else if(component instanceof JPanel){
                     component.setMaximumSize(new Dimension(component.getMaximumSize().width,50));
                     component.setPreferredSize(new Dimension(component.getPreferredSize().width,50));
                     component.setMinimumSize(new Dimension(component.getMinimumSize().width,50));
+                } else {
+                    component.setMaximumSize(new Dimension(40,40));
+                    component.setPreferredSize(new Dimension(40,40));
+                    component.setMinimumSize(new Dimension(40,40));
                 }
             }
             JButton mrZoom=(JButton)toolbar.getComponent(14);

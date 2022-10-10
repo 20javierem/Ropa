@@ -99,9 +99,9 @@ public class TabBoxSesion {
 
     private void loadTotals(){
         lblAmountInitial.setText("Monto inicial: "+Utilities.moneda.format(Babas.boxSession.getAmountInitial()));
-        lblTotalSales.setText("Total ventas: "+ Utilities.moneda.format(Babas.boxSession.getTotalSales()));
-        lblTotalReserves.setText("Total reservas: "+ Utilities.moneda.format(Babas.boxSession.getTotalReserves()));
-        lblTotalRentals.setText("Total alquileres: "+ Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
+//        lblTotalSales.setText("Total ventas: "+ Utilities.moneda.format(Babas.boxSession.getTotalSales()));
+//        lblTotalReserves.setText("Total reservas: "+ Utilities.moneda.format(Babas.boxSession.getTotalReserves()));
+//        lblTotalRentals.setText("Total alquileres: "+ Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
         lblTotalMovements.setText("Total movimientos: "+ Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
         lblTotalToDelivered.setText("Total a entregar: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
     }

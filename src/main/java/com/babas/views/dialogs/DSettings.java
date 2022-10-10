@@ -89,14 +89,20 @@ public class DSettings extends JDialog{
         Utilities.propiedades.setFont(String.valueOf(cbbFontSize.getSelectedItem()));
         Utilities.propiedades.save();
         changeTheme();
-        Utilities.updateUI();
+        Utilities.updateUI(true);
+        Utilities.updateComponents(Utilities.getJFrame().getRootPane());
+        Utilities.updateComponents(getRootPane());
+        Utilities.updateUI(false);
         pack();
     }
     private void changeTheme(){
         Utilities.propiedades.setTema(String.valueOf(cbbThemes.getSelectedItem()));
         Utilities.propiedades.save();
         Utilities.loadTheme();
-        Utilities.updateUI();
+        Utilities.updateUI(true);
+        Utilities.updateComponents(Utilities.getJFrame().getRootPane());
+        Utilities.updateComponents(getRootPane());
+        Utilities.updateUI(false);
         ((JTextField)cbbFontSize.getEditor().getEditorComponent()).getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -125,7 +131,10 @@ public class DSettings extends JDialog{
     }
     private void onCancel(){
         Utilities.loadTheme();
-        Utilities.updateUI();
+        Utilities.updateUI(true);
+        Utilities.updateComponents(Utilities.getJFrame().getRootPane());
+        Utilities.updateComponents(getRootPane());
+        Utilities.updateUI(false);
         onDispose();
     }
     private void initComponents(){

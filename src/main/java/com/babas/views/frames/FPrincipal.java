@@ -318,7 +318,7 @@ public class FPrincipal extends JFrame{
         pack();
         setLocationRelativeTo(null);
         loadLists();
-        lblUsuario.setText(Babas.user.getFirstName());
+        lblUsuario.setText("Usuario: "+Babas.user.getFirstName());
         menuSales=new MenuSales(tabbedPane);
         menuAlmacen=new MenuAlmacen(tabbedPane);
         menuManage=new MenuManage(tabbedPane);

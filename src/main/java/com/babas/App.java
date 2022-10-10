@@ -40,14 +40,18 @@ public class App
             dCompany.setVisible(true);
         }else{
             Babas.company=company;
+            if(!company.getLogo().isBlank()){
+                Utilities.downloadLogo(company.getLogo());
+            }
         }
 
-        if(Babas.company.getId()!=null){
+        if(Babas.company!=null){
             if(Users.getTodos().isEmpty()){
                 DUser dUser=new DUser(new User());
                 dUser.setVisible(true);
             }
         }
+
         if(!Users.getTodos().isEmpty()){
             if(Branchs.getTodos().isEmpty()){
                 DBranch dBranch=new DBranch(new Branch());

@@ -16,7 +16,6 @@ public class Company extends Babas {
     private String directionPrincipal;
     private String logo;
     private String slogan;
-    private String city;
 
     public Long getId() {
         return id;
@@ -70,11 +69,4 @@ public class Company extends Babas {
         this.slogan = slogan;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
 }

@@ -4,6 +4,7 @@ import ch.swaechter.smbjwrapper.SmbConnection;
 import ch.swaechter.smbjwrapper.SmbDirectory;
 import ch.swaechter.smbjwrapper.SmbFile;
 import com.babas.custom.TabbedPane;
+import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.extras.FlatAnimatedLafChange;
@@ -33,6 +34,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -81,12 +83,12 @@ public class Utilities {
         return new JSpinner.NumberEditor(spinner, "S/###,###,###.##");
     }
     public static boolean newImage(InputStream imageImput,String imageName){
-        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
+        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
 //        eder ederhibernate
 //        "192.168.1.49"
 //        javier ernestomoreno
 //        "192.168.0.119"
-        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
+        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
             SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
             OutputStream out = file.getOutputStream();
@@ -101,8 +103,8 @@ public class Utilities {
     }
 
     public static Image getImage(String imageName){
-        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
+        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
             SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
             return ImageIO.read(file.getInputStream());
@@ -112,19 +114,20 @@ public class Utilities {
         return null;
     }
 
-    public static boolean downloadImage(String imageName){
-        AuthenticationContext auth = new AuthenticationContext("javier", "ernestomoreno".toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection("192.168.0.119", "clothes", auth)) {
+    public static void downloadLogo(String imageName){
+        System.out.println("entró");
+        File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
+        AuthenticationContext auth = new AuthenticationContext("eder", "ederhibernate".toCharArray(), "localhost");
+        try (SmbConnection smbConnection = new SmbConnection("192.168.1.49", "clothes", auth)) {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+"miimagen.png");
-            OutputStream out = new FileOutputStream("F:\\"+imageName);
+            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+            OutputStream out = new FileOutputStream(carpeta.getAbsolutePath()+"/"+imageName);
             IOUtils.copy(file.getInputStream(), out);
             out.close();
-            return true;
         }catch (IOException e) {
+            System.out.println("exito");
             e.printStackTrace();
         }
-        return false;
     }
 
     public static void loadTheme(){
@@ -382,12 +385,34 @@ public class Utilities {
         Utilities.tabbedPane = tabbedPane;
     }
 
-    public static void updateUI(){
-        FlatAnimatedLafChange.showSnapshot();
-        FlatLaf.updateUI();
-        FlatAnimatedLafChange.hideSnapshotWithAnimation();
+    public static void updateUI(boolean start){
+        if(start){
+            FlatAnimatedLafChange.showSnapshot();
+        }else{
+            FlatAnimatedLafChange.hideSnapshotWithAnimation();
+        }
     }
 
+    public static void updateComponents(JComponent parent){
+        Font font=parent.getFont();
+        boolean bold=font.isBold();
+        parent.updateUI();
+        if(bold){
+            Font font1=((Font)UIManager.getDefaults().get("defaultFont")).deriveFont(Font.BOLD);
+            parent.setFont(font1);
+        }
+        if(parent instanceof JMenu){
+            for (Component component:((JMenu) parent).getMenuComponents()){
+                updateComponents((JComponent) component);
+            }
+        }else{
+            for(Component component:parent.getComponents()){
+                if(component instanceof JComponent){
+                    updateComponents((JComponent) component);
+                }
+            }
+        }
+    }
     public static Date getDateStart(Date date){
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(date);
@@ -564,7 +589,7 @@ public class Utilities {
             pbeCipher.init(Cipher.ENCRYPT_MODE, key);
             AlgorithmParameters parameters = pbeCipher.getParameters();
             IvParameterSpec ivParameterSpec = parameters.getParameterSpec(IvParameterSpec.class);
-            byte[] cryptoText = pbeCipher.doFinal(dataToEncrypt.getBytes("UTF-8"));
+            byte[] cryptoText = pbeCipher.doFinal(dataToEncrypt.getBytes(StandardCharsets.UTF_8));
             byte[] iv = ivParameterSpec.getIV();
             return base64Encode(iv) + ":" + base64Encode(cryptoText);
         }catch (Exception e){
@@ -582,7 +607,7 @@ public class Utilities {
             String property = string.split(":")[1];
             Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             pbeCipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(base64Decode(iv)));
-            return new String(pbeCipher.doFinal(base64Decode(property)), "UTF-8");
+            return new String(pbeCipher.doFinal(base64Decode(property)), StandardCharsets.UTF_8);
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -597,10 +622,4 @@ public class Utilities {
         return Base64.getDecoder().decode(property);
     }
 
-    public static void setPropiedades(Propiedades propiedades) {
-        Utilities.propiedades=propiedades;
-    }
-    public static Propiedades getPropiedades(){
-        return propiedades;
-    }
 }
