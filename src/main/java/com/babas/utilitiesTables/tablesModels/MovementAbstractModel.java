@@ -50,7 +50,7 @@ public class MovementAbstractModel extends AbstractTableModel {
             case 2:
                 return movement.getDescription();
             case 3:
-                return movement.isEntrance()?"INGRESO":"EGRESO";
+                return movement.isEntrance()?"INGRESO":"RETIRO";
             default:
                 return Utilities.moneda.format(movement.getAmount());
         }

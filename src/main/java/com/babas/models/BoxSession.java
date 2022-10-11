@@ -35,8 +35,12 @@ public class BoxSession extends Babas {
     private Double totalIngresos=0.0;
 
     private Double amountInitial=0.0;
+    private Double amountTotal=0.0;
     private Double amountToDelivered=0.0;
     private Double amountDelivered=0.0;
+
+    private Double totalTransfers=0.0;
+    private Double totalCash=0.0;
 
     @OneToMany(mappedBy = "boxSession")
     @OrderBy(value = "id DESC")
@@ -137,14 +141,6 @@ public class BoxSession extends Babas {
         return movements;
     }
 
-    @Override
-    public void save() {
-        if(created==null){
-            created=new Date();
-        }
-        super.save();
-    }
-
     public Double getTotalSalesCash() {
         return totalSalesCash;
     }
@@ -193,36 +189,59 @@ public class BoxSession extends Babas {
         return totalMovements;
     }
 
+    public Double getTotalTransfers() {
+        return totalTransfers;
+    }
+
+    public Double getTotalCash() {
+        return totalCash;
+    }
+
+    public Double getAmountTotal() {
+        return amountTotal;
+    }
+
     public void calculateTotals() {
         amountToDelivered=amountInitial;
+        amountTotal=amountInitial;
+        totalCash=amountInitial;
+        totalTransfers=0.0;
 
         totalSales=0.0;
         totalSalesCash=0.0;
         totalSalesTransfer=0.0;
         getSales().forEach(sale -> {
+            totalSales+=sale.getTotalCurrent();
+            amountTotal+=sale.getTotalCurrent();
             if(sale.isCash()){
                 totalSalesCash+=sale.getTotalCurrent();
             }else{
                 totalSalesTransfer+=sale.getTotalCurrent();
             }
         });
+        totalCash+=totalSalesCash;
+        totalTransfers+=totalSalesTransfer;
 
         totalRentals=0.0;
         totalRentalsCash=0.0;
         totalRentalsTransfer=0.0;
         getRentals().forEach(rental -> {
             totalRentals+=rental.getTotalCurrent();
+            amountTotal+=rental.getTotalCurrent();
             if(rental.isCash()){
                 totalRentalsCash+=rental.getTotalCurrent();
             }else{
                 totalRentalsTransfer+=rental.getTotalCurrent();
             }
         });
+        totalCash+=totalRentalsCash;
+        totalTransfers+=totalRentalsTransfer;
 
         totalReserves=0.0;
         totalReservesCash=0.0;
         totalReservesTransfer=0.0;
         getReserves().forEach(reserve ->{
+            amountTotal+=reserve.getAdvance();
             totalReserves+=reserve.getAdvance();
             if(reserve.isCash()){
                 totalReservesCash+=reserve.getAdvance();
@@ -230,6 +249,8 @@ public class BoxSession extends Babas {
                 totalReservesTransfer+=reserve.getAdvance();
             }
         });
+        totalCash+=totalReservesCash;
+        totalTransfers+=totalReservesTransfer;
 
         totalMovements=0.0;
         totalRetiros=0.0;
@@ -237,13 +258,24 @@ public class BoxSession extends Babas {
 
         getMovements().forEach(movement -> {
             totalMovements+=movement.getAmount();
+            amountTotal+=movement.getAmount();
             if(movement.isEntrance()){
                 totalIngresos+=movement.getAmount();
             }else{
                 totalRetiros+=movement.getAmount();
             }
         });
+        totalCash+=totalMovements;
+
         amountToDelivered+=(totalSalesCash+totalRentalsCash+totalReservesCash+totalMovements);
         save();
+    }
+
+    @Override
+    public void save() {
+        if(created==null){
+            created=new Date();
+        }
+        super.save();
     }
 }

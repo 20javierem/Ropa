@@ -100,7 +100,7 @@ public class DMovement extends JDialog{
             if(constraintViolationSet.isEmpty()){
                 movement.save();
                 if(!updated){
-                    movement.getBoxSesion().getMovements().add(movement);
+                    movement.getBoxSesion().getMovements().add(0,movement);
                 }
                 movement.getBoxSesion().calculateTotals();
                 Utilities.getTabbedPane().updateTab();
