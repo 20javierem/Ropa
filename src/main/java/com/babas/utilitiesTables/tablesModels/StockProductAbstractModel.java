@@ -6,8 +6,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class StockProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"SUCURSAL","PRODUCTO","STOCK-ACTUAL","EN ALQUILER"};
-    private final Class[] typeColumns={String.class,String.class,Integer.class,Integer.class};
+    private final String[] nameColumns={"SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","ALQUILERES"};
+    private final Class[] typeColumns={String.class,String.class,Integer.class,Integer.class,Integer.class,Integer.class};
     private final List<Stock> list;
 
     public StockProductAbstractModel(List<Stock> list){
@@ -44,8 +44,12 @@ public class StockProductAbstractModel extends AbstractTableModel {
                 return stock.getProduct().getStyle().getName()+" / "+stock.getProduct().getSex().getName()+" / "+stock.getProduct().getBrand().getName()+" / "+stock.getProduct().getSize().getName()+" / "+stock.getProduct().getColor().getName();
             case 2:
                 return stock.getQuantity();
-            default:
+            case 3:
+                return stock.getOnStock();
+            case 4:
                 return stock.getOnRental();
+            default:
+                return stock.getTimesRented();
         }
     }
 

@@ -136,7 +136,7 @@ public class TabCatalogue {
     private void filter(){
         filtros.clear();
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" +busqueda,0,1,2,3,4,5,6,7,8));
+        filtros.add(RowFilter.regexFilter("(?i)" +String.valueOf(busqueda),0,1,2,3,4,5,6,7,8));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);

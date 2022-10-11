@@ -139,6 +139,7 @@ public class Transfer extends Babas {
                         detailTransfer.getProduct().getStocks().add(stock);
                     }
                     stock.setQuantity(stock.getQuantity()+detailTransfer.getQuantity());
+                    stock.setOnStock(stock.getOnStock()+detailTransfer.getQuantity());
                     stock.save();
                 });
                 break;

@@ -22,6 +22,8 @@ public class Stock extends Babas {
     private Date created;
     private Date updated;
     private Integer onRental=0;
+    private Integer onStock=0;
+    private Integer timesRented=0;
 
     public Date getCreated() {
         return created;
@@ -67,12 +69,24 @@ public class Stock extends Babas {
         return onRental;
     }
 
-    public void addOnRental(){
-        onRental++;
+    public void setOnRental(Integer onRental) {
+        this.onRental = onRental;
     }
 
-    public void removeOnRental(){
-        onRental--;
+    public Integer getOnStock() {
+        return onStock;
+    }
+
+    public void setOnStock(Integer onStock) {
+        this.onStock = onStock;
+    }
+
+    public Integer getTimesRented() {
+        return timesRented;
+    }
+
+    public void setTimesRented(Integer timesRented) {
+        this.timesRented = timesRented;
     }
 
     @Override

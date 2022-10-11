@@ -140,24 +140,26 @@ public class TabBoxSesion {
         lblTotalSalesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalSalesTransfer()));
         lblTotalSalesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalSalesCash()));
         lblSalesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(Babas.boxSession.getTotalSalesTransfer()));
-        lblSalesCash2.setText("Total ventas efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalSalesCash()));
-        lblTotalSales3.setText("Total ventas: "+Utilities.moneda.format(Babas.boxSession.getTotalSales()));
+        lblSalesCash2.setText("Total efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalSalesCash()));
+        lblTotalSales3.setText("Total: "+Utilities.moneda.format(Babas.boxSession.getTotalSales()));
         lblTotalRentals.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
         lblTotalReserves.setText(Utilities.moneda.format(Babas.boxSession.getTotalReserves()));
+        lblTotalReserves2.setText(Utilities.moneda.format(Babas.boxSession.getTotalReserves()));
         lblMovements.setText(Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
         lblMovements2.setText(Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
         lblMovements3.setText(Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
-        lblMovements4.setText("Total movimientos: "+Babas.boxSession.getTotalMovements());
+        lblMovements4.setText("Total movimientos: "+Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
         lblIngresos.setText(Utilities.moneda.format(Babas.boxSession.getTotalIngresos()));
         lblIngresos2.setText("Total ingresos: "+Utilities.moneda.format(Babas.boxSession.getTotalIngresos()));
         lblEgresos.setText(Utilities.moneda.format(Babas.boxSession.getTotalRetiros()));
         lblEgresos2.setText("Total retiros: "+Utilities.moneda.format(Babas.boxSession.getTotalRetiros()));
         lblAmountInitial.setText(Utilities.moneda.format(Babas.boxSession.getAmountInitial()));
         lblAmountInitial2.setText(Utilities.moneda.format(Babas.boxSession.getAmountInitial()));
-        lblTotalRentals3.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
+        lblTotalRentals3.setText("Total: "+Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
         lblRentalsTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
-        lblRentalsCash2.setText("Total alquileres efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
-        lblRentalsTransfer2.setText("Total alquileres transferencia: "+Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
+        lblTotalRentalsTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
+        lblRentalsCash2.setText("Total efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
+        lblRentalsTransfer2.setText("Total transferencia: "+Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
         lblRentalsCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
         lblTotalRentalsCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
         lblTotalRentals2.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
@@ -167,8 +169,8 @@ public class TabBoxSesion {
         lblReservesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
         lblTotalReservesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
         lblTotalReservesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
-        lblReservesTransfer2.setText("Total reservas transferencias: "+Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
-        lblReservesCash2.setText("Total reservas efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
+        lblReservesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
+        lblReservesCash2.setText("Total efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
         lblReservesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
     }
     public TabPane getTabPane() {

@@ -98,12 +98,12 @@ public class DetailRental extends Babas {
         stock.refresh();
         stock.getProduct().refresh();
         if (getRental().isActive()){
-            stock.setQuantity(stock.getQuantity()-getQuantity()*getQuantityPresentation());
-            stock.addOnRental();
-            stock.save();
+            stock.setOnStock(stock.getOnStock()-getQuantity()*getQuantityPresentation());
+            stock.setOnRental(stock.getOnRental()+getQuantity()*getQuantityPresentation());
+            stock.setTimesRented(stock.getTimesRented()+getQuantity()*getQuantityPresentation());
         }else{
-            stock.setQuantity(stock.getQuantity()+getQuantity()*getQuantityPresentation());
-            stock.removeOnRental();
+            stock.setOnStock(stock.getOnStock()+getQuantity()*getQuantityPresentation());
+            stock.setOnRental(stock.getOnRental()-getQuantity()*getQuantityPresentation());
             stock.save();
         }
     }

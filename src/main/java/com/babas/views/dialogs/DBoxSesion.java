@@ -114,6 +114,7 @@ public class DBoxSesion extends JDialog{
                         flag=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"Tiene una sesion abierta en esta caja, desea continuar la sessión","Sesión abierta",JOptionPane.YES_NO_OPTION)==0;
                         if(flag){
                             Babas.boxSession=boxSession1;
+                            Babas.boxSession.calculateTotals();
                             flag=false;
                             Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(boxSession1.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja recuperada");

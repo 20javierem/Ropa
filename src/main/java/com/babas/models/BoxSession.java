@@ -56,6 +56,7 @@ public class BoxSession extends Babas {
     private List<Movement> movements=new ArrayList<>();
     private Date created;
     private Date updated;
+
     public Long getId() {
         return id;
     }
