@@ -18,16 +18,26 @@ public class BoxSession extends Babas {
     @ManyToOne
     @NotNull(message = "Caja")
     private Box box;
+    private Double totalSales=0.0;
     private Double totalSalesCash=0.0;
     private Double totalSalesTransfer=0.0;
+
+    private Double totalRentals=0.0;
     private Double totalRentalsCash=0.0;
     private Double totalRentalsTransfer=0.0;
+
+    private Double totalReserves=0.0;
     private Double totalReservesCash=0.0;
     private Double totalReservesTransfer=0.0;
+
     private Double totalMovements=0.0;
+    private Double totalRetiros=0.0;
+    private Double totalIngresos=0.0;
+
     private Double amountInitial=0.0;
     private Double amountToDelivered=0.0;
     private Double amountDelivered=0.0;
+
     @OneToMany(mappedBy = "boxSession")
     @OrderBy(value = "id DESC")
     private List<Sale> sales=new ArrayList<>();
@@ -139,48 +149,44 @@ public class BoxSession extends Babas {
         return totalSalesCash;
     }
 
-    public void setTotalSalesCash(Double totalSalesCash) {
-        this.totalSalesCash = totalSalesCash;
-    }
-
     public Double getTotalSalesTransfer() {
         return totalSalesTransfer;
-    }
-
-    public void setTotalSalesTransfer(Double totalSalesTransfer) {
-        this.totalSalesTransfer = totalSalesTransfer;
     }
 
     public Double getTotalRentalsCash() {
         return totalRentalsCash;
     }
 
-    public void setTotalRentalsCash(Double totalRentalsCash) {
-        this.totalRentalsCash = totalRentalsCash;
-    }
-
     public Double getTotalRentalsTransfer() {
         return totalRentalsTransfer;
-    }
-
-    public void setTotalRentalsTransfer(Double totalRentalsTransfer) {
-        this.totalRentalsTransfer = totalRentalsTransfer;
     }
 
     public Double getTotalReservesCash() {
         return totalReservesCash;
     }
 
-    public void setTotalReservesCash(Double totalReservesCash) {
-        this.totalReservesCash = totalReservesCash;
-    }
-
     public Double getTotalReservesTransfer() {
         return totalReservesTransfer;
     }
 
-    public void setTotalReservesTransfer(Double totalReservesTransfer) {
-        this.totalReservesTransfer = totalReservesTransfer;
+    public Double getTotalSales() {
+        return totalSales;
+    }
+
+    public Double getTotalRentals() {
+        return totalRentals;
+    }
+
+    public Double getTotalReserves() {
+        return totalReserves;
+    }
+
+    public Double getTotalRetiros() {
+        return totalRetiros;
+    }
+
+    public Double getTotalIngresos() {
+        return totalIngresos;
     }
 
     public Double getTotalMovements() {
@@ -189,6 +195,8 @@ public class BoxSession extends Babas {
 
     public void calculateTotals() {
         amountToDelivered=amountInitial;
+
+        totalSales=0.0;
         totalSalesCash=0.0;
         totalSalesTransfer=0.0;
         getSales().forEach(sale -> {
@@ -198,30 +206,41 @@ public class BoxSession extends Babas {
                 totalSalesTransfer+=sale.getTotalCurrent();
             }
         });
+
+        totalRentals=0.0;
         totalRentalsCash=0.0;
         totalRentalsTransfer=0.0;
         getRentals().forEach(rental -> {
+            totalRentals+=rental.getTotalCurrent();
             if(rental.isCash()){
                 totalRentalsCash+=rental.getTotalCurrent();
             }else{
                 totalRentalsTransfer+=rental.getTotalCurrent();
             }
         });
+
+        totalReserves=0.0;
         totalReservesCash=0.0;
         totalReservesTransfer=0.0;
         getReserves().forEach(reserve ->{
+            totalReserves+=reserve.getAdvance();
             if(reserve.isCash()){
-                totalReservesCash+=reserve.getTotal();
+                totalReservesCash+=reserve.getAdvance();
             }else{
-                totalReservesTransfer+=reserve.getTotal();
+                totalReservesTransfer+=reserve.getAdvance();
             }
         });
+
         totalMovements=0.0;
+        totalRetiros=0.0;
+        totalIngresos=0.0;
+
         getMovements().forEach(movement -> {
+            totalMovements+=movement.getAmount();
             if(movement.isEntrance()){
-                totalMovements+=movement.getAmount();
+                totalIngresos+=movement.getAmount();
             }else{
-                totalMovements-=movement.getAmount();
+                totalRetiros+=movement.getAmount();
             }
         });
         amountToDelivered+=(totalSalesCash+totalRentalsCash+totalReservesCash+totalMovements);

@@ -27,9 +27,6 @@ public class TabBoxSesion {
     private JButton btnCloseBoxSesion;
     private FlatTable tableSales;
     private FlatTable tableMovements;
-    private JLabel lblTotalSales;
-    private JLabel lblTotalReserves;
-    private JLabel lblTotalRentals;
     private JLabel lblTotalMovements;
     private JLabel lblTotalToDelivered;
     private JLabel lblAmountInitial;

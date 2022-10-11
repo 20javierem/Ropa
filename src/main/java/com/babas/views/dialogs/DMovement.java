@@ -91,7 +91,11 @@ public class DMovement extends JDialog{
             movement.setDescription(txtDescription.getText().trim());
             movement.setEntrance(ckEntrance.isSelected());
             movement.setBoxSesion(Babas.boxSession);
-            movement.setAmount((Double) spinnerAmount.getValue());
+            if(ckEntrance.isSelected()){
+                movement.setAmount((Double) spinnerAmount.getValue());
+            }else{
+                movement.setAmount(-(Double) spinnerAmount.getValue());
+            }
             Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(movement);
             if(constraintViolationSet.isEmpty()){
                 movement.save();
