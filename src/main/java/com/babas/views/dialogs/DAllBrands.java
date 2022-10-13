@@ -1,5 +1,6 @@
 package com.babas.views.dialogs;
 
+import com.babas.models.Brand;
 import com.babas.models.Category;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
@@ -70,8 +71,8 @@ public class DAllBrands extends JDialog{
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorBrand(true));
     }
     private void loadNew(){
-        DCategory dCategory=new DCategory(new Category());
-        dCategory.setVisible(true);
+        DBrand dBrand=new DBrand(new Brand());
+        dBrand.setVisible(true);
     }
     private void onHecho(){
         Utilities.getActionsOfDialog().removeActionListener(actionListener);

@@ -72,6 +72,7 @@ public class DColor extends JDialog{
             color.save();
             if(!update){
                 FPrincipal.colors.add(color);
+                FPrincipal.colorsWithAll.add(color);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 color=new Color();

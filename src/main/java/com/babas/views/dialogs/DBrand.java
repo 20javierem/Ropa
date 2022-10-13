@@ -70,6 +70,7 @@ public class DBrand extends JDialog{
             brand.save();
             if(!update){
                 FPrincipal.brands.add(brand);
+                FPrincipal.brandsWithAll.add(brand);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 brand=new Brand();

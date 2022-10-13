@@ -71,6 +71,7 @@ public class DCategory extends JDialog{
             category.save();
             if(!update){
                 FPrincipal.categories.add(category);
+                FPrincipal.categoriesWithAll.add(category);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 category=new Category();

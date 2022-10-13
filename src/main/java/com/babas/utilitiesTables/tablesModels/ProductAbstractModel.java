@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductAbstractModel extends AbstractTableModel {
     private final String[] nameColumns={"CÓDIGO","NOMBRE","GÉNERO","CATEGORÍA","MARCA","PRECIO","TALLA","COLOR","TOTAL-STOCK","","",""};
     private final Class[] typeColumns={Long.class,String.class,String.class,String.class,String.class,Double.class,String.class,String.class,Integer.class,JButton.class,JButton.class,JButton.class};
-    private final List<Product> list;
+    private List<Product> list;
 
     public ProductAbstractModel(List<Product> list){
         this.list=list;
@@ -70,5 +70,9 @@ public class ProductAbstractModel extends AbstractTableModel {
 
     public List<Product> getList(){
         return list;
+    }
+
+    public void setList(List<Product> list){
+        this.list=list;
     }
 }

@@ -7,14 +7,12 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
-import com.babas.views.ModelProduct;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -35,12 +33,15 @@ public class TabCatalogue {
     private JComboBox cbbSize;
     private JComboBox cbbColor;
     private JScrollPane scrollPane;
+    private JButton btnPrevius;
+    private JButton btnNext;
     private ProductAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
-    private TableRowSorter<ProductAbstractModel> modeloOrdenado;
     private List<RowFilter<ProductAbstractModel, String>> filtros = new ArrayList<>();
-    private RowFilter filtroand;
-    private boolean tableView=true;
+    private int position=0;
+    private List<Product> productsFilters;
+    private Product product;
+    private String search="";
 
     public TabCatalogue(){
         init();
@@ -122,21 +123,101 @@ public class TabCatalogue {
         cbbSize.setModel(new DefaultComboBoxModel(FPrincipal.sizesWithAll));
         cbbSize.setRenderer(new Size.ListCellRenderer());
     }
+
+    private void loadTableFilter(){
+        productsFilters=new ArrayList<>(new ArrayList<>(FPrincipal.products));
+        if(product.getStyle().getCategory()!=null){
+            productsFilters.removeIf(product1 -> !product1.getStyle().getCategory().getId().equals(product.getStyle().getCategory().getId()));
+        }
+        if(product.getSize()!=null){
+            productsFilters.removeIf(product1 -> !product1.getSize().getId().equals(product.getSize().getId()));
+        }
+        if(product.getColor()!=null){
+            productsFilters.removeIf(product1 -> !product1.getColor().getId().equals(product.getColor().getId()));
+        }
+        if(product.getSex()!=null){
+            productsFilters.removeIf(product1 -> !product1.getSex().getId().equals(product.getSex().getId()));
+        }
+        if(product.getBrand()!=null){
+            productsFilters.removeIf(product1 -> !product1.getBrand().getId().equals(product.getBrand().getId()));
+        }
+        if(!search.isBlank()){
+            productsFilters.removeIf(product1 -> {
+                if(product1.getBarcode().toString().contains(search)||
+                        product1.getStyle().getName().contains(search)||
+                        product1.getSex().getName().contains(search)||
+                        product1.getStyle().getCategory().getName().contains(search)||
+                        product1.getBrand().getName().contains(search)||
+                        product1.getPresentationDefault().getPriceDefault().getPrice().toString().contains(search)
+                ){
+                    return true;
+                }else{
+                    return false;
+                }
+            });
+        }
+        reloadTable();
+    }
     private void loadTable(){
-        model=new ProductAbstractModel(FPrincipal.products);
+        model=new ProductAbstractModel(new ArrayList<>());
+        filter();
         table.setModel(model);
-        UtilitiesTables.headerNegrita(table);
-        ProductCellRendered.setCellRenderer(table,listaFiltros);
         table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount()-1));
         table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount()-1));
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorProduct("images"));
-        modeloOrdenado = new TableRowSorter<>(model);
-        table.setRowSorter(modeloOrdenado);
+        UtilitiesTables.headerNegrita(table);
+        ProductCellRendered.setCellRenderer(table,listaFiltros);
     }
+
+    private void reloadTable(){
+        model.setList(getProductsRows());
+        model.fireTableDataChanged();
+    }
+
+    private List<Product> getProductsRows(){
+        if(productsFilters.size()>100){
+            if(btnPrevius.getActionListeners().length>0){
+                btnPrevius.removeActionListener(btnPrevius.getActionListeners()[0]);
+            }
+            if(btnNext.getActionListeners().length>0){
+                btnNext.removeActionListener(btnNext.getActionListeners()[0]);
+            }
+            btnNext.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(position<productsFilters.size()-1){
+                        if(position+100<=productsFilters.size()-1){
+                            position=position+100;
+                        }
+                    }
+                    reloadTable();
+                }
+            });
+            btnPrevius.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if(position>0){
+                        position=position-100;
+                    }
+                    reloadTable();
+                }
+            });
+            if((position+100)>productsFilters.size()){
+                return productsFilters.subList(position,productsFilters.size()-1);
+            }else{
+                return productsFilters.subList(position,position+100);
+            }
+        }else{
+            position=0;
+            return productsFilters;
+        }
+    }
+
     private void filter(){
-        filtros.clear();
+        product=new Product();
+        product.setStyle(new Style());
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" +String.valueOf(busqueda),0,1,2,3,4,5,6,7,8));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda,0,1,2,3,4,5,6,7,8));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
@@ -146,28 +227,28 @@ public class TabCatalogue {
         listaFiltros.put(6, busqueda);
         listaFiltros.put(7, busqueda);
         listaFiltros.put(8, busqueda);
+
         if (((Sex) cbbSex.getSelectedItem()).getId() != null) {
             Sex sex = (Sex) cbbSex.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(sex.getName(), 2));
+            product.setSex(sex);
         }
         if (((Category) cbbCategory.getSelectedItem()).getId() != null) {
             Category category = (Category) cbbCategory.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(category.getName(), 3));
+            product.getStyle().setCategory(category);
         }
         if (((Brand) cbbBrand.getSelectedItem()).getId() != null) {
             Brand brand = (Brand) cbbBrand.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(brand.getName(), 4));
+            product.setBrand(brand);
         }
         if (((Size) cbbSize.getSelectedItem()).getId() != null) {
-            Size seccion = (Size) cbbSize.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(seccion.getName(), 6));
+            Size size = (Size) cbbSize.getSelectedItem();
+            product.setSize(size);
         }
         if (((Color) cbbColor.getSelectedItem()).getId() != null) {
             Color color = (Color) cbbColor.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(color.getName(), 7));
+            product.setColor(color);
         }
-        filtroand = RowFilter.andFilter(filtros);
-        modeloOrdenado.setRowFilter(filtroand);
+        loadTableFilter();
     }
     public TabPane getTabPane(){
         return tabPane;

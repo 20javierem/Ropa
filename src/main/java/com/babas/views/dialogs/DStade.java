@@ -69,6 +69,7 @@ public class DStade extends JDialog{
             stade.save();
             if(!update){
                 FPrincipal.stades.add(stade);
+                FPrincipal.stadesWithAll.add(stade);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 stade=new Stade();
