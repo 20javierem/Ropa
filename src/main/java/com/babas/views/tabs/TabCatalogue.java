@@ -3,6 +3,7 @@ package com.babas.views.tabs;
 import com.babas.custom.TabPane;
 import com.babas.models.*;
 import com.babas.models.Color;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
@@ -143,16 +144,19 @@ public class TabCatalogue {
         }
         if(!search.isBlank()){
             productsFilters.removeIf(product1 -> {
-                if(product1.getBarcode().toString().contains(search)||
-                        product1.getStyle().getName().contains(search)||
-                        product1.getSex().getName().contains(search)||
-                        product1.getStyle().getCategory().getName().contains(search)||
-                        product1.getBrand().getName().contains(search)||
-                        product1.getPresentationDefault().getPriceDefault().getPrice().toString().contains(search)
+                if(product1.getBarcode().toString().toLowerCase().contains(search.toLowerCase())||
+                        product1.getStyle().getName().toLowerCase().contains(search.toLowerCase())||
+                        product1.getSex().getName().toLowerCase().contains(search.toLowerCase())||
+                        product1.getStyle().getCategory().getName().toLowerCase().contains(search.toLowerCase())||
+                        product1.getBrand().getName().toLowerCase().contains(search.toLowerCase())||
+                        Utilities.moneda.format(product1.getPresentationDefault().getPriceDefault().getPrice()).toLowerCase().contains(search.toLowerCase())||
+                        product1.getSize().getName().toLowerCase().contains(search.toLowerCase())||
+                        product1.getColor().getName().toLowerCase().contains(search.toLowerCase())||
+                        product1.getStockTotal().toString().contains(search.toLowerCase())
                 ){
-                    return true;
-                }else{
                     return false;
+                }else{
+                    return true;
                 }
             });
         }
@@ -216,17 +220,17 @@ public class TabCatalogue {
     private void filter(){
         product=new Product();
         product.setStyle(new Style());
-        String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda,0,1,2,3,4,5,6,7,8));
-        listaFiltros.put(0, busqueda);
-        listaFiltros.put(1, busqueda);
-        listaFiltros.put(2, busqueda);
-        listaFiltros.put(3, busqueda);
-        listaFiltros.put(4, busqueda);
-        listaFiltros.put(5, busqueda);
-        listaFiltros.put(6, busqueda);
-        listaFiltros.put(7, busqueda);
-        listaFiltros.put(8, busqueda);
+        search = txtSearch.getText().trim();
+        filtros.add(RowFilter.regexFilter("(?i)" + search,0,1,2,3,4,5,6,7,8));
+        listaFiltros.put(0, search);
+        listaFiltros.put(1, search);
+        listaFiltros.put(2, search);
+        listaFiltros.put(3, search);
+        listaFiltros.put(4, search);
+        listaFiltros.put(5, search);
+        listaFiltros.put(6, search);
+        listaFiltros.put(7, search);
+        listaFiltros.put(8, search);
 
         if (((Sex) cbbSex.getSelectedItem()).getId() != null) {
             Sex sex = (Sex) cbbSex.getSelectedItem();

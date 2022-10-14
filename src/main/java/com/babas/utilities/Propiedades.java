@@ -73,7 +73,6 @@ public class Propiedades {
     public void setUserName(String nameUser){
         properties.put("userName",nameUser);
     }
-
     public String getKey() {
         return properties.getProperty("key");
     }
@@ -99,10 +98,16 @@ public class Propiedades {
     public void setServerPassword(String password){
         properties.put("passwordServer",Utilities.encriptar(password));
     }
+    public void setServerUrl(String url){
+        properties.put("serverUrl",Utilities.encriptar(url));
+    }
+    public String getServerUrl(){
+        String server=properties.getProperty("serverUrl");
+        return server==null?"":Utilities.desencriptar(server);
+    }
     public void setFont(String fontSize){
         properties.put("fontSize", fontSize);
     }
-
     public Font getFont() {
         return new JTextField().getFont().deriveFont(Float.parseFloat(properties.getProperty("fontSize")));
     }

@@ -28,6 +28,10 @@ public class App
     public static void main( String[] args ) {
 
         Utilities.propiedades=new Propiedades();
+        Utilities.propiedades.setServerPassword("ernestomoreno");
+        Utilities.propiedades.setServerName("javier");
+        Utilities.propiedades.setServerUrl("192.168.0.119");
+        Utilities.propiedades.save();
         Babas.initialize();
         Utilities.loadTheme();
 
