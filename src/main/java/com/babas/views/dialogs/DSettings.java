@@ -2,15 +2,12 @@ package com.babas.views.dialogs;
 
 import com.babas.utilities.Utilities;
 import com.babas.views.frames.FPrincipal;
-import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatComboBox;
-import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import java.awt.*;
 import java.awt.event.*;
 
 public class DSettings extends JDialog{
@@ -21,6 +18,15 @@ public class DSettings extends JDialog{
     private FlatComboBox cbbThemes;
     private FlatComboBox cbbFontSize;
     private JButton btnApply;
+    private JRadioButton rbSaleAlways;
+    private JRadioButton rbReserveAlways;
+    private JRadioButton rbRentalAlways;
+    private JRadioButton rbSaleNever;
+    private JRadioButton rbReserveNever;
+    private JRadioButton rbRentalNever;
+    private JRadioButton rbSaleQuestion;
+    private JRadioButton rbReserveQuestion;
+    private JRadioButton rbRentalQuestion;
     private FPrincipal fPrincipal;
 
     public DSettings(FPrincipal fPrincipal){
@@ -122,6 +128,31 @@ public class DSettings extends JDialog{
     }
 
     private void save(){
+        if(rbSaleAlways.isSelected()){
+            Utilities.propiedades.setPrintTicketSale("always");
+        }else if(rbSaleNever.isSelected()){
+            Utilities.propiedades.setPrintTicketSale("never");
+        }else{
+            Utilities.propiedades.setPrintTicketSale("question");
+        }
+
+        if(rbReserveAlways.isSelected()){
+            Utilities.propiedades.setPrintTicketReserve("always");
+        }else if(rbReserveNever.isSelected()){
+            Utilities.propiedades.setPrintTicketReserve("never");
+        }else{
+            Utilities.propiedades.setPrintTicketReserve("question");
+        }
+
+        if(rbRentalAlways.isSelected()){
+            Utilities.propiedades.setPrintTicketRental("always");
+        }else if(rbRentalNever.isSelected()){
+            Utilities.propiedades.setPrintTicketRental("never");
+        }else{
+            Utilities.propiedades.setPrintTicketRental("question");
+        }
+
+        Utilities.propiedades.save();
         onDispose();
         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Cambios guardados");
     }
@@ -147,5 +178,28 @@ public class DSettings extends JDialog{
     private void loadSetings(){
         cbbThemes.setSelectedItem(Utilities.propiedades.getTema());
         cbbFontSize.setSelectedItem(Utilities.propiedades.getFont().getSize());
+        if(Utilities.propiedades.getPrintTicketSale().equals("always")){
+            rbSaleAlways.setSelected(true);
+        }else if(Utilities.propiedades.getPrintTicketSale().equals("never")){
+            rbSaleNever.setSelected(true);
+        }else{
+            rbSaleQuestion.setSelected(true);
+        }
+
+        if(Utilities.propiedades.getPrintTicketReserve().equals("always")){
+            rbReserveAlways.setSelected(true);
+        }else if(Utilities.propiedades.getPrintTicketReserve().equals("never")){
+            rbReserveNever.setSelected(true);
+        }else{
+            rbReserveQuestion.setSelected(true);
+        }
+
+        if(Utilities.propiedades.getPrintTicketRental().equals("always")){
+            rbRentalAlways.setSelected(true);
+        }else if(Utilities.propiedades.getPrintTicketRental().equals("never")){
+            rbRentalNever.setSelected(true);
+        }else{
+            rbRentalQuestion.setSelected(true);
+        }
     }
 }

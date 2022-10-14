@@ -45,7 +45,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
         if(table.getSelectedRow()!=-1){
             Sale sale=((SaleAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(show){
-                UtilitiesReports.generateTicketSale(sale);
+                UtilitiesReports.generateTicketSale(sale,false);
             }else{
                 if(Babas.boxSession.getId()!=null){
                     if(sale.isActive()){

@@ -7,6 +7,7 @@ import com.babas.models.Client;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale2;
@@ -14,6 +15,7 @@ import com.babas.utilitiesTables.tablesCellRendered.DetailSaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailSaleAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.dialogs.DaddProductToSale;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.FlatIconColors;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
@@ -173,11 +175,20 @@ public class TabNewSale {
                         sale.save();
                         Babas.boxSession.getSales().add(0,sale);
                         Babas.boxSession.calculateTotals();
+                        Utilities.getLblIzquierda().setText("Venta registrada Nro. "+sale.getNumberSale()+" :"+Utilities.formatoFechaHora.format(sale.getCreated()));
+                        Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta registrada");
+                        if(Utilities.propiedades.getPrintTicketSale().equals("always")){
+                            UtilitiesReports.generateTicketSale(sale,true);
+                        }else if(Utilities.propiedades.getPrintTicketSale().equals("question")){
+                            si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION) == 0;
+                            if(si){
+                                UtilitiesReports.generateTicketSale(sale,true);
+                            }
+                        }
                         sale=new Sale();
                         clear();
                         Utilities.getTabbedPane().updateTab();
-                        Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta registrada");
                     }
                 }else{
                     ProgramValidator.mostrarErrores(constraintViolationSet);

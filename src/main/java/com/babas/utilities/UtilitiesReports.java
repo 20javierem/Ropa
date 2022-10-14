@@ -4,9 +4,7 @@ import com.babas.App;
 import com.babas.models.DetailSale;
 import com.babas.models.Sale;
 import com.moreno.Notify;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanArrayDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.swing.JRViewer;
@@ -23,7 +21,7 @@ import java.util.*;
 
 public class UtilitiesReports {
 
-    public static void generateTicketSale(Sale sale) {
+    public static void generateTicketSale(Sale sale,boolean print) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/ticket-sale.jasper");
         File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
@@ -51,16 +49,21 @@ public class UtilitiesReports {
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("formaDePago",sale.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",sale.getUser().getUserName());
-                JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
-                if(viewer!=null){
-                    viewer.setTitle("Venta Nro. "+sale.getNumberSale());
-                    if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
-                        Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
-                    }
-                    Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
-                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                if(print){
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
+                    JasperPrintManager.printReport(jasperPrint,true);
                 }else{
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                    JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
+                    if(viewer!=null){
+                        viewer.setTitle("Venta Nro. "+sale.getNumberSale());
+                        if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                            Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                        }
+                        Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                        Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                    }
                 }
             }else{
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");

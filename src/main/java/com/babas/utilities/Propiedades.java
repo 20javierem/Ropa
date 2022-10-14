@@ -40,6 +40,12 @@ public class Propiedades {
             save();
             setTema("Claro");
             setFont(String.valueOf(new JTextField().getFont().getSize()));
+            setServerUrl("");
+            setServerName("");
+            setServerPassword("");
+            setPrintTicketSale("always");
+            setPrintTicketRental("always");
+            setPrintTicketReserve("always");
             save();
         }else{
             inputStream = new FileInputStream(archivo.getAbsolutePath());
@@ -110,6 +116,25 @@ public class Propiedades {
     }
     public Font getFont() {
         return new JTextField().getFont().deriveFont(Float.parseFloat(properties.getProperty("fontSize")));
+    }
+    public void setPrintTicketSale(String printTicketSale){
+        properties.put("printTicketSale",printTicketSale);
+    }
+    public String getPrintTicketSale(){
+        return properties.getProperty("printTicketSale");
+    }
+    public void setPrintTicketReserve(String printTicketReserve){
+        properties.put("printTicketReserve",printTicketReserve);
+    }
+    public String getPrintTicketReserve(){
+        return properties.getProperty("printTicketReserve");
+    }
+
+    public void setPrintTicketRental(String printTicketRental){
+        properties.put("printTicketRental",printTicketRental);
+    }
+    public String getPrintTicketRental(){
+        return properties.getProperty("printTicketRental");
     }
 
 }
