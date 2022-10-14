@@ -8,6 +8,7 @@ import com.babas.models.Rental;
 import com.babas.models.Reserve;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve2;
@@ -181,11 +182,20 @@ public class TabNewReserve {
                     FPrincipal.reservesActives.add(reserve);
                     Babas.boxSession.getReserves().add(0,reserve);
                     Babas.boxSession.calculateTotals();
+                    Utilities.getLblIzquierda().setText("Reserva registrada Nro. "+reserve.getNumberReserve()+" :"+Utilities.formatoFechaHora.format(reserve.getCreated()));
+                    Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Reserva registrada");
+                    if(Utilities.propiedades.getPrintTicketReserve().equals("always")){
+                        UtilitiesReports.generateTicketReserve(reserve,true);
+                    }else if(Utilities.propiedades.getPrintTicketReserve().equals("question")){
+                        si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de reserva", JOptionPane.YES_NO_OPTION) == 0;
+                        if(si){
+                            UtilitiesReports.generateTicketReserve(reserve,true);
+                        }
+                    }
                     reserve=new Reserve();
                     clear();
                     Utilities.getTabbedPane().updateTab();
-                    Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Reserva registrado");
                 }
             }else{
                 ProgramValidator.mostrarErrores(constraintViolationSet);

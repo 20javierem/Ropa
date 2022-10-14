@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL-ACTUAL",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL-ACTUAL","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class,JButton.class};
     private final List<Rental> list;
 
     public RentalAbstractModel(List<Rental> list){
@@ -68,8 +68,10 @@ public class RentalAbstractModel extends AbstractTableModel {
                 return Utilities.moneda.format(rental.getPenalty());
             case 11:
                 return Utilities.moneda.format(rental.getTotalCurrentWithPenalty());
+            case 12:
+                return new JButtonAction("x16/mostrarContraseña.png","Finalizar");
             default:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return new JButtonAction("x16/mostrarContraseña.png","Ticket");
         }
     }
 

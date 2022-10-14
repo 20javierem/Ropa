@@ -188,6 +188,12 @@ public class FPrincipal extends JFrame{
                 menuReserves.loadNewReserve();
             }
         });
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                exit();
+            }
+        });
     }
 
     private void reloadData(){

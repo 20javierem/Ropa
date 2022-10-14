@@ -9,6 +9,8 @@ import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
 import com.babas.utilitiesTables.tablesCellRendered.DetailReserveCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
@@ -128,8 +130,8 @@ public class TabRecordReserves {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ReserveCellRendered.setCellRenderer(table,null);
-//        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
-//        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+        table.removeColumn(table.getColumn(""));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve(false));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

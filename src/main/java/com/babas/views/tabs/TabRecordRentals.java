@@ -11,6 +11,7 @@ import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
+import com.babas.utilitiesTables.tablesCellRendered.RentalCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
@@ -138,8 +139,9 @@ public class TabRecordRentals {
         model = new RentalAbstractModel(rentals);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
-        SaleCellRendered.setCellRenderer(table,null);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental());
+        RentalCellRendered.setCellRenderer(table,null);
+        table.removeColumn(table.getColumn(""));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

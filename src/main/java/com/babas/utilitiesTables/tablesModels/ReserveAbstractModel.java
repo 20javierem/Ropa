@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ReserveAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","TOTAL","ADELANTO",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","TOTAL","ADELANTO","",""};
+    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,JButton.class,JButton.class};
     private final List<Reserve> list;
 
     public ReserveAbstractModel(List<Reserve> list){
@@ -62,8 +62,10 @@ public class ReserveAbstractModel extends AbstractTableModel {
                 return Utilities.moneda.format(reserve.getTotal());
             case 8:
                 return Utilities.moneda.format(reserve.getAdvance());
+            case 9:
+                return new JButtonAction("x16/mostrarContraseña.png","Completar");
             default:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return new JButtonAction("x16/mostrarContraseña.png","Ticket");
         }
     }
 

@@ -7,6 +7,7 @@ import com.babas.models.Client;
 import com.babas.models.Rental;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailRental2;
@@ -198,14 +199,23 @@ public class TabNewRental {
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Comfirmar Alquiler",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         rental.save();
-                        FPrincipal.rentalsActives.add(rental);
+                        FPrincipal.rentalsActives.add(0,rental);
                         Babas.boxSession.getRentals().add(0,rental);
                         Babas.boxSession.calculateTotals();
+                        Utilities.getLblIzquierda().setText("Alquiler registrado Nro. "+rental.getNumberRental()+" :"+Utilities.formatoFechaHora.format(rental.getCreated()));
+                        Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler registrado");
+                        if(Utilities.propiedades.getPrintTicketRental().equals("always")){
+                            UtilitiesReports.generateTicketRental(rental,true);
+                        }else if(Utilities.propiedades.getPrintTicketRental().equals("question")){
+                            si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de alquiler", JOptionPane.YES_NO_OPTION) == 0;
+                            if(si){
+                                UtilitiesReports.generateTicketRental(rental,true);
+                            }
+                        }
                         rental=new Rental();
                         clear();
                         Utilities.getTabbedPane().updateTab();
-                        Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler registrado");
                     }
                 }else{
                     ProgramValidator.mostrarErrores(constraintViolationSet);

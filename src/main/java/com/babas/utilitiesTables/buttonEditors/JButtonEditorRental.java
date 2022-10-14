@@ -2,10 +2,13 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.models.Movement;
 import com.babas.models.Rental;
+import com.babas.models.Reserve;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
+import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.tabs.TabFinishRental;
 import com.moreno.Notify;
@@ -18,9 +21,16 @@ import java.awt.event.ActionListener;
 
 public class JButtonEditorRental extends AbstractCellEditor implements TableCellEditor, ActionListener {
     private JButtonAction button;
+    private boolean detail;
 
-    public JButtonEditorRental() {
-        button=new JButtonAction("x16/mostrarContraseña.png");
+    public JButtonEditorRental(boolean detail) {
+        this.detail=detail;
+        if(detail){
+            button=new JButtonAction("x16/mostrarContraseña.png","Finalizar");
+        }else{
+            button=new JButtonAction("x16/mostrarContraseña.png","Ticket");
+        }
+
         iniciarComponentes();
     }
 
@@ -33,15 +43,25 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
-            Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-            TabFinishRental tabFinishRental=new TabFinishRental(rental);
-            if(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle())==-1){
-                Utilities.getTabbedPane().addTab(tabFinishRental.getTabPane().getTitle(),tabFinishRental.getTabPane());
+            if(detail){
+                if(Babas.boxSession.getId()!=null){
+                    Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+                    TabFinishRental tabFinishRental=new TabFinishRental(rental);
+                    if(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle())==-1){
+                        Utilities.getTabbedPane().addTab(tabFinishRental.getTabPane().getTitle(),tabFinishRental.getTabPane());
+                    }
+                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle()));
+                    fireEditingStopped();
+                    Utilities.getTabbedPane().updateTab();
+                    Utilities.updateDialog();
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
+                }
+            }else{
+                Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+                UtilitiesReports.generateTicketRental(rental,false);
             }
-            Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle()));
-            fireEditingStopped();
-            Utilities.getTabbedPane().updateTab();
-            Utilities.updateDialog();
+
         }
     }
 

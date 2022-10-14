@@ -10,15 +10,15 @@ import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
-public class ReserveCellRendered extends DefaultTableCellRenderer {
+public class RentalCellRendered extends DefaultTableCellRenderer {
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
 
-    public ReserveCellRendered(Map<Integer, String> listaFiltros) {
+    public RentalCellRendered(Map<Integer, String> listaFiltros) {
         this.listaFiltros = listaFiltros;
     }
 
     public static void setCellRenderer(JTable table,Map<Integer, String> listaFiltros){
-        ReserveCellRendered cellRendered=new ReserveCellRendered(listaFiltros);
+        RentalCellRendered cellRendered=new RentalCellRendered(listaFiltros);
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -47,7 +47,6 @@ public class ReserveCellRendered extends DefaultTableCellRenderer {
                 case "MULTA":
                 case "DESCUENTO":
                 case "TOTAL":
-                case "ADELANTO":
                 case "TOTAL-ACTUAL":
                 case "MONTO":
                 case "GARANTÍA":

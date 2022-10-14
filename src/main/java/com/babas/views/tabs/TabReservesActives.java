@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
+import com.babas.utilitiesTables.tablesCellRendered.RentalCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
@@ -99,7 +100,8 @@ public class TabReservesActives {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ReserveCellRendered.setCellRenderer(table,listaFiltros);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve());
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve(false));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorReserve(true));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
