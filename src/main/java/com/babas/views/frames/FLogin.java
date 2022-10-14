@@ -1,5 +1,6 @@
 package com.babas.views.frames;
 
+import com.babas.App;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.custom.JPanelGradiente;
@@ -18,7 +19,7 @@ public class FLogin extends JFrame {
     private JButton btnInitSession;
     private JCheckBox ckRememberUser;
     private JTextField fieldUser;
-    private JLabel logoLogin;
+    private JLabel lblLogo;
     private CustomPasswordField fieldPasword;
     private JLabel lblError;
     private JButton btnShowPasword;
@@ -38,6 +39,10 @@ public class FLogin extends JFrame {
         setResizable(false);
         pack();
         setLocationRelativeTo(null);
+        if(!Babas.company.getLogo().isBlank()){
+            ImageIcon logo=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+            lblLogo.setIcon(logo);
+        }
     }
     private void loadUserSaved(){
         String userName=Utilities.propiedades.getUserName();

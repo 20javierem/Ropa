@@ -59,7 +59,12 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                 }
             }else{
                 Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-                UtilitiesReports.generateTicketRental(rental,false);
+                if(rental.isActive()){
+                    UtilitiesReports.generateTicketRental(rental,false);
+                }else{
+                    UtilitiesReports.generateTicketRentalFinish(rental,false);
+                }
+
             }
 
         }
