@@ -8,12 +8,14 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
+import com.babas.views.ModelProduct;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 
 import javax.swing.*;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -36,6 +38,8 @@ public class TabCatalogue {
     private JScrollPane scrollPane;
     private JButton btnPrevius;
     private JButton btnNext;
+    private JTabbedPane tabbedPane1;
+    private JPanel panelProducts;
     private ProductAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
     private List<RowFilter<ProductAbstractModel, String>> filtros = new ArrayList<>();
@@ -106,10 +110,12 @@ public class TabCatalogue {
         cbbColor.setSelectedIndex(0);
         filter();
     }
-    private void init(){
+    private void init() {
         tabPane.setTitle("Catálogo");
+        panelProducts.setLayout(new FlowLayout());
         loadCombos();
         loadTable();
+        reloadCards();
         getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
     }
     private void loadCombos(){
@@ -161,6 +167,7 @@ public class TabCatalogue {
             });
         }
         reloadTable();
+        reloadCards();
     }
     private void loadTable(){
         model=new ProductAbstractModel(new ArrayList<>());
@@ -172,7 +179,15 @@ public class TabCatalogue {
         UtilitiesTables.headerNegrita(table);
         ProductCellRendered.setCellRenderer(table,listaFiltros);
     }
-
+    private void reloadCards(){
+        panelProducts.removeAll();
+        for(Product product: model.getList()){
+            ModelProduct modelProduct =new ModelProduct(product);
+            panelProducts.add(modelProduct.getContentPane());
+        }
+        panelProducts.repaint();
+        panelProducts.revalidate();
+    }
     private void reloadTable(){
         model.setList(getProductsRows());
         model.fireTableDataChanged();
@@ -195,6 +210,7 @@ public class TabCatalogue {
                         }
                     }
                     reloadTable();
+                    reloadCards();
                 }
             });
             btnPrevius.addActionListener(new ActionListener() {
@@ -204,6 +220,7 @@ public class TabCatalogue {
                         position=position-100;
                     }
                     reloadTable();
+                    reloadCards();
                 }
             });
             if((position+100)>productsFilters.size()){

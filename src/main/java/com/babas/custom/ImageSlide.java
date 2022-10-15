@@ -147,7 +147,7 @@ public class ImageSlide extends JComponent {
         return new Rectangle(new Point(x, y), new Dimension(width, height));
     }
 
-    private Image toImage(Icon icon) {
+    public static Image toImage(Icon icon) {
         return ((ImageIcon) icon).getImage();
     }
 }
