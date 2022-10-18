@@ -97,6 +97,6 @@ public class FLogin extends JFrame {
     }
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        contentPane=new JPanelGradiente(new Color(0xF3E749),new Color(0xDA3FBB));
+        contentPane=new JPanelGradiente(new Color(0xC6FFDD),new Color(0xFBD786),new Color(0xF7797D));
     }
 }

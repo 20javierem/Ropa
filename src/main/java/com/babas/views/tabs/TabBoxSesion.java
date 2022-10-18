@@ -140,7 +140,7 @@ public class TabBoxSesion {
                 }
             });
         }else{
-            tabPane.setTitle("Caja: "+Utilities.formatoFecha.format(boxSession.getCreated()));
+            tabPane.setTitle(boxSession.getBox().getName()+": "+Utilities.formatoFechaHora.format(boxSession.getCreated())+" a "+Utilities.formatoFechaHora.format(boxSession.getUpdated()));
             btnCloseBoxSesion.setVisible(false);
             btnNewMovement.setVisible(false);
         }

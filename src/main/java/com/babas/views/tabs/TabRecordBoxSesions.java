@@ -1,19 +1,22 @@
 package com.babas.views.tabs;
 
-import com.babas.controllers.Transfers;
+import com.babas.controllers.BoxSessions;
+import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
-import com.babas.models.*;
-import com.babas.models.Color;
+import com.babas.models.BoxSession;
+import com.babas.models.Branch;
+import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorTransfer;
-import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
-import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
-import com.babas.utilitiesTables.tablesModels.TransferAbstractModel;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorBoxSession;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
+import com.babas.utilitiesTables.tablesCellRendered.BoxSessionCellRendered;
+import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
+import com.babas.utilitiesTables.tablesModels.BoxSesionAbstractModel;
+import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
-import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.moreno.Notify;
 import com.toedter.calendar.JDateChooser;
 
@@ -22,32 +25,30 @@ import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class TabRecordTransfers {
+public class TabRecordBoxSesions {
     private TabPane tabPane;
-    private JPanel paneEntreFecha;
     private JDateChooser fechaInicio;
     private JDateChooser fechaFin;
-    private JPanel paneHastaFecha;
     private JDateChooser fechaHasta;
-    private JPanel paneDesdeFecha;
     private JDateChooser fechaDesde;
+    private JPanel paneEntreFecha;
+    private JPanel paneHastaFecha;
+    private JPanel paneDesdeFecha;
     private JButton btnSearch;
-    private JComboBox cbbDate;
-    private JComboBox cbbBranch;
     private FlatTable table;
-    private JComboBox cbbState;
-    private JButton btnClearFilters;
-    private TransferAbstractModel model;
-    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
-    private TableRowSorter<TransferAbstractModel> modeloOrdenado;
-    private List<RowFilter<TransferAbstractModel, String>> filtros = new ArrayList<>();
+    private JComboBox cbbBranch;
+    private JComboBox cbbDate;
+    private List<BoxSession> sales;
+    private BoxSesionAbstractModel model;
+    private TableRowSorter<BoxSesionAbstractModel> modeloOrdenado;
+    private List<RowFilter<BoxSesionAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
-    private List<Transfer> transfers;
 
-    public TabRecordTransfers(){
+    public TabRecordBoxSesions(){
         init();
         cbbDate.addActionListener(new ActionListener() {
             @Override
@@ -58,28 +59,22 @@ public class TabRecordTransfers {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getTransfers();
+                getSales();
             }
         });
         cbbBranch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        cbbBranch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filter();
-            }
-        });
-        cbbState.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 filter();
             }
         });
     }
+    private void init(){
+        tabPane.setTitle("Historial de cajas");
+        loadTable();
+        loadCombos();
+    }
+
     private void filterByType(){
         switch (cbbDate.getSelectedIndex()) {
             case 0:
@@ -104,17 +99,33 @@ public class TabRecordTransfers {
                 break;
         }
     }
-    private void init(){
-        tabPane.setTitle("Historial de traslados");
-        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
-        loadTable();
-        loadCombos();
-    }
     private void loadCombos(){
         cbbBranch.setModel(new DefaultComboBoxModel(FPrincipal.branchesWithAll));
         cbbBranch.setRenderer(new Branch.ListCellRenderer());
     }
-    private void getTransfers(){
+    private void loadTable() {
+        sales=new ArrayList<>();
+        for (Branch branch : Babas.user.getBranchs()) {
+            sales.addAll(BoxSessions.getAfter(branch,new Date()));
+        }
+        model = new BoxSesionAbstractModel(sales);
+        table.setModel(model);
+        UtilitiesTables.headerNegrita(table);
+        BoxSessionCellRendered.setCellRenderer(table,null);
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorBoxSession());
+        modeloOrdenado = new TableRowSorter<>(model);
+        table.setRowSorter(modeloOrdenado);
+    }
+    private void filter(){
+        filtros.clear();
+        if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
+            Branch branch = (Branch) cbbBranch.getSelectedItem();
+            filtros.add(RowFilter.regexFilter(branch.getName(), 1));
+        }
+        filtroand = RowFilter.andFilter(filtros);
+        modeloOrdenado.setRowFilter(filtroand);
+    }
+    private void getSales(){
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Date start = null;
         Date end = null;
@@ -137,37 +148,25 @@ public class TabRecordTransfers {
             }
         }
         if(start!=null&&end!=null){
-            transfers.clear();
+            sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                Transfers.getByRangeOfDate(branch,start,end).forEach(transfer -> {
-                    if(!transfers.contains(transfer)){
-                        transfers.add(transfer);
-                    }
-                });
+                sales.addAll(BoxSessions.getByRangeOfDate(branch,start,end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Transferencias cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Cajas cargadas");
             model.fireTableDataChanged();
         }else if(start!=null){
-            transfers.clear();
+            sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                Transfers.getAfter(branch,start).forEach(transfer -> {
-                    if(!transfers.contains(transfer)){
-                        transfers.add(transfer);
-                    }
-                });
+                sales.addAll(BoxSessions.getAfter(branch,start));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Transferencias cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Cajas cargadas");
             model.fireTableDataChanged();
         }else if(end!=null){
-            transfers.clear();
+            sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
-                Transfers.getBefore(branch,end).forEach(transfer -> {
-                    if(!transfers.contains(transfer)){
-                        transfers.add(transfer);
-                    }
-                });
+                sales.addAll(BoxSessions.getBefore(branch,end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Transferencias cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Cajas cargadas");
             model.fireTableDataChanged();
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");
@@ -175,40 +174,8 @@ public class TabRecordTransfers {
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
-    private void filter(){
-        filtros.clear();
-        if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
-            Branch branch = (Branch) cbbBranch.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(branch.getName(), 3,4));
-        }
-        if (cbbState.getSelectedIndex()!=0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 6));
-        }
-        filtroand = RowFilter.andFilter(filtros);
-        modeloOrdenado.setRowFilter(filtroand);
-    }
-
-    public TabPane getTabPane(){
+    public TabPane getTabPane() {
         return tabPane;
-    }
-
-    private void loadTable() {
-        transfers=new ArrayList<>();
-        for (Branch branch : Babas.user.getBranchs()) {
-            Transfers.getAfter(branch,new Date()).forEach(transfer -> {
-                if(!transfers.contains(transfer)){
-                    transfers.add(transfer);
-                }
-            });
-        }
-        model = new TransferAbstractModel(transfers);
-        table.setModel(model);
-        UtilitiesTables.headerNegrita(table);
-        TransferCellRendered.setCellRenderer(table);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorTransfer(false));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorTransfer(true));
-        modeloOrdenado = new TableRowSorter<>(model);
-        table.setRowSorter(modeloOrdenado);
     }
 
     private void createUIComponents() {

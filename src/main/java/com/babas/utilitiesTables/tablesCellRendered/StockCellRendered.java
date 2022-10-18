@@ -33,6 +33,7 @@ public class StockCellRendered extends DefaultTableCellRenderer {
             table.getColumnModel().getColumn(column).setPreferredWidth(25);
             JButton button=(JButton) value;
             button.setBackground(component.getBackground());
+            button.setForeground(component.getForeground());
             return button;
         }else{
             DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);

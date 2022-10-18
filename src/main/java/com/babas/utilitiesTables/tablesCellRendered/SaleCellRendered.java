@@ -33,6 +33,7 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
             table.getColumnModel().getColumn(column).setPreferredWidth(85);
             JButton button=(JButton) value;
             button.setBackground(component.getBackground());
+            button.setForeground(component.getForeground());
             return button;
         }else{
             DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
@@ -60,9 +61,9 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
                 case "ESTADO":
                 case "TIPO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
                     break;
                 case "TIPO/PAGO":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);

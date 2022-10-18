@@ -1,6 +1,7 @@
 package com.babas.views.dialogs;
 
 import com.babas.custom.ImageSlide;
+import com.babas.custom.JPanelGradiente;
 import com.babas.models.*;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
@@ -9,6 +10,7 @@ import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
+import java.awt.Color;
 import java.awt.event.*;
 import java.util.Vector;
 
@@ -183,4 +185,8 @@ public class DProductCatalogue extends JDialog{
         table.removeColumn(table.getColumn("PRODUCTO"));
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        contentPane=new JPanelGradiente(new java.awt.Color(0xC6FFDD),new java.awt.Color(0xFBD786),new Color(0xF7797D));
+    }
 }

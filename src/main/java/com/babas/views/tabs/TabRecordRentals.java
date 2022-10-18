@@ -215,10 +215,10 @@ public class TabRecordRentals {
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        fechaInicio = new JDateChooser();
-        fechaFin = new JDateChooser();
-        fechaDesde = new JDateChooser();
-        fechaHasta = new JDateChooser();
+        fechaInicio = new JDateChooser(new Date());
+        fechaFin = new JDateChooser(new Date());
+        fechaDesde = new JDateChooser(new Date());
+        fechaHasta = new JDateChooser(new Date());
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());

@@ -10,15 +10,15 @@ import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
-public class RentalCellRendered extends DefaultTableCellRenderer {
+public class BoxSessionCellRendered extends DefaultTableCellRenderer {
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
 
-    public RentalCellRendered(Map<Integer, String> listaFiltros) {
+    public BoxSessionCellRendered(Map<Integer, String> listaFiltros) {
         this.listaFiltros = listaFiltros;
     }
 
     public static void setCellRenderer(JTable table,Map<Integer, String> listaFiltros){
-        RentalCellRendered cellRendered=new RentalCellRendered(listaFiltros);
+        BoxSessionCellRendered cellRendered=new BoxSessionCellRendered(listaFiltros);
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -44,32 +44,20 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMinWidth(90);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
                     break;
-                case "SUBTOTAL":
-                case "MULTA":
-                case "DESCUENTO":
+                case "EFECTIVO":
+                case "TRANSFERENCIA":
                 case "TOTAL":
-                case "TOTAL-ACTUAL":
-                case "MONTO":
-                case "GARANTÍA":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(95);
                     table.getColumn(table.getColumnName(column)).setMinWidth(95);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(95);
                     break;
-                case "FECHA":
-                case "ACTUALIZADO":
-                case "ESTADO":
-                case "TIPO":
+                case "INICIO":
+                case "CIERRE":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(150);
                     table.getColumn(table.getColumnName(column)).setMinWidth(150);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
-                    break;
-                case "TIPO/PAGO":
-                    componente.setHorizontalAlignment(SwingConstants.LEFT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.LEFT);

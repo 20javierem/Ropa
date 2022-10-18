@@ -24,7 +24,6 @@ public class DBoxSesion extends JDialog{
     private FlatSpinner spinnerAmountToDeliver;
     private FlatSpinner spinnerAmountDelivered;
     private JLabel lblDateStart;
-    private JLabel lblDateEnd;
     private JComboBox cbbUser;
     private BoxSession boxSession;
     private boolean update;
@@ -87,9 +86,6 @@ public class DBoxSesion extends JDialog{
         spinnerAmountToDeliver.setValue(boxSession.getAmountToDelivered());
         spinnerAmountDelivered.setValue(boxSession.getAmountDelivered());
         lblDateStart.setText(Utilities.formatoFechaHora.format(boxSession.getCreated()));
-        if(boxSession.getUpdated()!=null){
-            lblDateEnd.setText(Utilities.formatoFechaHora.format(boxSession.getUpdated()));
-        }
         spinnerAmountInitial.setEnabled(false);
     }
 

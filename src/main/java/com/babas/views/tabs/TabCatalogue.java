@@ -37,7 +37,6 @@ public class TabCatalogue {
     private JScrollPane scrollPane;
     private JButton btnPrevius;
     private JButton btnNext;
-    private JTabbedPane tabbedPane1;
     private JPanel panelProducts;
     private ProductAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();

@@ -193,7 +193,7 @@
               </component>
             </children>
           </grid>
-          <tabbedpane id="ed062" binding="tabbedPane1" default-binding="true">
+          <tabbedpane id="ed062" default-binding="true">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
                 <preferred-size width="200" height="200"/>
@@ -204,7 +204,7 @@
             <children>
               <scrollpane id="bb918">
                 <constraints>
-                  <tabbedpane title="Vista tabla"/>
+                  <tabbedpane title="" icon="com/babas/icons/x24/catalogue2.png"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -219,7 +219,7 @@
               </scrollpane>
               <scrollpane id="ac2f2" binding="scrollPane">
                 <constraints>
-                  <tabbedpane title="Vista cards"/>
+                  <tabbedpane title="" icon="com/babas/icons/x24/catalogue.png"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>

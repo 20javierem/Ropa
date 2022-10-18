@@ -30,6 +30,7 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
             table.getColumnModel().getColumn(column).setPreferredWidth(25);
             JButton button=(JButton) value;
             button.setBackground(component.getBackground());
+            button.setForeground(component.getForeground());
             return button;
         }else{
             DesingTxtTable componente=buscarTexto2(null,value,column,component);
@@ -51,9 +52,9 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
                 case "ACTUALIZADO":
                 case "ESTADO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
                     break;
                 default:
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
