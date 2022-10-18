@@ -59,6 +59,7 @@ public class FPrincipal extends JFrame{
     private JButton btnBoxSesion;
     private JButton btnNewReserve;
     private JButton btnNewRental;
+    private FlatToggleButton btnBoxes;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
@@ -66,6 +67,7 @@ public class FPrincipal extends JFrame{
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
     private MenuRentals menuRentals;
+    private MenuBoxes menuBoxes;
     public static Vector<Branch> branchs=new Vector<>();
     public static Vector<Branch> branchesWithAll=new Vector<>();
     public static Vector<User> users=Users.getActives();
@@ -194,6 +196,12 @@ public class FPrincipal extends JFrame{
                 exit();
             }
         });
+        btnBoxes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadMenuBoxes();
+            }
+        });
     }
 
     private void reloadData(){
@@ -269,11 +277,11 @@ public class FPrincipal extends JFrame{
     }
     private void loadBoxSesion(){
         if(Babas.boxSession.getId()!=null){
-            if(tabbedPane.indexOfTab("Caja")==-1){
-                TabBoxSesion tabBoxSesion=new TabBoxSesion();
+            if(tabbedPane.indexOfTab("Caja actual")==-1){
+                TabBoxSesion tabBoxSesion=new TabBoxSesion(Babas.boxSession);
                 tabbedPane.addTab(tabBoxSesion.getTabPane().getTitle(),tabBoxSesion.getTabPane());
             }
-            tabbedPane.setSelectedIndex(tabbedPane.indexOfTab("Caja"));
+            tabbedPane.setSelectedIndex(tabbedPane.indexOfTab("Caja actual"));
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"Mensaje","No aperturó una caja");
         }
@@ -311,6 +319,7 @@ public class FPrincipal extends JFrame{
     private void loadMenuRentals(){
         splitPane.setRightComponent(menuRentals.getContentPane());
     }
+    private void loadMenuBoxes(){splitPane.setRightComponent(menuBoxes.getContentPane());}
     private void init(){
         setContentPane(contentPane);
         setTitle("Software-Tienda");
@@ -331,6 +340,7 @@ public class FPrincipal extends JFrame{
         menuTraslade=new MenuTraslade(tabbedPane);
         menuReserves=new MenuReserves(tabbedPane);
         menuRentals=new MenuRentals(tabbedPane);
+        menuBoxes=new MenuBoxes(tabbedPane);
         setExtendedState(MAXIMIZED_BOTH);
         loadMenuItems();
         loadMenuSales();
@@ -409,6 +419,7 @@ public class FPrincipal extends JFrame{
         btnBoxSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewRental.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewReserve.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnBoxes.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {
@@ -427,5 +438,6 @@ public class FPrincipal extends JFrame{
         btnTraslades=new CToggleButton();
         btnReserves=new CToggleButton();
         btnRentals =new CToggleButton();
+        btnBoxes=new CToggleButton();
     }
 }

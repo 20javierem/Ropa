@@ -48,10 +48,7 @@
     <dependency>
       <groupId>com.moreno</groupId>
       <artifactId>notify</artifactId>
-      <scope>system</scope>
       <version>1.0</version>
-      <type>jar</type>
-      <systemPath>${project.basedir}/src/main/resources/libraries/notify-1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.swinglabs.swingx</groupId>

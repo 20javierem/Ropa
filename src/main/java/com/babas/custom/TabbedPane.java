@@ -9,6 +9,7 @@ import com.formdev.flatlaf.ui.FlatTitlePaneIcon;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.multi.MultiTabbedPaneUI;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;

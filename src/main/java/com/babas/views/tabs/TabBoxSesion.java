@@ -1,11 +1,15 @@
 package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
+import com.babas.models.BoxSession;
 import com.babas.models.Movement;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
+import com.babas.utilitiesTables.tablesCellRendered.RentalCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.MovementAbstractModel;
@@ -77,8 +81,10 @@ public class TabBoxSesion {
     private MovementAbstractModel movementAbstractModel;
     private RentalAbstractModel rentalAbstractModel;
     private ReserveAbstractModel reserveAbstractModel;
+    private BoxSession boxSession;
 
-    public TabBoxSesion(){
+    public TabBoxSesion(BoxSession boxSession){
+        this.boxSession=boxSession;
         init();
         btnNewMovement.addActionListener(new ActionListener() {
             @Override
@@ -92,86 +98,96 @@ public class TabBoxSesion {
         dMovement.setVisible(true);
     }
     private void loadTables(){
-        saleAbstractModel=new SaleAbstractModel(Babas.boxSession.getSales());
+        saleAbstractModel=new SaleAbstractModel(boxSession.getSales());
         tableSales.setModel(saleAbstractModel);
         UtilitiesTables.headerNegrita(tableSales);
         SaleCellRendered.setCellRenderer(tableSales,null);
         tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-1));
         tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(true));
 
-        movementAbstractModel=new MovementAbstractModel(Babas.boxSession.getMovements());
+        movementAbstractModel=new MovementAbstractModel(boxSession.getMovements());
         tableMovements.setModel(movementAbstractModel);
         UtilitiesTables.headerNegrita(tableMovements);
         SaleCellRendered.setCellRenderer(tableMovements,null);
 
-        rentalAbstractModel=new RentalAbstractModel(Babas.boxSession.getRentals());
+        rentalAbstractModel=new RentalAbstractModel(boxSession.getRentals());
         tableRentals.setModel(rentalAbstractModel);
         UtilitiesTables.headerNegrita(tableRentals);
-        SaleCellRendered.setCellRenderer(tableRentals,null);
+        RentalCellRendered.setCellRenderer(tableRentals,null);
+        tableRentals.removeColumn(tableRentals.getColumn(""));
         tableRentals.removeColumn(tableRentals.getColumn("MULTA"));
         tableRentals.removeColumn(tableRentals.getColumn("TOTAL-ACTUAL"));
+        tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
 
-        reserveAbstractModel=new ReserveAbstractModel(Babas.boxSession.getReserves());
+        reserveAbstractModel=new ReserveAbstractModel(boxSession.getReserves());
         tableReserves.setModel(reserveAbstractModel);
         UtilitiesTables.headerNegrita(tableReserves);
         ReserveCellRendered.setCellRenderer(tableReserves,null);
+        tableReserves.removeColumn(tableReserves.getColumn(""));
+        tableReserves.getColumnModel().getColumn(tableReserves.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve(false));
     }
     private void init(){
-        tabPane.setTitle("Caja");
-        tabPane.getActions().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saleAbstractModel.fireTableDataChanged();
-                movementAbstractModel.fireTableDataChanged();
-                rentalAbstractModel.fireTableDataChanged();
-                reserveAbstractModel.fireTableDataChanged();
-                loadTotals();
-            }
-        });
+        if(boxSession.getId().equals(Babas.boxSession.getId())){
+            tabPane.setTitle("Caja actual");
+            tabPane.getActions().addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    saleAbstractModel.fireTableDataChanged();
+                    movementAbstractModel.fireTableDataChanged();
+                    rentalAbstractModel.fireTableDataChanged();
+                    reserveAbstractModel.fireTableDataChanged();
+                    loadTotals();
+                }
+            });
+        }else{
+            tabPane.setTitle("Caja: "+Utilities.formatoFecha.format(boxSession.getCreated()));
+            btnCloseBoxSesion.setVisible(false);
+            btnNewMovement.setVisible(false);
+        }
         loadTables();
         loadTotals();
     }
 
     private void loadTotals(){
-        lblTotalSales.setText(Utilities.moneda.format(Babas.boxSession.getTotalSales()));
-        lblTotalSales2.setText(Utilities.moneda.format(Babas.boxSession.getTotalSales()));
-        lblSalesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalSalesTransfer()));
-        lblSalesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalSalesCash()));
-        lblTotalSalesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalSalesTransfer()));
-        lblTotalSalesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalSalesCash()));
-        lblSalesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(Babas.boxSession.getTotalSalesTransfer()));
-        lblSalesCash2.setText("Total efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalSalesCash()));
-        lblTotalSales3.setText("Total: "+Utilities.moneda.format(Babas.boxSession.getTotalSales()));
-        lblTotalRentals.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
-        lblTotalReserves.setText(Utilities.moneda.format(Babas.boxSession.getTotalReserves()));
-        lblTotalReserves2.setText(Utilities.moneda.format(Babas.boxSession.getTotalReserves()));
-        lblMovements.setText(Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
-        lblMovements2.setText(Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
-        lblMovements3.setText(Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
-        lblMovements4.setText("Total movimientos: "+Utilities.moneda.format(Babas.boxSession.getTotalMovements()));
-        lblIngresos.setText(Utilities.moneda.format(Babas.boxSession.getTotalIngresos()));
-        lblIngresos2.setText("Total ingresos: "+Utilities.moneda.format(Babas.boxSession.getTotalIngresos()));
-        lblEgresos.setText(Utilities.moneda.format(Babas.boxSession.getTotalRetiros()));
-        lblEgresos2.setText("Total retiros: "+Utilities.moneda.format(Babas.boxSession.getTotalRetiros()));
-        lblAmountInitial.setText(Utilities.moneda.format(Babas.boxSession.getAmountInitial()));
-        lblAmountInitial2.setText(Utilities.moneda.format(Babas.boxSession.getAmountInitial()));
-        lblTotalRentals3.setText("Total: "+Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
-        lblRentalsTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
-        lblTotalRentalsTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
-        lblRentalsCash2.setText("Total efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
-        lblRentalsTransfer2.setText("Total transferencia: "+Utilities.moneda.format(Babas.boxSession.getTotalRentalsTransfer()));
-        lblRentalsCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
-        lblTotalRentalsCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentalsCash()));
-        lblTotalRentals2.setText(Utilities.moneda.format(Babas.boxSession.getTotalRentals()));
-        lblTotalTransfers.setText(Utilities.moneda.format(Babas.boxSession.getTotalTransfers()));
-        lblTotalCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalCash()));
-        lblTotalCurrent.setText(Utilities.moneda.format(Babas.boxSession.getAmountTotal()));
-        lblReservesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
-        lblTotalReservesTransfer.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
-        lblTotalReservesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
-        lblReservesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(Babas.boxSession.getTotalReservesTransfer()));
-        lblReservesCash2.setText("Total efectivo: "+Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
-        lblReservesCash.setText(Utilities.moneda.format(Babas.boxSession.getTotalReservesCash()));
+        lblTotalSales.setText(Utilities.moneda.format(boxSession.getTotalSales()));
+        lblTotalSales2.setText(Utilities.moneda.format(boxSession.getTotalSales()));
+        lblSalesTransfer.setText(Utilities.moneda.format(boxSession.getTotalSalesTransfer()));
+        lblSalesCash.setText(Utilities.moneda.format(boxSession.getTotalSalesCash()));
+        lblTotalSalesTransfer.setText(Utilities.moneda.format(boxSession.getTotalSalesTransfer()));
+        lblTotalSalesCash.setText(Utilities.moneda.format(boxSession.getTotalSalesCash()));
+        lblSalesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(boxSession.getTotalSalesTransfer()));
+        lblSalesCash2.setText("Total efectivo: "+Utilities.moneda.format(boxSession.getTotalSalesCash()));
+        lblTotalSales3.setText("Total: "+Utilities.moneda.format(boxSession.getTotalSales()));
+        lblTotalRentals.setText(Utilities.moneda.format(boxSession.getTotalRentals()));
+        lblTotalReserves.setText(Utilities.moneda.format(boxSession.getTotalReserves()));
+        lblTotalReserves2.setText(Utilities.moneda.format(boxSession.getTotalReserves()));
+        lblMovements.setText(Utilities.moneda.format(boxSession.getTotalMovements()));
+        lblMovements2.setText(Utilities.moneda.format(boxSession.getTotalMovements()));
+        lblMovements3.setText(Utilities.moneda.format(boxSession.getTotalMovements()));
+        lblMovements4.setText("Total movimientos: "+Utilities.moneda.format(boxSession.getTotalMovements()));
+        lblIngresos.setText(Utilities.moneda.format(boxSession.getTotalIngresos()));
+        lblIngresos2.setText("Total ingresos: "+Utilities.moneda.format(boxSession.getTotalIngresos()));
+        lblEgresos.setText(Utilities.moneda.format(boxSession.getTotalRetiros()));
+        lblEgresos2.setText("Total retiros: "+Utilities.moneda.format(boxSession.getTotalRetiros()));
+        lblAmountInitial.setText(Utilities.moneda.format(boxSession.getAmountInitial()));
+        lblAmountInitial2.setText(Utilities.moneda.format(boxSession.getAmountInitial()));
+        lblTotalRentals3.setText("Total: "+Utilities.moneda.format(boxSession.getTotalRentals()));
+        lblRentalsTransfer.setText(Utilities.moneda.format(boxSession.getTotalRentalsTransfer()));
+        lblTotalRentalsTransfer.setText(Utilities.moneda.format(boxSession.getTotalRentalsTransfer()));
+        lblRentalsCash2.setText("Total efectivo: "+Utilities.moneda.format(boxSession.getTotalRentalsCash()));
+        lblRentalsTransfer2.setText("Total transferencia: "+Utilities.moneda.format(boxSession.getTotalRentalsTransfer()));
+        lblRentalsCash.setText(Utilities.moneda.format(boxSession.getTotalRentalsCash()));
+        lblTotalRentalsCash.setText(Utilities.moneda.format(boxSession.getTotalRentalsCash()));
+        lblTotalRentals2.setText(Utilities.moneda.format(boxSession.getTotalRentals()));
+        lblTotalTransfers.setText(Utilities.moneda.format(boxSession.getTotalTransfers()));
+        lblTotalCash.setText(Utilities.moneda.format(boxSession.getTotalCash()));
+        lblTotalCurrent.setText(Utilities.moneda.format(boxSession.getAmountTotal()));
+        lblReservesTransfer.setText(Utilities.moneda.format(boxSession.getTotalReservesTransfer()));
+        lblTotalReservesTransfer.setText(Utilities.moneda.format(boxSession.getTotalReservesTransfer()));
+        lblTotalReservesCash.setText(Utilities.moneda.format(boxSession.getTotalReservesCash()));
+        lblReservesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(boxSession.getTotalReservesTransfer()));
+        lblReservesCash2.setText("Total efectivo: "+Utilities.moneda.format(boxSession.getTotalReservesCash()));
+        lblReservesCash.setText(Utilities.moneda.format(boxSession.getTotalReservesCash()));
     }
     public TabPane getTabPane() {
         return tabPane;

@@ -202,7 +202,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <scrollpane id="bb918" binding="scrollPane">
+              <scrollpane id="bb918">
                 <constraints>
                   <tabbedpane title="Vista tabla"/>
                 </constraints>
@@ -217,7 +217,7 @@
                   </component>
                 </children>
               </scrollpane>
-              <scrollpane id="ac2f2">
+              <scrollpane id="ac2f2" binding="scrollPane">
                 <constraints>
                   <tabbedpane title="Vista cards"/>
                 </constraints>

@@ -1,9 +1,6 @@
 package com.babas.controllers;
 
-import com.babas.models.Box;
-import com.babas.models.BoxSession;
-import com.babas.models.Size;
-import com.babas.models.User;
+import com.babas.models.*;
 import com.babas.utilities.Babas;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -24,10 +21,17 @@ public class BoxSessions extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    public static BoxSession getByBox(Box box){
+    public static BoxSession getByBox(Box box) {
+        criteria = builder.createQuery(BoxSession.class);
+        root = criteria.from(BoxSession.class);
+        criteria.select(root).where(builder.and(builder.equal(root.get("box"), box), builder.isNull(root.get("updated"))));
+        return session.createQuery(criteria).uniqueResult();
+    }
+
+    public static Vector<BoxSession> getCloseds(){
         criteria = builder.createQuery(BoxSession.class);
         root=criteria.from(BoxSession.class);
-        criteria.select(root).where(builder.and(builder.equal(root.get("box"), box),builder.isNull(root.get("updated"))));
-        return session.createQuery(criteria).uniqueResult();
+        criteria.select(root).where(builder.isNotNull(root.get("updated")));
+        return new Vector<>(session.createQuery(criteria).getResultList());
     }
 }

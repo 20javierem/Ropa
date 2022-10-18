@@ -66,7 +66,7 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 9:
                 return Utilities.moneda.format(sale.getTotalCurrent());
             case 10:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return new JButtonAction("x16/mostrarContraseña.png","Ticket");
             default:
                 return new JButtonAction("x16/remove.png");
         }

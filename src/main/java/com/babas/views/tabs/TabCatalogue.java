@@ -12,10 +12,9 @@ import com.babas.views.ModelProduct;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import org.jdesktop.swingx.WrapLayout;
 
 import javax.swing.*;
-import javax.swing.table.TableRowSorter;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -112,7 +111,8 @@ public class TabCatalogue {
     }
     private void init() {
         tabPane.setTitle("Catálogo");
-        panelProducts.setLayout(new FlowLayout());
+        panelProducts.setLayout(new WrapLayout(WrapLayout.LEFT,12,12));
+        scrollPane.getVerticalScrollBar().setUnitIncrement(35);
         loadCombos();
         loadTable();
         reloadCards();
@@ -185,6 +185,7 @@ public class TabCatalogue {
             ModelProduct modelProduct =new ModelProduct(product);
             panelProducts.add(modelProduct.getContentPane());
         }
+        scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMinimum());
         panelProducts.repaint();
         panelProducts.revalidate();
     }
@@ -194,7 +195,7 @@ public class TabCatalogue {
     }
 
     private List<Product> getProductsRows(){
-        if(productsFilters.size()>100){
+        if(productsFilters.size()>102){
             if(btnPrevius.getActionListeners().length>0){
                 btnPrevius.removeActionListener(btnPrevius.getActionListeners()[0]);
             }
@@ -205,8 +206,8 @@ public class TabCatalogue {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(position<productsFilters.size()-1){
-                        if(position+100<=productsFilters.size()-1){
-                            position=position+100;
+                        if(position+102<=productsFilters.size()-1){
+                            position=position+102;
                         }
                     }
                     reloadTable();
@@ -217,16 +218,16 @@ public class TabCatalogue {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(position>0){
-                        position=position-100;
+                        position=position-102;
                     }
                     reloadTable();
                     reloadCards();
                 }
             });
-            if((position+100)>productsFilters.size()){
+            if((position+102)>productsFilters.size()){
                 return productsFilters.subList(position,productsFilters.size()-1);
             }else{
-                return productsFilters.subList(position,position+100);
+                return productsFilters.subList(position,position+102);
             }
         }else{
             position=0;
@@ -275,7 +276,5 @@ public class TabCatalogue {
         return tabPane;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
+
 }
