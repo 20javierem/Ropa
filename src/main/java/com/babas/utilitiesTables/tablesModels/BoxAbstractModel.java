@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.List;
 
 public class BoxAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NOMBRE","CREACIÓN","",""};
-    private final Class[] typeColumns={String.class, Date.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"SUCURSAL","NOMBRE","ACTIVA","",""};
+    private final Class[] typeColumns={String.class,String.class, String.class,JButton.class,JButton.class};
     private final List<Box> list;
 
     public BoxAbstractModel(List<Box> list){
@@ -44,10 +44,12 @@ public class BoxAbstractModel extends AbstractTableModel {
         Box box= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return box.getName();
+                return box.getBranch().getName();
             case 1:
-                return box.getCreated();
+                return box.getName();
             case 2:
+                return box.isActive()?"ACTIVA":"DESACTIVADA";
+            case 3:
                 return new JButtonAction("x16/editar.png");
             default:
                 return new JButtonAction("x16/remove.png");

@@ -26,7 +26,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
     public JButtonEditorSale(boolean show) {
         this.show=show;
         if(show){
-            button=new JButtonAction("x16/mostrarContraseña.png","Ticket");
+            button=new JButtonAction("x16/mostrarContraseña.png");
         }else{
             button=new JButtonAction("x16/remove.png");
         }

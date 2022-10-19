@@ -172,10 +172,12 @@ public class DBranch extends JDialog{
         tableUsers.removeColumn(tableUsers.getColumn(""));
         modelBoxs=new BoxAbstractModel(branch.getBoxs());
         tableBoxs.setModel(modelBoxs);
+
         ColorCellRendered.setCellRenderer(tableBoxs);
         UtilitiesTables.headerNegrita(tableBoxs);
         tableBoxs.getColumnModel().getColumn(modelBoxs.getColumnCount() - 1).setCellEditor(new JButtonEditorBox(false));
         tableBoxs.getColumnModel().getColumn(modelBoxs.getColumnCount() - 2).setCellEditor(new JButtonEditorBox(true));
+        tableBoxs.removeColumn(tableBoxs.getColumn("SUCURSAL"));
     }
 
     private void onSave(){

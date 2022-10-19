@@ -16,6 +16,7 @@ import com.babas.utilitiesTables.tablesModels.MovementAbstractModel;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
+import com.babas.views.dialogs.DBoxSesion;
 import com.babas.views.dialogs.DMovement;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane;
 import com.formdev.flatlaf.extras.components.FlatTable;
@@ -92,6 +93,16 @@ public class TabBoxSesion {
                 loadNewMovement();
             }
         });
+        btnCloseBoxSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                closeBoxSession();
+            }
+        });
+    }
+    private void closeBoxSession(){
+        DBoxSesion dBoxSesion=new DBoxSesion();
+        dBoxSesion.setVisible(true);
     }
     private void loadNewMovement(){
         DMovement dMovement=new DMovement(new Movement());

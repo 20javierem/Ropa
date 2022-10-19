@@ -70,7 +70,11 @@ public class DBoxSesion extends JDialog{
             spinnerAmountDelivered.setEnabled(false);
             Vector<Box> boxes=new Vector<>();
             Babas.user.getBranchs().forEach(branch -> {
-                boxes.addAll(branch.getBoxs());
+                branch.getBoxs().forEach(box -> {
+                    if(box.isActive()){
+                        boxes.add(box);
+                    }
+                });
             });
             cbbBox.setModel(new DefaultComboBoxModel(boxes));
             cbbBox.setRenderer(new Box.ListCellRenderer());
@@ -131,6 +135,7 @@ public class DBoxSesion extends JDialog{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja cerrada");
                     Babas.boxSession =new BoxSession();
                 }else{
+                    boxSession.calculateTotals();
                     Utilities.getLblDerecha().setText("Monto caja: "+Utilities.moneda.format(boxSession.getAmountToDelivered()));
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja aperturada");
                 }

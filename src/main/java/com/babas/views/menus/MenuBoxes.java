@@ -12,19 +12,12 @@ import java.awt.event.ActionListener;
 
 public class MenuBoxes {
     private JPanel contentPane;
-    private FlatToggleButton btnBoxes;
     private FlatToggleButton btnRecordBoxSessions;
     private TabbedPane tabbedPane;
     private TabRecordBoxSesions tabRecordBoxSesions;
 
     public MenuBoxes(TabbedPane tabbedPane){
         this.tabbedPane=tabbedPane;
-        btnBoxes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
         btnRecordBoxSessions.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -33,7 +26,6 @@ public class MenuBoxes {
         });
     }
     public void loadRecordBoxSessions(){
-        Utilities.despintarButton(btnBoxes);
         Utilities.buttonSelected(btnRecordBoxSessions);
         if (tabRecordBoxSesions == null) {
             tabRecordBoxSesions = new TabRecordBoxSesions();
@@ -48,7 +40,6 @@ public class MenuBoxes {
 
     public JPanel getContentPane() {
         contentPane.updateUI();
-        btnBoxes.updateUI();
         btnRecordBoxSessions.updateUI();
         return contentPane;
     }
