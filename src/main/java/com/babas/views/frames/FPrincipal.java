@@ -8,19 +8,14 @@ import com.babas.models.Color;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
-import com.babas.views.dialogs.DBoxSesion;
-import com.babas.views.dialogs.DCompany;
-import com.babas.views.dialogs.DSettings;
-import com.babas.views.dialogs.DTransfersOnWait;
+import com.babas.views.dialogs.*;
 import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
-import com.formdev.flatlaf.IntelliJTheme;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 import com.moreno.Notify;
 
 import javax.swing.*;
-import javax.swing.plaf.IconUIResource;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -41,7 +36,7 @@ public class FPrincipal extends JFrame{
     private JPanel panelControles;
     private FlatToggleButton btnInventary;
     private FlatToggleButton btnSales;
-    private JButton btnExit;
+    private com.formdev.flatlaf.extras.components.FlatButton btnExit;
     private FlatToggleButton btnAlmacen;
     private FlatToggleButton btnManagement;
     private FlatToggleButton btnAjustes;
@@ -60,6 +55,7 @@ public class FPrincipal extends JFrame{
     private JButton btnNewReserve;
     private JButton btnNewRental;
     private FlatToggleButton btnBoxes;
+    private com.formdev.flatlaf.extras.components.FlatButton btnSettings;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
@@ -202,6 +198,17 @@ public class FPrincipal extends JFrame{
                 loadMenuBoxes();
             }
         });
+        btnSettings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadSettingUser();
+            }
+        });
+    }
+    private void loadSettingUser(){
+        DUser dUser=new DUser(Babas.user);
+        dUser.setVisible(true);
+        new java.awt.Color(0xDBDBE8);
     }
 
     private void reloadData(){
@@ -346,7 +353,9 @@ public class FPrincipal extends JFrame{
         loadMenuSales();
         menuSales.loadNewSale();
         loadTransferOnWait();
-        btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/buildLoadChanges.svg")));
+        btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));
+        btnSettings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/settings.svg")));
+        btnExit.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/exit.svg")));
     }
 
     public void loadTransferOnWait(){

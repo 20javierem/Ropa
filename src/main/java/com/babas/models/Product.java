@@ -51,7 +51,9 @@ public class Product extends Babas {
     @Transient
     private Presentation presentationDefault;
     @Transient
-    private List<Icon> icons=new ArrayList<>();
+    private List<Icon> iconsx200=new ArrayList<>();
+    @Transient
+    private List<Icon> iconsx800=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -180,20 +182,50 @@ public class Product extends Babas {
         }
         return presentationDefault;
     }
-    public List<Icon> getIcons(){
-        if(icons.size()==images.size()){
-            return  icons;
+    public List<Icon> getIconsx200(){
+        if(iconsx200.size()==images.size()){
+            return  iconsx200;
         }else{
-            icons.clear();
-            images.forEach(image->{
-                Image img=Utilities.getImage(image);
-                if(img!=null){
-                    icons.add(new ImageIcon(img));
-                }else{
-                    icons.add(null);
+            iconsx200.clear();
+            images.forEach(icon->{
+                Image image=Utilities.getImage(icon);
+                if(image!=null){
+                    int width=image.getWidth(null);
+                    int height=image.getHeight(null);
+                    if(width>200||height>200){
+                        double percen= Math.min(200.00/width,200.00/height);
+                        width= (int) (percen*width);
+                        height=(int) (percen*height);
+                    }
+                    image=image.getScaledInstance(width, height,  Image.SCALE_FAST);
+                    iconsx200.add(new ImageIcon(image));
                 }
+
             });
-            return icons;
+            return iconsx200;
+        }
+    }
+    public List<Icon> getIconsx800(){
+        if(iconsx800.size()==images.size()){
+            return  iconsx800;
+        }else{
+            iconsx800.clear();
+            images.forEach(icon->{
+                Image image=Utilities.getImage(icon);
+                if(image!=null){
+                    int width=image.getWidth(null);
+                    int height=image.getHeight(null);
+                    if(width>800||height>800){
+                        double percen= Math.min(800.00/width,800.00/height);
+                        width= (int) (percen*width);
+                        height=(int) (percen*height);
+                    }
+                    image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
+                    iconsx800.add(new ImageIcon(image));
+                }
+
+            });
+            return iconsx800;
         }
     }
     @Override

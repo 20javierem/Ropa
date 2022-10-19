@@ -39,9 +39,8 @@ public class ModelProduct {
         lblBrand.setText(product.getBrand().getName());
         lblPrice.setText(Utilities.moneda.format(product.getPresentationDefault().getPriceDefault().getPrice()));
         lblSize.setText(product.getSize().getName());
-        if(!product.getIcons().isEmpty()){
-            lblIcon.setIcon(product.getIcons().get(0));
-            lblIcon.setIcon(new ImageIcon(ImageSlide.toImage(product.getIcons().get(0)).getScaledInstance(200, 200, Image.SCALE_SMOOTH)));
+        if(!product.getIconsx200().isEmpty()){
+            lblIcon.setIcon(product.getIconsx200().get(0));
         }
     }
     public JPanel getContentPane(){

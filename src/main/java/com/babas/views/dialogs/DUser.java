@@ -45,6 +45,7 @@ public class DUser extends JDialog{
     private boolean update;
     private BranchAbstractModel modelBranchs;
     private BranchAbstractModel modelBranchsUsers;
+    private boolean fprincial;
 
     public DUser(User user){
         super(Utilities.getJFrame(),"Registrar usuario",true);

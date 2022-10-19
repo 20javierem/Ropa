@@ -1,5 +1,6 @@
 package com.babas.views.tabs;
 
+import com.babas.App;
 import com.babas.custom.TabPane;
 import com.babas.models.*;
 import com.babas.models.Color;
@@ -10,6 +11,7 @@ import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.ModelProduct;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import org.jdesktop.swingx.WrapLayout;
@@ -116,6 +118,8 @@ public class TabCatalogue {
         loadTable();
         reloadCards();
         getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
+        btnPrevius.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/arrowCollapse.svg")));
+        btnNext.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/arrowExpand.svg")));
     }
     private void loadCombos(){
         cbbBrand.setModel(new DefaultComboBoxModel(FPrincipal.brandsWithAll));

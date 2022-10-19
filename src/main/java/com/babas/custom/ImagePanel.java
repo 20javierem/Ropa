@@ -184,10 +184,10 @@ public class ImagePanel extends JPanel {
             Image image = ImageIO.read(new File(inputImage));
             int width=image.getWidth(this);
             int height=image.getHeight(this);
-            if(image.getHeight(this)>=800||image.getWidth(this)>=800){
-                double percen= Math.min(800.00/image.getWidth(this),800.00/image.getHeight(this));
-                width= (int) (percen*image.getWidth(this));
-                height=(int) (percen*image.getHeight(this));
+            if(width>400||height>400){
+                double percen= Math.min(400.00/width,400.00/height);
+                width= (int) (percen*width);
+                height=(int) (percen*height);
             }
             image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
             bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);

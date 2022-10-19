@@ -198,7 +198,7 @@ public class DProduct extends JDialog{
                 if(Utilities.newImage(inputStream, nameImage)){
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
                     product.getImages().add(nameImage);
-                    product.getIcons().add(new ImageIcon(Utilities.getImage(nameImage)));
+                    product.getIconsx800().add(new ImageIcon(Utilities.getImage(nameImage)));
                     if(update){
                         product.save();
                     }
@@ -311,7 +311,7 @@ public class DProduct extends JDialog{
 
     private void loadImages(){
         imageSlide.clear();
-        product.getIcons().forEach(icon->{
+        product.getIconsx800().forEach(icon->{
             if(icon!=null){
                 imageSlide.addImage(icon);
             }
@@ -320,7 +320,7 @@ public class DProduct extends JDialog{
     }
 
     private void loadQuantityImages(){
-        quantityImages.setText(String.valueOf(product.getIcons().size()));
+        quantityImages.setText(String.valueOf(product.getIconsx800().size()));
     }
 
     private void loadTable(){

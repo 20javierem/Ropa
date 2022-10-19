@@ -164,7 +164,7 @@ public class DProductCatalogue extends JDialog{
 
     private void loadImages(){
         imageSlide.clear();
-        product.getIcons().forEach(icon-> {
+        product.getIconsx800().forEach(icon-> {
             if(icon!=null){
                 imageSlide.addImage(icon);
             }
