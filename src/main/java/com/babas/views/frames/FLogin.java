@@ -23,7 +23,13 @@ public class FLogin extends JFrame {
     private CustomPasswordField fieldPasword;
     private JLabel lblError;
     private JButton btnShowPasword;
+    private FPrincipal fPrincipal;
 
+    public FLogin(FPrincipal fPrincipal){
+        this.fPrincipal=fPrincipal;
+        initComponents();
+        btnInitSession.addActionListener(e -> start());
+    }
     public FLogin() {
         initComponents();
         btnInitSession.addActionListener(e -> start());
@@ -62,12 +68,16 @@ public class FLogin extends JFrame {
             User user=Users.getByUserName(userName);
             if(user!=null){
                 if(user.getUserName().equals(userName)&&user.getUserPassword().equals(userPassword)){
-                    user.setLastLogin(new Date());
-                    user.save();
-                    Babas.user=user;
-                    Babas.boxSession=new BoxSession();
-                    saveUser();
-                    FPrincipal fPrincipal=new FPrincipal();
+                    if(fPrincipal==null){
+                        user.setLastLogin(new Date());
+                        user.save();
+                        saveUser();
+                        Babas.user=user;
+                        Babas.boxSession=new BoxSession();
+                        fPrincipal=new FPrincipal();
+                    }else{
+                        Utilities.setJFrame(fPrincipal);
+                    }
                     fPrincipal.setVisible(true);
                     dispose();
                 }else{

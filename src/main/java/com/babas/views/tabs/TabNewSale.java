@@ -132,11 +132,10 @@ public class TabNewSale {
             }
         });
         if(!Babas.company.getLogo().isBlank()){
-            ImageIcon logo=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-            lblLogo.setIcon(logo);
-        }else{
-            ImageIcon logo=new ImageIcon(new ImageIcon(App.class.getResource("images/logo.jpeg")).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-            lblLogo.setIcon(logo);
+            if(Utilities.iconCompany==null){
+                Utilities.iconCompany=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_DEFAULT));
+            }
+            lblLogo.setIcon(Utilities.iconCompany);
         }
     }
 

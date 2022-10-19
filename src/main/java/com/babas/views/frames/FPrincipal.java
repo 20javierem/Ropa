@@ -87,6 +87,7 @@ public class FPrincipal extends JFrame{
     public static List<Transfer> transfersOnWait=new ArrayList<>();
     public static List<Rental>  rentalsActives=new ArrayList<>();
     public static List<Reserve> reservesActives=new ArrayList<>();
+    private JPopupMenu pop_up = new JPopupMenu();
 
     public FPrincipal(){
         init();
@@ -94,12 +95,6 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadMenuSales();
-            }
-        });
-        btnExit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                exit();
             }
         });
         btnNewSale.addActionListener(new ActionListener() {
@@ -189,7 +184,7 @@ public class FPrincipal extends JFrame{
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                exit();
+                exitSession();
             }
         });
         btnBoxes.addActionListener(new ActionListener() {
@@ -204,11 +199,16 @@ public class FPrincipal extends JFrame{
                 loadSettingUser();
             }
         });
+        btnExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                pop_up.show(btnExit,btnExit.getVisibleRect().x,(int)( btnExit.getVisibleRect().y-btnExit.getHeight()*1.8));
+            }
+        });
     }
     private void loadSettingUser(){
         DUser dUser=new DUser(Babas.user);
         dUser.setVisible(true);
-        new java.awt.Color(0xDBDBE8);
     }
 
     private void reloadData(){
@@ -235,13 +235,19 @@ public class FPrincipal extends JFrame{
         }
     }
 
-    private void exit(){
+    private void exitSession(){
         boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Cerrar sesión",JOptionPane.YES_NO_OPTION)==0;
         if(si){
             FLogin fLogin =new FLogin();
             dispose();
             fLogin.setVisible(true);
         }
+    }
+
+    private void suspendSession(){
+        setVisible(false);
+        FLogin fLogin=new FLogin(this);
+        fLogin.setVisible(true);
     }
 
     private void loadMenuItems(){
@@ -281,6 +287,24 @@ public class FPrincipal extends JFrame{
         btnMenuInicio.add(menuCompany);
         btnMenuBox.add(menuBox);
         btnMenuBox.add(menuShowBox);
+    }
+    private void loadMenuExit(){
+        JMenuItem suspendSession = new JMenuItem("Suspender sesión");
+        JMenuItem closeSession = new JMenuItem("Cerrar sesión");
+        pop_up.add(suspendSession);
+        pop_up.add(closeSession);
+        suspendSession.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                suspendSession();
+            }
+        });
+        closeSession.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exitSession();
+            }
+        });
     }
     private void loadBoxSesion(){
         if(Babas.boxSession.getId()!=null){
@@ -351,6 +375,7 @@ public class FPrincipal extends JFrame{
         setExtendedState(MAXIMIZED_BOTH);
         loadMenuItems();
         loadMenuSales();
+        loadMenuExit();
         menuSales.loadNewSale();
         loadTransferOnWait();
         btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));

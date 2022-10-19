@@ -68,7 +68,7 @@ public class Utilities {
     private static JLabel lblCentro;
     private static JLabel lblDerecha;
     public static JButton actions=new JButton();
-
+    public static Icon iconCompany;
     public static JButton getActionsOfDialog(){
         return actions;
     }

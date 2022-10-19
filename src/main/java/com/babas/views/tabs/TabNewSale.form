@@ -299,6 +299,7 @@
                       </grid>
                     </constraints>
                     <properties>
+                      <icon value="com/babas/images/lojoJmoreno (1).png"/>
                       <text value=""/>
                     </properties>
                   </component>
