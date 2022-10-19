@@ -24,7 +24,7 @@ public class ImagePanel extends JPanel {
     private int diferenceX,diferenceY;
     private boolean isRelesed=false;
 
-    public ImagePanel(DCrop dCrop) throws IOException {
+    public ImagePanel() throws IOException {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if(isInside(e.getPoint(),shapeImage)){

@@ -77,7 +77,7 @@ public class DCrop extends JDialog {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         try {
-            panelImagen=new ImagePanel(this);
+            panelImagen=new ImagePanel();
         } catch (IOException e) {
             e.printStackTrace();
         }
