@@ -46,8 +46,8 @@ public class FLogin extends JFrame {
         pack();
         setLocationRelativeTo(null);
         if(!Babas.company.getLogo().isBlank()){
-            ImageIcon logo=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-            lblLogo.setIcon(logo);
+            Utilities.iconCompany=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+            lblLogo.setIcon(Utilities.iconCompany);
         }
     }
     private void loadUserSaved(){
@@ -68,18 +68,28 @@ public class FLogin extends JFrame {
             User user=Users.getByUserName(userName);
             if(user!=null){
                 if(user.getUserName().equals(userName)&&user.getUserPassword().equals(userPassword)){
-                    if(fPrincipal==null){
-                        user.setLastLogin(new Date());
-                        user.save();
-                        saveUser();
-                        Babas.user=user;
-                        Babas.boxSession=new BoxSession();
-                        fPrincipal=new FPrincipal();
+                    if(user.isStaff()){
+                        if(user.isActive()){
+                            if(fPrincipal==null){
+                                user.setLastLogin(new Date());
+                                user.save();
+                                saveUser();
+                                Babas.user=user;
+                                Babas.boxSession=new BoxSession();
+                                fPrincipal=new FPrincipal();
+                            }else{
+                                Utilities.setJFrame(fPrincipal);
+                            }
+                            fPrincipal.setVisible(true);
+                            dispose();
+                        }else{
+                            lblError.setText("Usuario desactivado");
+                            lblError.setVisible(true);
+                        }
                     }else{
-                        Utilities.setJFrame(fPrincipal);
+                        lblError.setText("Credenciales incorrectas");
+                        lblError.setVisible(true);
                     }
-                    fPrincipal.setVisible(true);
-                    dispose();
                 }else{
                     lblError.setText("Credenciales incorrectas");
                     lblError.setVisible(true);

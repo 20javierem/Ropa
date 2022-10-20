@@ -28,10 +28,6 @@ public class Product extends Babas {
     @ManyToOne
     @NotNull(message = "Talla")
     private Size size;
-    @ElementCollection
-    @CollectionTable(name="Images", joinColumns=@JoinColumn(name="product_id"))
-    @Column(name="image")
-    private List<String> images=new ArrayList<>();
     @OneToMany(mappedBy = "product")
     private List<Stock> stocks=new ArrayList<>();
     private Date created;
@@ -50,10 +46,20 @@ public class Product extends Babas {
     private List<Presentation> presentations=new ArrayList<>();
     @Transient
     private Presentation presentationDefault;
+
+    @ElementCollection
+    @CollectionTable(name="Imagesx200", joinColumns=@JoinColumn(name="product_id"))
+    @Column(name="image")
+    private List<String> imagesx200=new ArrayList<>();
     @Transient
     private List<Icon> iconsx200=new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name="Imagesx400", joinColumns=@JoinColumn(name="product_id"))
+    @Column(name="image")
+    private List<String> imagesx400=new ArrayList<>();
     @Transient
-    private List<Icon> iconsx800=new ArrayList<>();
+    private List<Icon> iconsx400=new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -111,8 +117,28 @@ public class Product extends Babas {
         this.active = active;
     }
 
-    public List<String> getImages() {
-        return images;
+    public List<String> getImagesx200() {
+        return imagesx200;
+    }
+
+    public void setImagesx200(List<String> imagesx200) {
+        this.imagesx200 = imagesx200;
+    }
+
+    public void setIconsx200(List<Icon> iconsx200) {
+        this.iconsx200 = iconsx200;
+    }
+
+    public List<String> getImagesx400() {
+        return imagesx400;
+    }
+
+    public void setImagesx400(List<String> imagesx400) {
+        this.imagesx400 = imagesx400;
+    }
+
+    public void setIconsx400(List<Icon> iconsx400) {
+        this.iconsx400 = iconsx400;
     }
 
     public Long getBarcode() {
@@ -183,21 +209,13 @@ public class Product extends Babas {
         return presentationDefault;
     }
     public List<Icon> getIconsx200(){
-        if(iconsx200.size()==images.size()){
+        if(iconsx200.size()==imagesx200.size()){
             return  iconsx200;
         }else{
             iconsx200.clear();
-            images.forEach(icon->{
+            imagesx200.forEach(icon->{
                 Image image=Utilities.getImage(icon);
                 if(image!=null){
-                    int width=image.getWidth(null);
-                    int height=image.getHeight(null);
-                    if(width>200||height>200){
-                        double percen= Math.min(200.00/width,200.00/height);
-                        width= (int) (percen*width);
-                        height=(int) (percen*height);
-                    }
-                    image=image.getScaledInstance(width, height,  Image.SCALE_FAST);
                     iconsx200.add(new ImageIcon(image));
                 }
 
@@ -205,27 +223,20 @@ public class Product extends Babas {
             return iconsx200;
         }
     }
-    public List<Icon> getIconsx800(){
-        if(iconsx800.size()==images.size()){
-            return  iconsx800;
+
+    public List<Icon> getIconsx400(){
+        if(iconsx400.size()==imagesx400.size()){
+            return  iconsx400;
         }else{
-            iconsx800.clear();
-            images.forEach(icon->{
+            iconsx400.clear();
+            imagesx400.forEach(icon->{
                 Image image=Utilities.getImage(icon);
                 if(image!=null){
-                    int width=image.getWidth(null);
-                    int height=image.getHeight(null);
-                    if(width>800||height>800){
-                        double percen= Math.min(800.00/width,800.00/height);
-                        width= (int) (percen*width);
-                        height=(int) (percen*height);
-                    }
-                    image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
-                    iconsx800.add(new ImageIcon(image));
+                    iconsx400.add(new ImageIcon(image));
                 }
 
             });
-            return iconsx800;
+            return iconsx400;
         }
     }
     @Override

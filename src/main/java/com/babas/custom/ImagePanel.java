@@ -184,8 +184,8 @@ public class ImagePanel extends JPanel {
             Image image = ImageIO.read(new File(inputImage));
             int width=image.getWidth(this);
             int height=image.getHeight(this);
-            if(width>400||height>400){
-                double percen= Math.min(400.00/width,400.00/height);
+            if(width>800||height>800){
+                double percen= Math.min(800.00/width,800.00/height);
                 width= (int) (percen*width);
                 height=(int) (percen*height);
             }

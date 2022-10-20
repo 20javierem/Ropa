@@ -166,15 +166,15 @@ public class DProduct extends JDialog{
         });
     }
     private void removeImage(){
-        if(!product.getImages().isEmpty()){
+        if(!product.getImagesx200().isEmpty()){
             boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Eliminar imagen",JOptionPane.YES_NO_OPTION)==0;
             if(si){
-                product.getImages().remove(imageSlide.getIndexPosition());
+                product.getImagesx200().remove(imageSlide.getIndexPosition());
+                product.getImagesx400().remove(imageSlide.getIndexPosition());
                 loadImages();
                 imageSlide.toNext();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Imagen eliminada");
             }
-
         }
     }
     private void loadNewDimention(){
@@ -188,26 +188,49 @@ public class DProduct extends JDialog{
     private void loadAddNewImage() {
         DCrop dCrop=new DCrop();
         dCrop.setVisible(true);
-        BufferedImage bufferedImage=DCrop.imageSelected;
-        if(bufferedImage!=null){
+        BufferedImage bufferedImage1=DCrop.imageSelectedx200;
+        BufferedImage bufferedImage2=DCrop.imageSelectedx400;
+        if(bufferedImage1!=null){
             try {
-                ByteArrayOutputStream os = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "png", os);
-                String nameImage=product.getId() + "-" + product.getImages().size()+"."+"png";
-                InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
-                if(Utilities.newImage(inputStream, nameImage)){
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
-                    product.getImages().add(nameImage);
-                    product.getIconsx800().add(new ImageIcon(Utilities.getImage(nameImage)));
+                ByteArrayOutputStream os1 = new ByteArrayOutputStream();
+                ByteArrayOutputStream os2 = new ByteArrayOutputStream();
+                ImageIO.write(bufferedImage1, "png", os1);
+                ImageIO.write(bufferedImage2, "png", os2);
+                String nameImage1=product.getId() + "-" + product.getImagesx200().size()+"x200"+"."+"png";
+                String nameImage2=product.getId() + "-" + product.getImagesx200().size()+"x400"+"."+"png";
+                InputStream inputStream1 = new ByteArrayInputStream(os1.toByteArray());
+                InputStream inputStream2 = new ByteArrayInputStream(os2.toByteArray());
+                boolean error=false;
+
+                if(Utilities.newImage(inputStream1, nameImage1)){
+                    product.getImagesx200().add(nameImage1);
+                    product.getIconsx200().add(new ImageIcon(Utilities.getImage(nameImage1)));
                     if(update){
                         product.save();
                     }
-                    imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage)));
-                    loadQuantityImages();
-                    imageSlide.toNext();
+                }else{
+                    error=true;
+                }
+
+                if(!error){
+                    if(Utilities.newImage(inputStream2, nameImage2)){
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
+                        product.getImagesx400().add(nameImage2);
+                        product.getIconsx400().add(new ImageIcon(Utilities.getImage(nameImage2)));
+                        if(update){
+                            product.save();
+                        }
+                        imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage2)));
+                        loadQuantityImages();
+                        imageSlide.toNext();
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
+                    }
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
                 }
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -311,7 +334,7 @@ public class DProduct extends JDialog{
 
     private void loadImages(){
         imageSlide.clear();
-        product.getIconsx800().forEach(icon->{
+        product.getIconsx400().forEach(icon->{
             if(icon!=null){
                 imageSlide.addImage(icon);
             }
@@ -320,7 +343,7 @@ public class DProduct extends JDialog{
     }
 
     private void loadQuantityImages(){
-        quantityImages.setText(String.valueOf(product.getIconsx800().size()));
+        quantityImages.setText(String.valueOf(product.getIconsx400().size()));
     }
 
     private void loadTable(){

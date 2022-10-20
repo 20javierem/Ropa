@@ -48,19 +48,23 @@ public class App
         }
 
         if(Babas.company!=null){
-            if(Users.getTodos().isEmpty()){
-                DUser dUser=new DUser(new User());
-                dUser.setVisible(true);
-            }
-        }
-
-        if(!Users.getTodos().isEmpty()){
             if(Branchs.getTodos().isEmpty()){
                 DBranch dBranch=new DBranch(new Branch());
                 dBranch.setVisible(true);
             }
         }
-        if(!Branchs.getTodos().isEmpty()){
+
+        if(Babas.company!=null&&!Branchs.getTodos().isEmpty()){
+            if(Users.getTodos().isEmpty()){
+                User user=new User();
+                user.getBranchs().add(Branchs.get(1));
+                Branchs.get(1).getUsers().add(user);
+                DUser dUser=new DUser(true,user);
+                dUser.setVisible(true);
+            }
+        }
+
+        if(!Users.getTodos().isEmpty()){
             FLogin fLogin=new FLogin();
             fLogin.setVisible(true);
         }

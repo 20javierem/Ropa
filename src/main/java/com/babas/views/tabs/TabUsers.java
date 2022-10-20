@@ -40,7 +40,7 @@ public class TabUsers {
     }
 
     private void loadNewUser(){
-        DUser dUser=new DUser(new User());
+        DUser dUser=new DUser(false,new User());
         dUser.setVisible(true);
     }
 

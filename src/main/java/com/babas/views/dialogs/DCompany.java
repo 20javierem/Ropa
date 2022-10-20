@@ -92,7 +92,7 @@ public class DCompany extends JDialog {
     private void loadCrop(){
         DCrop dCrop=new DCrop();
         dCrop.setVisible(true);
-        BufferedImage bufferedImage=DCrop.imageSelected;
+        BufferedImage bufferedImage=DCrop.imageSelectedx400;
         if(bufferedImage!=null){
             try {
                 ByteArrayOutputStream os = new ByteArrayOutputStream();

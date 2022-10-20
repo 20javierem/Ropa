@@ -1,5 +1,6 @@
 package com.babas.views.dialogs;
 
+import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.models.Branch;
 import com.babas.models.Sex;
@@ -45,11 +46,12 @@ public class DUser extends JDialog{
     private boolean update;
     private BranchAbstractModel modelBranchs;
     private BranchAbstractModel modelBranchsUsers;
-    private boolean fprincial;
+    private boolean fprincipal;
 
-    public DUser(User user){
+    public DUser(boolean fprincipal,User user){
         super(Utilities.getJFrame(),"Registrar usuario",true);
         this.user=user;
+        this.fprincipal=fprincipal;
         update=user.getId()!=null;
         init();
         btnHecho.addActionListener(new ActionListener() {
@@ -127,7 +129,11 @@ public class DUser extends JDialog{
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         loadCombos();
+        if(fprincipal){
+            tabbedPane.removeTabAt(tabbedPane.indexOfTab("Sucursales"));
+        }
         if(update){
+            txtNameUser.setEnabled(false);
             setTitle("Actualizar Usuario");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
@@ -198,25 +204,29 @@ public class DUser extends JDialog{
         }
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(user);
         if(constraintViolationSet.isEmpty()){
-            user.save();
-            if(!update){
-                FPrincipal.users.add(user);
-                Utilities.updateDialog();
-                if(Utilities.getTabbedPane()!=null){
-                    Utilities.getTabbedPane().updateTab();
-                }else{
-                    onHecho();
-                }
-                user=new User();
-                load();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario registrado");
-            }else{
+            if(update){
+                user.save();
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario actualizado");
                 onHecho();
+            }else{
+                if(Users.getByUserName(user.getUserName())==null){
+                    user.save();
+                    FPrincipal.users.add(user);
+                    Utilities.updateDialog();
+                    if(Utilities.getTabbedPane()!=null){
+                        Utilities.getTabbedPane().updateTab();
+                    }else{
+                        onHecho();
+                    }
+                    user=new User();
+                    load();
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario registrado");
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","Nombre de usuario ya registrado");
+                }
             }
-
         }else{
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }

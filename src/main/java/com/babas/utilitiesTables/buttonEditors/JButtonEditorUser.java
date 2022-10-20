@@ -1,13 +1,16 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.controllers.Branchs;
 import com.babas.models.Branch;
 import com.babas.models.User;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.utilitiesTables.tablesModels.UserAbstractModel;
 import com.babas.views.dialogs.DBranch;
 import com.babas.views.dialogs.DUser;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -40,23 +43,31 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
         if(table.getSelectedRow()!=-1){
             User user=((UserAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
-                DUser dUser=new DUser(user);
+                DUser dUser=new DUser(false,user);
                 dUser.setVisible(true);
             }else{
-                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Usuario",JOptionPane.YES_NO_OPTION)==0;
-                if(si){
-                    user.refresh();
-                    user.getBranchs().forEach(branch -> {
-                        branch.getUsers().remove(user);
-                        branch.save();
-                    });
-                    if(user.getSales().isEmpty()){
-                        user.delete();
+                if(!user.getId().equals(Babas.user.getId())){
+                    if(Branchs.getTodos().size()>1){
+                        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Usuario",JOptionPane.YES_NO_OPTION)==0;
+                        if(si){
+                            user.refresh();
+                            user.getBranchs().forEach(branch -> {
+                                branch.getUsers().remove(user);
+                                branch.save();
+                            });
+                            if(user.getSales().isEmpty()){
+                                user.delete();
+                            }else{
+                                user.setActive(false);
+                                user.save();
+                            }
+                            FPrincipal.users.remove(user);
+                        }
                     }else{
-                        user.setActive(false);
-                        user.save();
+                        Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminar a todos los usuarios");
                     }
-                    FPrincipal.users.remove(user);
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminarse a si mismo");
                 }
             }
             Utilities.updateDialog();

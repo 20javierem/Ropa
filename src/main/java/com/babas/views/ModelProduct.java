@@ -21,6 +21,7 @@ public class ModelProduct {
     private JLabel lblIcon;
     private JButton btnShowDetails;
     private JTextArea lblArea;
+    private JLabel lblNamePrice;
     private Product product;
 
     public ModelProduct(Product product) {
@@ -35,10 +36,11 @@ public class ModelProduct {
         });
     }
     private void init(){
-        lblArea.setText(product.getStyle().getName()+"/ "+product.getColor().getName()+"/ "+product.getSize().getName());
+        lblArea.setText(product.getStyle().getName());
         lblBrand.setText(product.getBrand().getName());
         lblPrice.setText(Utilities.moneda.format(product.getPresentationDefault().getPriceDefault().getPrice()));
         lblSize.setText(product.getSize().getName());
+        lblNamePrice.setText(product.getPresentationDefault().getName()+":");
         if(!product.getIconsx200().isEmpty()){
             lblIcon.setIcon(product.getIconsx200().get(0));
         }

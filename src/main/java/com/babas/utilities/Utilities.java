@@ -84,10 +84,6 @@ public class Utilities {
     }
     public static boolean newImage(InputStream imageImput,String imageName){
         AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
-//        eder ederhibernate
-//        "192.168.1.49"
-//        javier ernestomoreno
-//        "192.168.0.119"
         try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
             SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);

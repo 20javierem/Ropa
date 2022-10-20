@@ -207,7 +207,7 @@ public class FPrincipal extends JFrame{
         });
     }
     private void loadSettingUser(){
-        DUser dUser=new DUser(Babas.user);
+        DUser dUser=new DUser(true,Babas.user);
         dUser.setVisible(true);
     }
 
@@ -431,6 +431,8 @@ public class FPrincipal extends JFrame{
         sexsWithAll=new Vector<>(sexs);
         sexsWithAll.add(0,new Sex("TODOS"));
         products= Products.getActives();
+        products.forEach(Product::getIconsx200);
+        products.forEach(Product::getIconsx400);
         styles=Styles.getTodos();
         Babas.user.getBranchs().forEach(branch -> rentalsActives.addAll(Rentals.getActives(branch)));
         Babas.user.getBranchs().forEach(branch -> reservesActives.addAll(Reserves.getActives(branch)));
@@ -458,7 +460,7 @@ public class FPrincipal extends JFrame{
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        paneNotify=new FondoPanel("icons/x32/notificacion.png",new Dimension(32,32));
+        paneNotify=new FondoPanel("notification.svg");
         panelControles=new CustomPane(2);
         panelControles.updateUI();
         cPane=new CustomPane(2);

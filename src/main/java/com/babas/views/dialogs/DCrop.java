@@ -19,7 +19,8 @@ public class DCrop extends JDialog {
     private JButton btnCancel;
     private JButton btnOpenFileChooser;
     private JPanel contentPane;
-    public static BufferedImage imageSelected;
+    public static BufferedImage imageSelectedx200;
+    public static BufferedImage imageSelectedx400;
 
     public DCrop() {
         super(Utilities.getJFrame(),"Editar Logo",true);
@@ -35,12 +36,45 @@ public class DCrop extends JDialog {
         btnSave.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                imageSelected=((ImagePanel)panelImagen).getImageSelected();
-                onDispose();
+                loadImagesScaled();
             }
         });
     }
+    private void loadImagesScaled(){
+        BufferedImage bufferedImage=((ImagePanel)panelImagen).getImageSelected();
 
+        int width=bufferedImage.getWidth();
+        int height=bufferedImage.getHeight();
+        if(width>200||height>200){
+            double percen= Math.min(200.00/width,200.00/height);
+            width= (int) (percen*width);
+            height=(int) (percen*height);
+        }
+        // Draw the image on to the buffered image
+        Image image=bufferedImage.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
+        BufferedImage bufferedImage1 = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);;
+        Graphics2D bGr1 = bufferedImage1.createGraphics();
+        bGr1.drawImage(image, 0, 0, null);
+        bGr1.dispose();
+        imageSelectedx200=bufferedImage1;
+
+        width=bufferedImage.getWidth();
+        height=bufferedImage.getHeight();
+        if(width>400||height>400){
+            double percen= Math.min(400.00/width,400.00/height);
+            width= (int) (percen*width);
+            height=(int) (percen*height);
+        }
+        // Draw the image on to the buffered image
+        Image image2=bufferedImage.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
+        BufferedImage bufferedImage2 = new BufferedImage(image2.getWidth(null), image2.getHeight(null), BufferedImage.TYPE_INT_ARGB);;
+        Graphics2D bGr2 = bufferedImage2.createGraphics();
+        bGr2.drawImage(image2, 0, 0, null);
+        bGr2.dispose();
+        imageSelectedx400=bufferedImage2;
+
+        onDispose();
+    }
     public void loadImage(){
         String ruta=nuevaImagen();
         if(ruta!=null){
@@ -53,12 +87,11 @@ public class DCrop extends JDialog {
         JFileChooser selectorArchivos = new JFileChooser();
         FileFilter filtro1=new FileNameExtensionFilter("*.images","png","jpg","jpeg");
         selectorArchivos.addChoosableFileFilter(filtro1);
-        int resultado = selectorArchivos.showOpenDialog(null);
+        int resultado = selectorArchivos.showOpenDialog(Utilities.getJFrame());
         if (resultado != 0) {
             JOptionPane.showMessageDialog(selectorArchivos, "No seleccionó la imagen", "", JOptionPane.WARNING_MESSAGE);
             return null;
-        }
-        else{
+        } else {
             imagenProducto = selectorArchivos.getSelectedFile();
             return imagenProducto.getAbsolutePath();
         }
@@ -68,7 +101,8 @@ public class DCrop extends JDialog {
     }
     private void initComponents(){
         setContentPane(contentPane);
-        imageSelected=null;
+        imageSelectedx200=null;
+        imageSelectedx400=null;
         pack();
         setLocationRelativeTo(getOwner());
         setResizable(false);
