@@ -246,6 +246,8 @@ public class UtilitiesReports {
                 JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
                 JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
                 Map<String,Object> parameters=new HashMap<>();
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("date",Utilities.formatoFechaHora.format(new Date()));
                 parameters.put("logo",logo);
                 parameters.put("sales",sp);
                 parameters.put("dateStart", Utilities.formatoFecha.format(dateStart));
