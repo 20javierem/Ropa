@@ -8,11 +8,9 @@ public class CustomPane extends JPanel {
     public CustomPane(int dark){
         this.dark=dark;
     }
-
     public CustomPane(){
 
     }
-
     @Override
     public void updateUI() {
         JPanel panel=new JPanel();

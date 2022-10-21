@@ -288,6 +288,7 @@ public class FPrincipal extends JFrame{
         btnMenuBox.add(menuBox);
         btnMenuBox.add(menuShowBox);
     }
+
     private void loadMenuExit(){
         JMenuItem suspendSession = new JMenuItem("Suspender sesión");
         JMenuItem closeSession = new JMenuItem("Cerrar sesión");
@@ -306,6 +307,7 @@ public class FPrincipal extends JFrame{
             }
         });
     }
+
     private void loadBoxSesion(){
         if(Babas.boxSession.getId()!=null){
             if(tabbedPane.indexOfTab("Caja actual")==-1){
@@ -351,6 +353,7 @@ public class FPrincipal extends JFrame{
         splitPane.setRightComponent(menuRentals.getContentPane());
     }
     private void loadMenuBoxes(){splitPane.setRightComponent(menuBoxes.getContentPane());}
+
     private void init(){
         setContentPane(contentPane);
         setTitle("Software-Tienda");

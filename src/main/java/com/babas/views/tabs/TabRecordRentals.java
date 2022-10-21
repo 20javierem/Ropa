@@ -51,6 +51,8 @@ public class TabRecordRentals {
     private TableRowSorter<RentalAbstractModel> modeloOrdenado;
     private List<RowFilter<RentalAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
+    private Date start,end;
+    private Double totalTransfer,totalCash;
 
     public TabRecordRentals(){
         init();
@@ -63,7 +65,7 @@ public class TabRecordRentals {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getSales();
+                getRentals();
             }
         });
         cbbBranch.addActionListener(new ActionListener() {
@@ -93,8 +95,15 @@ public class TabRecordRentals {
     }
     private void init(){
         tabPane.setTitle("Historial de alquileres");
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
         loadTable();
         loadCombos();
+        filter();
     }
     private void clearFilters(){
         cbbState.setSelectedIndex(0);
@@ -159,11 +168,32 @@ public class TabRecordRentals {
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
+        loadTotals();
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
-    private void getSales(){
+    private void loadTotals(){
+        totalCash=0.0;
+        totalTransfer=0.0;
+        for (int i = 0; i < table.getRowCount(); i++) {
+            Rental rental = model.getList().get(table.convertRowIndexToModel(i));
+            if(rental.isCash()){
+                totalCash+=rental.getTotalCurrent();
+            }else{
+                totalTransfer+=rental.getTotalCurrent();
+            }
+        }
+        lblTotalEfectivo.setText("Total efectivo: "+Utilities.moneda.format(totalCash));
+        lblTotalTransferencias.setText("Total transferencias: "+Utilities.moneda.format(totalTransfer));
+    }
+
+    private void getRentals(){
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        Date start = null;
-        Date end = null;
+        start = null;
+        end = null;
         if(paneEntreFecha.isVisible()){
             if(fechaInicio.getDate()!=null){
                 start=fechaInicio.getDate();
@@ -207,6 +237,7 @@ public class TabRecordRentals {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        filter();
     }
 
     public TabPane getTabPane() {

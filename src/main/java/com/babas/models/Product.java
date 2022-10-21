@@ -217,8 +217,9 @@ public class Product extends Babas {
                 Image image=Utilities.getImage(icon);
                 if(image!=null){
                     iconsx200.add(new ImageIcon(image));
+                }else{
+                    iconsx200.add(null);
                 }
-
             });
             return iconsx200;
         }
@@ -233,6 +234,8 @@ public class Product extends Babas {
                 Image image=Utilities.getImage(icon);
                 if(image!=null){
                     iconsx400.add(new ImageIcon(image));
+                }else{
+                    iconsx400.add(null);
                 }
 
             });

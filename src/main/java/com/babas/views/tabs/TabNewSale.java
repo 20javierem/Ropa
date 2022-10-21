@@ -148,6 +148,7 @@ public class TabNewSale {
         lblSubTotal.setText(Utilities.moneda.format(sale.getTotal()));
         lblDiscount.setText(Utilities.moneda.format(sale.getDiscount()));
         lblTotal.setText(Utilities.moneda.format(sale.getTotalCurrent()));
+        Utilities.getLblCentro().setText("Nueva venta");
     }
 
     private void loadTable(){

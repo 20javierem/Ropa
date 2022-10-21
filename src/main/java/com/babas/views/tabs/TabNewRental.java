@@ -184,6 +184,7 @@ public class TabNewRental {
         }
         lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
+        Utilities.getLblCentro().setText("Nuevo alquiler");
     }
     private void onSave(boolean isCash){
         if(Babas.boxSession.getId()!=null){

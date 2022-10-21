@@ -120,8 +120,7 @@ public class Utilities {
             IOUtils.copy(file.getInputStream(), out);
             out.close();
         }catch (IOException e) {
-            System.out.println("exito");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 

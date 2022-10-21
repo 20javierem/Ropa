@@ -138,6 +138,7 @@ public class TabNewReserve {
         lblSubTotal.setText(Utilities.moneda.format(reserve.getTotal()));
         lblAdvance.setText(Utilities.moneda.format(reserve.getAdvance()));
         lblTotal.setText(Utilities.moneda.format(reserve.getToCancel()));
+        Utilities.getLblCentro().setText("Nueva reserva");
     }
     private void loadTable(){
         model=new DetailReserveAbstractModel(reserve.getDetailReserves());

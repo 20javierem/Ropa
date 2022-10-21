@@ -46,9 +46,16 @@ public class TabUsers {
 
     private void init(){
         tabPane.setTitle("Usuarios");
-        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                Utilities.getLblCentro().setText("Usuarios");
+            }
+        });
         loadTable();
         loadIcons();
+        Utilities.getLblCentro().setText("Usuarios");
     }
     private void loadIcons(){
         flatTextField.setLeadingIcon(new FlatSearchIcon());

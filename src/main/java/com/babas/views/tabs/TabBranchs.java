@@ -13,6 +13,7 @@ import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
+import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -42,9 +43,16 @@ public class TabBranchs {
 
     private void init(){
         tabPane.setTitle("Sucursales");
-        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                Utilities.getLblCentro().setText("Sucursales");
+            }
+        });
         loadTable();
         loadIcons();
+        Utilities.getLblCentro().setText("Sucursales");
     }
     private void loadIcons(){
         flatTextField.setLeadingIcon(new FlatSearchIcon());

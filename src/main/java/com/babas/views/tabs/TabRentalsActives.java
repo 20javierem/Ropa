@@ -29,8 +29,6 @@ import java.util.Map;
 public class TabRentalsActives {
     private TabPane tabPane;
     private FlatTable table;
-    private JLabel lblTotalTransferencias;
-    private JLabel lblTotalEfectivo;
     private JComboBox cbbBranch;
     private JComboBox cbbType;
     private FlatTextField txtSearch;
@@ -88,6 +86,7 @@ public class TabRentalsActives {
         });
         loadCombos();
         loadTables();
+        filter();
     }
     private void loadCombos(){
         cbbBranch.setModel(new DefaultComboBoxModel(FPrincipal.branchesWithAll));
@@ -133,6 +132,11 @@ public class TabRentalsActives {
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
 
     public TabPane getTabPane() {

@@ -105,9 +105,15 @@ public class TabRecordSales {
     }
     private void init(){
         tabPane.setTitle("Historial de ventas");
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
         loadTable();
         loadCombos();
-        loadTotals();
+        filter();
     }
 
     private void generateReport(){
@@ -146,6 +152,7 @@ public class TabRecordSales {
         lblTotalEfectivo.setText("Total efectivo: "+Utilities.moneda.format(totalCash));
         lblTotalTransferencias.setText("Total transferencias: "+Utilities.moneda.format(totalTransfer));
     }
+
     private void filterByType(){
         switch (cbbDate.getSelectedIndex()) {
             case 0:
@@ -203,8 +210,15 @@ public class TabRecordSales {
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
         loadTotals();
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
     private void getSales(){
+        start=null;
+        end=null;
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         if(paneEntreFecha.isVisible()){
             if(fechaInicio.getDate()!=null){

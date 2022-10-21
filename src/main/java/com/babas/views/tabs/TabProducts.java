@@ -2,6 +2,7 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.Product;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
@@ -122,7 +123,13 @@ public class TabProducts {
     private void init(){
         tabPane.setTitle("Productos");
         loadIcons();
-        getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
+        getTabPane().getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                filter();
+            }
+        });
         loadTable();
     }
     private void loadIcons(){
@@ -138,7 +145,11 @@ public class TabProducts {
         table.removeColumn(table.getColumn(""));
     }
     private void filter(){
-
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Productos: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Productos filtrados: "+table.getRowCount());
+        }
     }
     public TabPane getTabPane() {
         return tabPane;

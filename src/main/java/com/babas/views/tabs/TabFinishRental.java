@@ -84,6 +84,13 @@ public class TabFinishRental {
             }
             lblLogo.setIcon(Utilities.iconCompany);
         }
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                loadTotals();
+            }
+        });
         load();
         loadTotals();
     }
@@ -160,6 +167,7 @@ public class TabFinishRental {
         lblWarranty2.setText(Utilities.moneda.format(rental.getWarranty()));
         lblPenalty.setText(Utilities.moneda.format(rental.getPenalty()));
         lblTotalWithPenalty.setText(Utilities.moneda.format(rental.getWarranty()-rental.getPenalty()));
+        Utilities.getLblCentro().setText("Finalizar alquiler");
     }
 
     public TabPane getTabPane() {

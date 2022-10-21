@@ -199,6 +199,7 @@ public class TabBoxSesion {
         lblReservesTransfer2.setText("Total transferencias: "+Utilities.moneda.format(boxSession.getTotalReservesTransfer()));
         lblReservesCash2.setText("Total efectivo: "+Utilities.moneda.format(boxSession.getTotalReservesCash()));
         lblReservesCash.setText(Utilities.moneda.format(boxSession.getTotalReservesCash()));
+        Utilities.getLblCentro().setText("Caja actual");
     }
     public TabPane getTabPane() {
         return tabPane;

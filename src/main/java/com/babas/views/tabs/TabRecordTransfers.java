@@ -46,6 +46,7 @@ public class TabRecordTransfers {
     private List<RowFilter<TransferAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
     private List<Transfer> transfers;
+    private Date start,end;
 
     public TabRecordTransfers(){
         init();
@@ -79,6 +80,17 @@ public class TabRecordTransfers {
                 filter();
             }
         });
+        btnClearFilters.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearFilters();
+            }
+        });
+    }
+    private void clearFilters(){
+        cbbBranch.setSelectedIndex(0);
+        cbbState.setSelectedIndex(0);
+        filter();
     }
     private void filterByType(){
         switch (cbbDate.getSelectedIndex()) {
@@ -106,9 +118,16 @@ public class TabRecordTransfers {
     }
     private void init(){
         tabPane.setTitle("Historial de traslados");
-        tabPane.getActions().addActionListener(e -> model.fireTableDataChanged());
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                filter();
+            }
+        });
         loadTable();
         loadCombos();
+        filter();
     }
     private void loadCombos(){
         cbbBranch.setModel(new DefaultComboBoxModel(FPrincipal.branchesWithAll));
@@ -116,8 +135,8 @@ public class TabRecordTransfers {
     }
     private void getTransfers(){
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        Date start = null;
-        Date end = null;
+        start = null;
+        end = null;
         if(paneEntreFecha.isVisible()){
             if(fechaInicio.getDate()!=null){
                 start=fechaInicio.getDate();
@@ -173,6 +192,7 @@ public class TabRecordTransfers {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        filter();
     }
 
     private void filter(){
@@ -186,6 +206,11 @@ public class TabRecordTransfers {
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
 
     public TabPane getTabPane(){

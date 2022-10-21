@@ -117,7 +117,13 @@ public class TabCatalogue {
         loadCombos();
         loadTable();
         reloadCards();
-        getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
+        getTabPane().getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                model.fireTableDataChanged();
+                filter();
+            }
+        });
         btnPrevius.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/arrowCollapse.svg")));
         btnNext.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/arrowExpand.svg")));
     }
@@ -274,6 +280,11 @@ public class TabCatalogue {
             product.setColor(color);
         }
         loadTableFilter();
+        if(FPrincipal.products.size()==productsFilters.size()){
+            Utilities.getLblCentro().setText("Productos registrados: "+FPrincipal.products.size());
+        }else{
+            Utilities.getLblCentro().setText("Productos filtrados: "+productsFilters.size());
+        }
     }
     public TabPane getTabPane(){
         return tabPane;

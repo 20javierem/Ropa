@@ -1,22 +1,15 @@
 package com.babas.views.tabs;
 
 import com.babas.controllers.Reserves;
-import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
 import com.babas.models.Reserve;
-import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
-import com.babas.utilitiesTables.tablesCellRendered.DetailReserveCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
-import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
-import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.moreno.Notify;
@@ -48,11 +41,14 @@ public class TabRecordReserves {
     private JComboBox cbbBranch;
     private JComboBox cbbDate;
     private JComboBox cbbState;
+    private JButton btnClearFilters;
     private List<Reserve> reserves;
     private ReserveAbstractModel model;
     private TableRowSorter<ReserveAbstractModel> modeloOrdenado;
     private List<RowFilter<ReserveAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
+    private Date start,end;
+    private Double totalTransfer,totalCash;
 
     public TabRecordReserves(){
         init();
@@ -86,11 +82,30 @@ public class TabRecordReserves {
                 filter();
             }
         });
+        btnClearFilters.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearFilters();
+            }
+        });
+    }
+    private void clearFilters(){
+        cbbBranch.setSelectedIndex(0);
+        cbbType.setSelectedIndex(0);
+        cbbState.setSelectedIndex(0);
+        filter();
     }
     private void init(){
         tabPane.setTitle("Historial de reservas");
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
         loadTable();
         loadCombos();
+        filter();
     }
 
     private void filterByType(){
@@ -149,11 +164,32 @@ public class TabRecordReserves {
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
+        loadTotals();
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
+    private void loadTotals(){
+        totalCash=0.0;
+        totalTransfer=0.0;
+        for (int i = 0; i < table.getRowCount(); i++) {
+            Reserve reserve = model.getList().get(table.convertRowIndexToModel(i));
+            if(reserve.isCash()){
+                totalCash+=reserve.getAdvance();
+            }else{
+                totalTransfer+=reserve.getAdvance();
+            }
+        }
+        lblTotalEfectivo.setText("Total efectivo: "+Utilities.moneda.format(totalCash));
+        lblTotalTransferencias.setText("Total transferencias: "+Utilities.moneda.format(totalTransfer));
+    }
+
     private void getSales(){
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        Date start = null;
-        Date end = null;
+        start = null;
+        end = null;
         if(paneEntreFecha.isVisible()){
             if(fechaInicio.getDate()!=null){
                 start=fechaInicio.getDate();
@@ -197,6 +233,7 @@ public class TabRecordReserves {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        filter();
     }
 
     public TabPane getTabPane() {

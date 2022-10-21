@@ -71,6 +71,12 @@ public class TabRecordBoxSesions {
     }
     private void init(){
         tabPane.setTitle("Historial de cajas");
+        tabPane.getActions().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
         loadTable();
         loadCombos();
     }
@@ -124,6 +130,11 @@ public class TabRecordBoxSesions {
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
     private void getSales(){
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));

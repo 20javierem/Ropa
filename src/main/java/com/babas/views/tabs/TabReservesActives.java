@@ -4,6 +4,7 @@ import com.babas.custom.TabPane;
 import com.babas.models.Branch;
 import com.babas.models.Rental;
 import com.babas.models.Reserve;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
@@ -31,8 +32,6 @@ import java.util.Map;
 public class TabReservesActives {
     private TabPane tabPane;
     private FlatTable table;
-    private JLabel lblTotalTransferencias;
-    private JLabel lblTotalEfectivo;
     private JComboBox cbbBranch;
     private JComboBox cbbType;
     private FlatTextField txtSearch;
@@ -90,6 +89,7 @@ public class TabReservesActives {
         });
         loadCombos();
         loadTables();
+        filter();
     }
     private void loadCombos(){
         cbbBranch.setModel(new DefaultComboBoxModel(FPrincipal.branchesWithAll));
@@ -135,6 +135,11 @@ public class TabReservesActives {
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
+        if(model.getList().size()==table.getRowCount()){
+            Utilities.getLblCentro().setText("Registros: "+model.getList().size());
+        }else{
+            Utilities.getLblCentro().setText("Registros filtrados: "+table.getRowCount());
+        }
     }
 
     public TabPane getTabPane() {
