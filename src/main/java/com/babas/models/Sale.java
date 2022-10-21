@@ -1,6 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -142,6 +143,30 @@ public class Sale extends Babas {
         if(reserve!=null){
             total=totalCurrent- reserve.getAdvance();
         }
+    }
+    public String getStringUpdated(){
+        return Utilities.formatoFecha.format(updated);
+    }
+    public String getStringBranch(){
+        return branch.getName();
+    }
+    public String getStringClient(){
+        return client==null?"--":client.getNames();
+    }
+    public String getStringStade(){
+        return active?"REALIZADO":"CANCELADO";
+    }
+    public String getStringSubtotal(){
+        return Utilities.moneda.format(total);
+    }
+    public String getStringDiscount(){
+        return Utilities.moneda.format(discount);
+    }
+    public String getStringTotal(){
+        return Utilities.moneda.format(totalCurrent);
+    }
+    public String getStringType(){
+        return cash?"EFECTIVO":"TRANSFERENCIA";
     }
     @Override
     public void save() {

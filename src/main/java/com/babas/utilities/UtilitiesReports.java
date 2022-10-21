@@ -235,6 +235,42 @@ public class UtilitiesReports {
         }
     }
 
+    public static void generateReportSales(List<Sale> sales,Date dateStart,Date dateEnd,Double totalSaleCash,Double totalSaleTransfer) {
+        InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportSales.jasper");
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
+        try {
+            if(pathReport!=null){
+                List<Sale> list=new ArrayList<>(sales);
+                list.add(0,new Sale());
+                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
+                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
+                Map<String,Object> parameters=new HashMap<>();
+                parameters.put("logo",logo);
+                parameters.put("sales",sp);
+                parameters.put("dateStart", Utilities.formatoFecha.format(dateStart));
+                parameters.put("dateEnd", Utilities.formatoFecha.format(dateEnd));
+                parameters.put("totalSaleCash",Utilities.moneda.format(totalSaleCash));
+                parameters.put("totalSaleTransfer",Utilities.moneda.format(totalSaleTransfer));
+                JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
+                if(viewer!=null){
+                    viewer.setTitle("Reporte de ventas: "+Utilities.formatoFecha.format(dateStart)+" a "+Utilities.formatoFecha.format(dateEnd));
+                    if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                        Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }
+                    Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static JasperViewer getjasperViewer(JasperReport report, Map<String, Object> parameters, JRBeanArrayDataSource sp, boolean isExitOnClose){
         try {
             JasperViewer jasperViewer=new JasperViewer(JasperFillManager.fillReport(report,parameters,sp),isExitOnClose);
