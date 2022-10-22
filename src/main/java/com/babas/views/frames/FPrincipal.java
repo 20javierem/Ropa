@@ -12,6 +12,7 @@ import com.babas.views.dialogs.*;
 import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
 import com.moreno.Notify;
 
@@ -36,7 +37,7 @@ public class FPrincipal extends JFrame{
     private JPanel panelControles;
     private FlatToggleButton btnInventary;
     private FlatToggleButton btnSales;
-    private com.formdev.flatlaf.extras.components.FlatButton btnExit;
+    private FlatButton btnExit;
     private FlatToggleButton btnAlmacen;
     private FlatToggleButton btnManagement;
     private FlatToggleButton btnAjustes;
@@ -44,8 +45,6 @@ public class FPrincipal extends JFrame{
     private JPanel panelMenus;
     private JLabel lblUsuario;
     private TabbedPane tabbedPane;
-    private JPanel paneNotify;
-    private JLabel lblNotify;
     private JPanel cPane;
     private FlatToggleButton btnTraslades;
     private FlatToggleButton btnReserves;
@@ -55,7 +54,8 @@ public class FPrincipal extends JFrame{
     private JButton btnNewReserve;
     private JButton btnNewRental;
     private FlatToggleButton btnBoxes;
-    private com.formdev.flatlaf.extras.components.FlatButton btnSettings;
+    private FlatButton btnSettings;
+    private FlatButton btnNotify;
     private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
@@ -107,12 +107,6 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuSales.loadRecordSales();
-            }
-        });
-        paneNotify.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                loadDialogTransfers();
             }
         });
         btnAlmacen.addActionListener(new ActionListener() {
@@ -203,6 +197,12 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 pop_up.show(btnExit,btnExit.getVisibleRect().x,(int)( btnExit.getVisibleRect().y-btnExit.getHeight()*1.8));
+            }
+        });
+        btnNotify.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadDialogTransfers();
             }
         });
     }
@@ -384,6 +384,7 @@ public class FPrincipal extends JFrame{
         btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));
         btnSettings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/settings.svg")));
         btnExit.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/exit.svg")));
+        btnNotify.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/notification.svg")));
     }
 
     public void loadTransferOnWait(){
@@ -398,14 +399,14 @@ public class FPrincipal extends JFrame{
             }
         }));
         if(count[0]>0){
-            lblNotify.setVisible(true);
+            btnNotify.setVisible(true);
             if(count[0]>9){
-                lblNotify.setText("+9");
+                btnNotify.setText("+9");
             }else{
-                lblNotify.setText(String.valueOf(count[0]));
+                btnNotify.setText(String.valueOf(count[0]));
             }
         }else{
-            lblNotify.setVisible(false);
+            btnNotify.setVisible(false);
         }
     }
     private void loadLists(){
@@ -452,18 +453,18 @@ public class FPrincipal extends JFrame{
         btnRecordTransfers.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnRecordSales.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnTraslades.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        paneNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReserves.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnRentals.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBoxSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewRental.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewReserve.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBoxes.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {
         // TODO: place custom component creation code here
-        paneNotify=new FondoPanel("notification.svg");
         panelControles=new CustomPane(2);
         panelControles.updateUI();
         cPane=new CustomPane(2);

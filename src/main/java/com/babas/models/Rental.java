@@ -2,6 +2,7 @@ package com.babas.models;
 
 import com.babas.controllers.Rentals;
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import com.babas.views.frames.FPrincipal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
@@ -206,6 +207,33 @@ public class Rental extends Babas {
         this.reserve = reserve;
     }
 
+    public String getStringUpdated(){
+        return Utilities.formatoFecha.format(updated);
+    }
+    public String getStringBranch(){
+        return branch.getName();
+    }
+    public String getStringClient(){
+        return client==null?"--":client.getNames();
+    }
+    public String getStringStade(){
+        return active?"En alquiler":"Finalizada";
+    }
+    public String getStringSubtotal(){
+        return Utilities.moneda.format(total);
+    }
+    public String getStringDiscount(){
+        return Utilities.moneda.format(discount);
+    }
+    public String getStringTotal(){
+        return Utilities.moneda.format(totalCurrentWithPenalty-warranty);
+    }
+    public String getStringType(){
+        return cash?"Efectivo":"Transferencia";
+    }
+    public String getStringMulta(){
+        return Utilities.moneda.format(getPenalty());
+    }
     @Override
     public void save() {
         if(created==null){

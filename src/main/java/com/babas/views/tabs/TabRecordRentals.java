@@ -8,6 +8,7 @@ import com.babas.models.Rental;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
@@ -46,6 +47,7 @@ public class TabRecordRentals {
     private JComboBox cbbDate;
     private JComboBox cbbState;
     private JButton btnClearFilters;
+    private JButton btnGenerateReport;
     private List<Rental> rentals;
     private RentalAbstractModel model;
     private TableRowSorter<RentalAbstractModel> modeloOrdenado;
@@ -92,6 +94,33 @@ public class TabRecordRentals {
                 clearFilters();
             }
         });
+        btnGenerateReport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateReport();
+            }
+        });
+    }
+    private void generateReport(){
+        List<Rental> rentals=new ArrayList<>();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            rentals.add(model.getList().get(table.convertRowIndexToModel(i)));
+        }
+        if(!rentals.isEmpty()){
+            Date start1=start;
+            Date end1=end;
+            if(start1==null){
+                start1=rentals.get(0).getUpdated();
+            }
+            if(end1==null){
+                end1=rentals.get(rentals.size()-1).getUpdated();
+            }
+            btnGenerateReport.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            UtilitiesReports.generateReportRentals(rentals,start1,end1,totalCash,totalTransfer);
+            btnGenerateReport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(),Notify.Type.INFO,Notify.Location.TOP_CENTER,"MENSAJE","No se encontraron alquileres");
+        }
     }
     private void init(){
         tabPane.setTitle("Historial de alquileres");
@@ -217,14 +246,14 @@ public class TabRecordRentals {
             for (Branch branch : Babas.user.getBranchs()) {
                 rentals.addAll(Rentals.getByRangeOfDate(branch,start,end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Alquileres cargados");
             model.fireTableDataChanged();
         }else if(start!=null){
             rentals.clear();
             for (Branch branch : Babas.user.getBranchs()) {
                 rentals.addAll(Rentals.getAfter(branch,start));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Alquileres cargados");
             model.fireTableDataChanged();
         }else if(end!=null){
             rentals.clear();
