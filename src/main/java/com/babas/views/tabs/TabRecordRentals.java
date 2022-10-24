@@ -182,6 +182,7 @@ public class TabRecordRentals {
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
+        table.removeColumn(table.getColumn("TOTAL"));
     }
     private void filter(){
         filtros.clear();
@@ -210,9 +211,9 @@ public class TabRecordRentals {
         for (int i = 0; i < table.getRowCount(); i++) {
             Rental rental = model.getList().get(table.convertRowIndexToModel(i));
             if(rental.isCash()){
-                totalCash+=rental.getTotalCurrent();
+                totalCash+=rental.getTotalCurrentWithPenalty();
             }else{
-                totalTransfer+=rental.getTotalCurrent();
+                totalTransfer+=rental.getTotalCurrentWithPenalty();
             }
         }
         lblTotalEfectivo.setText("Total efectivo: "+Utilities.moneda.format(totalCash));

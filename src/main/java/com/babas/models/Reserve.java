@@ -1,6 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -148,6 +149,27 @@ public class Reserve extends Babas {
     public void setRental(Rental rental) {
         this.rental = rental;
     }
+
+    public String getStringUpdated(){
+        return Utilities.formatoFecha.format(updated);
+    }
+    public String getStringBranch(){
+        return branch.getName();
+    }
+    public String getStringClient(){
+        return client==null?"--":client.getNames();
+    }
+    public String getStringStade(){
+        return active?"Realizado":"Cancelado";
+    }
+    public String getStringSubtotal(){
+        return Utilities.moneda.format(total);
+    }
+    public String getStringType(){
+        return cash?"Efectivo":"Transferencia";
+    }
+    public String getStringAdvance(){return Utilities.moneda.format(advance);}
+    public String getStringToCancel(){return Utilities.moneda.format(toCancel);}
 
     @Override
     public void save() {

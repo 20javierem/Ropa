@@ -52,6 +52,7 @@ public class ReserveCellRendered extends DefaultTableCellRenderer {
                 case "TOTAL-ACTUAL":
                 case "MONTO":
                 case "GARANTÍA":
+                case "POR PAGAR":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(95);
                     table.getColumn(table.getColumnName(column)).setMinWidth(95);

@@ -293,7 +293,7 @@ public class UtilitiesReports {
                 parameters.put("totalSaleTransfer",Utilities.moneda.format(totalSaleTransfer));
                 JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                 if(viewer!=null){
-                    viewer.setTitle("Reporte de ventas: "+Utilities.formatoFecha.format(dateStart)+" a "+Utilities.formatoFecha.format(dateEnd));
+                    viewer.setTitle("Reporte de alquileres: "+Utilities.formatoFecha.format(dateStart)+" a "+Utilities.formatoFecha.format(dateEnd));
                     if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                         Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                     }
@@ -309,7 +309,90 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
+    public static void generateReportReserves(List<Reserve> sales,Date dateStart,Date dateEnd,Double totalSaleCash,Double totalSaleTransfer) {
+        InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportReserves.jasper");
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
+        try {
+            if(pathReport!=null){
+                List<Reserve> list=new ArrayList<>(sales);
+                list.add(0,new Reserve());
+                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
+                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
+                Map<String,Object> parameters=new HashMap<>();
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("date",Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("logo",logo);
+                parameters.put("reserves",sp);
+                parameters.put("dateStart", Utilities.formatoFecha.format(dateStart));
+                parameters.put("dateEnd", Utilities.formatoFecha.format(dateEnd));
+                parameters.put("totalSaleCash",Utilities.moneda.format(totalSaleCash));
+                parameters.put("totalSaleTransfer",Utilities.moneda.format(totalSaleTransfer));
+                JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
+                if(viewer!=null){
+                    viewer.setTitle("Reporte de reservas: "+Utilities.formatoFecha.format(dateStart)+" a "+Utilities.formatoFecha.format(dateEnd));
+                    if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                        Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }
+                    Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void generateReportBoxSesssion(BoxSession boxSession) {
+        InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportBoxSession.jasper");
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
+        try {
+            if(pathReport!=null){
+                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
+                Map<String,Object> parameters=new HashMap<>();
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("date",Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("nameBranch",boxSession.getBox().getBranch().getName());
+                parameters.put("logo",logo);
+                parameters.put("dateStart", Utilities.formatoFecha.format(boxSession.getCreated()));
+                parameters.put("dateEnd",Utilities.formatoFecha.format(boxSession.getUpdated()!=null?boxSession.getUpdated():new Date()));
+                parameters.put("amountInitial",Utilities.moneda.format(boxSession.getAmountInitial()));
+                parameters.put("totalSales",Utilities.moneda.format(boxSession.getTotalSales()));
+                parameters.put("totalSalesCash",Utilities.moneda.format(boxSession.getTotalSalesCash()));
+                parameters.put("totalSalesTransfer",Utilities.moneda.format(boxSession.getTotalSalesTransfer()));
+                parameters.put("totalReserves",Utilities.moneda.format(boxSession.getTotalReserves()));
+                parameters.put("totalReservesCash",Utilities.moneda.format(boxSession.getTotalReservesCash()));
+                parameters.put("totalReservesTransfer",Utilities.moneda.format(boxSession.getTotalReservesTransfer()));
+                parameters.put("totalRentals",Utilities.moneda.format(boxSession.getTotalRentals()));
+                parameters.put("totalRentalsCash",Utilities.moneda.format(boxSession.getTotalRentalsCash()));
+                parameters.put("totalRentalsTransfer",Utilities.moneda.format(boxSession.getTotalRentalsTransfer()));
+                parameters.put("totalRetiros",Utilities.moneda.format(boxSession.getTotalRetiros()));
+                parameters.put("totalIngresos",Utilities.moneda.format(boxSession.getTotalIngresos()));
+                parameters.put("totalCash",Utilities.moneda.format(boxSession.getTotalCash()));
+                parameters.put("totalTransfer",Utilities.moneda.format(boxSession.getTotalTransfers()));
+                parameters.put("total",Utilities.moneda.format(boxSession.getAmountTotal()));
+                JasperViewer viewer = getjasperViewer(report,parameters,null,true);
+                if(viewer!=null){
+                    viewer.setTitle("Reporte sesión de caja: "+boxSession.getBox().getBranch().getName()+" "+Utilities.formatoFecha.format(boxSession.getCreated()));
+                    if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                        Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }
+                    Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
     public static JasperViewer getjasperViewer(JasperReport report, Map<String, Object> parameters, JRBeanArrayDataSource sp, boolean isExitOnClose){
         try {
             JasperViewer jasperViewer=new JasperViewer(JasperFillManager.fillReport(report,parameters,sp),isExitOnClose);

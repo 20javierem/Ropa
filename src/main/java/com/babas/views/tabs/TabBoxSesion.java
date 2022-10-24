@@ -5,6 +5,7 @@ import com.babas.models.BoxSession;
 import com.babas.models.Movement;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
@@ -22,6 +23,7 @@ import com.formdev.flatlaf.extras.components.FlatTabbedPane;
 import com.formdev.flatlaf.extras.components.FlatTable;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -77,6 +79,7 @@ public class TabBoxSesion {
     private JLabel lblTotalCurrent;
     private JLabel lblTotalTransfers;
     private JLabel lblTotalCash;
+    private JButton btnGenerateReport;
     private FlatTabbedPane flatTabbedPane;
     private SaleAbstractModel saleAbstractModel;
     private MovementAbstractModel movementAbstractModel;
@@ -99,6 +102,17 @@ public class TabBoxSesion {
                 closeBoxSession();
             }
         });
+        btnGenerateReport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateReport();
+            }
+        });
+    }
+    private void generateReport(){
+        btnGenerateReport.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        UtilitiesReports.generateReportBoxSesssion(boxSession);
+        btnGenerateReport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
     private void closeBoxSession(){
         DBoxSesion dBoxSesion=new DBoxSesion();
@@ -127,7 +141,7 @@ public class TabBoxSesion {
         RentalCellRendered.setCellRenderer(tableRentals,null);
         tableRentals.removeColumn(tableRentals.getColumn(""));
         tableRentals.removeColumn(tableRentals.getColumn("MULTA"));
-        tableRentals.removeColumn(tableRentals.getColumn("TOTAL-ACTUAL"));
+        tableRentals.removeColumn(tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount()-2));
         tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
 
         reserveAbstractModel=new ReserveAbstractModel(boxSession.getReserves());

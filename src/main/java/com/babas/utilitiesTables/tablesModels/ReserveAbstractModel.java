@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ReserveAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","TOTAL","ADELANTO","",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","TOTAL","ADELANTO","POR PAGAR","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, String.class,String.class,String.class,JButton.class,JButton.class};
     private final List<Reserve> list;
 
     public ReserveAbstractModel(List<Reserve> list){
@@ -49,19 +49,19 @@ public class ReserveAbstractModel extends AbstractTableModel {
             case 1:
                 return reserve.getCreated();
             case 2:
-                return reserve.getUpdated();
-            case 3:
                 return reserve.getBranch().getName();
-            case 4:
+            case 3:
                 return reserve.getClient().getNames();
-            case 5:
+            case 4:
                 return reserve.isCash()?"EFECTIVO":"TRANSFERENCIA";
-            case 6:
+            case 5:
                 return reserve.isActive()?"REALIZADA":"FINALIZADA";
-            case 7:
+            case 6:
                 return Utilities.moneda.format(reserve.getTotal());
-            case 8:
+            case 7:
                 return Utilities.moneda.format(reserve.getAdvance());
+            case 8:
+                return Utilities.moneda.format(reserve.getToCancel());
             case 9:
                 return new JButtonAction("x16/mostrarContraseña.png","Completar");
             default:

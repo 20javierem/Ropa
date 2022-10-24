@@ -11,7 +11,7 @@ import java.util.Date;
 import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL-ACTUAL","",""};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL","",""};
     private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class,JButton.class};
     private final List<Rental> list;
 

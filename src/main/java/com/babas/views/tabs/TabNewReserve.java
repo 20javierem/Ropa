@@ -114,10 +114,9 @@ public class TabNewReserve {
             }
         });
         if(!Babas.company.getLogo().isBlank()){
-            if(Utilities.iconCompany==null){
-                Utilities.iconCompany=new ImageIcon(new ImageIcon(Utilities.getImage(Babas.company.getLogo())).getImage().getScaledInstance(255, 220, Image.SCALE_DEFAULT));
+            if(Utilities.iconCompany!=null){
+                lblLogo.setIcon(Utilities.iconCompany);
             }
-            lblLogo.setIcon(Utilities.iconCompany);
         }
     }
 

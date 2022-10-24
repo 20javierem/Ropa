@@ -97,6 +97,7 @@ public class TabRentalsActives {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         RentalCellRendered.setCellRenderer(table,listaFiltros);
+        table.removeColumn(table.getColumn("TOTAL"));
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
         table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental(true));
         modeloOrdenado = new TableRowSorter<>(model);

@@ -134,8 +134,8 @@ public class DCompany extends JDialog {
         txtTradeName.setText(company.getTradeName());
         txtFiscalAdress.setText(company.getDirectionPrincipal());
         txtSlogan.setText(company.getSlogan());
-        if(!company.getLogo().isBlank()){
-            lblLogo.setIcon(new ImageIcon(Utilities.getImage(company.getLogo())));
+        if(Utilities.iconCompany!=null){
+            lblLogo.setIcon(Utilities.iconCompany);
         }
     }
     private void onHecho(){

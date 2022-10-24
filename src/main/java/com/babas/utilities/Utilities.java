@@ -17,6 +17,7 @@ import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 import com.formdev.flatlaf.intellijthemes.*;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
+import com.hierynomus.smbj.SmbConfig;
 import com.hierynomus.smbj.auth.AuthenticationContext;
 import com.moreno.Notify;
 import org.apache.commons.io.IOUtils;

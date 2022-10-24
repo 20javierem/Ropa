@@ -3,9 +3,11 @@ package com.babas.views.tabs;
 import com.babas.controllers.Reserves;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
+import com.babas.models.Rental;
 import com.babas.models.Reserve;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
@@ -42,6 +44,7 @@ public class TabRecordReserves {
     private JComboBox cbbDate;
     private JComboBox cbbState;
     private JButton btnClearFilters;
+    private JButton btnGenerateReport;
     private List<Reserve> reserves;
     private ReserveAbstractModel model;
     private TableRowSorter<ReserveAbstractModel> modeloOrdenado;
@@ -88,6 +91,12 @@ public class TabRecordReserves {
                 clearFilters();
             }
         });
+        btnGenerateReport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateReport();
+            }
+        });
     }
     private void clearFilters(){
         cbbBranch.setSelectedIndex(0);
@@ -107,7 +116,27 @@ public class TabRecordReserves {
         loadCombos();
         filter();
     }
-
+    private void generateReport(){
+        List<Reserve> reserves=new ArrayList<>();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            reserves.add(model.getList().get(table.convertRowIndexToModel(i)));
+        }
+        if(!reserves.isEmpty()){
+            Date start1=start;
+            Date end1=end;
+            if(start1==null){
+                start1=reserves.get(0).getUpdated();
+            }
+            if(end1==null){
+                end1=reserves.get(reserves.size()-1).getUpdated();
+            }
+            btnGenerateReport.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            UtilitiesReports.generateReportReserves(reserves,start1,end1,totalCash,totalTransfer);
+            btnGenerateReport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(),Notify.Type.INFO,Notify.Location.TOP_CENTER,"MENSAJE","No se encontraron reservas");
+        }
+    }
     private void filterByType(){
         switch (cbbDate.getSelectedIndex()) {
             case 0:

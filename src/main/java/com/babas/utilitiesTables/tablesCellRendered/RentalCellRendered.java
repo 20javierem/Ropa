@@ -46,8 +46,8 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
                     break;
                 case "SUBTOTAL":
                 case "MULTA":
-                case "DESCUENTO":
                 case "TOTAL":
+                case "DESCUENTO":
                 case "TOTAL-ACTUAL":
                 case "MONTO":
                 case "GARANTÍA":

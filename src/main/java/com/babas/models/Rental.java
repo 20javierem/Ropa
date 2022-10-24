@@ -160,7 +160,7 @@ public class Rental extends Babas {
         if(reserve!=null){
             totalCurrent=totalCurrent-reserve.getAdvance();
         }
-        totalCurrentWithPenalty=totalCurrent+penalty;
+        totalCurrentWithPenalty=totalCurrent+penalty-warranty;
     }
 
     public Double getTotalCurrentWithPenalty() {
@@ -226,12 +226,12 @@ public class Rental extends Babas {
         return Utilities.moneda.format(discount);
     }
     public String getStringTotal(){
-        return Utilities.moneda.format(totalCurrentWithPenalty-warranty);
+        return Utilities.moneda.format(totalCurrentWithPenalty);
     }
     public String getStringType(){
         return cash?"Efectivo":"Transferencia";
     }
-    public String getStringMulta(){
+        public String getStringMulta(){
         return Utilities.moneda.format(getPenalty());
     }
     @Override
