@@ -204,7 +204,7 @@ public class DProduct extends JDialog{
 
                 if(Utilities.newImage(inputStream1, nameImage1)){
                     product.getImagesx200().add(nameImage1);
-                    product.getIconsx200().add(new ImageIcon(Utilities.getImage(nameImage1)));
+                    product.getIconsx200(false).add(new ImageIcon(Utilities.getImage(nameImage1)));
                     if(update){
                         product.save();
                     }
@@ -216,7 +216,7 @@ public class DProduct extends JDialog{
                     if(Utilities.newImage(inputStream2, nameImage2)){
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
                         product.getImagesx400().add(nameImage2);
-                        product.getIconsx400().add(new ImageIcon(Utilities.getImage(nameImage2)));
+                        product.getIconsx400(false).add(new ImageIcon(Utilities.getImage(nameImage2)));
                         if(update){
                             product.save();
                         }
@@ -334,7 +334,7 @@ public class DProduct extends JDialog{
 
     private void loadImages(){
         imageSlide.clear();
-        product.getIconsx400().forEach(icon->{
+        product.getIconsx400(false).forEach(icon->{
             if(icon!=null){
                 imageSlide.addImage(icon);
             }
@@ -343,7 +343,7 @@ public class DProduct extends JDialog{
     }
 
     private void loadQuantityImages(){
-        quantityImages.setText(String.valueOf(product.getIconsx400().size()));
+        quantityImages.setText(String.valueOf(product.getIconsx400(false).size()));
     }
 
     private void loadTable(){

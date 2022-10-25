@@ -133,14 +133,14 @@
                   <component id="63fe2" class="com.toedter.calendar.JDateChooser" binding="fechaFin" custom-create="true">
                     <constraints>
                       <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="120" height="-1"/>
+                        <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                   </component>
                   <component id="16ee5" class="com.toedter.calendar.JDateChooser" binding="fechaInicio" custom-create="true">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="120" height="-1"/>
+                        <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                   </component>
@@ -167,7 +167,7 @@
                   <component id="f8971" class="com.toedter.calendar.JDateChooser" binding="fechaHasta" custom-create="true">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="120" height="-1"/>
+                        <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                   </component>
@@ -186,7 +186,7 @@
                   <component id="4ad83" class="com.toedter.calendar.JDateChooser" binding="fechaDesde" custom-create="true">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="120" height="-1"/>
+                        <preferred-size width="150" height="-1"/>
                       </grid>
                     </constraints>
                   </component>

@@ -53,7 +53,7 @@ public class App
                 dBranch.setVisible(true);
             }
         }
-
+        
         if(Babas.company!=null&&!Branchs.getTodos().isEmpty()){
             if(Users.getTodos().isEmpty()){
                 User user=new User();

@@ -212,6 +212,7 @@ public class FPrincipal extends JFrame{
     }
 
     private void reloadData(){
+        Utilities.consult=true;
         btnActualizar.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         branchs.forEach(Babas::refresh);
         branchs.forEach(branch -> branch.getStocks().forEach(Babas::refresh));
@@ -226,6 +227,8 @@ public class FPrincipal extends JFrame{
         btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         tabbedPane.updateTab();
         loadTransferOnWait();
+        products.forEach(product -> product.getIconsx200(true));
+        products.forEach(product -> product.getIconsx400(true));
     }
 
     private void loadDialogTransfers(){
@@ -435,8 +438,8 @@ public class FPrincipal extends JFrame{
         sexsWithAll=new Vector<>(sexs);
         sexsWithAll.add(0,new Sex("TODOS"));
         products= Products.getActives();
-        products.forEach(Product::getIconsx200);
-        products.forEach(Product::getIconsx400);
+        products.forEach(product -> product.getIconsx200(true));
+        products.forEach(product -> product.getIconsx400(true));
         styles=Styles.getTodos();
         Babas.user.getBranchs().forEach(branch -> rentalsActives.addAll(Rentals.getActives(branch)));
         Babas.user.getBranchs().forEach(branch -> reservesActives.addAll(Reserves.getActives(branch)));

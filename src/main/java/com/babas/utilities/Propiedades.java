@@ -105,11 +105,11 @@ public class Propiedades {
         properties.put("passwordServer",Utilities.encriptar(password));
     }
     public void setServerUrl(String url){
-        properties.put("serverUrl",Utilities.encriptar(url));
+        properties.put("serverUrl",url);
     }
     public String getServerUrl(){
         String server=properties.getProperty("serverUrl");
-        return server==null?"":Utilities.desencriptar(server);
+        return server==null?"":properties.getProperty("serverUrl");
     }
     public void setFont(String fontSize){
         properties.put("fontSize", fontSize);

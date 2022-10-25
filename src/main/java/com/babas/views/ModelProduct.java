@@ -41,8 +41,8 @@ public class ModelProduct {
         lblPrice.setText(Utilities.moneda.format(product.getPresentationDefault().getPriceDefault().getPrice()));
         lblSize.setText(product.getSize().getName());
         lblNamePrice.setText(product.getPresentationDefault().getName()+":");
-        if(!product.getIconsx200().isEmpty()){
-            lblIcon.setIcon(product.getIconsx200().get(0));
+        if(!product.getIconsx200(false).isEmpty()){
+            lblIcon.setIcon(product.getIconsx200(false).get(0));
         }
     }
     public JPanel getContentPane(){

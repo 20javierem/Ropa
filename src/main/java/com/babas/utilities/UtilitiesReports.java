@@ -358,8 +358,8 @@ public class UtilitiesReports {
                 parameters.put("date",Utilities.formatoFechaHora.format(new Date()));
                 parameters.put("nameBranch",boxSession.getBox().getBranch().getName());
                 parameters.put("logo",logo);
-                parameters.put("dateStart", Utilities.formatoFecha.format(boxSession.getCreated()));
-                parameters.put("dateEnd",Utilities.formatoFecha.format(boxSession.getUpdated()!=null?boxSession.getUpdated():new Date()));
+                parameters.put("dateStart", Utilities.formatoFechaHora.format(boxSession.getCreated()));
+                parameters.put("dateEnd",Utilities.formatoFechaHora.format(boxSession.getUpdated()!=null?boxSession.getUpdated():new Date()));
                 parameters.put("amountInitial",Utilities.moneda.format(boxSession.getAmountInitial()));
                 parameters.put("totalSales",Utilities.moneda.format(boxSession.getTotalSales()));
                 parameters.put("totalSalesCash",Utilities.moneda.format(boxSession.getTotalSalesCash()));

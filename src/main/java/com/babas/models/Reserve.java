@@ -151,7 +151,7 @@ public class Reserve extends Babas {
     }
 
     public String getStringUpdated(){
-        return Utilities.formatoFecha.format(updated);
+        return Utilities.formatoFechaHora.format(updated);
     }
     public String getStringBranch(){
         return branch.getName();

@@ -208,7 +208,11 @@ public class Product extends Babas {
         }
         return presentationDefault;
     }
-    public List<Icon> getIconsx200(){
+    public List<Icon> getIconsx200(boolean clear){
+        if(clear){
+            iconsx200.clear();
+        }
+
         if(iconsx200.size()==imagesx200.size()){
             return  iconsx200;
         }else{
@@ -225,7 +229,10 @@ public class Product extends Babas {
         }
     }
 
-    public List<Icon> getIconsx400(){
+    public List<Icon> getIconsx400(boolean clear){
+        if(clear){
+            iconsx400.clear();
+        }
         if(iconsx400.size()==imagesx400.size()){
             return  iconsx400;
         }else{

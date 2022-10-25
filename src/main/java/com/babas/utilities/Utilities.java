@@ -76,7 +76,7 @@ public class Utilities {
     public static void updateDialog(){
         actions.doClick();
     }
-
+    public static Boolean consult=true;
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         return new JSpinner.NumberEditor(spinner, "###,###,###.##");
     }
@@ -84,44 +84,53 @@ public class Utilities {
         return new JSpinner.NumberEditor(spinner, "S/###,###,###.##");
     }
     public static boolean newImage(InputStream imageImput,String imageName){
-        AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
-            SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
-            OutputStream out = file.getOutputStream();
-            IOUtils.copy(imageImput, out);
-            imageImput.close();
-            out.close();
-            return true;
-        }catch (IOException e) {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imagenes");
+        if(consult){
+            AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
+            try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
+                SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                OutputStream out = file.getOutputStream();
+                IOUtils.copy(imageImput, out);
+                imageImput.close();
+                out.close();
+                return true;
+            }catch (IOException e) {
+                consult=false;
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imagenes");
+            }
         }
         return false;
     }
 
     public static Image getImage(String imageName){
-        AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
-            SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
-            return ImageIO.read(file.getInputStream());
-        }catch (IOException e) {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imagenes");
+        if(consult){
+            AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
+            try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
+                SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                return ImageIO.read(file.getInputStream());
+            }catch (IOException e) {
+                consult=false;
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imagenes");
+            }
         }
         return null;
     }
 
     public static void downloadLogo(String imageName){
-        File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
-        AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
-        try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
-            SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-            SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
-            OutputStream out = new FileOutputStream(carpeta.getAbsolutePath()+"/"+imageName);
-            IOUtils.copy(file.getInputStream(), out);
-            out.close();
-        }catch (IOException e) {
-            System.out.println(e.getMessage());
+        if(consult){
+            File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
+            AuthenticationContext auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
+            try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
+                SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                OutputStream out = new FileOutputStream(carpeta.getAbsolutePath()+"/"+imageName);
+                IOUtils.copy(file.getInputStream(), out);
+                out.close();
+            }catch (IOException e) {
+                consult=false;
+                System.out.println(e.getMessage());
+            }
         }
     }
 
