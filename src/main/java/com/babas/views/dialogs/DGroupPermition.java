@@ -30,6 +30,7 @@ public class DGroupPermition extends JDialog {
     private JCheckBox ckManageBranchs;
     private JCheckBox ckManageCompany;
     private JScrollPane scrool;
+    private JCheckBox ckAceptTransfer;
     private Permission permission;
     private boolean update;
 
@@ -94,6 +95,7 @@ public class DGroupPermition extends JDialog {
         ckManageUsers.setSelected(permission.isManageUsers());
         ckManageBranchs.setSelected(permission.isManageBranchs());
         ckManageCompany.setSelected(permission.isManageCompany());
+        ckAceptTransfer.setSelected(permission.isAceptTransfer());
     }
     private void onSave(){
         permission.setGroup(true);
@@ -113,6 +115,7 @@ public class DGroupPermition extends JDialog {
         permission.setManageUsers(ckManageUsers.isSelected());
         permission.setManageBranchs(ckManageBranchs.isSelected());
         permission.setManageCompany(ckManageCompany.isSelected());
+        permission.setAceptTransfer(ckAceptTransfer.isSelected());
         permission.setNameGroup(txtName.getText().trim());
         if(!permission.getNameGroup().isBlank()){
             permission.save();

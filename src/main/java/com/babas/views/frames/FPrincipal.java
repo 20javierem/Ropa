@@ -37,7 +37,6 @@ public class FPrincipal extends JFrame{
     private FlatToggleButton btnInventary;
     private FlatToggleButton btnSales;
     private FlatButton btnExit;
-    private FlatToggleButton btnAlmacen;
     private FlatToggleButton btnManagement;
     private FlatToggleButton btnAjustes;
     private FlatToggleButton btnAdministrador;
@@ -56,7 +55,6 @@ public class FPrincipal extends JFrame{
     private FlatButton btnSettings;
     private FlatButton btnNotify;
     private MenuSales menuSales;
-    private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
     private MenuReserves menuReserves;
@@ -106,12 +104,6 @@ public class FPrincipal extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuSales.loadRecordSales();
-            }
-        });
-        btnAlmacen.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadMenuAlmacen();
             }
         });
         btnManagement.addActionListener(new ActionListener() {
@@ -212,6 +204,7 @@ public class FPrincipal extends JFrame{
 
     private void reloadData(){
         Utilities.consult=true;
+        Babas.user.getPermitions().refresh();
         btnActualizar.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         branchs.forEach(Babas::refresh);
         branchs.forEach(branch -> branch.getStocks().forEach(Babas::refresh));
@@ -226,8 +219,10 @@ public class FPrincipal extends JFrame{
         btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         tabbedPane.updateTab();
         loadTransferOnWait();
+        groupPermnitions.forEach(Babas::refresh);
         products.forEach(product -> product.getIconsx200(true));
         products.forEach(product -> product.getIconsx400(true));
+        loadPermisses();
     }
 
     private void loadDialogTransfers(){
@@ -289,6 +284,7 @@ public class FPrincipal extends JFrame{
         btnMenuInicio.add(menuCompany);
         btnMenuBox.add(menuBox);
         btnMenuBox.add(menuShowBox);
+        menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
     }
 
     private void loadMenuExit(){
@@ -336,9 +332,6 @@ public class FPrincipal extends JFrame{
         dCompany.setVisible(true);
     }
 
-    private void loadMenuAlmacen() {
-        splitPane.setRightComponent(menuAlmacen.getContentPane());
-    }
     private void loadMenuSales() {
         splitPane.setRightComponent(menuSales.getContentPane());
     }
@@ -371,17 +364,16 @@ public class FPrincipal extends JFrame{
         loadLists();
         lblUsuario.setText("Usuario: "+Babas.user.getFirstName());
         menuSales=new MenuSales(tabbedPane);
-        menuAlmacen=new MenuAlmacen(tabbedPane);
         menuManage=new MenuManage(tabbedPane);
         menuTraslade=new MenuTraslade(tabbedPane);
         menuReserves=new MenuReserves(tabbedPane);
         menuRentals=new MenuRentals(tabbedPane);
         menuBoxes=new MenuBoxes(tabbedPane);
         setExtendedState(MAXIMIZED_BOTH);
+        loadPermisses();
         loadMenuItems();
         loadMenuSales();
         loadMenuExit();
-        menuSales.loadNewSale();
         loadTransferOnWait();
         btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));
         btnSettings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/settings.svg")));
@@ -389,7 +381,16 @@ public class FPrincipal extends JFrame{
         btnNotify.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/notification.svg")));
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
-
+    private void loadPermisses(){
+        btnCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
+        btnNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
+        btnNewRental.setEnabled(Babas.user.getPermitions().isNewSale());
+        btnNewReserve.setEnabled(Babas.user.getPermitions().isNewSale());
+        btnBoxSesion.setEnabled(Babas.user.getPermitions().isNewSale());
+        btnRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
+        btnRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
+        btnNotify.setEnabled(Babas.user.getPermitions().isAceptTransfer());
+    }
     public void loadTransferOnWait(){
         transfersOnWait.clear();
         final int[] count = {0};
@@ -449,7 +450,6 @@ public class FPrincipal extends JFrame{
         btnAjustes.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnInventary.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSales.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnAlmacen.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnManagement.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAdministrador.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewSale.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -476,7 +476,6 @@ public class FPrincipal extends JFrame{
         cPane.updateUI();
         btnSales=new CToggleButton();
         btnInventary=new CToggleButton();
-        btnAlmacen=new CToggleButton();
         btnManagement =new CToggleButton();
         btnAjustes=new CToggleButton();
         btnAdministrador=new CToggleButton();

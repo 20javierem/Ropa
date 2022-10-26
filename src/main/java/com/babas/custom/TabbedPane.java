@@ -122,12 +122,14 @@ public class TabbedPane extends FlatTabbedPane {
     }
 
     public void updateTab(){
-        if(getComponentAt(getSelectedIndex()) instanceof TabPane){
-            TabPane tabPane =(TabPane) getComponentAt(getSelectedIndex());
-            if(tabPane.getOption()!=null){
-                Utilities.buttonSelected(tabPane.getOption());
+        if(getSelectedIndex()!=-1){
+            if(getComponentAt(getSelectedIndex()) instanceof TabPane){
+                TabPane tabPane =(TabPane) getComponentAt(getSelectedIndex());
+                if(tabPane.getOption()!=null){
+                    Utilities.buttonSelected(tabPane.getOption());
+                }
+                tabPane.update();
             }
-            tabPane.update();
         }
     }
 

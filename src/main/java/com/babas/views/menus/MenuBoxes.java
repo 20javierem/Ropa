@@ -2,6 +2,7 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabRecordBoxSesions;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
@@ -39,6 +40,7 @@ public class MenuBoxes {
     }
 
     public JPanel getContentPane() {
+        btnRecordBoxSessions.setEnabled(Babas.user.getPermitions().isRecordBoxes());
         contentPane.updateUI();
         btnRecordBoxSessions.updateUI();
         return contentPane;

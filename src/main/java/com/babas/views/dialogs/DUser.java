@@ -1,11 +1,13 @@
 package com.babas.views.dialogs;
 
+import com.babas.controllers.Permissions;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.models.Branch;
 import com.babas.models.Permission;
 import com.babas.models.Sex;
 import com.babas.models.User;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.BranchCellRendered;
@@ -63,6 +65,7 @@ public class DUser extends JDialog{
     private JCheckBox ckManageCompany;
     private JRadioButton rbPropies;
     private JScrollPane scrooll;
+    private JCheckBox ckAceptTransfer;
     private User user;
     private boolean update;
     private BranchAbstractModel modelBranchs;
@@ -130,6 +133,7 @@ public class DUser extends JDialog{
         scrooll.getVerticalScrollBar().setUnitIncrement(16);
         if(fprincipal){
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Sucursales"));
+            tabbedPane.removeTabAt(tabbedPane.indexOfTab("Permisos"));
         }
         if(update){
             txtNameUser.setEnabled(false);
@@ -212,6 +216,7 @@ public class DUser extends JDialog{
             ckManageUsers.setSelected(user.getPermitions().isManageUsers());
             ckManageBranchs.setSelected(user.getPermitions().isManageBranchs());
             ckManageCompany.setSelected(user.getPermitions().isManageCompany());
+            ckAceptTransfer.setSelected(user.getPermitions().isAceptTransfer());
         }
     }
     private void savePermitions(){
@@ -241,6 +246,7 @@ public class DUser extends JDialog{
             permission.setManageUsers(ckManageUsers.isSelected());
             permission.setManageBranchs(ckManageBranchs.isSelected());
             permission.setManageCompany(ckManageCompany.isSelected());
+            permission.setAceptTransfer(ckAceptTransfer.isSelected());
             user.setPermitions(permission);
         }
     }
@@ -267,10 +273,12 @@ public class DUser extends JDialog{
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario actualizado");
+                clearPermirmitios();
                 onHecho();
             }else{
                 if(Users.getByUserName(user.getUserName())==null){
                     user.save();
+                    user.getPermitions().getUsers().add(user);
                     FPrincipal.users.add(user);
                     Utilities.updateDialog();
                     if(Utilities.getTabbedPane()!=null){
@@ -278,6 +286,7 @@ public class DUser extends JDialog{
                     }else{
                         onHecho();
                     }
+                    clearPermirmitios();
                     user=new User();
                     load();
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario registrado");
@@ -290,6 +299,9 @@ public class DUser extends JDialog{
         }
     }
 
+    private void clearPermirmitios(){
+        Permissions.getPermissionToDelete().forEach(Babas::delete);
+    }
     private void onHecho(){
         if(update){
             user.refresh();

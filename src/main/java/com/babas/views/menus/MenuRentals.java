@@ -3,6 +3,7 @@ package com.babas.views.menus;
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
 import com.babas.models.Rental;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabNewRental;
 import com.babas.views.tabs.TabNewSale;
@@ -91,6 +92,9 @@ public class MenuRentals {
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordRentals.getTabPane().getTitle()));
     }
     public JPanel getContentPane() {
+        btnNewRental.setEnabled(Babas.user.getPermitions().isNewRental());
+        btnRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
+        btnRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
         contentPane.updateUI();
         btnNewRental.updateUI();
         btnRecordRentals.updateUI();

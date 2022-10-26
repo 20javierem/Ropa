@@ -2,6 +2,7 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabNewReserve;
 import com.babas.views.tabs.TabRecordRentals;
@@ -86,6 +87,8 @@ public class MenuReserves {
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabReservesActives.getTabPane().getTitle()));
     }
     public JPanel getContentPane() {
+        btnRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
+        btnNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
         contentPane.updateUI();
         btnRecordReserves.updateUI();
         btnNewReserve.updateUI();

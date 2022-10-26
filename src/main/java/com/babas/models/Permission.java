@@ -36,6 +36,7 @@ public class Permission extends Babas {
     private boolean manageUsers=false;
     private boolean manageBranchs=false;
     private boolean manageCompany=false;
+    private boolean aceptTransfer=false;
 
     @OneToMany(mappedBy = "permission")
     private List<User> users=new ArrayList<>();
@@ -190,6 +191,15 @@ public class Permission extends Babas {
 
     public void setGroup(boolean isgroup) {
         this.isgroup = isgroup;
+    }
+
+
+    public boolean isAceptTransfer() {
+        return aceptTransfer;
+    }
+
+    public void setAceptTransfer(boolean aceptTransfer) {
+        this.aceptTransfer = aceptTransfer;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

@@ -2,6 +2,7 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabBranchs;
 import com.babas.views.tabs.TabProducts;
@@ -87,7 +88,11 @@ public class MenuManage {
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabBranchs.getTabPane().getTitle()));
     }
     public JPanel getContentPane() {
+        btnProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
+        btnBranchs.setEnabled(Babas.user.getPermitions().isManageBranchs());
+        btnUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
         contentPane.updateUI();
+        btnProducts.updateUI();
         btnBranchs.updateUI();
         btnUsers.updateUI();
         return contentPane;

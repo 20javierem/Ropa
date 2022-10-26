@@ -22,4 +22,10 @@ public class Permissions extends Babas {
         criteria.select(root).where(builder.isTrue(root.get("isgroup")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
+    public static Vector<Permission> getPermissionToDelete(){
+        criteria = builder.createQuery(Permission.class);
+        root=criteria.from(Permission.class);
+        criteria.select(root).where(builder.and(builder.isFalse(root.get("isgroup")),builder.isEmpty(root.get("users"))));
+        return new Vector<>(session.createQuery(criteria).getResultList());
+    }
 }

@@ -3,6 +3,7 @@ package com.babas.views.menus;
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
 import com.babas.models.Transfer;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabNewTraslade;
 import com.babas.views.tabs.TabRecordTransfers;
@@ -63,6 +64,8 @@ public class MenuTraslade {
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordTransfers.getTabPane().getTitle()));
     }
     public JPanel getContentPane() {
+        btnRecordTraslades.setEnabled(Babas.user.getPermitions().isRecordTransfers());
+        btnNewTraslade.setEnabled(Babas.user.getPermitions().isNewTransfer());
         contentPane.updateUI();
         btnRecordTraslades.updateUI();
         btnNewTraslade.updateUI();
