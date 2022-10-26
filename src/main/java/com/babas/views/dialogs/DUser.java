@@ -75,59 +75,20 @@ public class DUser extends JDialog{
         this.fprincipal=fprincipal;
         update=user.getId()!=null;
         init();
-        btnHecho.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        });
-        btnRemoveBranch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                removeBranch();
-            }
-        });
-        btnAddBranch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addBranch();
-            }
-        });
-        btnSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                onSave();
-            }
-        });
+        btnHecho.addActionListener(e -> onHecho());
+        btnRemoveBranch.addActionListener(e -> removeBranch());
+        btnAddBranch.addActionListener(e -> addBranch());
+        btnSave.addActionListener(e -> onSave());
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 onHecho();
             }
         });
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        btnNewSex.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadNewSex();
-            }
-        });
-        rbGroup.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                verifyPermises();
-            }
-        });
-        rbPropies.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                verifyPermises();
-            }
-        });
+        contentPane.registerKeyboardAction(e -> onHecho(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        btnNewSex.addActionListener(e -> loadNewSex());
+        rbGroup.addActionListener(e -> verifyPermises());
+        rbPropies.addActionListener(e -> verifyPermises());
     }
     private void verifyPermises(){
         scrooll.setVisible(rbPropies.isSelected());
