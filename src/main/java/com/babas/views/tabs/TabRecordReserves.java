@@ -242,21 +242,21 @@ public class TabRecordReserves {
             for (Branch branch : Babas.user.getBranchs()) {
                 reserves.addAll(Reserves.getByRangeOfDate(branch,start,end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Reservas cargadas");
             model.fireTableDataChanged();
         }else if(start!=null){
             reserves.clear();
             for (Branch branch : Babas.user.getBranchs()) {
                 reserves.addAll(Reserves.getAfter(branch,start));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Reservas cargadas");
             model.fireTableDataChanged();
         }else if(end!=null){
             reserves.clear();
             for (Branch branch : Babas.user.getBranchs()) {
                 reserves.addAll(Reserves.getBefore(branch,end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Ventas cargadas");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","Reservas cargadas");
             model.fireTableDataChanged();
         }else{
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","Debe seleccionar un rango de fechas");

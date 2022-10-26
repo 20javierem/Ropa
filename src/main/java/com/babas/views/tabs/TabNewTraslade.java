@@ -7,6 +7,7 @@ import com.babas.models.Brand;
 import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorBrand;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailTransfer;
@@ -43,6 +44,7 @@ public class TabNewTraslade {
     private JComboBox cbbBranchSource;
     private JComboBox cbbBranchDestiny;
     private JButton btnRechase;
+    private JButton btnGenerateReport;
     private Transfer transfer;
     private DetailTransferAbstractModel model;
     private Branch olBranchSource;
@@ -83,8 +85,18 @@ public class TabNewTraslade {
                 onSave(false);
             }
         });
+        btnGenerateReport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateReport();
+            }
+        });
     }
-
+    private void generateReport(){
+        btnGenerateReport.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        UtilitiesReports.generateReportTransfer(transfer);
+        btnGenerateReport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+    }
     private void loadAddProducts(){
         DAddProductToTransfer dAddProductToTransfer;
         switch (cbbTypeTransfer.getSelectedIndex()){
@@ -183,6 +195,9 @@ public class TabNewTraslade {
             }
         }else{
             btnRechase.setVisible(false);
+        }
+        if(transfer.getId()!=null){
+            btnGenerateReport.setVisible(true);
         }
         getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
     }

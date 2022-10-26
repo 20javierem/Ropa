@@ -55,6 +55,7 @@ public class DTransfersOnWait extends JDialog {
     private void loadTable(){
         model=new TransferAbstractModel(transfers);
         table.setModel(model);
+        table.removeColumn(table.getColumn("NRO."));
         table.removeColumn(table.getColumn("ESTADO"));
         table.removeColumn(table.getColumn("DESCRIPCIÓN"));
         table.removeColumn(table.getColumn("CREADO"));

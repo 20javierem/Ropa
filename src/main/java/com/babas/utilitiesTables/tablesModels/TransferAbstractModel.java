@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class TransferAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"CREADO","ACTUALIZADO","DESCRIPCIÓN","ORIGEN","DESTINO","PRODUCTOS","ESTADO","",""};
-    private final Class[] typeColumns={Date.class,Date.class,String.class,String.class, String.class, Integer.class,String.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","CREADO","ACTUALIZADO","DESCRIPCIÓN","ORIGEN","DESTINO","PRODUCTOS","ESTADO","",""};
+    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class, String.class, Integer.class,String.class,JButton.class,JButton.class};
     private final List<Transfer> list;
 
     public TransferAbstractModel(List<Transfer> list){
@@ -44,20 +44,22 @@ public class TransferAbstractModel extends AbstractTableModel {
         Transfer transfer= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return transfer.getCreated();
+                return transfer.getNumberTransfer();
             case 1:
-                return transfer.getUpdated()==null?transfer.getCreated():transfer.getUpdated();
+                return transfer.getCreated();
             case 2:
-                return transfer.getDescription();
+                return transfer.getUpdated()==null?transfer.getCreated():transfer.getUpdated();
             case 3:
-                return Objects.equals(transfer.getSource().getId(), transfer.getDestiny().getId()) ?"INGRESO":transfer.getSource().getName();
+                return transfer.getDescription();
             case 4:
-                return transfer.getDestiny().getName();
+                return Objects.equals(transfer.getSource().getId(), transfer.getDestiny().getId()) ?"INGRESO":transfer.getSource().getName();
             case 5:
-                return transfer.getProductsTransfers();
+                return transfer.getDestiny().getName();
             case 6:
-                return transfer.getState()==0?"EN ESPERA":transfer.getState()==1?"COMPLETADO":"CANCELADO";
+                return transfer.getProductsTransfers();
             case 7:
+                return transfer.getState()==0?"EN ESPERA":transfer.getState()==1?"COMPLETADO":"CANCELADO";
+            case 8:
                 return new JButtonAction("x16/mostrarContraseña.png");
             default:
                 return new JButtonAction("x16/remove.png");

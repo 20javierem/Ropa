@@ -6,7 +6,6 @@ import com.babas.custom.*;
 import com.babas.models.*;
 import com.babas.models.Color;
 import com.babas.utilities.Babas;
-import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
 import com.babas.views.dialogs.*;
 import com.babas.views.menus.*;
@@ -56,7 +55,6 @@ public class FPrincipal extends JFrame{
     private FlatToggleButton btnBoxes;
     private FlatButton btnSettings;
     private FlatButton btnNotify;
-    private Propiedades propiedades;
     private MenuSales menuSales;
     private MenuAlmacen menuAlmacen;
     private MenuManage menuManage;
@@ -87,6 +85,7 @@ public class FPrincipal extends JFrame{
     public static List<Transfer> transfersOnWait=new ArrayList<>();
     public static List<Rental>  rentalsActives=new ArrayList<>();
     public static List<Reserve> reservesActives=new ArrayList<>();
+    public static Vector<Permission> groupPermnitions=new Vector<>();
     private JPopupMenu pop_up = new JPopupMenu();
 
     public FPrincipal(){
@@ -388,6 +387,7 @@ public class FPrincipal extends JFrame{
         btnSettings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/settings.svg")));
         btnExit.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/exit.svg")));
         btnNotify.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/notification.svg")));
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
     public void loadTransferOnWait(){
@@ -441,6 +441,7 @@ public class FPrincipal extends JFrame{
         products.forEach(product -> product.getIconsx200(true));
         products.forEach(product -> product.getIconsx400(true));
         styles=Styles.getTodos();
+        groupPermnitions= Permissions.getGroups();
         Babas.user.getBranchs().forEach(branch -> rentalsActives.addAll(Rentals.getActives(branch)));
         Babas.user.getBranchs().forEach(branch -> reservesActives.addAll(Reserves.getActives(branch)));
     }
@@ -464,6 +465,7 @@ public class FPrincipal extends JFrame{
         btnBoxes.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {

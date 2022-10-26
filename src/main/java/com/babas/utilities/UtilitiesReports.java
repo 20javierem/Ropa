@@ -346,6 +346,79 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
+
+    public static void generateReportTransfer(Transfer transfer) {
+        InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportTransfer.jasper");
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
+        try {
+            if(pathReport!=null){
+                List<DetailTransfer> list=new ArrayList<>(transfer.getDetailTransfers());
+                list.add(0,new DetailTransfer());
+                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
+                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
+                Map<String,Object> parameters=new HashMap<>();
+                parameters.put("totalProducts",transfer.getProductsTransfers());
+                parameters.put("numberTransfer",transfer.getNumberTransfer());
+                parameters.put("source",transfer.getStringSource());
+                parameters.put("destiny",transfer.getStringDestiny());
+                parameters.put("stade",transfer.getStringStade());
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("logo",logo);
+                parameters.put("details",sp);
+                JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
+                if(viewer!=null){
+                    viewer.setTitle("Reporte de transferencia N°: "+transfer.getNumberTransfer());
+                    if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                        Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }
+                    Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
+    public static void generateReportTransfers(List<Transfer> transfers,Date dateStart,Date dateEnd) {
+        InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportTransfers.jasper");
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
+        try {
+            if(pathReport!=null){
+                List<Transfer> list=new ArrayList<>(transfers);
+                list.add(0,new Transfer());
+                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
+                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
+                Map<String,Object> parameters=new HashMap<>();
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("date",Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("logo",logo);
+                parameters.put("transfers",sp);
+                parameters.put("dateStart", Utilities.formatoFecha.format(dateStart));
+                parameters.put("dateEnd", Utilities.formatoFecha.format(dateEnd));
+                JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
+                if(viewer!=null){
+                    viewer.setTitle("Reporte de transferencias: "+Utilities.formatoFecha.format(dateStart)+" a "+Utilities.formatoFecha.format(dateEnd));
+                    if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                        Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }
+                    Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                    Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
     public static void generateReportBoxSesssion(BoxSession boxSession) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportBoxSession.jasper");
         File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());

@@ -13,6 +13,7 @@ import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.utilitiesTables.tablesModels.UserAbstractModel;
 import com.babas.views.dialogs.DBranch;
 import com.babas.views.dialogs.DUser;
+import com.babas.views.dialogs.DallGroups;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -27,6 +28,7 @@ public class TabUsers {
     private JButton btnNewUser;
     private FlatTable table;
     private FlatTextField flatTextField;
+    private JButton btnGroupsPermitions;
     private UserAbstractModel model;
 
     public TabUsers(){
@@ -37,8 +39,23 @@ public class TabUsers {
                 loadNewUser();
             }
         });
-    }
+        btnGroupsPermitions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+            }
+        });
+        btnGroupsPermitions.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadGroups();
+            }
+        });
+    }
+    private void loadGroups(){
+        DallGroups dallGroups=new DallGroups();
+        dallGroups.setVisible(true);
+    }
     private void loadNewUser(){
         DUser dUser=new DUser(false,new User());
         dUser.setVisible(true);

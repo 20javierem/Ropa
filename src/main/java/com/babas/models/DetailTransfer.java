@@ -44,5 +44,16 @@ public class DetailTransfer extends Babas {
         this.quantity = quantity;
     }
 
-
+    public String getStringCode(){
+        return String.valueOf(product.getBarcode());
+    }
+    public String getStringProduct(){
+        return product.getStyle().getName();
+    }
+    public String getStringColor(){
+        return product.getColor().getName();
+    }
+    public String getStringSize(){
+        return product.getSize().getName();
+    }
 }

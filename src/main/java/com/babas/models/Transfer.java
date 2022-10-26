@@ -2,6 +2,7 @@ package com.babas.models;
 
 import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -26,8 +27,9 @@ public class Transfer extends Babas {
     @OneToMany(mappedBy = "transfer")
     private List<DetailTransfer> detailTransfers=new ArrayList<>();
     @NotNull(message = "Tipo de transferencia")
-    private Integer state;
+    private Integer state=0;
     private Integer productsTransfers=0;
+    private Long numberTransfer;
     private String description="";
     private Date created;
     private Date updated;
@@ -85,7 +87,7 @@ public class Transfer extends Babas {
     }
 
     public String getDescription() {
-        return description;
+        return description.isBlank()?"--":description;
     }
 
     public void setDescription(String description) {
@@ -104,11 +106,33 @@ public class Transfer extends Babas {
         this.updated = updated;
     }
 
+    public String getStringUpdated(){
+        return updated==null? Utilities.formatoFechaHora.format(created):Utilities.formatoFechaHora.format(updated);
+    }
+    public String getStringCreated(){
+        return Utilities.formatoFechaHora.format(created);
+    }
+    public String getStringSource(){
+        return Objects.equals(getSource().getId(), getDestiny().getId()) ?"Ingreso":getSource().getName();
+    }
+    public String getStringStade(){
+        return getState()==0?"EN ESPERA":getState()==1?"COMPLETADO":"CANCELADO";
+    }
+    public String getStringDestiny(){
+        return destiny.getName();
+    }
+
+    public Long getNumberTransfer() {
+        return numberTransfer;
+    }
+
     @Override
     public void save() {
         if(created==null){
             created=new Date();
         }
+        super.save();
+        numberTransfer=1000+id;
         super.save();
         getDetailTransfers().forEach(Babas::save);
         getSource().getTransfers_sources().add(Transfer.this);

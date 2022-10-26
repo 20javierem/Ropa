@@ -118,7 +118,7 @@ public class DCompany extends JDialog {
     private void init() {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        if(company.getId()!=null){
+        if(company!=null){
             load();
         }else{
             btnSave.setText("Registrar");

@@ -6,6 +6,7 @@ import com.babas.models.Movement;
 import com.babas.models.Rental;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;

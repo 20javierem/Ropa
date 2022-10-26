@@ -31,7 +31,6 @@ public class App
         Utilities.propiedades.save();
         Babas.initialize();
         Utilities.loadTheme();
-
         Company company=Companys.get(1);
         JFrame jFrame=new JFrame();
         jFrame.setLocationRelativeTo(null);
@@ -53,7 +52,7 @@ public class App
                 dBranch.setVisible(true);
             }
         }
-        
+
         if(Babas.company!=null&&!Branchs.getTodos().isEmpty()){
             if(Users.getTodos().isEmpty()){
                 User user=new User();

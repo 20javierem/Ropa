@@ -6,6 +6,7 @@ import com.babas.models.*;
 import com.babas.models.Color;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorTransfer;
 import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
@@ -40,6 +41,7 @@ public class TabRecordTransfers {
     private FlatTable table;
     private JComboBox cbbState;
     private JButton btnClearFilters;
+    private JButton btnGenerateReport;
     private TransferAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
     private TableRowSorter<TransferAbstractModel> modeloOrdenado;
@@ -86,6 +88,33 @@ public class TabRecordTransfers {
                 clearFilters();
             }
         });
+        btnGenerateReport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                generateReport();
+            }
+        });
+    }
+    private void generateReport(){
+        List<Transfer> transfers=new ArrayList<>();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            transfers.add(model.getList().get(table.convertRowIndexToModel(i)));
+        }
+        if(!transfers.isEmpty()){
+            Date start1=start;
+            Date end1=end;
+            if(start1==null){
+                start1=transfers.get(0).getCreated();
+            }
+            if(end1==null){
+                end1=transfers.get(transfers.size()-1).getCreated();
+            }
+            btnGenerateReport.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+            UtilitiesReports.generateReportTransfers(transfers,start1,end1);
+            btnGenerateReport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(),Notify.Type.INFO,Notify.Location.TOP_CENTER,"MENSAJE","No se encontraron transferencias");
+        }
     }
     private void clearFilters(){
         cbbBranch.setSelectedIndex(0);

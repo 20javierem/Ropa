@@ -3,6 +3,7 @@ package com.babas.views.dialogs;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.models.Branch;
+import com.babas.models.Permission;
 import com.babas.models.Sex;
 import com.babas.models.User;
 import com.babas.utilities.Utilities;
@@ -42,6 +43,26 @@ public class DUser extends JDialog{
     private JTextField txtPhone;
     private JCheckBox ckActive;
     private JXHyperlink btnNewSex;
+    private JRadioButton rbGroup;
+    private JComboBox cbbGroupsPermitions;
+    private JCheckBox ckNewSale;
+    private JCheckBox ckCatalogue;
+    private JCheckBox ckRecordSales;
+    private JCheckBox ckNewRental;
+    private JCheckBox ckRentalsActives;
+    private JCheckBox ckRecordRentals;
+    private JCheckBox ckNewReserve;
+    private JCheckBox ckReservesActives;
+    private JCheckBox ckRecordReserves;
+    private JCheckBox ckNewTransfer;
+    private JCheckBox ckRecordTransfers;
+    private JCheckBox ckRecordBoxes;
+    private JCheckBox ckManageProducts;
+    private JCheckBox ckManageUsers;
+    private JCheckBox ckManageBranchs;
+    private JCheckBox ckManageCompany;
+    private JRadioButton rbPropies;
+    private JScrollPane scrooll;
     private User user;
     private boolean update;
     private BranchAbstractModel modelBranchs;
@@ -95,6 +116,22 @@ public class DUser extends JDialog{
                 loadNewSex();
             }
         });
+        rbGroup.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verifyPermises();
+            }
+        });
+        rbPropies.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verifyPermises();
+            }
+        });
+    }
+    private void verifyPermises(){
+        scrooll.setVisible(rbPropies.isSelected());
+        cbbGroupsPermitions.setEnabled(rbGroup.isSelected());
     }
     private void loadNewSex(){
         DSex dSex=new DSex(new Sex());
@@ -129,6 +166,7 @@ public class DUser extends JDialog{
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         loadCombos();
+        scrooll.getVerticalScrollBar().setUnitIncrement(16);
         if(fprincipal){
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Sucursales"));
         }
@@ -144,9 +182,13 @@ public class DUser extends JDialog{
         setResizable(false);
         setLocationRelativeTo(Utilities.getJFrame());
     }
+
     private void loadCombos(){
         cbbSex.setModel(new DefaultComboBoxModel(FPrincipal.sexs));
         cbbSex.setRenderer(new Sex.ListCellRenderer());
+        cbbSex.setSelectedIndex(-1);
+        cbbGroupsPermitions.setModel(new DefaultComboBoxModel(FPrincipal.groupPermnitions));
+        cbbGroupsPermitions.setRenderer(new Permission.ListCellRenderer());
         cbbSex.setSelectedIndex(-1);
     }
 
@@ -183,11 +225,64 @@ public class DUser extends JDialog{
         tableBranchsUser.removeColumn(tableBranchsUser.getColumn("USUARIOS"));
         tableBranchsUser.removeColumn(tableBranchsUser.getColumn(""));
         tableBranchsUser.removeColumn(tableBranchsUser.getColumn(""));
-
+        loadPermitions();
         user.getBranchs().forEach( branch -> modelBranchs.getList().remove(branch));
         modelBranchs.fireTableDataChanged();
     }
+    private void loadPermitions(){
+        rbPropies.setSelected(!user.getPermitions().isGroup());
+        verifyPermises();
+        if(user.getPermitions().isGroup()){
+            cbbGroupsPermitions.setSelectedItem(user.getPermitions());
+        }else{
+            ckNewSale.setSelected(user.getPermitions().isNewSale());
+            ckCatalogue.setSelected(user.getPermitions().isShowCatalogue());
+            ckRecordSales.setSelected(user.getPermitions().isRecordSales());
+            ckNewRental.setSelected(user.getPermitions().isNewRental());
+            ckRentalsActives.setSelected(user.getPermitions().isRentalsActives());
+            ckRecordRentals.setSelected(user.getPermitions().isRecordRentals());
+            ckNewReserve.setSelected(user.getPermitions().isNewReserve());
+            ckReservesActives.setSelected(user.getPermitions().isReservesActives());
+            ckRecordReserves.setSelected(user.getPermitions().isRecordReserves());
+            ckNewTransfer.setSelected(user.getPermitions().isNewTransfer());
+            ckRecordTransfers.setSelected(user.getPermitions().isRecordTransfers());
+            ckRecordBoxes.setSelected(user.getPermitions().isRecordBoxes());
+            ckManageProducts.setSelected(user.getPermitions().isManageProducts());
+            ckManageUsers.setSelected(user.getPermitions().isManageUsers());
+            ckManageBranchs.setSelected(user.getPermitions().isManageBranchs());
+            ckManageCompany.setSelected(user.getPermitions().isManageCompany());
+        }
+    }
+    private void savePermitions(){
+        if(user.getPermitions()!=null){
+            if(user.getPermitions().isGroup()){
+                user.getPermitions().getUsers().remove(user);
+            }
+        }
 
+        if(rbGroup.isSelected()){
+            user.setPermitions((Permission) cbbGroupsPermitions.getSelectedItem());
+        }else{
+            Permission permission =new Permission();
+            permission.setNewSale(ckNewSale.isSelected());
+            permission.setShowCatalogue(ckCatalogue.isSelected());
+            permission.setRecordSales(ckRecordSales.isSelected());
+            permission.setNewRental(ckNewRental.isSelected());
+            permission.setRentalsActives(ckRentalsActives.isSelected());
+            permission.setRecordRentals(ckRecordRentals.isSelected());
+            permission.setNewReserve(ckNewReserve.isSelected());
+            permission.setReservesActives(ckReservesActives.isSelected());
+            permission.setRecordReserves(ckRecordReserves.isSelected());
+            permission.setNewTransfer(ckNewTransfer.isSelected());
+            permission.setRecordTransfers(ckRecordTransfers.isSelected());
+            permission.setRecordBoxes(ckRecordBoxes.isSelected());
+            permission.setManageProducts(ckManageProducts.isSelected());
+            permission.setManageUsers(ckManageUsers.isSelected());
+            permission.setManageBranchs(ckManageBranchs.isSelected());
+            permission.setManageCompany(ckManageCompany.isSelected());
+            user.setPermitions(permission);
+        }
+    }
     private void onSave(){
         user.setFirstName(txtFirstName.getText().trim());
         user.setLastName(txtLastName.getText().trim());
@@ -197,6 +292,7 @@ public class DUser extends JDialog{
         user.setBirthday(jdateBirthday.getDate());
         user.setSex((Sex) cbbSex.getSelectedItem());
         user.setStaff(ckActive.isSelected());
+        savePermitions();
         if(Arrays.equals(pswPasword2.getPassword(), pswPasword1.getPassword())){
             user.setUserPassword(new String(pswPasword1.getPassword()));
         }else{
@@ -206,6 +302,7 @@ public class DUser extends JDialog{
         if(constraintViolationSet.isEmpty()){
             if(update){
                 user.save();
+                user.getPermitions().getUsers().add(user);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario actualizado");

@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Entity(name = "user_Tbl")
 public class User extends Babas {
@@ -44,6 +43,9 @@ public class User extends Babas {
     private List<Branch> branchs=new ArrayList<>();
     @OneToMany
     private List<Sale> sales=new ArrayList<>();
+    @ManyToOne
+    @NotNull(message = "Permisos")
+    private Permission permission=new Permission();
 
     public Long getId() {
         return id;
@@ -146,10 +148,21 @@ public class User extends Babas {
         this.staff = staff;
     }
 
+    public Permission getPermitions() {
+        return permission;
+    }
+
+    public void setPermitions(Permission permission) {
+        this.permission = permission;
+    }
+
     @Override
     public void save() {
         if(created==null){
             created=new Date();
+        }
+        if(permission!=null){
+            permission.save();
         }
         updated=new Date();
         super.save();

@@ -109,7 +109,7 @@ public class Propiedades {
     }
     public String getServerUrl(){
         String server=properties.getProperty("serverUrl");
-        return server==null?"":properties.getProperty("serverUrl");
+        return server==null?"":server;
     }
     public void setFont(String fontSize){
         properties.put("fontSize", fontSize);

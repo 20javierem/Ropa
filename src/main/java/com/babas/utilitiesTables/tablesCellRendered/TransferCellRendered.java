@@ -35,6 +35,12 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
         }else{
             DesingTxtTable componente=buscarTexto2(null,value,column,component);
             switch(table.getColumnName(column)){
+                case "NRO.":
+                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
+                    break;
                 case "ORIGEN":
                 case "DESTINO":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
