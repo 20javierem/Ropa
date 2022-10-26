@@ -57,6 +57,7 @@ public class App
             if(Users.getTodos().isEmpty()){
                 User user=new User();
                 user.getBranchs().add(Branchs.get(1));
+                user.setPermitions(new Permission(true));
                 Branchs.get(1).getUsers().add(user);
                 DUser dUser=new DUser(true,user);
                 dUser.setVisible(true);

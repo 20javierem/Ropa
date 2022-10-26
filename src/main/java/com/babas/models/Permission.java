@@ -38,6 +38,30 @@ public class Permission extends Babas {
     private boolean manageCompany=false;
     private boolean aceptTransfer=false;
 
+    public Permission(){
+
+    }
+    public Permission(boolean all) {
+        isgroup = true;
+        newSale = true;
+        showCatalogue = true;
+        recordSales = true;
+        newRental = true;
+        rentalsActives = true;
+        recordRentals = true;
+        newReserve = true;
+        reservesActives = true;
+        recordReserves = true;
+        newTransfer = true;
+        recordTransfers = true;
+        recordBoxes = true;
+        manageProducts = true;
+        manageUsers = true;
+        manageBranchs = true;
+        manageCompany = true;
+        aceptTransfer = true;
+    }
+
     @OneToMany(mappedBy = "permission")
     private List<User> users=new ArrayList<>();
 
