@@ -71,6 +71,13 @@ public class DCompany extends JDialog {
         });
     }
     private void onSave(){
+        if(Babas.company==null){
+            Babas.company=new Company();
+            company=Babas.company;
+        }
+        if(company.getLogo()==null){
+            company.setLogo("");
+        }
         company.setBusinessName(txtBusinessName.getText().trim());
         company.setDirectionPrincipal(txtFiscalAdress.getText().trim());
         company.setRuc(txtRuc.getText().trim());
@@ -103,9 +110,13 @@ public class DCompany extends JDialog {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ÉXITO","Imagen guardada");
                     company.setLogo(nameImage);
                     Image image=Utilities.getImage(nameImage);
-                    image=image.getScaledInstance(lblLogo.getWidth(),lblLogo.getHeight(),Image.SCALE_SMOOTH);
-                    Icon icon=new ImageIcon(image);
-                    lblLogo.setIcon(icon);
+                    if(image!=null){
+                        image=image.getScaledInstance(lblLogo.getWidth(),lblLogo.getHeight(),Image.SCALE_SMOOTH);
+                        Icon icon=new ImageIcon(image);
+                        lblLogo.setIcon(icon);
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
+                    }
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error");
                 }

@@ -587,6 +587,7 @@ public class Utilities {
         }
 
     }
+
     public static String encrypt(String dataToEncrypt, SecretKeySpec key) {
         try {
             Cipher pbeCipher = Cipher.getInstance("AES/CBC/PKCS5Padding");

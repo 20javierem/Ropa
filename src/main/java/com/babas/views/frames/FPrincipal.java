@@ -216,13 +216,13 @@ public class FPrincipal extends JFrame{
         sizes.forEach(Babas::refresh);;
         sexs.forEach(Babas::refresh);
         styles.forEach(Babas::refresh);
-        btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         tabbedPane.updateTab();
         loadTransferOnWait();
         groupPermnitions.forEach(Babas::refresh);
         products.forEach(product -> product.getIconsx200(true));
         products.forEach(product -> product.getIconsx400(true));
         loadPermisses();
+        btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void loadDialogTransfers(){

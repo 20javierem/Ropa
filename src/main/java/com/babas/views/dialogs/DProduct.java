@@ -196,8 +196,13 @@ public class DProduct extends JDialog{
                 ByteArrayOutputStream os2 = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage1, "png", os1);
                 ImageIO.write(bufferedImage2, "png", os2);
-                String nameImage1=product.getId() + "-" + product.getImagesx200().size()+"x200"+"."+"png";
-                String nameImage2=product.getId() + "-" + product.getImagesx200().size()+"x400"+"."+"png";
+                Long id = product.getId();
+                if(id==null){
+                    Product lastProduct=FPrincipal.products.get(FPrincipal.products.size()-1);
+                    id=lastProduct!=null?lastProduct.getId()+1:1;
+                }
+                String nameImage1=id + "-" + product.getImagesx200().size()+"x200"+"."+"png";
+                String nameImage2=id + "-" + product.getImagesx200().size()+"x400"+"."+"png";
                 InputStream inputStream1 = new ByteArrayInputStream(os1.toByteArray());
                 InputStream inputStream2 = new ByteArrayInputStream(os2.toByteArray());
                 boolean error=false;
@@ -405,6 +410,8 @@ public class DProduct extends JDialog{
         cbbDimention.setSelectedIndex(-1);
         cbbStade.setSelectedIndex(-1);
         loadStyle();
+        loadTable();
+        loadImages();
     }
     private void onHecho(){
         if(update){

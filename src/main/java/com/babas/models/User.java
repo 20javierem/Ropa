@@ -26,7 +26,7 @@ public class User extends Babas {
     @ManyToOne
     @NotNull(message = "Género")
     private Sex sex;
-    @NotBlank(message = "Contraseña")
+    @NotNull(message = "Contraseña")
     private String userPassword;
     private Date created;
     private Date updated;
@@ -88,7 +88,12 @@ public class User extends Babas {
     }
 
     public void setUserPassword(String userPassword) {
-        this.userPassword = Utilities.encriptar(userPassword);
+        if(userPassword==null){
+            this.userPassword = userPassword;
+        }else{
+            this.userPassword = Utilities.encriptar(userPassword);
+        }
+
     }
 
     public Date getCreated() {
@@ -134,7 +139,6 @@ public class User extends Babas {
     public void setSex(Sex sex) {
         this.sex = sex;
     }
-
 
     public List<Sale> getSales() {
         return sales;

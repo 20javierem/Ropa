@@ -66,6 +66,7 @@ public class DUser extends JDialog{
     private JRadioButton rbPropies;
     private JScrollPane scrooll;
     private JCheckBox ckAceptTransfer;
+    private JLabel activoLabel;
     private User user;
     private boolean update;
     private BranchAbstractModel modelBranchs;
@@ -134,6 +135,8 @@ public class DUser extends JDialog{
         if(fprincipal){
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Sucursales"));
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Permisos"));
+            ckActive.setVisible(false);
+            activoLabel.setVisible(false);
         }
         if(update){
             txtNameUser.setEnabled(false);

@@ -42,7 +42,6 @@ public class Permission extends Babas {
 
     }
     public Permission(boolean all) {
-        isgroup = true;
         newSale = true;
         showCatalogue = true;
         recordSales = true;

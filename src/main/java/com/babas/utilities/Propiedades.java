@@ -99,10 +99,10 @@ public class Propiedades {
     }
     public String getServerPassword(){
         String pasword=properties.getProperty("passwordServer");
-        return pasword==null?"":Utilities.desencriptar(pasword);
+        return pasword==null?"":pasword;
     }
     public void setServerPassword(String password){
-        properties.put("passwordServer",Utilities.encriptar(password));
+        properties.put("passwordServer",password);
     }
     public void setServerUrl(String url){
         properties.put("serverUrl",url);
