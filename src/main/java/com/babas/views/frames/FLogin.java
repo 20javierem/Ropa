@@ -190,8 +190,6 @@ public class FLogin extends JFrame {
         lblLogo.setHorizontalAlignment(0);
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));
         lblLogo.setText("");
-        lblLogo.setVerticalAlignment(0);
-        lblLogo.setVerticalTextPosition(0);
         contentPane.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(255, 220), new Dimension(255, 220), new Dimension(255, 220), 0, false));
     }
 

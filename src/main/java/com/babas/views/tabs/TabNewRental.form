@@ -160,7 +160,7 @@
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="43363" layout-manager="GridLayoutManager" row-count="11" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="0">
+                  <grid id="43363" layout-manager="GridLayoutManager" row-count="8" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="5" vgap="0">
                     <margin top="0" left="20" bottom="0" right="20"/>
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -170,7 +170,7 @@
                     <children>
                       <component id="c9752" class="javax.swing.JLabel" binding="lblSubTotal">
                         <constraints>
-                          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -179,7 +179,7 @@
                       </component>
                       <component id="5d866" class="javax.swing.JLabel">
                         <constraints>
-                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -188,54 +188,36 @@
                       </component>
                       <hspacer id="b60ae">
                         <constraints>
-                          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="0" column="1" row-span="2" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                       </hspacer>
                       <component id="f6ff0" class="javax.swing.JLabel">
                         <constraints>
-                          <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
                           <text value="Descuento:"/>
                         </properties>
                       </component>
-                      <component id="dae33" class="javax.swing.JLabel" binding="lblDiscount">
-                        <constraints>
-                          <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <font size="14" style="1"/>
-                          <text value="S/0.00"/>
-                        </properties>
-                      </component>
                       <component id="36946" class="javax.swing.JLabel">
                         <constraints>
-                          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
                           <text value="Garantía:"/>
                         </properties>
                       </component>
-                      <component id="17366" class="javax.swing.JLabel" binding="lblWarranty">
-                        <constraints>
-                          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <font size="14" style="1"/>
-                          <text value="S/0.00"/>
-                        </properties>
-                      </component>
                       <component id="a3fa" class="javax.swing.JSeparator">
                         <constraints>
-                          <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
                       <component id="15203" class="javax.swing.JLabel">
                         <constraints>
-                          <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -244,7 +226,7 @@
                       </component>
                       <component id="d249f" class="javax.swing.JLabel" binding="lblTotal">
                         <constraints>
-                          <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -253,13 +235,13 @@
                       </component>
                       <component id="eae38" class="javax.swing.JSeparator">
                         <constraints>
-                          <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
                       <component id="7ee49" class="javax.swing.JLabel">
                         <constraints>
-                          <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -268,7 +250,7 @@
                       </component>
                       <component id="1a575" class="javax.swing.JLabel" binding="lblTotalCurrent">
                         <constraints>
-                          <grid row="10" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -277,7 +259,7 @@
                       </component>
                       <component id="906e5" class="javax.swing.JLabel">
                         <constraints>
-                          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
@@ -286,46 +268,22 @@
                       </component>
                       <component id="81cc7" class="javax.swing.JLabel" binding="lblReserve">
                         <constraints>
-                          <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
                           <text value="S/0.00"/>
                         </properties>
                       </component>
-                      <component id="724a4" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <font size="14" style="1"/>
-                          <text value="Descuento:"/>
-                        </properties>
-                      </component>
-                      <component id="b1700" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerDiscount" custom-create="true">
+                      <component id="5c030" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerWarranty" custom-create="true">
                         <constraints>
                           <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
-                      <component id="99a7e" class="javax.swing.JLabel">
+                      <component id="b1700" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerDiscount" custom-create="true">
                         <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <font size="14" style="1"/>
-                          <text value="Garantía:"/>
-                        </properties>
-                      </component>
-                      <component id="5c030" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerWarranty" custom-create="true">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties/>
-                      </component>
-                      <component id="693e4" class="javax.swing.JSeparator">
-                        <constraints>
-                          <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                         </constraints>
                         <properties/>
                       </component>
@@ -371,13 +329,14 @@
                   </grid>
                   <component id="8108e" class="javax.swing.JLabel" binding="lblLogo">
                     <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false">
                         <minimum-size width="255" height="220"/>
                         <preferred-size width="255" height="220"/>
                         <maximum-size width="255" height="220"/>
                       </grid>
                     </constraints>
                     <properties>
+                      <horizontalAlignment value="0"/>
                       <icon value="com/babas/images/lojoJmoreno (1).png"/>
                       <text value=""/>
                     </properties>

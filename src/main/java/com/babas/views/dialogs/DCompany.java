@@ -226,6 +226,7 @@ public class DCompany extends JDialog {
         txtRuc = new FlatTextField();
         panel2.add(txtRuc, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         lblLogo = new JLabel();
+        lblLogo.setHorizontalAlignment(0);
         lblLogo.setText("");
         panel2.add(lblLogo, new GridConstraints(0, 0, 6, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(420, 420), new Dimension(420, 420), new Dimension(420, 420), 0, false));
     }
@@ -236,4 +237,5 @@ public class DCompany extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

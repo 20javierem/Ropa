@@ -40,7 +40,7 @@ public class TabbedPane extends FlatTabbedPane {
     private Double minY=0.0;
     private JButton buttonEsquina=new JButton();
     private JToolBar toolBar=new JToolBar();
-    private JPopupMenu pop_up = new JPopupMenu();
+    private JPopupMenu pop_up;
 
     @Override
     public Component[] getComponents() {
@@ -153,6 +153,8 @@ public class TabbedPane extends FlatTabbedPane {
 
     private void insertarButtons(){
         //creacion de pop_up
+        pop_up = new JPopupMenu();
+        pop_up.setBorder(BorderFactory.createEmptyBorder());
         JMenuItem cerrarPestaña = new JMenuItem("Cerrar Pestaña");
         JMenuItem cerrarOtras = new JMenuItem("Cerrar Otras Pestañas");
         JMenuItem cerrarTodas = new JMenuItem("Cerrar Todas Las Pestañas");
@@ -167,9 +169,17 @@ public class TabbedPane extends FlatTabbedPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(getSelectedIndex()!=-1){
-                    TabPane tab= (TabPane) getComponentAt(getSelectedIndex());
-                    removeAll();
-                    addTab(tab.getTitle(),tab.getIcon(),tab);
+                    if(getComponentAt(getSelectedIndex()) instanceof TabPane){
+                        TabPane tabPane= (TabPane) getComponentAt(getSelectedIndex());
+                        removeAll();
+                        addTab(tabPane.getTitle(),tabPane.getIcon(),tabPane);
+                    }else{
+                        String tittle=getTitleAt(getSelectedIndex());
+                        Component component=getComponentAt(getSelectedIndex());
+                        removeAll();
+                        addTab(tittle,component);
+                    }
+
                 }
             }
         });

@@ -90,6 +90,7 @@ public class FPrincipal extends JFrame {
     public static List<Rental> rentalsActives = new ArrayList<>();
     public static List<Reserve> reservesActives = new ArrayList<>();
     public static Vector<Permission> groupPermnitions = new Vector<>();
+
     private JPopupMenu pop_up = new JPopupMenu();
 
     public FPrincipal() {
@@ -194,7 +195,7 @@ public class FPrincipal extends JFrame {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pop_up.show(btnExit, -btnExit.getX(), (int) (btnExit.getVisibleRect().y - btnExit.getHeight() * 1.8));
+                pop_up.show(btnExit, -btnExit.getX(), btnExit.getVisibleRect().y - 66);
             }
         });
         btnNotify.addActionListener(new ActionListener() {
@@ -222,7 +223,6 @@ public class FPrincipal extends JFrame {
         colors.forEach(Babas::refresh);
         brands.forEach(Babas::refresh);
         sizes.forEach(Babas::refresh);
-        ;
         sexs.forEach(Babas::refresh);
         styles.forEach(Babas::refresh);
         tabbedPane.updateTab();
@@ -257,6 +257,7 @@ public class FPrincipal extends JFrame {
     }
 
     private void loadMenuItems() {
+        pop_up.setBorder(BorderFactory.createEmptyBorder());
         JMenuItem menuSettings = new JMenuItem("Configuraciones");
         JMenuItem menuCompany = new JMenuItem("Compañia");
         JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja");

@@ -106,8 +106,6 @@
           <horizontalAlignment value="0"/>
           <icon value="com/babas/images/lojoJmoreno (1).png"/>
           <text value=""/>
-          <verticalAlignment value="0"/>
-          <verticalTextPosition value="0"/>
         </properties>
       </component>
     </children>
