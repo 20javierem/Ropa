@@ -78,7 +78,7 @@
             </constraints>
             <properties>
               <font size="17"/>
-              <placeholderText value=" Usuario"/>
+              <placeholderText value="Usuario"/>
             </properties>
           </component>
           <component id="a5d6e" class="com.babas.custom.CustomPasswordField" binding="fieldPasword">

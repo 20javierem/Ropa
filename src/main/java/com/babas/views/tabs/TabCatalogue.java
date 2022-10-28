@@ -14,17 +14,21 @@ import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 import org.jdesktop.swingx.WrapLayout;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.text.StyleContext;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class TabCatalogue {
     private TabPane tabPane;
@@ -43,12 +47,12 @@ public class TabCatalogue {
     private ProductAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
     private List<RowFilter<ProductAbstractModel, String>> filtros = new ArrayList<>();
-    private int position=0;
+    private int position = 0;
     private List<Product> productsFilters;
     private Product product;
-    private String search="";
+    private String search = "";
 
-    public TabCatalogue(){
+    public TabCatalogue() {
         init();
         txtSearch.addKeyListener(new KeyAdapter() {
             @Override
@@ -87,7 +91,7 @@ public class TabCatalogue {
                 filter();
             }
         });
-        ((JButton)txtSearch.getComponent(0)).addActionListener(new ActionListener() {
+        ((JButton) txtSearch.getComponent(0)).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 txtSearch.setText(null);
@@ -101,7 +105,8 @@ public class TabCatalogue {
             }
         });
     }
-    private void clearFilters(){
+
+    private void clearFilters() {
         txtSearch.setText(null);
         cbbSex.setSelectedIndex(0);
         cbbCategory.setSelectedIndex(0);
@@ -110,9 +115,10 @@ public class TabCatalogue {
         cbbColor.setSelectedIndex(0);
         filter();
     }
+
     private void init() {
         tabPane.setTitle("Catálogo");
-        panelProducts.setLayout(new WrapLayout(WrapLayout.LEFT,10,10));
+        panelProducts.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
         scrollPane.getVerticalScrollBar().setUnitIncrement(35);
         loadCombos();
         loadTable();
@@ -127,7 +133,8 @@ public class TabCatalogue {
         btnPrevius.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/arrowCollapse.svg")));
         btnNext.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/arrowExpand.svg")));
     }
-    private void loadCombos(){
+
+    private void loadCombos() {
         cbbBrand.setModel(new DefaultComboBoxModel(FPrincipal.brandsWithAll));
         cbbBrand.setRenderer(new Brand.ListCellRenderer());
         cbbCategory.setModel(new DefaultComboBoxModel(FPrincipal.categoriesWithAll));
@@ -140,37 +147,37 @@ public class TabCatalogue {
         cbbSize.setRenderer(new Size.ListCellRenderer());
     }
 
-    private void loadTableFilter(){
-        productsFilters=new ArrayList<>(new ArrayList<>(FPrincipal.products));
-        if(product.getStyle().getCategory()!=null){
+    private void loadTableFilter() {
+        productsFilters = new ArrayList<>(new ArrayList<>(FPrincipal.products));
+        if (product.getStyle().getCategory() != null) {
             productsFilters.removeIf(product1 -> !product1.getStyle().getCategory().getId().equals(product.getStyle().getCategory().getId()));
         }
-        if(product.getSize()!=null){
+        if (product.getSize() != null) {
             productsFilters.removeIf(product1 -> !product1.getSize().getId().equals(product.getSize().getId()));
         }
-        if(product.getColor()!=null){
+        if (product.getColor() != null) {
             productsFilters.removeIf(product1 -> !product1.getColor().getId().equals(product.getColor().getId()));
         }
-        if(product.getSex()!=null){
+        if (product.getSex() != null) {
             productsFilters.removeIf(product1 -> !product1.getSex().getId().equals(product.getSex().getId()));
         }
-        if(product.getBrand()!=null){
+        if (product.getBrand() != null) {
             productsFilters.removeIf(product1 -> !product1.getBrand().getId().equals(product.getBrand().getId()));
         }
-        if(!search.isBlank()){
+        if (!search.isBlank()) {
             productsFilters.removeIf(product1 -> {
-                if(product1.getBarcode().toString().toLowerCase().contains(search.toLowerCase())||
-                        product1.getStyle().getName().toLowerCase().contains(search.toLowerCase())||
-                        product1.getSex().getName().toLowerCase().contains(search.toLowerCase())||
-                        product1.getStyle().getCategory().getName().toLowerCase().contains(search.toLowerCase())||
-                        product1.getBrand().getName().toLowerCase().contains(search.toLowerCase())||
-                        Utilities.moneda.format(product1.getPresentationDefault().getPriceDefault().getPrice()).toLowerCase().contains(search.toLowerCase())||
-                        product1.getSize().getName().toLowerCase().contains(search.toLowerCase())||
-                        product1.getColor().getName().toLowerCase().contains(search.toLowerCase())||
+                if (product1.getBarcode().toString().toLowerCase().contains(search.toLowerCase()) ||
+                        product1.getStyle().getName().toLowerCase().contains(search.toLowerCase()) ||
+                        product1.getSex().getName().toLowerCase().contains(search.toLowerCase()) ||
+                        product1.getStyle().getCategory().getName().toLowerCase().contains(search.toLowerCase()) ||
+                        product1.getBrand().getName().toLowerCase().contains(search.toLowerCase()) ||
+                        Utilities.moneda.format(product1.getPresentationDefault().getPriceDefault().getPrice()).toLowerCase().contains(search.toLowerCase()) ||
+                        product1.getSize().getName().toLowerCase().contains(search.toLowerCase()) ||
+                        product1.getColor().getName().toLowerCase().contains(search.toLowerCase()) ||
                         product1.getStockTotal().toString().contains(search.toLowerCase())
-                ){
+                ) {
                     return false;
-                }else{
+                } else {
                     return true;
                 }
             });
@@ -178,45 +185,48 @@ public class TabCatalogue {
         reloadTable();
         reloadCards();
     }
-    private void loadTable(){
-        model=new ProductAbstractModel(new ArrayList<>());
+
+    private void loadTable() {
+        model = new ProductAbstractModel(new ArrayList<>());
         filter();
         table.setModel(model);
-        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount()-1));
-        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount()-1));
+        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount() - 1));
+        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount() - 1));
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorProduct("images"));
         UtilitiesTables.headerNegrita(table);
-        ProductCellRendered.setCellRenderer(table,listaFiltros);
+        ProductCellRendered.setCellRenderer(table, listaFiltros);
     }
-    private void reloadCards(){
+
+    private void reloadCards() {
         panelProducts.removeAll();
-        for(Product product: model.getList()){
-            ModelProduct modelProduct =new ModelProduct(product);
+        for (Product product : model.getList()) {
+            ModelProduct modelProduct = new ModelProduct(product);
             panelProducts.add(modelProduct.getContentPane());
         }
         scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMinimum());
         panelProducts.repaint();
         panelProducts.revalidate();
     }
-    private void reloadTable(){
+
+    private void reloadTable() {
         model.setList(getProductsRows());
         model.fireTableDataChanged();
     }
 
-    private List<Product> getProductsRows(){
-        if(productsFilters.size()>102){
-            if(btnPrevius.getActionListeners().length>0){
+    private List<Product> getProductsRows() {
+        if (productsFilters.size() > 102) {
+            if (btnPrevius.getActionListeners().length > 0) {
                 btnPrevius.removeActionListener(btnPrevius.getActionListeners()[0]);
             }
-            if(btnNext.getActionListeners().length>0){
+            if (btnNext.getActionListeners().length > 0) {
                 btnNext.removeActionListener(btnNext.getActionListeners()[0]);
             }
             btnNext.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(position<productsFilters.size()-1){
-                        if(position+102<=productsFilters.size()-1){
-                            position=position+102;
+                    if (position < productsFilters.size() - 1) {
+                        if (position + 102 <= productsFilters.size() - 1) {
+                            position = position + 102;
                         }
                     }
                     reloadTable();
@@ -226,29 +236,29 @@ public class TabCatalogue {
             btnPrevius.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    if(position>0){
-                        position=position-102;
+                    if (position > 0) {
+                        position = position - 102;
                     }
                     reloadTable();
                     reloadCards();
                 }
             });
-            if((position+102)>productsFilters.size()){
-                return productsFilters.subList(position,productsFilters.size()-1);
-            }else{
-                return productsFilters.subList(position,position+102);
+            if ((position + 102) > productsFilters.size()) {
+                return productsFilters.subList(position, productsFilters.size() - 1);
+            } else {
+                return productsFilters.subList(position, position + 102);
             }
-        }else{
-            position=0;
+        } else {
+            position = 0;
             return productsFilters;
         }
     }
 
-    private void filter(){
-        product=new Product();
+    private void filter() {
+        product = new Product();
         product.setStyle(new Style());
         search = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" + search,0,1,2,3,4,5,6,7,8));
+        filtros.add(RowFilter.regexFilter("(?i)" + search, 0, 1, 2, 3, 4, 5, 6, 7, 8));
         listaFiltros.put(0, search);
         listaFiltros.put(1, search);
         listaFiltros.put(2, search);
@@ -280,15 +290,150 @@ public class TabCatalogue {
             product.setColor(color);
         }
         loadTableFilter();
-        if(FPrincipal.products.size()==productsFilters.size()){
-            Utilities.getLblCentro().setText("Productos registrados: "+FPrincipal.products.size());
-        }else{
-            Utilities.getLblCentro().setText("Productos filtrados: "+productsFilters.size());
+        if (FPrincipal.products.size() == productsFilters.size()) {
+            Utilities.getLblCentro().setText("Productos registrados: " + FPrincipal.products.size());
+        } else {
+            Utilities.getLblCentro().setText("Productos filtrados: " + productsFilters.size());
         }
     }
-    public TabPane getTabPane(){
+
+    public TabPane getTabPane() {
         return tabPane;
     }
 
 
+    {
+// GUI initializer generated by IntelliJ IDEA GUI Designer
+// >>> IMPORTANT!! <<<
+// DO NOT EDIT OR ADD ANY CODE HERE!
+        $$$setupUI$$$();
+    }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        tabPane = new TabPane();
+        tabPane.setLayout(new GridLayoutManager(3, 1, new Insets(10, 10, 10, 10), 5, 5));
+        panel1.add(tabPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        tabPane.add(panel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel2.add(spacer1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final Spacer spacer2 = new Spacer();
+        panel2.add(spacer2, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.add(panel3, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnPrevius = new JButton();
+        btnPrevius.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/previous.png")));
+        btnPrevius.setText("");
+        panel3.add(btnPrevius, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(35, 35), new Dimension(35, 35), null, 0, false));
+        btnNext = new JButton();
+        btnNext.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/next.png")));
+        btnNext.setText("");
+        panel3.add(btnNext, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(35, 35), new Dimension(35, 35), null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(1, 12, new Insets(0, 0, 0, 0), -1, -1));
+        tabPane.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnClearFilters = new JButton();
+        btnClearFilters.setText("Limpiar filtros");
+        panel4.add(btnClearFilters, new GridConstraints(0, 11, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbbBrand = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel1 = new DefaultComboBoxModel();
+        defaultComboBoxModel1.addElement("--Seleccione--");
+        cbbBrand.setModel(defaultComboBoxModel1);
+        panel4.add(cbbBrand, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        Font label1Font = this.$$$getFont$$$(null, Font.BOLD, -1, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setText("Marca:");
+        panel4.add(label1, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label2 = new JLabel();
+        Font label2Font = this.$$$getFont$$$(null, Font.BOLD, -1, label2.getFont());
+        if (label2Font != null) label2.setFont(label2Font);
+        label2.setText("Talla:");
+        panel4.add(label2, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbbSize = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
+        defaultComboBoxModel2.addElement("--Seleccione--");
+        cbbSize.setModel(defaultComboBoxModel2);
+        panel4.add(cbbSize, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label3 = new JLabel();
+        Font label3Font = this.$$$getFont$$$(null, Font.BOLD, -1, label3.getFont());
+        if (label3Font != null) label3.setFont(label3Font);
+        label3.setText("Color:");
+        panel4.add(label3, new GridConstraints(0, 9, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbbColor = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
+        defaultComboBoxModel3.addElement("--Seleccione--");
+        cbbColor.setModel(defaultComboBoxModel3);
+        panel4.add(cbbColor, new GridConstraints(0, 10, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        txtSearch = new FlatTextField();
+        txtSearch.setPlaceholderText("Producto...");
+        txtSearch.setShowClearButton(true);
+        txtSearch.setText("");
+        panel4.add(txtSearch, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label4 = new JLabel();
+        Font label4Font = this.$$$getFont$$$(null, Font.BOLD, -1, label4.getFont());
+        if (label4Font != null) label4.setFont(label4Font);
+        label4.setText("Género:");
+        panel4.add(label4, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbbSex = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel4 = new DefaultComboBoxModel();
+        defaultComboBoxModel4.addElement("--Seleccione--");
+        cbbSex.setModel(defaultComboBoxModel4);
+        panel4.add(cbbSex, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        Font label5Font = this.$$$getFont$$$(null, Font.BOLD, -1, label5.getFont());
+        if (label5Font != null) label5.setFont(label5Font);
+        label5.setText("Categoría:");
+        panel4.add(label5, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbbCategory = new JComboBox();
+        final DefaultComboBoxModel defaultComboBoxModel5 = new DefaultComboBoxModel();
+        defaultComboBoxModel5.addElement("--Seleccione--");
+        cbbCategory.setModel(defaultComboBoxModel5);
+        panel4.add(cbbCategory, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JTabbedPane tabbedPane1 = new JTabbedPane();
+        tabPane.add(tabbedPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(200, 200), null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        tabbedPane1.addTab("", new ImageIcon(getClass().getResource("/com/babas/icons/x24/catalogue2.png")), scrollPane1);
+        table = new FlatTable();
+        table.setRowHeight(25);
+        scrollPane1.setViewportView(table);
+        scrollPane = new JScrollPane();
+        tabbedPane1.addTab("", new ImageIcon(getClass().getResource("/com/babas/icons/x24/catalogue.png")), scrollPane);
+        panelProducts = new JPanel();
+        panelProducts.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        scrollPane.setViewportView(panelProducts);
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    private Font $$$getFont$$$(String fontName, int style, int size, Font currentFont) {
+        if (currentFont == null) return null;
+        String resultName;
+        if (fontName == null) {
+            resultName = currentFont.getName();
+        } else {
+            Font testFont = new Font(fontName, Font.PLAIN, 10);
+            if (testFont.canDisplay('a') && testFont.canDisplay('1')) {
+                resultName = fontName;
+            } else {
+                resultName = currentFont.getName();
+            }
+        }
+        Font font = new Font(resultName, style >= 0 ? style : currentFont.getStyle(), size >= 0 ? size : currentFont.getSize());
+        boolean isMac = System.getProperty("os.name", "").toLowerCase(Locale.ENGLISH).startsWith("mac");
+        Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
+        return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
+    }
 }

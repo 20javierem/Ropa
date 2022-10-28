@@ -40,6 +40,8 @@ public class Propiedades {
             save();
             setTema("Claro");
             setFont(String.valueOf(new JTextField().getFont().getSize()));
+            setUserPassword("");
+            setUserName("");
             setServerUrl("");
             setServerName("");
             setServerPassword("");

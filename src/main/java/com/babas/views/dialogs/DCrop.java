@@ -2,8 +2,12 @@ package com.babas.views.dialogs;
 
 import com.babas.custom.ImagePanel;
 import com.babas.utilities.Utilities;
+import com.intellij.uiDesigner.core.GridConstraints;
+import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
@@ -23,7 +27,8 @@ public class DCrop extends JDialog {
     public static BufferedImage imageSelectedx400;
 
     public DCrop() {
-        super(Utilities.getJFrame(),"Editar Logo",true);
+        super(Utilities.getJFrame(), "Editar Logo", true);
+        $$$setupUI$$$();
         initComponents();
         btnSave.addActionListener(new ActionListener() {
             @Override
@@ -40,52 +45,56 @@ public class DCrop extends JDialog {
             }
         });
     }
-    private void loadImagesScaled(){
-        BufferedImage bufferedImage=((ImagePanel)panelImagen).getImageSelected();
 
-        int width=bufferedImage.getWidth();
-        int height=bufferedImage.getHeight();
-        if(width>200||height>200){
-            double percen= Math.min(200.00/width,200.00/height);
-            width= (int) (percen*width);
-            height=(int) (percen*height);
+    private void loadImagesScaled() {
+        BufferedImage bufferedImage = ((ImagePanel) panelImagen).getImageSelected();
+
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
+        if (width > 200 || height > 200) {
+            double percen = Math.min(200.00 / width, 200.00 / height);
+            width = (int) (percen * width);
+            height = (int) (percen * height);
         }
         // Draw the image on to the buffered image
-        Image image=bufferedImage.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
-        BufferedImage bufferedImage1 = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);;
+        Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage bufferedImage1 = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        ;
         Graphics2D bGr1 = bufferedImage1.createGraphics();
         bGr1.drawImage(image, 0, 0, null);
         bGr1.dispose();
-        imageSelectedx200=bufferedImage1;
+        imageSelectedx200 = bufferedImage1;
 
-        width=bufferedImage.getWidth();
-        height=bufferedImage.getHeight();
-        if(width>400||height>400){
-            double percen= Math.min(400.00/width,400.00/height);
-            width= (int) (percen*width);
-            height=(int) (percen*height);
+        width = bufferedImage.getWidth();
+        height = bufferedImage.getHeight();
+        if (width > 400 || height > 400) {
+            double percen = Math.min(400.00 / width, 400.00 / height);
+            width = (int) (percen * width);
+            height = (int) (percen * height);
         }
         // Draw the image on to the buffered image
-        Image image2=bufferedImage.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
-        BufferedImage bufferedImage2 = new BufferedImage(image2.getWidth(null), image2.getHeight(null), BufferedImage.TYPE_INT_ARGB);;
+        Image image2 = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage bufferedImage2 = new BufferedImage(image2.getWidth(null), image2.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        ;
         Graphics2D bGr2 = bufferedImage2.createGraphics();
         bGr2.drawImage(image2, 0, 0, null);
         bGr2.dispose();
-        imageSelectedx400=bufferedImage2;
+        imageSelectedx400 = bufferedImage2;
 
         onDispose();
     }
-    public void loadImage(){
-        String ruta=nuevaImagen();
-        if(ruta!=null){
-            ((ImagePanel)panelImagen).loadImage(ruta);
+
+    public void loadImage() {
+        String ruta = nuevaImagen();
+        if (ruta != null) {
+            ((ImagePanel) panelImagen).loadImage(ruta);
         }
     }
 
-    public static String nuevaImagen(){
+    public static String nuevaImagen() {
         File imagenProducto;
         JFileChooser selectorArchivos = new JFileChooser();
-        FileFilter filtro1=new FileNameExtensionFilter("*.images","png","jpg","jpeg");
+        FileFilter filtro1 = new FileNameExtensionFilter("*.images", "png", "jpg", "jpeg");
         selectorArchivos.addChoosableFileFilter(filtro1);
         int resultado = selectorArchivos.showOpenDialog(Utilities.getJFrame());
         if (resultado != 0) {
@@ -96,13 +105,15 @@ public class DCrop extends JDialog {
             return imagenProducto.getAbsolutePath();
         }
     }
-    private void onDispose(){
+
+    private void onDispose() {
         dispose();
     }
-    private void initComponents(){
+
+    private void initComponents() {
         setContentPane(contentPane);
-        imageSelectedx200=null;
-        imageSelectedx400=null;
+        imageSelectedx200 = null;
+        imageSelectedx400 = null;
         pack();
         setLocationRelativeTo(getOwner());
         setResizable(false);
@@ -111,9 +122,52 @@ public class DCrop extends JDialog {
     private void createUIComponents() {
         // TODO: place custom component creation code here
         try {
-            panelImagen=new ImagePanel();
+            panelImagen = new ImagePanel();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+    private void $$$setupUI$$$() {
+        createUIComponents();
+        contentPane = new JPanel();
+        contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), 10, 10));
+        final JPanel panel1 = new JPanel();
+        panel1.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnSave = new JButton();
+        btnSave.setText("Guardar");
+        panel1.add(btnSave, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel1.add(spacer1, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        btnOpenFileChooser = new JButton();
+        btnOpenFileChooser.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/carpeta.png")));
+        btnOpenFileChooser.setIconTextGap(4);
+        btnOpenFileChooser.setMargin(new Insets(2, 2, 2, 2));
+        btnOpenFileChooser.setText("Seleccionar imagen");
+        panel1.add(btnOpenFileChooser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnCancel = new JButton();
+        btnCancel.setText("Cancelar");
+        panel1.add(btnCancel, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), -1, -1));
+        contentPane.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
+        panel2.add(panelImagen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(800, 800), new Dimension(800, 800), new Dimension(800, 800), 0, false));
+    }
+
+    /**
+     * @noinspection ALL
+     */
+    public JComponent $$$getRootComponent$$$() {
+        return contentPane;
+    }
+
 }
