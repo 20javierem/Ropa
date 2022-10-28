@@ -36,8 +36,8 @@ public class PriceCellRendered extends DefaultTableCellRenderer {
             DesingTxtTable componente=buscarTexto2(null,value,column,component);
             if ("DEFECTO".equals(table.getColumnName(column))) {
                 componente.setHorizontalAlignment(SwingConstants.CENTER);
-                table.getColumn(table.getColumnName(column)).setMaxWidth(80);
-                table.getColumn(table.getColumnName(column)).setMinWidth(80);
+//                table.getColumn(table.getColumnName(column)).setMaxWidth(80);
+//                table.getColumn(table.getColumnName(column)).setMinWidth(80);
                 table.getColumn(table.getColumnName(column)).setPreferredWidth(80);
             }else{
                 componente.setHorizontalAlignment(SwingConstants.RIGHT);

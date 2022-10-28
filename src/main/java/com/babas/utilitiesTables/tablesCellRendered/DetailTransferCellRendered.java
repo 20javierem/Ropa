@@ -41,20 +41,20 @@ public class DetailTransferCellRendered extends DefaultTableCellRenderer {
                 case "T-STOCK":
                 case "CANTIDAD":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "PRECIO":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "CÓDIGO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 default:

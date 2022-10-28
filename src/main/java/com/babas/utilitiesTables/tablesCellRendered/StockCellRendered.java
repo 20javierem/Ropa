@@ -41,15 +41,15 @@ public class StockCellRendered extends DefaultTableCellRenderer {
                 case "TOTAL":
                 case "ACTUAL":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(75);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(75);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(75);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(75);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(75);
                     break;
                 case "EN ALQUILER":
                 case "ALQUILERES":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(100);
                     break;
                 default:

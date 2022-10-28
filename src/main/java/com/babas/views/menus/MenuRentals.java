@@ -123,9 +123,9 @@ public class MenuRentals {
     private void $$$setupUI$$$() {
         createUIComponents();
         contentPane.setLayout(new GridLayoutManager(4, 1, new Insets(10, 5, 5, 5), -1, 10));
-        contentPane.setMaximumSize(new Dimension(140, 2147483647));
-        contentPane.setMinimumSize(new Dimension(140, 109));
-        contentPane.setPreferredSize(new Dimension(140, 109));
+        contentPane.setMaximumSize(new Dimension(130, 2147483647));
+        contentPane.setMinimumSize(new Dimension(130, 109));
+        contentPane.setPreferredSize(new Dimension(130, 109));
         btnNewRental = new FlatToggleButton();
         btnNewRental.setText("<html><center>Nuevo alquiler<center></html>");
         contentPane.add(btnNewRental, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -145,4 +145,5 @@ public class MenuRentals {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

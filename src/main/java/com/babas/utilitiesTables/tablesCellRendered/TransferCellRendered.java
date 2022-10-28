@@ -37,29 +37,29 @@ public class TransferCellRendered extends DefaultTableCellRenderer {
             switch(table.getColumnName(column)){
                 case "NRO.":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
                     break;
                 case "ORIGEN":
                 case "DESTINO":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
 //                    table.getColumn(table.getColumnName(column)).setMaxWidth(210);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(210);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(210);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(210);
                     break;
                 case "PRODUCTOS":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(100);
                     break;
                 case "CREADO":
                 case "ACTUALIZADO":
                 case "ESTADO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
                     break;
                 default:

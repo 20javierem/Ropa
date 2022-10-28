@@ -37,15 +37,15 @@ public class BranchCellRendered extends DefaultTableCellRenderer {
             switch(table.getColumnName(column)){
                 case "EMAIL":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(210);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(210);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(210);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(210);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(210);
                     break;
                 case "ESTADO":
                 case "USUARIOS":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 default:

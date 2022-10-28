@@ -39,14 +39,14 @@ public class PresentationCellRendered extends DefaultTableCellRenderer {
                 case "DEFECTO":
                 case "PRECIO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(80);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(80);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(80);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(80);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(80);
                     break;
                 case "ACTUALIZADO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(140);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(140);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(140);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(140);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(140);
                     break;
                 case "NOMBRE":

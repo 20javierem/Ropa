@@ -40,8 +40,8 @@ public class ReserveCellRendered extends DefaultTableCellRenderer {
             switch(table.getColumnName(column)){
                 case "NRO.":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
                     break;
                 case "SUBTOTAL":
@@ -54,8 +54,8 @@ public class ReserveCellRendered extends DefaultTableCellRenderer {
                 case "GARANTÍA":
                 case "POR PAGAR":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(95);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(95);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(95);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(95);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(95);
                     break;
                 case "FECHA":
@@ -63,14 +63,14 @@ public class ReserveCellRendered extends DefaultTableCellRenderer {
                 case "ESTADO":
                 case "TIPO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
                     break;
                 case "TIPO/PAGO":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 default:

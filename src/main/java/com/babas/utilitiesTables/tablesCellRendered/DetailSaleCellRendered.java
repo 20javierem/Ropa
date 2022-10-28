@@ -45,20 +45,20 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                 case "T-STOCK":
                 case "CANTIDAD":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "SUBTOTAL":
                     componente.setHorizontalAlignment(SwingConstants.RIGHT);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "CÓDIGO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "PRESENTACIÓN":
@@ -68,8 +68,8 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                     comboBox.setForeground(component.getForeground());
                     comboBox.setBackground(component.getBackground());
                     comboBox.addItem(detailSale.getNamePresentation());
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     return comboBox;
                 case "PRECIO":
@@ -80,8 +80,8 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                     comboBox.setBackground(component.getBackground());
                     comboBox.setRenderer(new Price.ListCellRenderer());
                     comboBox.addItem(detailSale.getPrice());
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
+//                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     return comboBox;
                 default:

@@ -120,9 +120,9 @@ public class MenuReserves {
     private void $$$setupUI$$$() {
         createUIComponents();
         contentPane.setLayout(new GridLayoutManager(4, 1, new Insets(10, 5, 5, 5), -1, 10));
-        contentPane.setMaximumSize(new Dimension(140, 2147483647));
-        contentPane.setMinimumSize(new Dimension(140, 104));
-        contentPane.setPreferredSize(new Dimension(140, 104));
+        contentPane.setMaximumSize(new Dimension(130, 2147483647));
+        contentPane.setMinimumSize(new Dimension(130, 104));
+        contentPane.setPreferredSize(new Dimension(130, 104));
         final Spacer spacer1 = new Spacer();
         contentPane.add(spacer1, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         btnNewReserve = new FlatToggleButton();
@@ -142,4 +142,5 @@ public class MenuReserves {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
