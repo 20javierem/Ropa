@@ -18,7 +18,6 @@ import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -52,6 +51,7 @@ public class DProduct extends JDialog{
     private JXHyperlink btnNewDimention;
     private JComboBox cbbStade;
     private JXHyperlink btnRemoveImage;
+    private JTextField txtBarcode;
     private Product product;
     private final boolean update;
     private PresentationsAbstractModel model;
@@ -333,6 +333,7 @@ public class DProduct extends JDialog{
         cbbBrand.setSelectedItem(product.getBrand());
         cbbStade.setSelectedItem(product.getStade());
         cbbDimention.setSelectedItem(product.getDimention());
+        txtBarcode.setText(product.getBarcode());
         loadImages();
         style=product.getStyle();
     }
@@ -373,6 +374,7 @@ public class DProduct extends JDialog{
         product.setStade((Stade) cbbStade.getSelectedItem());
         product.setBrand((Brand) cbbBrand.getSelectedItem());
         product.setDimention((Dimention) cbbDimention.getSelectedItem());
+        product.setBarcode(txtBarcode.getText().trim());
         Set<ConstraintViolation<Object>> constraintViolationSet= ProgramValidator.loadViolations(product);
         constraintViolationSet.addAll(ProgramValidator.loadViolations(style));
         if(constraintViolationSet.isEmpty()){
@@ -409,6 +411,7 @@ public class DProduct extends JDialog{
         cbbSex.setSelectedIndex(-1);
         cbbDimention.setSelectedIndex(-1);
         cbbStade.setSelectedIndex(-1);
+        txtBarcode.setText(null);
         loadStyle();
         loadTable();
         loadImages();

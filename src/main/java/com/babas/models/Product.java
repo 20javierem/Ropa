@@ -34,7 +34,7 @@ public class Product extends Babas {
     private Date updated;
     private Integer stockTotal=0;
     private boolean active=true;
-    private Long barcode;
+    private String barcode;
     @ManyToOne
     private Stade stade;
     @ManyToOne
@@ -141,7 +141,7 @@ public class Product extends Babas {
         this.iconsx400 = iconsx400;
     }
 
-    public Long getBarcode() {
+    public String getBarcode() {
         return barcode;
     }
 
@@ -175,6 +175,10 @@ public class Product extends Babas {
 
     public List<Presentation> getPresentations() {
         return presentations;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public void setPresentationDefault(Presentation presentationDefault){
@@ -256,8 +260,8 @@ public class Product extends Babas {
         }
         updated=new Date();
         super.save();
-        if(barcode==null){
-            barcode=1000+getId();
+        if(barcode.isBlank()){
+            barcode= String.valueOf(1000+getId());
             super.save();
         }
         getPresentations().forEach(Presentation::save);

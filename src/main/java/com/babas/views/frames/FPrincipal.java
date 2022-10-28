@@ -390,6 +390,7 @@ public class FPrincipal extends JFrame{
         btnRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
         btnRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
         btnNotify.setEnabled(Babas.user.getPermitions().isAceptTransfer());
+        System.out.println(Babas.user.getPermitions().isAceptTransfer());
     }
     public void loadTransferOnWait(){
         transfersOnWait.clear();
