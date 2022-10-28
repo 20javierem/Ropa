@@ -34,6 +34,7 @@ public class FLogin extends JFrame {
     public FLogin(FPrincipal fPrincipal) {
         this.fPrincipal = fPrincipal;
         $$$setupUI$$$();
+        fieldUser.setEnabled(false);
         initComponents();
         btnInitSession.addActionListener(e -> start());
     }

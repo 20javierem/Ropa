@@ -194,7 +194,7 @@ public class FPrincipal extends JFrame {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pop_up.show(btnExit, btnExit.getVisibleRect().x, (int) (btnExit.getVisibleRect().y - btnExit.getHeight() * 1.8));
+                pop_up.show(btnExit, -btnExit.getX(), (int) (btnExit.getVisibleRect().y - btnExit.getHeight() * 1.8));
             }
         });
         btnNotify.addActionListener(new ActionListener() {
@@ -299,6 +299,8 @@ public class FPrincipal extends JFrame {
     private void loadMenuExit() {
         JMenuItem suspendSession = new JMenuItem("Suspender sesión");
         JMenuItem closeSession = new JMenuItem("Cerrar sesión");
+        suspendSession.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/moon.svg")));
+        closeSession.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/exit.svg")));
         pop_up.add(suspendSession);
         pop_up.add(closeSession);
         suspendSession.addActionListener(new ActionListener() {
@@ -812,4 +814,5 @@ public class FPrincipal extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
