@@ -51,7 +51,9 @@ public class ModelProduct {
         lblSize.setText(product.getSize().getName());
         lblNamePrice.setText(product.getPresentationDefault().getName() + ":");
         if (!product.getIconsx200(false).isEmpty()) {
-            lblIcon.setIcon(product.getIconsx200(false).get(0));
+            if (product.getIconsx200(false).get(0) != null) {
+                lblIcon.setIcon(product.getIconsx200(false).get(0));
+            }
         }
     }
 
@@ -181,4 +183,5 @@ public class ModelProduct {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

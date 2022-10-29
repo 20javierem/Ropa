@@ -101,6 +101,7 @@ public class MenuReserves {
         btnNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
         contentPane.updateUI();
         btnRecordReserves.updateUI();
+        btnReservesActives.updateUI();
         btnNewReserve.updateUI();
         return contentPane;
     }

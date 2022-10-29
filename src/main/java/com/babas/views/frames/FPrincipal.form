@@ -357,7 +357,7 @@
                       <horizontalTextPosition value="0"/>
                       <icon value="com/babas/icons/x32/ventasSelected.png"/>
                       <iconTextGap value="-2"/>
-                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <margin top="10" left="5" bottom="10" right="5"/>
                       <rolloverEnabled value="false"/>
                       <selected value="true"/>
                       <selectedIcon value="com/babas/icons/x32/ventasDefault.png"/>
@@ -378,7 +378,7 @@
                       <horizontalTextPosition value="0"/>
                       <icon value="com/babas/icons/x32/gestionarSelected.png"/>
                       <iconTextGap value="-2"/>
-                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <margin top="10" left="5" bottom="10" right="5"/>
                       <rolloverEnabled value="false"/>
                       <selectedIcon value="com/babas/icons/x32/gestionarDefault.png"/>
                       <tabUnderlineHeight value="5"/>
@@ -398,7 +398,7 @@
                       <horizontalTextPosition value="0"/>
                       <icon value="com/babas/icons/x32/reserveSelected.png"/>
                       <iconTextGap value="-2"/>
-                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <margin top="10" left="5" bottom="10" right="5"/>
                       <rolloverEnabled value="false"/>
                       <selectedIcon value="com/babas/icons/x32/reserveDefault.png"/>
                       <tabUnderlineHeight value="5"/>
@@ -418,7 +418,7 @@
                       <horizontalTextPosition value="0"/>
                       <icon value="com/babas/icons/x32/transferirDefault.png"/>
                       <iconTextGap value="-2"/>
-                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <margin top="10" left="5" bottom="10" right="5"/>
                       <rolloverEnabled value="false"/>
                       <selectedIcon value="com/babas/icons/x32/transferirSelected.png"/>
                       <tabUnderlineHeight value="5"/>
@@ -438,7 +438,7 @@
                       <horizontalTextPosition value="0"/>
                       <icon value="com/babas/icons/x32/reserveSelected.png"/>
                       <iconTextGap value="-2"/>
-                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <margin top="10" left="5" bottom="10" right="5"/>
                       <rolloverEnabled value="false"/>
                       <selectedIcon value="com/babas/icons/x32/reserveDefault.png"/>
                       <tabUnderlineHeight value="5"/>
@@ -458,7 +458,7 @@
                       <horizontalTextPosition value="0"/>
                       <icon value="com/babas/icons/x32/boxSelected.png"/>
                       <iconTextGap value="-2"/>
-                      <margin top="10" left="10" bottom="10" right="10"/>
+                      <margin top="10" left="5" bottom="10" right="5"/>
                       <rolloverEnabled value="false"/>
                       <selectedIcon value="com/babas/icons/x32/boxDefault.png"/>
                       <tabUnderlineHeight value="5"/>

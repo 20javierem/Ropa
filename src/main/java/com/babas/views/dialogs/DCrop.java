@@ -48,40 +48,28 @@ public class DCrop extends JDialog {
 
     private void loadImagesScaled() {
         BufferedImage bufferedImage = ((ImagePanel) panelImagen).getImageSelected();
+        if (bufferedImage != null) {
+            imageSelectedx200 = getImage(bufferedImage, 200.00);
+            imageSelectedx400 = getImage(bufferedImage, 400.00);
+        }
+        onDispose();
+    }
 
+    private BufferedImage getImage(BufferedImage bufferedImage, double scal) {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
-        if (width > 200 || height > 200) {
-            double percen = Math.min(200.00 / width, 200.00 / height);
+        if (width > scal || height > scal) {
+            double percen = Math.min(scal / width, scal / height);
             width = (int) (percen * width);
             height = (int) (percen * height);
         }
         // Draw the image on to the buffered image
         Image image = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         BufferedImage bufferedImage1 = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        ;
         Graphics2D bGr1 = bufferedImage1.createGraphics();
         bGr1.drawImage(image, 0, 0, null);
         bGr1.dispose();
-        imageSelectedx200 = bufferedImage1;
-
-        width = bufferedImage.getWidth();
-        height = bufferedImage.getHeight();
-        if (width > 400 || height > 400) {
-            double percen = Math.min(400.00 / width, 400.00 / height);
-            width = (int) (percen * width);
-            height = (int) (percen * height);
-        }
-        // Draw the image on to the buffered image
-        Image image2 = bufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        BufferedImage bufferedImage2 = new BufferedImage(image2.getWidth(null), image2.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        ;
-        Graphics2D bGr2 = bufferedImage2.createGraphics();
-        bGr2.drawImage(image2, 0, 0, null);
-        bGr2.dispose();
-        imageSelectedx400 = bufferedImage2;
-
-        onDispose();
+        return bufferedImage1;
     }
 
     public void loadImage() {

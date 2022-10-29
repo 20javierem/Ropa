@@ -212,19 +212,23 @@ public class Product extends Babas {
         }
         return presentationDefault;
     }
+
     public List<Icon> getIconsx200(boolean clear){
         if(clear){
             iconsx200.clear();
         }
-
         if(iconsx200.size()==imagesx200.size()){
             return  iconsx200;
         }else{
             iconsx200.clear();
             imagesx200.forEach(icon->{
-                Image image=Utilities.getImage(icon);
-                if(image!=null){
-                    iconsx200.add(new ImageIcon(image));
+                if(Utilities.openConection()){
+                    Image image=Utilities.getImage(icon);
+                    if(image!=null){
+                        iconsx200.add(new ImageIcon(image));
+                    }else{
+                        iconsx200.add(null);
+                    }
                 }else{
                     iconsx200.add(null);
                 }
@@ -242,13 +246,16 @@ public class Product extends Babas {
         }else{
             iconsx400.clear();
             imagesx400.forEach(icon->{
-                Image image=Utilities.getImage(icon);
-                if(image!=null){
-                    iconsx400.add(new ImageIcon(image));
+                if(Utilities.openConection()){
+                    Image image=Utilities.getImage(icon);
+                    if(image!=null){
+                        iconsx400.add(new ImageIcon(image));
+                    }else{
+                        iconsx400.add(null);
+                    }
                 }else{
                     iconsx400.add(null);
                 }
-
             });
             return iconsx400;
         }

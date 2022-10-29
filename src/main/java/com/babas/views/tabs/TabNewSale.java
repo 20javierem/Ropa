@@ -141,8 +141,8 @@ public class TabNewSale {
             }
         });
         if (!Babas.company.getLogo().isBlank()) {
-            if (Utilities.iconCompany != null) {
-                lblLogo.setIcon(Utilities.iconCompany);
+            if (Utilities.iconCompanyx255x220 != null) {
+                lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
     }
@@ -303,7 +303,7 @@ public class TabNewSale {
         panel7.setLayout(new GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel6.add(panel7, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
-        panel8.setLayout(new GridLayoutManager(5, 3, new Insets(0, 20, 0, 20), 5, -1));
+        panel8.setLayout(new GridLayoutManager(5, 3, new Insets(0, 20, 0, 20), 5, 0));
         panel7.add(panel8, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, Font.BOLD, 14, label1.getFont());

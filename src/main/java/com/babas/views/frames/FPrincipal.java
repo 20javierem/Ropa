@@ -195,7 +195,7 @@ public class FPrincipal extends JFrame {
         btnExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                pop_up.show(btnExit, -btnExit.getX(), btnExit.getVisibleRect().y - 66);
+                pop_up.show(btnExit, -btnExit.getX(), btnExit.getVisibleRect().y - 58);
             }
         });
         btnNotify.addActionListener(new ActionListener() {
@@ -411,7 +411,6 @@ public class FPrincipal extends JFrame {
         btnRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
         btnRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
         btnNotify.setEnabled(Babas.user.getPermitions().isAceptTransfer());
-        System.out.println(Babas.user.getPermitions().isAceptTransfer());
     }
 
     public void loadTransferOnWait() {
@@ -677,7 +676,7 @@ public class FPrincipal extends JFrame {
         btnSales.setHorizontalTextPosition(0);
         btnSales.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/ventasSelected.png")));
         btnSales.setIconTextGap(-2);
-        btnSales.setMargin(new Insets(10, 10, 10, 10));
+        btnSales.setMargin(new Insets(10, 5, 10, 5));
         btnSales.setRolloverEnabled(false);
         btnSales.setSelected(true);
         btnSales.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/ventasDefault.png")));
@@ -693,7 +692,7 @@ public class FPrincipal extends JFrame {
         btnManagement.setHorizontalTextPosition(0);
         btnManagement.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/gestionarSelected.png")));
         btnManagement.setIconTextGap(-2);
-        btnManagement.setMargin(new Insets(10, 10, 10, 10));
+        btnManagement.setMargin(new Insets(10, 5, 10, 5));
         btnManagement.setRolloverEnabled(false);
         btnManagement.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/gestionarDefault.png")));
         btnManagement.setTabUnderlineHeight(5);
@@ -708,7 +707,7 @@ public class FPrincipal extends JFrame {
         btnReserves.setHorizontalTextPosition(0);
         btnReserves.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/reserveSelected.png")));
         btnReserves.setIconTextGap(-2);
-        btnReserves.setMargin(new Insets(10, 10, 10, 10));
+        btnReserves.setMargin(new Insets(10, 5, 10, 5));
         btnReserves.setRolloverEnabled(false);
         btnReserves.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/reserveDefault.png")));
         btnReserves.setTabUnderlineHeight(5);
@@ -723,7 +722,7 @@ public class FPrincipal extends JFrame {
         btnTraslades.setHorizontalTextPosition(0);
         btnTraslades.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/transferirDefault.png")));
         btnTraslades.setIconTextGap(-2);
-        btnTraslades.setMargin(new Insets(10, 10, 10, 10));
+        btnTraslades.setMargin(new Insets(10, 5, 10, 5));
         btnTraslades.setRolloverEnabled(false);
         btnTraslades.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/transferirSelected.png")));
         btnTraslades.setTabUnderlineHeight(5);
@@ -738,7 +737,7 @@ public class FPrincipal extends JFrame {
         btnRentals.setHorizontalTextPosition(0);
         btnRentals.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/reserveSelected.png")));
         btnRentals.setIconTextGap(-2);
-        btnRentals.setMargin(new Insets(10, 10, 10, 10));
+        btnRentals.setMargin(new Insets(10, 5, 10, 5));
         btnRentals.setRolloverEnabled(false);
         btnRentals.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/reserveDefault.png")));
         btnRentals.setTabUnderlineHeight(5);
@@ -753,7 +752,7 @@ public class FPrincipal extends JFrame {
         btnBoxes.setHorizontalTextPosition(0);
         btnBoxes.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/boxSelected.png")));
         btnBoxes.setIconTextGap(-2);
-        btnBoxes.setMargin(new Insets(10, 10, 10, 10));
+        btnBoxes.setMargin(new Insets(10, 5, 10, 5));
         btnBoxes.setRolloverEnabled(false);
         btnBoxes.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/boxDefault.png")));
         btnBoxes.setTabUnderlineHeight(5);

@@ -56,10 +56,13 @@ public class FLogin extends JFrame {
         pack();
         setLocationRelativeTo(null);
         if (!Babas.company.getLogo().isBlank()) {
-            Image logo = Utilities.getImage(Babas.company.getLogo());
-            if (logo != null) {
-                Utilities.iconCompany = new ImageIcon(logo.getScaledInstance(215, 215, Image.SCALE_SMOOTH));
-                lblLogo.setIcon(Utilities.iconCompany);
+            if (Utilities.openConection()) {
+                Image logo = Utilities.getImage(Babas.company.getLogo());
+                if (logo != null) {
+                    Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+                    Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(420, 420, Image.SCALE_SMOOTH));
+                    lblLogo.setIcon(Utilities.iconCompanyx255x220);
+                }
             }
         }
     }

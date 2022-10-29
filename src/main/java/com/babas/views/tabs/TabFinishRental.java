@@ -88,8 +88,8 @@ public class TabFinishRental {
     private void init() {
         tabPane.setTitle("Finalización alquiler Nro. " + rental.getNumberRental());
         if (!Babas.company.getLogo().isBlank()) {
-            if (Utilities.iconCompany != null) {
-                lblLogo.setIcon(Utilities.iconCompany);
+            if (Utilities.iconCompanyx255x220 != null) {
+                lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
         tabPane.getActions().addActionListener(new ActionListener() {

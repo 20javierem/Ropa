@@ -14,7 +14,7 @@ import org.hibernate.service.spi.ServiceException;
 public class Babas {
     public static Session session;
     protected static CriteriaBuilder builder;
-    public static boolean state;
+    public static boolean state=false;
     private static SessionFactory sessionFactory;
     public static User user;
     public static BoxSession boxSession =new BoxSession();
@@ -22,7 +22,6 @@ public class Babas {
     
     public static void initialize() {
         buildSessionFactory();
-        state=true;
     }
 
     private static void buildSessionFactory() {
@@ -31,6 +30,7 @@ public class Babas {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             session = sessionFactory.openSession();
             builder = session.getCriteriaBuilder();
+            state=true;
         }catch (ServiceException e){
             System.out.println("error de conexion");
         }

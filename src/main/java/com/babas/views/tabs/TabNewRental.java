@@ -135,8 +135,8 @@ public class TabNewRental {
             loadTotals();
         });
         if (!Babas.company.getLogo().isBlank()) {
-            if (Utilities.iconCompany != null) {
-                lblLogo.setIcon(Utilities.iconCompany);
+            if (Utilities.iconCompanyx255x220 != null) {
+                lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
     }

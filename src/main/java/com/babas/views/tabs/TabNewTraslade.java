@@ -184,8 +184,8 @@ public class TabNewTraslade {
     private void init() {
         tabPane.setTitle("Nuevo traslado");
         if (!Babas.company.getLogo().isBlank()) {
-            if (Utilities.iconCompany != null) {
-                lblLogo.setIcon(Utilities.iconCompany);
+            if (Utilities.iconCompanyx255x220 != null) {
+                lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
         loadCombos();
