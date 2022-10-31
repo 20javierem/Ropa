@@ -40,6 +40,7 @@ public class Branch extends Babas {
     @Transient
     private List<Transfer> transfers=new ArrayList<>();
     @OneToMany(mappedBy = "branch")
+    @Where(clause = "p1_0.active=1")
     private List<Stock> stocks =new ArrayList<>();
     private Date created;
     private Date updated;

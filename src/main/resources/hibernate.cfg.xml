@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.mariadb.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mariadb://192.168.0.103:3306/db</property>
+        <property name="connection.url">jdbc:mariadb://192.168.0.116:3306/db</property>
         <property name="connection.user">javier</property>
         <property name="connection.password">ernestomoreno</property>
 <!--        <property name="connection.url">jdbc:mariadb://localhost/db</property>-->

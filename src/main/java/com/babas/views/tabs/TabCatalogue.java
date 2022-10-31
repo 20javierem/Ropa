@@ -121,7 +121,7 @@ public class TabCatalogue {
 
     private void init() {
         tabPane.setTitle("Catálogo");
-        panelProducts.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
+        panelProducts.setLayout(new WrapLayout(WrapLayout.LEFT, 5, 5));
         scrollPane.getVerticalScrollBar().setUnitIncrement(35);
         loadCombos();
         loadTable();
