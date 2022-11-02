@@ -4,6 +4,7 @@ import com.babas.App;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.custom.JPanelGradiente;
+import com.babas.custom.ToggleButton;
 import com.babas.models.BoxSession;
 import com.babas.models.User;
 import com.babas.utilities.Babas;
@@ -11,6 +12,7 @@ import com.babas.utilities.Utilities;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -23,29 +25,28 @@ public class FLogin extends JFrame {
     private JPanel contentPane;
     private JPanel panelDatos;
     private JButton btnInitSession;
-    private JCheckBox ckRememberUser;
+    private ToggleButton ckRememberUser;
     private FlatTextField fieldUser;
     private JLabel lblLogo;
     private CustomPasswordField fieldPasword;
     private JLabel lblError;
-    private JButton btnShowPasword;
     private FPrincipal fPrincipal;
 
     public FLogin(FPrincipal fPrincipal) {
         this.fPrincipal = fPrincipal;
         $$$setupUI$$$();
         fieldUser.setEnabled(false);
-        initComponents();
+        init();
         btnInitSession.addActionListener(e -> start());
     }
 
     public FLogin() {
         $$$setupUI$$$();
-        initComponents();
+        init();
         btnInitSession.addActionListener(e -> start());
     }
 
-    private void initComponents() {
+    private void init() {
         setContentPane(contentPane);
         setTitle("Login");
         Utilities.setJFrame(this);
@@ -65,6 +66,7 @@ public class FLogin extends JFrame {
                 }
             }
         }
+        lblError.setVisible(false);
     }
 
     private void loadUserSaved() {
@@ -149,7 +151,7 @@ public class FLogin extends JFrame {
         createUIComponents();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 40, 10), -1, -1));
         panelDatos = new JPanel();
-        panelDatos.setLayout(new GridLayoutManager(4, 1, new Insets(2, 2, 2, 2), 5, 5));
+        panelDatos.setLayout(new GridLayoutManager(5, 1, new Insets(2, 2, 2, 2), 5, 5));
         panelDatos.setBackground(new Color(-12828863));
         panelDatos.setOpaque(false);
         contentPane.add(panelDatos, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -157,28 +159,24 @@ public class FLogin extends JFrame {
         Font btnInitSessionFont = this.$$$getFont$$$(null, -1, 14, btnInitSession.getFont());
         if (btnInitSessionFont != null) btnInitSession.setFont(btnInitSessionFont);
         btnInitSession.setText("Ingresar");
-        panelDatos.add(btnInitSession, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 32), null, 0, false));
+        panelDatos.add(btnInitSession, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 32), null, 0, false));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), 0, -1));
         panel1.setOpaque(false);
-        panelDatos.add(panel1, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(-1, 50), null, 0, false));
-        lblError = new JLabel();
-        Font lblErrorFont = this.$$$getFont$$$(null, -1, 12, lblError.getFont());
-        if (lblErrorFont != null) lblError.setFont(lblErrorFont);
-        lblError.setForeground(new Color(-976373));
-        lblError.setText("Credenciales incorrectas");
-        lblError.setVisible(false);
-        panel1.add(lblError, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        ckRememberUser = new JCheckBox();
-        ckRememberUser.setHorizontalAlignment(2);
-        ckRememberUser.setHorizontalTextPosition(4);
-        ckRememberUser.setIconTextGap(5);
-        ckRememberUser.setInheritsPopupMenu(false);
-        ckRememberUser.setMargin(new Insets(2, 2, 2, 2));
-        ckRememberUser.setOpaque(false);
-        ckRememberUser.setText("Recordar usuario");
-        ckRememberUser.setVerticalAlignment(0);
-        panel1.add(ckRememberUser, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panelDatos.add(panel1, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        ckRememberUser = new ToggleButton();
+        panel1.add(ckRememberUser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer1 = new Spacer();
+        panel1.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 4, 0), -1, -1));
+        panel2.setOpaque(false);
+        panel1.add(panel2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label1 = new JLabel();
+        Font label1Font = this.$$$getFont$$$(null, -1, 11, label1.getFont());
+        if (label1Font != null) label1.setFont(label1Font);
+        label1.setText("Recordar usuario");
+        panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         fieldUser = new FlatTextField();
         Font fieldUserFont = this.$$$getFont$$$(null, -1, 17, fieldUser.getFont());
         if (fieldUserFont != null) fieldUser.setFont(fieldUserFont);
@@ -189,6 +187,12 @@ public class FLogin extends JFrame {
         if (fieldPaswordFont != null) fieldPasword.setFont(fieldPaswordFont);
         fieldPasword.setPlaceholderText(" Contraseña");
         panelDatos.add(fieldPasword, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(165, -1), null, 0, false));
+        lblError = new JLabel();
+        Font lblErrorFont = this.$$$getFont$$$(null, -1, 11, lblError.getFont());
+        if (lblErrorFont != null) lblError.setFont(lblErrorFont);
+        lblError.setForeground(new Color(-976373));
+        lblError.setText("Credenciales incorrectas");
+        panelDatos.add(lblError, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblLogo = new JLabel();
         lblLogo.setHorizontalAlignment(0);
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));
