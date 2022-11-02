@@ -231,6 +231,12 @@ public class FPrincipal extends JFrame {
         products.forEach(product -> product.getIconsx200(true));
         products.forEach(product -> product.getIconsx400(true));
         loadPermisses();
+        Babas.company.refresh();
+        if(!Babas.company.getLogo().isBlank()){
+            if(Utilities.openConection()){
+                Utilities.downloadLogo(Babas.company.getLogo());
+            }
+        }
         btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 

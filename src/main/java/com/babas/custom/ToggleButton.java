@@ -76,7 +76,7 @@ public class ToggleButton extends JComponent {
     }
 
     private void initAnimator() {
-        animator = new Animator(350, new TimingTargetAdapter() {
+        animator = new Animator(250, new TimingTargetAdapter() {
             @Override
             public void timingEvent(float fraction) {
                 if (isSelected()) {

@@ -137,7 +137,7 @@ public class DGroupPermition extends JDialog {
             } else {
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ÉXITO", "Grupo guardados");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Cambios guardados");
                 onHecho();
             }
         } else {
