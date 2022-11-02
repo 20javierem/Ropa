@@ -94,14 +94,8 @@ public class Utilities {
     public static boolean openConection(){
         if(smbConnection!=null){
             if(!smbConnection.isConnectionAlive()){
-                try {
-                    auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getServerPassword().toCharArray(), "localhost");
-                    smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth);
-                    return true;
-                }catch (IOException e) {
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imagenes");
-                    return false;
-                }
+                smbConnection = null;
+                 return openConection();
             }else{
                 return true;
             }
@@ -134,7 +128,7 @@ public class Utilities {
     }
 
     public static Image getImage(String imageName){
-        try (SmbConnection smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth)) {
+        try {
             SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
             SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
             return ImageIO.read(file.getInputStream());

@@ -14,8 +14,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -49,6 +49,8 @@
       <groupId>com.moreno</groupId>
       <artifactId>notify</artifactId>
       <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>/home/eder/.m2/repository/com/moreno/notify/1.0/notify-1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.swinglabs.swingx</groupId>
