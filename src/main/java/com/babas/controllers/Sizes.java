@@ -26,7 +26,7 @@ public class Sizes extends Babas {
     public static Vector<Size> getActives(){
         criteria = builder.createQuery(Size.class);
         root=criteria.from(Size.class);
-        criteria.select(root).where(builder.isTrue(root.get("active")));
+        criteria.select(root).where(builder.isTrue(root.get("active"))).orderBy(builder.asc(root.get("name")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 }

@@ -115,6 +115,11 @@ public class DBoxSesion extends JDialog {
                 if (boxSession1 != null) {
                     if (!Objects.equals(boxSession1.getUser().getId(), boxSession.getUser().getId())) {
                         flag = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Ya se abrió esta caja, ¿Desea cerrar la caja " + boxSession.getBox().getName() + "?", "Caja abierta", JOptionPane.YES_NO_OPTION) == 0;
+                        if (flag) {
+                            boxSession1.setAmountDelivered(boxSession1.getAmountToDelivered());
+                            boxSession1.setUpdated(new Date());
+                            boxSession1.save();
+                        }
                     } else {
                         flag = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Tiene una sesion abierta en esta caja, desea continuar la sessión", "Sesión abierta", JOptionPane.YES_NO_OPTION) == 0;
                         if (flag) {
@@ -237,4 +242,5 @@ public class DBoxSesion extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

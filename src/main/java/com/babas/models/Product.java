@@ -221,18 +221,16 @@ public class Product extends Babas {
             return  iconsx200;
         }else{
             iconsx200.clear();
-            imagesx200.forEach(icon->{
                 if(Utilities.openConection()){
-                    Image image=Utilities.getImage(icon);
-                    if(image!=null){
-                        iconsx200.add(new ImageIcon(image));
-                    }else{
-                        iconsx200.add(null);
-                    }
-                }else{
-                    iconsx200.add(null);
+                    imagesx200.forEach(icon->{
+                        Image image=Utilities.getImage(icon);
+                        if(image!=null){
+                            iconsx200.add(new ImageIcon(image));
+                        }else{
+                            iconsx200.add(null);
+                        }
+                    });
                 }
-            });
             return iconsx200;
         }
     }
@@ -245,18 +243,16 @@ public class Product extends Babas {
             return  iconsx400;
         }else{
             iconsx400.clear();
-            imagesx400.forEach(icon->{
-                if(Utilities.openConection()){
+            if(Utilities.openConection()){
+                imagesx400.forEach(icon->{
                     Image image=Utilities.getImage(icon);
                     if(image!=null){
                         iconsx400.add(new ImageIcon(image));
                     }else{
                         iconsx400.add(null);
                     }
-                }else{
-                    iconsx400.add(null);
-                }
-            });
+                });
+            }
             return iconsx400;
         }
     }

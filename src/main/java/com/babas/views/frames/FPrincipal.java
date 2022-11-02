@@ -232,8 +232,8 @@ public class FPrincipal extends JFrame {
         products.forEach(product -> product.getIconsx400(true));
         loadPermisses();
         Babas.company.refresh();
-        if(!Babas.company.getLogo().isBlank()){
-            if(Utilities.openConection()){
+        if (!Babas.company.getLogo().isBlank()) {
+            if (Utilities.openConection()) {
                 Utilities.downloadLogo(Babas.company.getLogo());
             }
         }
@@ -250,8 +250,10 @@ public class FPrincipal extends JFrame {
     private void exitSession() {
         boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Cerrar sesión", JOptionPane.YES_NO_OPTION) == 0;
         if (si) {
+            System.out.println("rapido");
             FLogin fLogin = new FLogin();
-            dispose();
+            this.dispose();
+            System.out.println("lento");
             fLogin.setVisible(true);
         }
     }

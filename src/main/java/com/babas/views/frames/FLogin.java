@@ -57,7 +57,9 @@ public class FLogin extends JFrame {
         pack();
         setLocationRelativeTo(null);
         Babas.company.refresh();
-        if (!Babas.company.getLogo().isBlank()) {
+        if (Utilities.iconCompanyx255x220 != null) {
+            lblLogo.setIcon(Utilities.iconCompanyx255x220);
+        } else if (!Babas.company.getLogo().isBlank()) {
             if (Utilities.openConection()) {
                 Image logo = Utilities.getImage(Babas.company.getLogo());
                 if (logo != null) {

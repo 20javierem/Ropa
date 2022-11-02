@@ -26,7 +26,7 @@ public class Colors extends Babas {
     public static Vector<Color> getActives(){
         criteria = builder.createQuery(Color.class);
         root=criteria.from(Color.class);
-        criteria.select(root).where(builder.isTrue(root.get("active")));
+        criteria.select(root).where(builder.isTrue(root.get("active"))).orderBy(builder.asc(root.get("name")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 }

@@ -26,7 +26,7 @@ public class Categorys extends Babas {
     public static Vector<Category> getActives(){
         criteria = builder.createQuery(Category.class);
         root=criteria.from(Category.class);
-        criteria.select(root).where(builder.isTrue(root.get("active")));
+        criteria.select(root).where(builder.isTrue(root.get("active"))).orderBy(builder.asc(root.get("name")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 }
