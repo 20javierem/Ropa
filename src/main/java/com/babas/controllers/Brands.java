@@ -16,7 +16,13 @@ public class Brands extends Babas {
     public static Brand get(Integer id) {
         return session.find(Brand.class, id);
     }
-
+    public static Brand get(String name) {
+        criteria = builder.createQuery(Brand.class);
+        root = criteria.from(Brand.class);
+        criteria.select(root).
+                where(builder.equal(root.get("name"), name));
+        return session.createQuery(criteria).getSingleResultOrNull();
+    }
     public static Vector<Brand> getTodos(){
         criteria = builder.createQuery(Brand.class);
         criteria.select(criteria.from(Brand.class));

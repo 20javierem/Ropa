@@ -16,7 +16,13 @@ public class Styles extends Babas {
     public static Style get(Integer id) {
         return session.find(Style.class, id);
     }
-
+    public static Style get(String name) {
+        criteria = builder.createQuery(Style.class);
+        root = criteria.from(Style.class);
+        criteria.select(root).
+                where(builder.equal(root.get("name"), name));
+        return session.createQuery(criteria).getSingleResultOrNull();
+    }
     public static Vector<Style> getTodos(){
         criteria = builder.createQuery(Style.class);
         criteria.select(criteria.from(Style.class));

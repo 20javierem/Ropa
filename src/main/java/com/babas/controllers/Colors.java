@@ -2,6 +2,7 @@ package com.babas.controllers;
 
 import com.babas.models.Color;
 import com.babas.models.Product;
+import com.babas.models.Size;
 import com.babas.utilities.Babas;
 import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaQuery;
@@ -16,7 +17,13 @@ public class Colors extends Babas {
     public static Color get(Integer id) {
         return session.find(Color.class, id);
     }
-
+    public static Color get(String name) {
+        criteria = builder.createQuery(Color.class);
+        root = criteria.from(Color.class);
+        criteria.select(root).
+                where(builder.equal(root.get("name"), name));
+        return session.createQuery(criteria).getSingleResultOrNull();
+    }
     public static Vector<Color> getTodos(){
         criteria = builder.createQuery(Color.class);
         criteria.select(criteria.from(Color.class));

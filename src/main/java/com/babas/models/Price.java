@@ -77,6 +77,7 @@ public class Price extends Babas {
 
     @Override
     public void save() {
+        if (created == null) created = new Date();
         updated=new Date();
         super.save();
     }

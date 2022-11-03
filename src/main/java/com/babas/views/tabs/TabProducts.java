@@ -2,6 +2,7 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.Product;
+import com.babas.utilities.Excel;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
@@ -12,13 +13,8 @@ import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
-import com.intellij.uiDesigner.core.GridConstraints;
-import com.intellij.uiDesigner.core.GridLayoutManager;
-import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -34,6 +30,8 @@ public class TabProducts {
     private JButton btnBrands;
     private JButton btnStades;
     private JButton btnDimentions;
+    private JButton btnExport;
+    private JButton btnImport;
     private ProductAbstractModel model;
 
     public TabProducts() {
@@ -92,8 +90,22 @@ public class TabProducts {
                 loadStades();
             }
         });
+        btnImport.setActionCommand("import");
+        btnImport.addActionListener(this::fileExcelData);
+        btnExport.setActionCommand("export");
+        btnExport.addActionListener(this::fileExcelData);
     }
-
+    private void fileExcelData(ActionEvent event) {
+        JButton button = (JButton) event.getSource();
+        if ("import".equals(button.getActionCommand())) {
+            Excel excel = new Excel();
+            if (excel.initialize()) {
+                excel.loadData();
+            }
+        } else {
+            //export
+        }
+    }
     private void loadDimentions() {
         DAllDimentions dAllDimentions = new DAllDimentions();
         dAllDimentions.setVisible(true);

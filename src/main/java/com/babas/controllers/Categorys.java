@@ -16,7 +16,13 @@ public class Categorys extends Babas {
     public static Category get(Integer id) {
         return session.find(Category.class, id);
     }
-
+    public static Category get(String name) {
+        criteria = builder.createQuery(Category.class);
+        root = criteria.from(Category.class);
+        criteria.select(root).
+                where(builder.equal(root.get("name"), name));
+        return session.createQuery(criteria).getSingleResultOrNull();
+    }
     public static Vector<Category> getTodos(){
         criteria = builder.createQuery(Category.class);
         criteria.select(criteria.from(Category.class));
