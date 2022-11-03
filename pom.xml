@@ -49,8 +49,6 @@
       <groupId>com.moreno</groupId>
       <artifactId>notify</artifactId>
       <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>/home/eder/.m2/repository/com/moreno/notify/1.0/notify-1.0.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>org.swinglabs.swingx</groupId>
