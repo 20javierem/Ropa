@@ -3,9 +3,13 @@
   <grid id="27dc6" binding="contentPane" custom-create="true" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="33" y="23" width="315" height="387"/>
+      <xy x="39" y="23" width="315" height="376"/>
     </constraints>
-    <properties/>
+    <properties>
+      <maximumSize width="290" height="376"/>
+      <minimumSize width="290" height="376"/>
+      <preferredSize width="290" height="376"/>
+    </properties>
     <border type="none" title=""/>
     <children>
       <grid id="94310" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

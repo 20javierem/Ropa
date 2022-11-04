@@ -39,10 +39,8 @@ public class TabRecordBoxSesions {
     private TabPane tabPane;
     private JDateChooser fechaInicio;
     private JDateChooser fechaFin;
-    private JDateChooser fechaHasta;
     private JDateChooser fechaDesde;
     private JPanel paneEntreFecha;
-    private JPanel paneHastaFecha;
     private JPanel paneDesdeFecha;
     private JButton btnSearch;
     private FlatTable table;
@@ -93,22 +91,18 @@ public class TabRecordBoxSesions {
             case 0:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 1:
                 paneEntreFecha.setVisible(true);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 2:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(true);
-                paneHastaFecha.setVisible(false);
                 break;
             case 3:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(true);
                 break;
         }
     }
@@ -164,11 +158,7 @@ public class TabRecordBoxSesions {
                 start = fechaDesde.getDate();
             }
         }
-        if (paneHastaFecha.isVisible()) {
-            if (fechaHasta.getDate() != null) {
-                end = fechaHasta.getDate();
-            }
-        }
+
         if (start != null && end != null) {
             sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
@@ -183,14 +173,7 @@ public class TabRecordBoxSesions {
             }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cajas cargadas");
             model.fireTableDataChanged();
-        } else if (end != null) {
-            sales.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(BoxSessions.getBefore(branch, end));
-            }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cajas cargadas");
-            model.fireTableDataChanged();
-        } else {
+        }else {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -205,11 +188,9 @@ public class TabRecordBoxSesions {
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
         fechaDesde = new JDateChooser(new Date());
-        fechaHasta = new JDateChooser(new Date());
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());
-        fechaHasta.setDateFormatString(Utilities.getFormatoFecha());
     }
 
 }

@@ -35,12 +35,10 @@ public class TabRecordSales {
     private JComboBox cbbType;
     private JDateChooser fechaInicio;
     private JDateChooser fechaFin;
-    private JDateChooser fechaHasta;
     private JDateChooser fechaDesde;
     private JLabel lblTotalEfectivo;
     private JLabel lblTotalTransferencias;
     private JPanel paneEntreFecha;
-    private JPanel paneHastaFecha;
     private JPanel paneDesdeFecha;
     private JButton btnSearch;
     private FlatTable table;
@@ -165,22 +163,18 @@ public class TabRecordSales {
             case 0:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 1:
                 paneEntreFecha.setVisible(true);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 2:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(true);
-                paneHastaFecha.setVisible(false);
                 break;
             case 3:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(true);
                 break;
         }
     }
@@ -244,11 +238,6 @@ public class TabRecordSales {
                 start = fechaDesde.getDate();
             }
         }
-        if (paneHastaFecha.isVisible()) {
-            if (fechaHasta.getDate() != null) {
-                end = fechaHasta.getDate();
-            }
-        }
         if (start != null && end != null) {
             sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
@@ -286,11 +275,9 @@ public class TabRecordSales {
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
         fechaDesde = new JDateChooser(new Date());
-        fechaHasta = new JDateChooser(new Date());
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());
-        fechaHasta.setDateFormatString(Utilities.getFormatoFecha());
     }
 
 }

@@ -36,8 +36,6 @@ public class TabRecordTransfers {
     private JPanel paneEntreFecha;
     private JDateChooser fechaInicio;
     private JDateChooser fechaFin;
-    private JPanel paneHastaFecha;
-    private JDateChooser fechaHasta;
     private JPanel paneDesdeFecha;
     private JDateChooser fechaDesde;
     private JButton btnSearch;
@@ -134,22 +132,18 @@ public class TabRecordTransfers {
             case 0:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 1:
                 paneEntreFecha.setVisible(true);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 2:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(true);
-                paneHastaFecha.setVisible(false);
                 break;
             case 3:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(true);
                 break;
         }
     }
@@ -190,11 +184,6 @@ public class TabRecordTransfers {
                 start = fechaDesde.getDate();
             }
         }
-        if (paneHastaFecha.isVisible()) {
-            if (fechaHasta.getDate() != null) {
-                end = fechaHasta.getDate();
-            }
-        }
         if (start != null && end != null) {
             transfers.clear();
             for (Branch branch : Babas.user.getBranchs()) {
@@ -217,18 +206,7 @@ public class TabRecordTransfers {
             }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
             model.fireTableDataChanged();
-        } else if (end != null) {
-            transfers.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                Transfers.getBefore(branch, end).forEach(transfer -> {
-                    if (!transfers.contains(transfer)) {
-                        transfers.add(transfer);
-                    }
-                });
-            }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
-            model.fireTableDataChanged();
-        } else {
+        }else {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -281,11 +259,9 @@ public class TabRecordTransfers {
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
         fechaDesde = new JDateChooser(new Date());
-        fechaHasta = new JDateChooser(new Date());
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());
-        fechaHasta.setDateFormatString(Utilities.getFormatoFecha());
     }
 
 }

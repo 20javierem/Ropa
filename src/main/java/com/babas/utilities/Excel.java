@@ -6,6 +6,7 @@ import com.babas.models.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -38,7 +39,7 @@ public class Excel {
     }
     public boolean initialize() {
         JFileChooser selectFile = new JFileChooser();
-        FileFilter filter = new FileNameExtensionFilter("*.excel", ".xls", "slxs");
+        FileFilter filter = new FileNameExtensionFilter("*.excel", "xlsx","xls", "slxs");
         selectFile.addChoosableFileFilter(filter);
         int result = selectFile.showOpenDialog(Utilities.getJFrame());
         if (result == JFileChooser.APPROVE_OPTION) {
@@ -120,18 +121,26 @@ public class Excel {
                                 product.setSize(size);
                                 color = Colors.get(row.getCell(3).getStringCellValue().trim());
                                 System.out.println(row.getCell(3).getStringCellValue());
+                                System.out.println(color);
                                 product.setColor(color);
                                 brand = Brands.get(row.getCell(4).getStringCellValue().trim());
                                 product.setBrand(brand);
-                                dimention = Dimentions.get(row.getCell(5).getStringCellValue().trim());
-                                product.setDimention(dimention);
+                                Cell cell=row.getCell(5);
+                                if(cell!=null){
+                                    String valueDimension=cell.getStringCellValue();
+                                    dimention = Dimentions.get(valueDimension.trim());
+                                    product.setDimention(dimention);
+                                }
+
                                 try {
                                     product.setBarcode(row.getCell(6).getStringCellValue().trim());
                                 } catch (IllegalStateException e) {
                                     product.setBarcode(String.valueOf(row.getCell(6).getNumericCellValue()));
                                 }
-                                String value = String.valueOf(row.getCell(7).getNumericCellValue());
-                                if (!value.isEmpty()) {
+                                cell=row.getCell(7);
+                                String value;
+                                if(cell!=null){
+                                    value = String.valueOf(cell.getNumericCellValue());
                                     Presentation presentationSale = new Presentation(product);
                                     Price priceSale = new Price(presentationSale);
                                     priceSale.setDefault(true);
@@ -143,8 +152,9 @@ public class Excel {
                                     presentationSale.getPrices().add(priceSale);
                                     product.getPresentations().add(presentationSale);
                                 }
-                                value = String.valueOf(row.getCell(8).getNumericCellValue());
-                                if (!value.isEmpty()) {
+                                cell=row.getCell(8);
+                                if(cell!=null){
+                                    value = String.valueOf(cell.getNumericCellValue());
                                     Presentation presentationRental = new Presentation(product);
                                     Price priceRental = new Price(presentationRental);
                                     priceRental.setDefault(true);

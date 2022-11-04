@@ -37,12 +37,10 @@ public class TabRecordReserves {
     private JComboBox cbbType;
     private JDateChooser fechaInicio;
     private JDateChooser fechaFin;
-    private JDateChooser fechaHasta;
     private JDateChooser fechaDesde;
     private JLabel lblTotalEfectivo;
     private JLabel lblTotalTransferencias;
     private JPanel paneEntreFecha;
-    private JPanel paneHastaFecha;
     private JPanel paneDesdeFecha;
     private JButton btnSearch;
     private FlatTable table;
@@ -152,22 +150,18 @@ public class TabRecordReserves {
             case 0:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 1:
                 paneEntreFecha.setVisible(true);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(false);
                 break;
             case 2:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(true);
-                paneHastaFecha.setVisible(false);
                 break;
             case 3:
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(false);
-                paneHastaFecha.setVisible(true);
                 break;
         }
     }
@@ -246,11 +240,6 @@ public class TabRecordReserves {
                 start = fechaDesde.getDate();
             }
         }
-        if (paneHastaFecha.isVisible()) {
-            if (fechaHasta.getDate() != null) {
-                end = fechaHasta.getDate();
-            }
-        }
         if (start != null && end != null) {
             reserves.clear();
             for (Branch branch : Babas.user.getBranchs()) {
@@ -265,14 +254,7 @@ public class TabRecordReserves {
             }
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Reservas cargadas");
             model.fireTableDataChanged();
-        } else if (end != null) {
-            reserves.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                reserves.addAll(Reserves.getBefore(branch, end));
-            }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Reservas cargadas");
-            model.fireTableDataChanged();
-        } else {
+        }else {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -288,11 +270,9 @@ public class TabRecordReserves {
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
         fechaDesde = new JDateChooser(new Date());
-        fechaHasta = new JDateChooser(new Date());
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());
-        fechaHasta.setDateFormatString(Utilities.getFormatoFecha());
     }
 
 }
