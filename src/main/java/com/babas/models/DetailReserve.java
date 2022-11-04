@@ -1,6 +1,5 @@
 package com.babas.models;
 
-import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import jakarta.persistence.*;

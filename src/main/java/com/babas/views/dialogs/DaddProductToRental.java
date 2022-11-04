@@ -135,9 +135,10 @@ public class DaddProductToRental extends JDialog {
     public void filtrar() {
         String busqueda = txtSearchProduct.getText().trim();
         filtros.clear();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 1, 2));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0,1,2));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
+        listaFiltros.put(2, busqueda);
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
     }
@@ -148,6 +149,7 @@ public class DaddProductToRental extends JDialog {
         StockCellRendered.setCellRenderer(table, listaFiltros);
         UtilitiesTables.headerNegrita(table);
         table.removeColumn(table.getColumn("SUCURSAL"));
+        table.removeColumn(table.getColumn("ALQUILERES"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

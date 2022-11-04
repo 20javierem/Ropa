@@ -108,31 +108,31 @@ public class DBoxSesion extends JDialog {
         }
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(boxSession);
         if (constraintViolationSet.isEmpty()) {
-            boolean flag = true;
+            int index = 0;
             if (!update) {
                 BoxSession boxSession1 = BoxSessions.getByBox(boxSession.getBox());
                 if (boxSession1 != null) {
                     if (!Objects.equals(boxSession1.getUser().getId(), boxSession.getUser().getId())) {
-                        flag = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Ya se abrió esta caja, ¿Desea cerrar la caja " + boxSession.getBox().getName() + "?", "Caja abierta", JOptionPane.YES_NO_OPTION) == 0;
+                        index = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Ya se abrió esta caja, ¿Desea cerrar la caja " + boxSession.getBox().getName() + "?", "Caja abierta", JOptionPane.YES_NO_OPTION);
                     } else {
-                        flag = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Tiene una sesion abierta en esta caja, desea continuar la sessión", "Sesión abierta", JOptionPane.YES_NO_OPTION) == 0;
-                        if (flag) {
+                        index=JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Tiene una sesion abierta en esta caja, desea continuar la sessión", "Sesión abierta", JOptionPane.YES_NO_OPTION);
+                        if (index==0) {
                             Babas.boxSession = boxSession1;
                             Babas.boxSession.calculateTotals();
-                            flag = false;
+                            index = 1;
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(boxSession1.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Caja recuperada");
                             onHecho();
-                        } else {
+                        } else if(index==1) {
                             boxSession1.setAmountDelivered(boxSession1.getAmountToDelivered());
                             boxSession1.setUpdated(new Date());
                             boxSession1.save();
-                            flag = true;
+                            index = 0;
                         }
                     }
                 }
             }
-            if (flag) {
+            if (index==0) {
                 boxSession.save();
                 if (update) {
                     Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(0.00));

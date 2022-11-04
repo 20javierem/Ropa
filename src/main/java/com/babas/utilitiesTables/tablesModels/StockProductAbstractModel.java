@@ -6,8 +6,8 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class StockProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","ALQUILERES"};
-    private final Class[] typeColumns={String.class,String.class,Integer.class,Integer.class,Integer.class,Integer.class};
+    private final String[] nameColumns={"COD. BARRA","SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","ALQUILERES"};
+    private final Class[] typeColumns={String.class,String.class,String.class,Integer.class,Integer.class,Integer.class,Integer.class};
     private final List<Stock> list;
 
     public StockProductAbstractModel(List<Stock> list){
@@ -39,14 +39,16 @@ public class StockProductAbstractModel extends AbstractTableModel {
         Stock stock= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return stock.getBranch().getName();
+                return stock.getProduct().getBarcode();
             case 1:
-                return stock.getProduct().getStyle().getName()+" / "+stock.getProduct().getSex().getName()+" / "+stock.getProduct().getBrand().getName()+" / "+stock.getProduct().getSize().getName()+" / "+stock.getProduct().getColor().getName();
+                return stock.getBranch().getName();
             case 2:
-                return stock.getQuantity();
+                return stock.getProduct().getStyle().getName()+" / "+stock.getProduct().getSex().getName()+" / "+stock.getProduct().getBrand().getName()+" / "+stock.getProduct().getSize().getName()+" / "+stock.getProduct().getColor().getName();
             case 3:
-                return stock.getOnStock();
+                return stock.getQuantity();
             case 4:
+                return stock.getOnStock();
+            case 5:
                 return stock.getOnRental();
             default:
                 return stock.getTimesRented();

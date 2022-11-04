@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
+import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.babas.views.dialogs.*;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
@@ -15,13 +16,20 @@ import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.formdev.flatlaf.icons.FlatSearchIcon;
 
 import javax.swing.*;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TabProducts {
     private TabPane tabPane;
     private FlatTable table;
-    private FlatTextField flatTextField;
+    private FlatTextField txtSearch;
     private JButton btnCategorys;
     private JButton btnSizes;
     private JButton btnColors;
@@ -32,6 +40,10 @@ public class TabProducts {
     private JButton btnDimentions;
     private JButton btnExport;
     private JButton btnImport;
+    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
+    private TableRowSorter<ProductAbstractModel> modeloOrdenado;
+    private List<RowFilter<ProductAbstractModel, String>> filtros = new ArrayList<>();
+    private RowFilter filtroand;
     private ProductAbstractModel model;
 
     public TabProducts() {
@@ -88,6 +100,19 @@ public class TabProducts {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadStades();
+            }
+        });
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filter();
+            }
+        });
+        ((JButton) txtSearch.getComponent(0)).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtSearch.setText(null);
+                filter();
             }
         });
         btnImport.setActionCommand("import");
@@ -160,20 +185,36 @@ public class TabProducts {
     }
 
     private void loadIcons() {
-        flatTextField.setLeadingIcon(new FlatSearchIcon());
+        txtSearch.setLeadingIcon(new FlatSearchIcon());
     }
 
     private void loadTable() {
         model = new ProductAbstractModel(FPrincipal.products);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
-        ProductCellRendered.setCellRenderer(table, null);
+        ProductCellRendered.setCellRenderer(table, listaFiltros);
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorProduct("delete"));
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorProduct("edit"));
         table.removeColumn(table.getColumn(""));
+        modeloOrdenado = new TableRowSorter<>(model);
+        table.setRowSorter(modeloOrdenado);
     }
 
     private void filter() {
+        String busqueda = txtSearch.getText().trim();
+        filtros.clear();
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0,1,2,3,4,5,6,7,8));
+        listaFiltros.put(0, busqueda);
+        listaFiltros.put(1, busqueda);
+        listaFiltros.put(2, busqueda);
+        listaFiltros.put(3, busqueda);
+        listaFiltros.put(4, busqueda);
+        listaFiltros.put(5, busqueda);
+        listaFiltros.put(6, busqueda);
+        listaFiltros.put(7, busqueda);
+        listaFiltros.put(8, busqueda);
+        filtroand = RowFilter.andFilter(filtros);
+        modeloOrdenado.setRowFilter(filtroand);
         if (model.getList().size() == table.getRowCount()) {
             Utilities.getLblCentro().setText("Productos: " + model.getList().size());
         } else {

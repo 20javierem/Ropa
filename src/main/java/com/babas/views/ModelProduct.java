@@ -18,6 +18,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 public class ModelProduct {
@@ -26,7 +28,6 @@ public class ModelProduct {
     private JLabel lblBrand;
     private JLabel lblSize;
     private JLabel lblIcon;
-    private JButton btnShowDetails;
     private JTextArea lblArea;
     private JLabel lblNamePrice;
     private Product product;
@@ -34,9 +35,16 @@ public class ModelProduct {
     public ModelProduct(Product product) {
         this.product = product;
         init();
-        btnShowDetails.addActionListener(new ActionListener() {
+        contentPane.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
+                DProductCatalogue dProductCatalogue = new DProductCatalogue(product);
+                dProductCatalogue.setVisible(true);
+            }
+        });
+        lblArea.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
                 DProductCatalogue dProductCatalogue = new DProductCatalogue(product);
                 dProductCatalogue.setVisible(true);
             }
@@ -54,8 +62,12 @@ public class ModelProduct {
                 lblIcon.setIcon(product.getIconsx200(false).get(0));
             }
         }
+        loadCursors();
     }
-
+    private void loadCursors(){
+        contentPane.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        lblArea.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
     public JPanel getContentPane() {
         contentPane.updateUI();
         return contentPane;

@@ -303,7 +303,12 @@ public class FPrincipal extends JFrame {
         btnMenuBox.add(menuShowBox);
         menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
     }
-
+    private void loadIcons(){
+        btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));
+        btnSettings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/settings.svg")));
+        btnExit.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/exit.svg")));
+        btnNotify.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/notification.svg")));
+    }
     private void loadMenuExit() {
         JMenuItem suspendSession = new JMenuItem("Suspender sesión");
         JMenuItem closeSession = new JMenuItem("Cerrar sesión");
@@ -402,10 +407,7 @@ public class FPrincipal extends JFrame {
         loadMenuSales();
         loadMenuExit();
         loadTransferOnWait();
-        btnActualizar.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));
-        btnSettings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/settings.svg")));
-        btnExit.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/exit.svg")));
-        btnNotify.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/notification.svg")));
+        loadIcons();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 

@@ -47,7 +47,7 @@
             <properties/>
             <border type="none" title="Buscar"/>
             <children>
-              <component id="36136" class="com.formdev.flatlaf.extras.components.FlatTextField" binding="flatTextField">
+              <component id="36136" class="com.formdev.flatlaf.extras.components.FlatTextField" binding="txtSearch">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
