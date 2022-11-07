@@ -6,6 +6,7 @@ import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,7 @@ import java.util.Objects;
 public class Transfer extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     @NotNull(message = "Origen")
     @ManyToOne

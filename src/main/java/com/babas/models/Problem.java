@@ -1,10 +1,8 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +10,7 @@ import java.util.List;
 public class Problem extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Integer id;
 
     private Boolean hasDependency=false;

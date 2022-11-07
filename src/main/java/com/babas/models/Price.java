@@ -4,6 +4,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +14,7 @@ import java.util.Date;
 public class Price extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     @ManyToOne
     private Presentation presentation;

@@ -7,6 +7,7 @@ import com.babas.views.frames.FPrincipal;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
@@ -18,6 +19,7 @@ import java.util.List;
 public class Rental extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     @ManyToOne
     @NotNull(message = "Caja")

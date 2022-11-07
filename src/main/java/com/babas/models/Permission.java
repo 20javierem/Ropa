@@ -1,10 +1,8 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,6 +13,7 @@ import java.util.List;
 public class Permission extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
 
     private String nameGroup;

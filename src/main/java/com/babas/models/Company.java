@@ -3,12 +3,15 @@ package com.babas.models;
 import com.babas.utilities.Babas;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "company_tbl")
 public class Company extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     private String ruc;
     private String businessName;

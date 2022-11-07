@@ -31,6 +31,5 @@ public class Stocks extends Babas {
                 builder.equal(root.get("branch"), branch)),
                 builder.equal(root.get("product"),product));
         return session.createQuery(criteria).getSingleResultOrNull();
-
     }
 }

@@ -7,11 +7,13 @@ import com.babas.utilities.UtilitiesReports;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "detailSale_tbl")
 public class DetailSale extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     @ManyToOne
     private Sale sale;
@@ -109,6 +111,7 @@ public class DetailSale extends Babas {
         }
         super.save();
         Stock stock= Stocks.getStock(getSale().getBranch(),getProduct());
+        stock.refresh();
         stock.getProduct().refresh();
         if (getSale().isActive()){
             stock.getProduct().setStockTotal(stock.getProduct().getStockTotal()-getQuantity()*getQuantityPresentation());

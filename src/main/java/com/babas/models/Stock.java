@@ -3,6 +3,7 @@ package com.babas.models;
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 public class Stock extends Babas {
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     @NotNull
     @ManyToOne

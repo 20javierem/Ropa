@@ -22,7 +22,8 @@ import org.jdesktop.animation.timing.Animator;
 import org.jdesktop.animation.timing.TimingTargetAdapter;
 import org.jdesktop.swingx.graphics.ShadowRenderer;
 
-public class ToggleButton extends JComponent {
+public class CSwitchButton extends JComponent {
+
 
     public boolean isSelected() {
         return selected;
@@ -70,7 +71,7 @@ public class ToggleButton extends JComponent {
     private final Insets shadowSize = new Insets(2, 5, 8, 5);
     private final List<ToggleListener> events = new ArrayList<>();
 
-    public ToggleButton() {
+    public CSwitchButton() {
         init();
         initAnimator();
     }

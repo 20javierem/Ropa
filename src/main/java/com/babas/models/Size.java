@@ -1,12 +1,10 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +17,7 @@ public class Size extends Babas {
 
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "identity")
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;
