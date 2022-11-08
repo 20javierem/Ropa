@@ -14,8 +14,7 @@ import java.util.List;
 @Entity(name = "box_tbl")
 public class Box extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Branch branch;

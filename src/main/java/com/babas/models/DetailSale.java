@@ -12,8 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity(name = "detailSale_tbl")
 public class DetailSale extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Sale sale;

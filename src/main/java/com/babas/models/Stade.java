@@ -14,8 +14,7 @@ import java.util.List;
 @Entity(name = "stade_tbl")
 public class Stade extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank
     private String name;

@@ -12,8 +12,7 @@ import java.util.List;
 @Entity(name = "permission_tbl")
 public class Permission extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nameGroup;

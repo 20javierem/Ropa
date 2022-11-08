@@ -13,10 +13,8 @@ import java.util.List;
 
 @Entity(name = "category_tbl")
 public class Category extends Babas {
-
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;

@@ -14,10 +14,8 @@ import java.util.List;
 
 @Entity(name = "size_tbl")
 public class Size extends Babas {
-
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;

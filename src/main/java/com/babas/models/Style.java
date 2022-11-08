@@ -18,10 +18,8 @@ import java.util.List;
 
 @Entity(name = "style_tbl")
 public class Style extends Babas {
-
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Nombre")
     @NotNull(message = "Nombre")

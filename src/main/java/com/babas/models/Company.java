@@ -10,8 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity(name = "company_tbl")
 public class Company extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String ruc;
     private String businessName;

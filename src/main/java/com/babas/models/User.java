@@ -13,10 +13,8 @@ import java.util.List;
 
 @Entity(name = "user_Tbl")
 public class User extends Babas {
-
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Nombres")
     private String firstName;

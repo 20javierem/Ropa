@@ -14,8 +14,7 @@ import java.util.List;
 @Entity(name = "reserve_tbl")
 public class Reserve extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     @NotNull(message = "Cliente")

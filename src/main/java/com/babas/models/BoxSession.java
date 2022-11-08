@@ -13,8 +13,7 @@ import java.util.List;
 @Entity(name = "box_session_tbl")
 public class BoxSession extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private User user;

@@ -37,11 +37,9 @@ public class DCompany extends JDialog {
     private FlatTextField txtFiscalAdress;
     private JLabel lblLogo;
     private FlatTextField txtLogo;
-    private Company company;
 
     public DCompany() {
         super(Utilities.getJFrame(), "Actualizar datos de la empresa", true);
-        this.company = Babas.company;
         init();
         addWindowListener(new WindowAdapter() {
             @Override
@@ -77,19 +75,15 @@ public class DCompany extends JDialog {
     private void onSave() {
         if (Babas.company == null) {
             Babas.company = new Company();
-            company = Babas.company;
         }
-        if (company.getLogo() == null) {
-            company.setLogo("");
-        }
-        company.setBusinessName(txtBusinessName.getText().trim());
-        company.setDirectionPrincipal(txtFiscalAdress.getText().trim());
-        company.setRuc(txtRuc.getText().trim());
-        company.setTradeName(txtTradeName.getText().trim());
-        company.setSlogan(txtSlogan.getText().trim());
-        Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(company);
+        Babas.company.setBusinessName(txtBusinessName.getText().trim());
+        Babas.company.setDirectionPrincipal(txtFiscalAdress.getText().trim());
+        Babas.company.setRuc(txtRuc.getText().trim());
+        Babas.company.setTradeName(txtTradeName.getText().trim());
+        Babas.company.setSlogan(txtSlogan.getText().trim());
+        Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(Babas.company);
         if (constraintViolationSet.isEmpty()) {
-            company.save();
+            Babas.company.save();
             if (Babas.company.getId() == null) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos registrados");
             } else {
@@ -114,7 +108,7 @@ public class DCompany extends JDialog {
                 if (Utilities.openConection()) {
                     if (Utilities.newImage(inputStream, nameImage)) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
-                        company.setLogo(nameImage);
+                        Babas.company.setLogo(nameImage);
                         Image image = Utilities.getImage(nameImage);
                         if (image != null) {
                             Utilities.iconCompanyx420x420 = new ImageIcon(image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
@@ -136,9 +130,10 @@ public class DCompany extends JDialog {
     private void init() {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        if (company != null) {
+        if (Babas.company != null) {
             load();
         } else {
+            Babas.company = new Company();
             btnSave.setText("Registrar");
             btnHecho.setText("Cancelar");
         }
@@ -147,19 +142,19 @@ public class DCompany extends JDialog {
     }
 
     private void load() {
-        txtRuc.setText(company.getRuc());
-        txtBusinessName.setText(company.getBusinessName());
-        txtTradeName.setText(company.getTradeName());
-        txtFiscalAdress.setText(company.getDirectionPrincipal());
-        txtSlogan.setText(company.getSlogan());
+        txtRuc.setText(Babas.company.getRuc());
+        txtBusinessName.setText(Babas.company.getBusinessName());
+        txtTradeName.setText(Babas.company.getTradeName());
+        txtFiscalAdress.setText(Babas.company.getDirectionPrincipal());
+        txtSlogan.setText(Babas.company.getSlogan());
         if (Utilities.iconCompanyx420x420 != null) {
             lblLogo.setIcon(Utilities.iconCompanyx420x420);
         }
     }
 
     private void onHecho() {
-        if (company.getId() != null) {
-            company.refresh();
+        if (Babas.company.getId() != null) {
+            Babas.company.refresh();
         }
         dispose();
     }
@@ -239,4 +234,5 @@ public class DCompany extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

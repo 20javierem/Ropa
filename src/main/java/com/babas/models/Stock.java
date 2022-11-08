@@ -10,8 +10,7 @@ import java.util.Date;
 @Entity(name = "stock_tbl")
 public class Stock extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotNull
     @ManyToOne

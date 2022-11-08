@@ -14,8 +14,7 @@ import java.util.List;
 @Entity(name = "brand_tbl")
 public class Brand extends Babas {
     @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "identity")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotBlank(message = "Nombre")
     private String name;
