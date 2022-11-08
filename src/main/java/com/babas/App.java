@@ -52,7 +52,7 @@ public class App
 
             if(Babas.company!=null){
                 if(Branchs.getTodos().isEmpty()){
-                    DBranch dBranch=new DBranch(new Branch());
+                    DBranch dBranch=new DBranch(new Branch(),true);
                     dBranch.setVisible(true);
                 }
             }

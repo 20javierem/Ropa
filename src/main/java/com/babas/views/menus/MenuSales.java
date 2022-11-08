@@ -2,6 +2,7 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabCatalogue;
@@ -71,10 +72,10 @@ public class MenuSales {
         Utilities.despintarButton(btnCatalogue);
         Utilities.buttonSelected(btnNewSale);
         if (tabNewSale == null) {
-            tabNewSale = new TabNewSale();
+            tabNewSale = new TabNewSale(new Sale());
         }
         if (tabbedPane.indexOfTab(tabNewSale.getTabPane().getTitle()) == -1) {
-            tabNewSale = new TabNewSale();
+            tabNewSale = new TabNewSale(new Sale());
             tabNewSale.getTabPane().setOption(btnNewSale);
             tabbedPane.addTab(tabNewSale.getTabPane().getTitle(), tabNewSale.getTabPane().getIcon(), tabNewSale.getTabPane());
         }

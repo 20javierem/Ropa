@@ -61,7 +61,8 @@ public class TabNewReserve {
     private Reserve reserve;
     private DetailReserveAbstractModel model;
 
-    public TabNewReserve() {
+    public TabNewReserve(Reserve reserve) {
+        this.reserve = reserve;
         $$$setupUI$$$();
         init();
         btnAddProducts.addActionListener(new ActionListener() {
@@ -90,7 +91,7 @@ public class TabNewReserve {
             @Override
             public void focusLost(FocusEvent e) {
                 SwingUtilities.invokeLater(() -> {
-                    reserve.setAdvance((Double) spinnerAdvance.getValue());
+                    TabNewReserve.this.reserve.setAdvance((Double) spinnerAdvance.getValue());
                     loadTotals();
                 });
             }
@@ -110,7 +111,6 @@ public class TabNewReserve {
     }
 
     private void init() {
-        reserve = new Reserve();
         tabPane.setTitle("Nueva reserva");
         loadTable();
         tabPane.getActions().addActionListener(new ActionListener() {

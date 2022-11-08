@@ -83,6 +83,7 @@ public class TabNewRental {
             }
         });
         btnSaleWithTrasnfer.addActionListener(e -> onSave(false));
+
         ((JSpinner.NumberEditor) spinnerDiscount.getEditor()).getTextField().addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -95,7 +96,7 @@ public class TabNewRental {
             @Override
             public void focusLost(FocusEvent e) {
                 SwingUtilities.invokeLater(() -> {
-                    rental.setDiscount((Double) spinnerDiscount.getValue());
+                    TabNewRental.this.rental.setDiscount((Double) spinnerDiscount.getValue());
                     loadTotals();
                 });
             }
@@ -112,7 +113,7 @@ public class TabNewRental {
             @Override
             public void focusLost(FocusEvent e) {
                 SwingUtilities.invokeLater(() -> {
-                    rental.setWarranty((Double) spinnerWarranty.getValue());
+                    TabNewRental.this.rental.setWarranty((Double) spinnerWarranty.getValue());
                     loadTotals();
                 });
             }
@@ -129,7 +130,6 @@ public class TabNewRental {
             tabPane.setTitle("Nuevo alquiler");
         }
         load();
-        loadTotals();
         tabPane.getActions().addActionListener(e -> {
             model.fireTableDataChanged();
             loadTotals();
@@ -165,7 +165,6 @@ public class TabNewRental {
     }
 
     private void load() {
-        System.out.println("detalles: " + rental.getDetailRentals().size());
         model = new DetailRentalAbstractModel(rental.getDetailRentals());
         table.setModel(model);
         DetailRentalCellRendered.setCellRenderer(table);
@@ -211,7 +210,7 @@ public class TabNewRental {
                     FPrincipal.rentalsActives.add(0, rental);
                     Babas.boxSession.getRentals().add(0, rental);
                     Babas.boxSession.calculateTotals();
-                    Utilities.getLblIzquierda().setText("Alquiler registrado Nro. " + rental.getNumberRental() + " :" + Utilities.formatoFechaHora.format(rental.getCreated()));
+                    Utilities.getLblIzquierda().setText("Alquiler registrado Nro. " + rental.getNumberRental() + " : " + Utilities.formatoFechaHora.format(rental.getCreated()));
                     Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler registrado");
                     if (Utilities.propiedades.getPrintTicketRental().equals("always")) {
@@ -256,10 +255,7 @@ public class TabNewRental {
         txtDocument.setText(null);
         txtPhone.setText(null);
         txtNameClient.setText(null);
-        spinnerWarranty.setValue(0.0);
-        spinnerDiscount.setValue(0.0);
         load();
-        loadTotals();
     }
 
     public TabPane getTabPane() {

@@ -40,7 +40,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
         if(table.getSelectedRow()!=-1){
             Branch branch=((BranchAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
-                DBranch dBranch=new DBranch(branch);
+                DBranch dBranch=new DBranch(branch,false);
                 dBranch.setVisible(true);
             }else{
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Sucursal",JOptionPane.YES_NO_OPTION)==0;

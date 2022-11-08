@@ -52,7 +52,8 @@ public class TabNewSale {
     private Sale sale;
     private DetailSaleAbstractModel model;
 
-    public TabNewSale() {
+    public TabNewSale(Sale sale) {
+        this.sale = sale;
         $$$setupUI$$$();
         init();
         btnAddProducts.addActionListener(new ActionListener() {
@@ -84,23 +85,17 @@ public class TabNewSale {
         ((JSpinner.NumberEditor) spinnerDiscount.getEditor()).getTextField().addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        JTextField textField = (JTextField) e.getSource();
-                        textField.selectAll();
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    JTextField textField = (JTextField) e.getSource();
+                    textField.selectAll();
                 });
             }
 
             @Override
             public void focusLost(FocusEvent e) {
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        sale.setDiscount((Double) spinnerDiscount.getValue());
-                        loadTotals();
-                    }
+                SwingUtilities.invokeLater(() -> {
+                    TabNewSale.this.sale.setDiscount((Double) spinnerDiscount.getValue());
+                    loadTotals();
                 });
             }
         });
@@ -131,8 +126,7 @@ public class TabNewSale {
 
     private void init() {
         tabPane.setTitle("Nueva venta");
-        sale = new Sale();
-        loadTable();
+        load();
         tabPane.getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -159,7 +153,7 @@ public class TabNewSale {
         Utilities.getLblCentro().setText("Nueva venta");
     }
 
-    private void loadTable() {
+    private void load() {
         model = new DetailSaleAbstractModel(sale.getDetailSales());
         table.setModel(model);
         DetailSaleCellRendered.setCellRenderer(table);
@@ -167,6 +161,7 @@ public class TabNewSale {
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorDetailSale2());
         table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailSale());
         table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailSale());
+        loadTotals();
     }
 
     private void onSave(boolean isCash) {
@@ -183,7 +178,7 @@ public class TabNewSale {
                         sale.save();
                         Babas.boxSession.getSales().add(0, sale);
                         Babas.boxSession.calculateTotals();
-                        Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getNumberSale() + " :" + Utilities.formatoFechaHora.format(sale.getCreated()));
+                        Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getNumberSale() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
                         if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
@@ -214,8 +209,7 @@ public class TabNewSale {
         txtDocument.setText(null);
         txtPhone.setText(null);
         txtNameClient.setText(null);
-        loadTable();
-        loadTotals();
+        load();
     }
 
     private boolean getClient() {

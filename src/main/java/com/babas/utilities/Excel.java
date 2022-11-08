@@ -4,6 +4,7 @@ import com.babas.controllers.*;
 import com.babas.controllers.Colors;
 import com.babas.models.*;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -50,6 +51,7 @@ public class Excel {
         return false;
     }
     public void loadData() {
+        boolean alive=true;
         try {
             XSSFWorkbook book = new XSSFWorkbook(file);
             for (String nameSheet : sheets) {
@@ -59,6 +61,7 @@ public class Excel {
                     iterator.next();
                     while (iterator.hasNext()) {
                         Row row = iterator.next();
+                        Utilities.getLblIzquierda().setText("Importando registros...");
                         switch (nameSheet) {
                             case "categorias":
                                 Category category = Categorys.get(row.getCell(1).getStringCellValue().trim());
@@ -143,7 +146,6 @@ public class Excel {
                                     dimention = Dimentions.get(valueDimension.trim());
                                     product.setDimention(dimention);
                                 }
-
                                 try {
                                     product.setBarcode(row.getCell(6).getStringCellValue().trim());
                                 } catch (IllegalStateException e) {
@@ -186,7 +188,12 @@ public class Excel {
                     }
                 }
             }
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Datos importados");
+            Utilities.getLblIzquierda().setText("Éxito: Registros cargados");
+            Utilities.getTabbedPane().updateTab();
         } catch (IOException | InvalidFormatException e) {
+            Utilities.getLblIzquierda().setText("Error al importar registros");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Datos incorrectos");
             throw new RuntimeException(e);
         }
     }

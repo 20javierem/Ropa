@@ -468,7 +468,8 @@ public class UtilitiesReports {
     }
     public static JasperViewer getjasperViewer(JasperReport report, Map<String, Object> parameters, JRBeanArrayDataSource sp, boolean isExitOnClose){
         try {
-            JasperViewer jasperViewer=new JasperViewer(JasperFillManager.fillReport(report,parameters,sp),isExitOnClose);
+            JasperPrint jasperPrint=JasperFillManager.fillReport(report,parameters,sp);
+            JasperViewer jasperViewer=new JasperViewer(jasperPrint,isExitOnClose);
             JPanel panel= (JPanel) jasperViewer.getRootPane().getContentPane().getComponent(0);
             JRViewer visor= (JRViewer) panel.getComponent(0);
             JRViewerToolbar toolbar= (JRViewerToolbar) visor.getComponent(0);

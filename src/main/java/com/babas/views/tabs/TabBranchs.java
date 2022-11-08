@@ -42,7 +42,7 @@ public class TabBranchs {
     }
 
     private void loadNewBranch() {
-        DBranch dBranch = new DBranch(new Branch());
+        DBranch dBranch = new DBranch(new Branch(), false);
         dBranch.setVisible(true);
     }
 

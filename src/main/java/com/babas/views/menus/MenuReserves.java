@@ -2,6 +2,7 @@ package com.babas.views.menus;
 
 import com.babas.custom.CustomPane;
 import com.babas.custom.TabbedPane;
+import com.babas.models.Reserve;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.views.tabs.TabNewReserve;
@@ -55,10 +56,10 @@ public class MenuReserves {
         Utilities.despintarButton(btnRecordReserves);
         Utilities.buttonSelected(btnNewReserve);
         if (tabNewReserve == null) {
-            tabNewReserve = new TabNewReserve();
+            tabNewReserve = new TabNewReserve(new Reserve());
         }
         if (tabbedPane.indexOfTab(tabNewReserve.getTabPane().getTitle()) == -1) {
-            tabNewReserve = new TabNewReserve();
+            tabNewReserve = new TabNewReserve(new Reserve());
             tabNewReserve.getTabPane().setOption(btnNewReserve);
             tabbedPane.addTab(tabNewReserve.getTabPane().getTitle(), tabNewReserve.getTabPane().getIcon(), tabNewReserve.getTabPane());
         }

@@ -7,7 +7,6 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorBox;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorBrand;
 import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
 import com.babas.utilitiesTables.tablesModels.BoxAbstractModel;
@@ -33,7 +32,7 @@ import java.util.Set;
 public class DBranch extends JDialog {
     private JPanel contentPane;
     private FlatButton btnHecho;
-    private JTabbedPane tabbedPane1;
+    private JTabbedPane tabbedPane;
     private FlatButton btnSave;
     private FlatTextField txtName;
     private JButton btnRemoveUser;
@@ -51,10 +50,12 @@ public class DBranch extends JDialog {
     private UserAbstractModel modelUsers;
     private BoxAbstractModel modelBoxs;
     private ActionListener actionListener;
+    private boolean fprincipal;
 
-    public DBranch(Branch branch) {
+    public DBranch(Branch branch, boolean fprincipal) {
         super(Utilities.getJFrame(), "Nueva sucursal", true);
         this.branch = branch;
+        this.fprincipal = fprincipal;
         update = branch.getId() != null;
         init();
         btnSave.addActionListener(new ActionListener() {
@@ -136,6 +137,10 @@ public class DBranch extends JDialog {
         getRootPane().setDefaultButton(btnSave);
         actionListener = e -> modelBoxs.fireTableDataChanged();
         Utilities.getActionsOfDialog().addActionListener(actionListener);
+        if (fprincipal) {
+            tabbedPane.removeTabAt(tabbedPane.indexOfTab("Usuarios"));
+            tabbedPane.removeTabAt(tabbedPane.indexOfTab("Cajas"));
+        }
         if (update) {
             setTitle("Actualizar Usuario");
             btnSave.setText("Guardar");
@@ -249,11 +254,11 @@ public class DBranch extends JDialog {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        tabbedPane1 = new JTabbedPane();
-        panel1.add(tabbedPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
+        tabbedPane = new JTabbedPane();
+        panel1.add(tabbedPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(6, 4, new Insets(10, 10, 10, 10), 5, 5));
-        tabbedPane1.addTab("Sucursal", panel2);
+        tabbedPane.addTab("Sucursal", panel2);
         final JLabel label1 = new JLabel();
         label1.setText("Nombre:");
         panel2.add(label1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -284,7 +289,7 @@ public class DBranch extends JDialog {
         panel2.add(spacer4, new GridConstraints(0, 3, 6, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(2, 3, new Insets(5, 5, 5, 5), 0, 10));
-        tabbedPane1.addTab("Usuarios", panel3);
+        tabbedPane.addTab("Usuarios", panel3);
         final JScrollPane scrollPane1 = new JScrollPane();
         panel3.add(scrollPane1, new GridConstraints(0, 0, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         scrollPane1.setBorder(BorderFactory.createTitledBorder(null, "Usuarios", TitledBorder.CENTER, TitledBorder.DEFAULT_POSITION, null, null));
@@ -306,7 +311,7 @@ public class DBranch extends JDialog {
         panel4.add(btnRemoveUser, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(42, 35), new Dimension(42, 35), new Dimension(42, 35), 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridLayoutManager(2, 2, new Insets(5, 5, 5, 5), 0, 10));
-        tabbedPane1.addTab("Cajas", panel5);
+        tabbedPane.addTab("Cajas", panel5);
         final JScrollPane scrollPane3 = new JScrollPane();
         panel5.add(scrollPane3, new GridConstraints(1, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         tableBoxs = new FlatTable();
@@ -335,4 +340,5 @@ public class DBranch extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
