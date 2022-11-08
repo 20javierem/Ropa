@@ -232,7 +232,7 @@ public class FPrincipal extends JFrame {
         products.forEach(product -> product.getIconsx400(true));
         loadPermisses();
         Babas.company.refresh();
-        if (!Babas.company.getLogo().isBlank()) {
+        if (Babas.company.getLogo() != null) {
             if (Utilities.openConection()) {
                 Utilities.downloadLogo(Babas.company.getLogo());
             }
@@ -826,4 +826,5 @@ public class FPrincipal extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

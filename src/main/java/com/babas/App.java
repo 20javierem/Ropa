@@ -43,7 +43,7 @@ public class App
                 DCompany dCompany=new DCompany();
                 dCompany.setVisible(true);
             }else{
-                if(!Babas.company.getLogo().isBlank()){
+                if(Babas.company.getLogo()!=null){
                     if(Utilities.openConection()){
                         Utilities.downloadLogo(Babas.company.getLogo());
                     }

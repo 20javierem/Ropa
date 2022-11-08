@@ -3,6 +3,7 @@ package com.babas.utilities;
 import com.babas.controllers.*;
 import com.babas.controllers.Colors;
 import com.babas.models.*;
+import com.babas.views.frames.FPrincipal;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
@@ -65,6 +66,8 @@ public class Excel {
                                     category = new Category();
                                     category.setName(row.getCell(1).getStringCellValue().trim());
                                     category.save();
+                                    FPrincipal.categories.add(category);
+                                    FPrincipal.categoriesWithAll.add(category);
                                 }
                                 break;
                             case "estilos":
@@ -75,6 +78,7 @@ public class Excel {
                                     style.setName(row.getCell(1).getStringCellValue().trim());
                                     style.setCategory(category);
                                     style.save();
+                                    FPrincipal.styles.add(style);
                                 }
                                 break;
                             case "tallas":
@@ -84,6 +88,8 @@ public class Excel {
                                     size.setName(row.getCell(1).getStringCellValue().trim());
                                     size.setActive(true);
                                     size.save();
+                                    FPrincipal.sizes.add(size);
+                                    FPrincipal.sizesWithAll.add(size);
                                 }
                                 break;
                             case "colores":
@@ -93,6 +99,8 @@ public class Excel {
                                     color.setName(row.getCell(1).getStringCellValue().trim());
                                     color.setActive(true);
                                     color.save();
+                                    FPrincipal.colors.add(color);
+                                    FPrincipal.colorsWithAll.add(color);
                                 }
                                 break;
                             case "marcas":
@@ -102,6 +110,8 @@ public class Excel {
                                     brand.setName(row.getCell(1).getStringCellValue().trim());
                                     brand.setActive(true);
                                     brand.save();
+                                    FPrincipal.brands.add(brand);
+                                    FPrincipal.brandsWithAll.add(brand);
                                 }
                                 break;
                             case "dimensiones":
@@ -111,6 +121,8 @@ public class Excel {
                                     dimention.setName(row.getCell(1).getStringCellValue().trim());
                                     dimention.setActive(true);
                                     dimention.save();
+                                    FPrincipal.dimentions.add(dimention);
+                                    FPrincipal.dimentionsWithAll.add(dimention);
                                 }
                                 break;
                             default:
@@ -167,7 +179,9 @@ public class Excel {
                                     product.getPresentations().add(presentationRental);
                                 }
                                 product.setSex(sex);
+                                product.getStyle().getProducts().add(product);
                                 product.save();
+                                FPrincipal.products.add(product);
                         }
                     }
                 }

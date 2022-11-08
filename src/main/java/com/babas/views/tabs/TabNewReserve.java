@@ -120,7 +120,7 @@ public class TabNewReserve {
                 loadTotals();
             }
         });
-        if (!Babas.company.getLogo().isBlank()) {
+        if (Babas.company.getLogo() != null) {
             if (Utilities.iconCompanyx255x220 != null) {
                 lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
@@ -392,4 +392,5 @@ public class TabNewReserve {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

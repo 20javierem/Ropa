@@ -114,9 +114,9 @@ public class DBoxSesion extends JDialog {
                 BoxSession boxSession1 = BoxSessions.getByBox(boxSession.getBox());
                 if (boxSession1 != null) {
                     if (!Objects.equals(boxSession1.getUser().getId(), boxSession.getUser().getId())) {
-                        index = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Ya se abrió esta caja, ¿Desea cerrar la caja " + boxSession.getBox().getName() + "?", "Caja abierta", JOptionPane.YES_NO_OPTION);
+                        index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Ya se abrió esta caja, ¿Desea cerrar la caja " + boxSession.getBox().getName() + "?", "Caja abierta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Si, cerrar caja", "Cancelar"}, "Si, continar sesión");
                     } else {
-                        index = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "Tiene una sesion abierta en esta caja, desea continuar la sessión", "Sesión abierta", JOptionPane.YES_NO_OPTION);
+                        index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Tiene una sesion abierta en esta caja, desea continuar la sessión", "Caja abierta", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Si, continar sesión", "No, iniciar una nueva sesión"}, "Si, continar sesión");
                         if (index == 0) {
                             Babas.boxSession = boxSession1;
                             Babas.boxSession.calculateTotals();
@@ -237,4 +237,5 @@ public class DBoxSesion extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
