@@ -57,9 +57,9 @@ public class DetailSaleCellRendered extends DefaultTableCellRenderer {
                     break;
                 case "CÓDIGO":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-//                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
-//                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(80);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(80);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(80);
                     break;
                 case "PRESENTACIÓN":
                     detailSale=(DetailSale) value;

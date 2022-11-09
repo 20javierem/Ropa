@@ -106,6 +106,7 @@ public class ModelProduct {
         lblArea.setForeground(new Color(-16777216));
         lblArea.setLineWrap(true);
         lblArea.setOpaque(false);
+        lblArea.setRows(2);
         lblArea.setWrapStyleWord(true);
         panel1.add(lblArea, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
         final JPanel panel2 = new JPanel();
@@ -196,4 +197,5 @@ public class ModelProduct {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

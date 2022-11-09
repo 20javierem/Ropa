@@ -40,8 +40,8 @@ public class ReserveCellRendered extends DefaultTableCellRenderer {
             switch(table.getColumnName(column)){
                 case "NRO.":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-//                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
-//                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(90);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(90);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
                     break;
                 case "SUBTOTAL":

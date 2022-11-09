@@ -34,6 +34,7 @@
               <foreground color="-16777216"/>
               <lineWrap value="true"/>
               <opaque value="false"/>
+              <rows value="2"/>
               <wrapStyleWord value="true"/>
             </properties>
           </component>

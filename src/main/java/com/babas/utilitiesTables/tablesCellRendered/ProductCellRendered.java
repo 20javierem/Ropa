@@ -76,9 +76,9 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
                     break;
                 case "CÓDIGO":
                     desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
-//                    table.getColumn(table.getColumnName(column)).setMaxWidth(70);
-//                    table.getColumn(table.getColumnName(column)).setMinWidth(70);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(70);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(100);
                     break;
                 default:
                     desingTxtTable.setHorizontalAlignment(SwingConstants.LEFT);

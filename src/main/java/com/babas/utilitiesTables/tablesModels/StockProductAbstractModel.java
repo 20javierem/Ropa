@@ -6,7 +6,7 @@ import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class StockProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"COD. BARRA","SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","ALQUILERES"};
+    private final String[] nameColumns={"CÓDIGO","SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","ALQUILERES"};
     private final Class[] typeColumns={String.class,String.class,String.class,Integer.class,Integer.class,Integer.class,Integer.class};
     private final List<Stock> list;
 

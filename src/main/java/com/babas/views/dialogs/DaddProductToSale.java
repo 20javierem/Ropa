@@ -50,6 +50,7 @@ public class DaddProductToSale extends JDialog {
         this.sale = sale;
         $$$setupUI$$$();
         init();
+
         addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent me) {
                 pX = me.getX();

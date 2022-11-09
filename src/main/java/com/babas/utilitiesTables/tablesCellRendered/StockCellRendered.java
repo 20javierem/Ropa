@@ -39,18 +39,18 @@ public class StockCellRendered extends DefaultTableCellRenderer {
             DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "TOTAL":
-                case "COD. BARRA":
+                case "CÓDIGO":
                 case "ACTUAL":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-//                    table.getColumn(table.getColumnName(column)).setMaxWidth(75);
-//                    table.getColumn(table.getColumnName(column)).setMinWidth(75);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(75);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(80);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(80);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(80);
                     break;
                 case "EN ALQUILER":
                 case "ALQUILERES":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-//                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
-//                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(100);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(100);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(100);
                     break;
                 default:

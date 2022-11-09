@@ -301,6 +301,7 @@ public class TabRecordSales {
         final JScrollPane scrollPane1 = new JScrollPane();
         panel2.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         table = new FlatTable();
+        table.setRowHeight(25);
         scrollPane1.setViewportView(table);
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 8, new Insets(0, 10, 0, 10), 10, -1));
@@ -414,4 +415,5 @@ public class TabRecordSales {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }
