@@ -79,11 +79,11 @@ public class DStade extends JDialog {
                 Utilities.getTabbedPane().updateTab();
                 stade = new Stade();
                 clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Dimensión registrado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Estado registrado");
             } else {
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Dimensión actualizado");
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Estado actualizado");
                 onHecho();
             }
 

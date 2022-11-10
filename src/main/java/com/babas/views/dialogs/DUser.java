@@ -152,6 +152,9 @@ public class DUser extends JDialog {
             activoLabel.setVisible(false);
         }
         if (update) {
+            if (user.getId() == 1) {
+                tabbedPane.remove(tabbedPane.indexOfTab("Permisos"));
+            }
             txtNameUser.setEnabled(false);
             setTitle("Actualizar Usuario");
             btnSave.setText("Guardar");
@@ -640,4 +643,5 @@ public class DUser extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

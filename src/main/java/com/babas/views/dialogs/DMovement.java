@@ -112,6 +112,9 @@ public class DMovement extends JDialog {
                 }
                 movement.getBoxSesion().calculateTotals();
                 Utilities.getTabbedPane().updateTab();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Movimiento registrado");
+                Utilities.getLblIzquierda().setText("ÉXITO: movimiento registrado a las: " + Utilities.formatoHora.format(movement.getCreated()));
+                clear();
             } else {
                 ProgramValidator.mostrarErrores(constraintViolationSet);
             }
@@ -119,6 +122,11 @@ public class DMovement extends JDialog {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Debe aperturar caja");
         }
 
+    }
+
+    private void clear() {
+        movement = new Movement();
+        load();
     }
 
     private void onHecho() {
@@ -196,4 +204,5 @@ public class DMovement extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

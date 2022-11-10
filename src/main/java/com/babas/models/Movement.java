@@ -19,7 +19,7 @@ public class Movement extends Babas {
     private Date updated;
     private Double amount=0.0;
     private String description;
-    private boolean entrance;
+    private boolean entrance=true;
 
     public Long getId() {
         return id;
