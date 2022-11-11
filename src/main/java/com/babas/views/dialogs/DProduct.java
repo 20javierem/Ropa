@@ -278,11 +278,13 @@ public class DProduct extends JDialog {
             style = (Style) cbbStyle.getSelectedItem();
             if (!update) {
                 cbbCategory.setSelectedItem(style.getCategory());
+                cbbCategory.setEnabled(false);
             }
         } else {
             if (!update) {
                 style = new Style();
                 cbbCategory.setSelectedIndex(-1);
+                cbbCategory.setEnabled(true);
             }
         }
     }
