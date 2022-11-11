@@ -47,14 +47,16 @@ public class JButtonEditorPrice extends AbstractCellEditor implements TableCellE
                 if (price.getPresentation().getPrices().size()>1){
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Precio",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
-                        price.refresh();
-                        price.getPresentation().getPrices().remove(price);
-                        if(price.isDefault()){
-                            price.getPresentation().getPrices().get(0).setDefault(true);
-                            price.getPresentation().getPrices().get(0).save();
-                            price.getPresentation().setPriceDefault(price.getPresentation().getPrices().get(0));
+                        if(price.getId()!=null){
+                            price.refresh();
+                            if(price.isDefault()){
+                                price.getPresentation().getPrices().get(0).setDefault(true);
+                                price.getPresentation().getPrices().get(0).save();
+                                price.getPresentation().setPriceDefault(price.getPresentation().getPrices().get(0));
+                            }
+                            price.delete();
                         }
-                        price.delete();
+                        price.getPresentation().getPrices().remove(price);
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Precio eliminado");
                     }
                 }else{

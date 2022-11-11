@@ -84,7 +84,7 @@ public class DPresentation extends JDialog {
         getRootPane().setDefaultButton(btnSave);
         actionListener = e -> model.fireTableDataChanged();
         Utilities.getActionsOfDialog().addActionListener(actionListener);
-        if (update) {
+        if (presentation.getProduct().getPresentations().contains(presentation)) {
             setTitle("Actualizar Presentación");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
@@ -124,17 +124,8 @@ public class DPresentation extends JDialog {
         }
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(presentation);
         if (constraintViolationSet.isEmpty()) {
-            if (presentation.getProduct().getId() != null) {
-                presentation.save();
-                if (presentation.isDefault() && presentation.getPriceDefault() != null) {
-                    presentation.getProduct().getPresentationDefault().setDefault(false);
-                    presentation.getProduct().getPresentationDefault().save();
-                    presentation.getProduct().setPresentationDefault(presentation);
-                    presentation.setDefault(true);
-                    presentation.save();
-                }
-            }
-            if (!update) {
+            updatePresentationDefault();
+            if (!presentation.getProduct().getPresentations().contains(presentation)) {
                 presentation.getProduct().getPresentations().add(presentation);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
@@ -142,19 +133,28 @@ public class DPresentation extends JDialog {
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación registrada");
             } else {
-                if (presentation.isDefault()) {
-                    presentation.getProduct().getPresentationDefault().setDefault(false);
-                    presentation.getProduct().getPresentationDefault().save();
-                    presentation.getProduct().setPresentationDefault(presentation);
-                    presentation.setDefault(true);
-                    presentation.save();
-                }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación actualizada");
                 onHecho();
             }
 
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
+        }
+    }
+
+    private void updatePresentationDefault() {
+        if (presentation.isDefault()) {
+            if (presentation.getProduct().getPresentationDefault() != null) {
+                presentation.getProduct().getPresentationDefault().setDefault(false);
+                if (presentation.getProduct().getPresentationDefault().getId() != null) {
+                    presentation.getProduct().getPresentationDefault().save();
+                }
+                presentation.setDefault(true);
+                presentation.getProduct().setPresentationDefault(presentation);
+            }
+            if (presentation.getId() != null) {
+                presentation.save();
+            }
         }
     }
 
@@ -192,18 +192,15 @@ public class DPresentation extends JDialog {
     private void $$$setupUI$$$() {
         createUIComponents();
         contentPane = new JPanel();
-        contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), 10, 10));
+        contentPane.setLayout(new GridLayoutManager(3, 1, new Insets(10, 10, 10, 10), 10, 10));
+        contentPane.setPreferredSize(new Dimension(481, 400));
         final JPanel panel1 = new JPanel();
-        panel1.setLayout(new GridLayoutManager(4, 3, new Insets(0, 0, 0, 0), -1, 5));
-        contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel1.setLayout(new GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, 5));
+        contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         label1.setText("Cantidad:");
         panel1.add(label1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         panel1.add(spinnerQuantity, new GridConstraints(1, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JScrollPane scrollPane1 = new JScrollPane();
-        panel1.add(scrollPane1, new GridConstraints(3, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        table = new FlatTable();
-        scrollPane1.setViewportView(table);
         btnNewPrice = new JButton();
         btnNewPrice.setText("Registrar precio");
         panel1.add(btnNewPrice, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -217,7 +214,7 @@ public class DPresentation extends JDialog {
         panel1.add(txtName, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        contentPane.add(panel2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnHecho = new JButton();
         btnHecho.setText("Hecho");
         panel2.add(btnHecho, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -232,6 +229,13 @@ public class DPresentation extends JDialog {
         ckDefault = new JCheckBox();
         ckDefault.setText("");
         panel2.add(ckDefault, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel3, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JScrollPane scrollPane1 = new JScrollPane();
+        panel3.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        table = new FlatTable();
+        scrollPane1.setViewportView(table);
     }
 
     /**
@@ -240,4 +244,13 @@ public class DPresentation extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
+    /**
+     * Method generated by IntelliJ IDEA GUI Designer
+     * >>> IMPORTANT!! <<<
+     * DO NOT edit this method OR call it in your code!
+     *
+     * @noinspection ALL
+     */
+
 }

@@ -58,11 +58,11 @@ public class DPrice extends JDialog {
     private void init() {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        if (update) {
+        if (price.getPresentation().getPrices().contains(price)) {
+            load();
             setTitle("Actualizar Precio");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
-            load();
         }
         pack();
         setResizable(false);
@@ -78,36 +78,36 @@ public class DPrice extends JDialog {
         }
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(price);
         if (constraintViolationSet.isEmpty()) {
-            if (price.getPresentation().getId() != null) {
-                price.save();
-                if (price.isDefault() && price.getPresentation().getPriceDefault() != null) {
-                    price.getPresentation().getPriceDefault().setDefault(false);
-                    price.getPresentation().getPriceDefault().save();
-                    price.getPresentation().setPriceDefault(price);
-                    price.setDefault(true);
-                    price.save();
-                }
-            }
-            if (!update) {
+            updatePriceDefault();
+            if (!price.getPresentation().getPrices().contains(price)) {
                 price.getPresentation().getPrices().add(price);
-                Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
                 price = new Price(price.getPresentation());
                 clear();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Precio registrado");
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
             } else {
-                if (price.isDefault()) {
-                    price.getPresentation().getPriceDefault().setDefault(false);
-                    price.getPresentation().getPriceDefault().save();
-                    price.getPresentation().setPriceDefault(price);
-                    price.setDefault(true);
-                    price.save();
-                }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Precio actualizado");
                 onHecho();
             }
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
+        }
+    }
+
+    private void updatePriceDefault() {
+        if (price.isDefault()) {
+            if (price.getPresentation().getPriceDefault() != null) {
+                price.getPresentation().getPriceDefault().setDefault(false);
+                if (price.getPresentation().getPriceDefault().getId() != null) {
+                    price.getPresentation().getPriceDefault().save();
+                }
+                price.setDefault(true);
+                price.getPresentation().setPriceDefault(price);
+            }
+            if (price.getId() != null) {
+                price.save();
+            }
         }
     }
 
@@ -178,4 +178,5 @@ public class DPrice extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

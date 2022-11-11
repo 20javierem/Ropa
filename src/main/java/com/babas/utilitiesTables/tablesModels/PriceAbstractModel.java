@@ -1,6 +1,7 @@
 package com.babas.utilitiesTables.tablesModels;
 
 import com.babas.models.Price;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -43,7 +44,7 @@ public class PriceAbstractModel extends AbstractTableModel {
         Price price= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return price.getPrice();
+                return Utilities.moneda.format(price.getPrice());
             case 1:
                 return price.isDefault()?"SI":"NO";
             case 2:

@@ -152,13 +152,15 @@ public class DUser extends JDialog {
             activoLabel.setVisible(false);
         }
         if (update) {
-            if (user.getId() == 1) {
-                tabbedPane.remove(tabbedPane.indexOfTab("Permisos"));
-            }
             txtNameUser.setEnabled(false);
             setTitle("Actualizar Usuario");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
+            if (user.getId() == 1) {
+                if (tabbedPane.indexOfTab("Permisos") != -1) {
+                    tabbedPane.remove(tabbedPane.indexOfTab("Permisos"));
+                }
+            }
         }
         loadTables();
         load();

@@ -1,6 +1,7 @@
 package com.babas.utilitiesTables.tablesModels;
 
 import com.babas.models.Presentation;
+import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
@@ -46,7 +47,7 @@ public class PresentationsAbstractModel extends AbstractTableModel {
             case 1:
                 return presentation.getQuantity();
             case 2:
-                return presentation.getPriceDefault().getPrice();
+                return Utilities.moneda.format(presentation.getPriceDefault().getPrice());
             case 3:
                 return presentation.isDefault()?"SI":"NO";
             case 4:
