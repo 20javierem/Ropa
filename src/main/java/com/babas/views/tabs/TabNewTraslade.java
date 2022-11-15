@@ -205,6 +205,7 @@ public class TabNewTraslade {
             btnRechase.setVisible(false);
         }
         if (transfer.getId() != null) {
+            btnAddProducts.setVisible(false);
             btnGenerateReport.setVisible(true);
         }
         getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
