@@ -162,7 +162,7 @@ public class TabRecordBoxSesions {
             for (Branch branch : Babas.user.getBranchs()) {
                 sales.addAll(BoxSessions.getByRangeOfDate(branch, start, end));
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cajas cargadas");
             }
             model.fireTableDataChanged();
@@ -171,12 +171,12 @@ public class TabRecordBoxSesions {
             for (Branch branch : Babas.user.getBranchs()) {
                 sales.addAll(BoxSessions.getAfter(branch, start));
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cajas cargadas");
             }
             model.fireTableDataChanged();
         } else {
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
             }
         }

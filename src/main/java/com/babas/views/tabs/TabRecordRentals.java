@@ -247,7 +247,7 @@ public class TabRecordRentals {
             for (Branch branch : Babas.user.getBranchs()) {
                 rentals.addAll(Rentals.getByRangeOfDate(branch, start, end));
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Alquileres cargados");
             }
             model.fireTableDataChanged();
@@ -256,12 +256,12 @@ public class TabRecordRentals {
             for (Branch branch : Babas.user.getBranchs()) {
                 rentals.addAll(Rentals.getAfter(branch, start));
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Alquileres cargados");
             }
             model.fireTableDataChanged();
         } else {
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
             }
         }

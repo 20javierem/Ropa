@@ -20,6 +20,12 @@ public class Rentals extends Babas {
         return session.find(Rental.class, id, LockModeType.NONE);
     }
 
+    public static Rental getByNumber(Long numberSale){
+        criteria = builder.createQuery(Rental.class);
+        criteria.select(criteria.from(Rental.class)).where(root.get("numberRental")).equals(numberSale);
+        return session.createQuery(criteria).getSingleResultOrNull();
+    }
+
     public static Vector<Rental> getTodos(){
         criteria = builder.createQuery(Rental.class);
         criteria.select(criteria.from(Rental.class));

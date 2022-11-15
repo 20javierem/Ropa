@@ -190,7 +190,7 @@ public class TabRecordTransfers {
                     }
                 });
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
             }
             model.fireTableDataChanged();
@@ -203,12 +203,12 @@ public class TabRecordTransfers {
                     }
                 });
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
             }
             model.fireTableDataChanged();
         } else {
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
             }
         }

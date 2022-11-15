@@ -20,6 +20,12 @@ public class Reserves extends Babas {
         return session.find(Reserve.class, id, LockModeType.NONE);
     }
 
+    public static Reserve getByNumber(Long numberSale){
+        criteria = builder.createQuery(Reserve.class);
+        criteria.select(criteria.from(Reserve.class)).where(root.get("numberReserve")).equals(numberSale);
+        return session.createQuery(criteria).getSingleResultOrNull();
+    }
+
     public static Vector<Reserve> getTodos(){
         criteria = builder.createQuery(Reserve.class);
         criteria.select(criteria.from(Reserve.class));

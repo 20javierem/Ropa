@@ -243,7 +243,7 @@ public class TabRecordReserves {
             for (Branch branch : Babas.user.getBranchs()) {
                 reserves.addAll(Reserves.getByRangeOfDate(branch, start, end));
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Reservas cargadas");
             }
             model.fireTableDataChanged();
@@ -252,12 +252,12 @@ public class TabRecordReserves {
             for (Branch branch : Babas.user.getBranchs()) {
                 reserves.addAll(Reserves.getAfter(branch, start));
             }
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Reservas cargadas");
             }
             model.fireTableDataChanged();
         } else {
-            if(show){
+            if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
             }
         }

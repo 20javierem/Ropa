@@ -7,6 +7,7 @@ import com.babas.models.*;
 import com.babas.models.Color;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.views.dialogs.*;
 import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
@@ -60,6 +61,7 @@ public class FPrincipal extends JFrame {
     private FlatToggleButton btnBoxes;
     private FlatButton btnSettings;
     private FlatButton btnNotify;
+    private JButton btnSearchComprobante;
     private MenuSales menuSales;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
@@ -204,6 +206,27 @@ public class FPrincipal extends JFrame {
                 loadDialogTransfers();
             }
         });
+        btnSearchComprobante.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getComprobante();
+            }
+        });
+    }
+
+    private void getComprobante() {
+//        SpinnerNumberModel sModel = new SpinnerNumberModel(0L, Long.MIN_VALUE, Long.MAX_VALUE, 1L);
+//        JSpinner spinner = new JSpinner(sModel);
+//        int option = JOptionPane.showOptionDialog(this, spinner, "Ingrese el numero de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
+//        if (option == JOptionPane.OK_OPTION) {
+//            if (Sales.getByNumber((Long) spinner.getValue()) != null) {
+//                UtilitiesReports.generateTicketSale(Sales.getByNumber((Long) spinner.getValue()), false);
+//            } else if (Rentals.getByNumber((Long) spinner.getValue()) != null) {
+//                UtilitiesReports.generateTicketRental(Rentals.getByNumber((Long) spinner.getValue()), false);
+//            } else if (Reserves.getByNumber((Long) spinner.getValue()) != null) {
+//                UtilitiesReports.generateTicketReserve(Reserves.getByNumber((Long) spinner.getValue()), false);
+//            }
+//        }
     }
 
     private void loadSettingUser() {
@@ -585,6 +608,10 @@ public class FPrincipal extends JFrame {
         btnRecordTransfers.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/recordTransactions.png")));
         btnRecordTransfers.setText("Historial de transferencias");
         toolBar1.add(btnRecordTransfers);
+        btnSearchComprobante = new JButton();
+        btnSearchComprobante.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/recordTransactions.png")));
+        btnSearchComprobante.setText("Buscar comprobante");
+        toolBar1.add(btnSearchComprobante);
         final Spacer spacer2 = new Spacer();
         toolBar1.add(spacer2);
         final JPanel panel2 = new JPanel();
@@ -834,4 +861,5 @@ public class FPrincipal extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
