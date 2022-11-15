@@ -91,6 +91,7 @@
                     <item value="ENTRE"/>
                     <item value="DESDE"/>
                   </model>
+                  <selectedIndex value="2"/>
                 </properties>
               </component>
               <grid id="e3039" binding="paneEntreFecha" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -124,9 +125,7 @@
                 <constraints>
                   <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <visible value="false"/>
-                </properties>
+                <properties/>
                 <border type="none"/>
                 <children>
                   <component id="42155" class="com.toedter.calendar.JDateChooser" binding="fechaDesde" custom-create="true">

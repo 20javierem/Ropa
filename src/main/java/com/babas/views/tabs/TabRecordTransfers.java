@@ -65,7 +65,7 @@ public class TabRecordTransfers {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getTransfers();
+                getTransfers(true);
             }
         });
         cbbBranch.addActionListener(new ActionListener() {
@@ -142,10 +142,6 @@ public class TabRecordTransfers {
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(true);
                 break;
-            case 3:
-                paneEntreFecha.setVisible(false);
-                paneDesdeFecha.setVisible(false);
-                break;
         }
     }
 
@@ -154,7 +150,7 @@ public class TabRecordTransfers {
         tabPane.getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                model.fireTableDataChanged();
+                getTransfers(false);
                 filter();
             }
         });
@@ -168,7 +164,7 @@ public class TabRecordTransfers {
         cbbBranch.setRenderer(new Branch.ListCellRenderer());
     }
 
-    private void getTransfers() {
+    private void getTransfers(boolean show) {
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         start = null;
         end = null;
@@ -194,7 +190,9 @@ public class TabRecordTransfers {
                     }
                 });
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
+            if(show){
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
+            }
             model.fireTableDataChanged();
         } else if (start != null) {
             transfers.clear();
@@ -205,10 +203,14 @@ public class TabRecordTransfers {
                     }
                 });
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
+            if(show){
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Transferencias cargadas");
+            }
             model.fireTableDataChanged();
         } else {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
+            if(show){
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
+            }
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         filter();
@@ -339,6 +341,7 @@ public class TabRecordTransfers {
         defaultComboBoxModel3.addElement("ENTRE");
         defaultComboBoxModel3.addElement("DESDE");
         cbbDate.setModel(defaultComboBoxModel3);
+        cbbDate.setSelectedIndex(2);
         panel4.add(cbbDate, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         paneEntreFecha = new JPanel();
         paneEntreFecha.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -348,7 +351,6 @@ public class TabRecordTransfers {
         paneEntreFecha.add(fechaInicio, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), null, 0, false));
         paneDesdeFecha = new JPanel();
         paneDesdeFecha.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        paneDesdeFecha.setVisible(false);
         panel4.add(paneDesdeFecha, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         paneDesdeFecha.add(fechaDesde, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), null, 0, false));
         btnSearch = new JButton();
@@ -377,4 +379,5 @@ public class TabRecordTransfers {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

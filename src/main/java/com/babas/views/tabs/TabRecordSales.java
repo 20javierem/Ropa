@@ -67,7 +67,7 @@ public class TabRecordSales {
         btnSearch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                getSales();
+                getSales(true);
             }
         });
         cbbBranch.addActionListener(new ActionListener() {
@@ -114,6 +114,7 @@ public class TabRecordSales {
         tabPane.getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                getSales(false);
                 filter();
             }
         });
@@ -173,10 +174,6 @@ public class TabRecordSales {
                 paneEntreFecha.setVisible(false);
                 paneDesdeFecha.setVisible(true);
                 break;
-            case 3:
-                paneEntreFecha.setVisible(false);
-                paneDesdeFecha.setVisible(false);
-                break;
         }
     }
 
@@ -222,7 +219,7 @@ public class TabRecordSales {
         }
     }
 
-    private void getSales() {
+    private void getSales(boolean show) {
         start = null;
         end = null;
         btnSearch.setCursor(new Cursor(Cursor.WAIT_CURSOR));
@@ -244,24 +241,32 @@ public class TabRecordSales {
             for (Branch branch : Babas.user.getBranchs()) {
                 sales.addAll(Sales.getByRangeOfDate(branch, start, end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
+            if (show) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
+            }
             model.fireTableDataChanged();
         } else if (start != null) {
             sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
                 sales.addAll(Sales.getAfter(branch, start));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
+            if (show) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
+            }
             model.fireTableDataChanged();
         } else if (end != null) {
             sales.clear();
             for (Branch branch : Babas.user.getBranchs()) {
                 sales.addAll(Sales.getBefore(branch, end));
             }
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
+            if (show) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
+            }
             model.fireTableDataChanged();
         } else {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
+            if (show) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
+            }
         }
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         filter();
@@ -329,6 +334,7 @@ public class TabRecordSales {
         defaultComboBoxModel1.addElement("ENTRE");
         defaultComboBoxModel1.addElement("DESDE");
         cbbDate.setModel(defaultComboBoxModel1);
+        cbbDate.setSelectedIndex(2);
         panel3.add(cbbDate, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         paneEntreFecha = new JPanel();
         paneEntreFecha.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -338,7 +344,6 @@ public class TabRecordSales {
         paneEntreFecha.add(fechaInicio, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), null, 0, false));
         paneDesdeFecha = new JPanel();
         paneDesdeFecha.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        paneDesdeFecha.setVisible(false);
         panel3.add(paneDesdeFecha, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         paneDesdeFecha.add(fechaDesde, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), null, 0, false));
         btnSearch = new JButton();
@@ -415,4 +420,5 @@ public class TabRecordSales {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }
