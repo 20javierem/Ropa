@@ -55,6 +55,15 @@ public class DCrop extends JDialog {
         onDispose();
     }
 
+    @Override
+    public void setVisible(boolean b) {
+        if (loadImage()) {
+            super.setVisible(b);
+        } else {
+            dispose();
+        }
+    }
+
     private BufferedImage getImage(BufferedImage bufferedImage, double scal) {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
@@ -72,11 +81,13 @@ public class DCrop extends JDialog {
         return bufferedImage1;
     }
 
-    public void loadImage() {
+    public boolean loadImage() {
         String ruta = nuevaImagen();
         if (ruta != null) {
             ((ImagePanel) panelImagen).loadImage(ruta);
+            return true;
         }
+        return false;
     }
 
     public static String nuevaImagen() {
@@ -157,4 +168,5 @@ public class DCrop extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

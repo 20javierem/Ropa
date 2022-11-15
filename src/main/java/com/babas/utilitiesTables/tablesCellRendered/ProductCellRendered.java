@@ -63,7 +63,7 @@ public class ProductCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "COLOR":
-                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
+//                    desingTxtTable.setHorizontalAlignment(SwingConstants.CENTER);
 //                    table.getColumn(table.getColumnName(column)).setMaxWidth(75);
 //                    table.getColumn(table.getColumnName(column)).setMinWidth(75);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(75);

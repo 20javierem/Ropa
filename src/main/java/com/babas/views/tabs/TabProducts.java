@@ -127,6 +127,8 @@ public class TabProducts {
     }
 
     private void fileExcelData(ActionEvent event) {
+        btnExport.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        btnImport.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         JButton button = (JButton) event.getSource();
         if ("import".equals(button.getActionCommand())) {
             Excel excel = new Excel();
@@ -136,6 +138,8 @@ public class TabProducts {
         } else {
             //export
         }
+        btnExport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        btnImport.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void loadDimentions() {
