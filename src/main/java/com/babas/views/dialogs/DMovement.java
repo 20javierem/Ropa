@@ -204,5 +204,4 @@ public class DMovement extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

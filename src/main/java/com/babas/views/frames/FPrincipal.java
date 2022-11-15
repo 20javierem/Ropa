@@ -834,5 +834,4 @@ public class FPrincipal extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

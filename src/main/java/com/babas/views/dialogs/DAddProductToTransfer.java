@@ -326,5 +326,4 @@ public class DAddProductToTransfer extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

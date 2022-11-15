@@ -1,6 +1,5 @@
 package com.babas.custom;
 
-import com.babas.App;
 import com.formdev.flatlaf.extras.components.FlatPasswordField;
 import com.formdev.flatlaf.icons.FlatRevealIcon;
 

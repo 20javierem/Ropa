@@ -340,5 +340,4 @@ public class DBranch extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

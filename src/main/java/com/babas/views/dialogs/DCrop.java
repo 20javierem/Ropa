@@ -168,5 +168,4 @@ public class DCrop extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

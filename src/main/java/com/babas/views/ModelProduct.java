@@ -197,5 +197,4 @@ public class ModelProduct {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

@@ -645,5 +645,4 @@ public class DUser extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

@@ -234,5 +234,4 @@ public class DCompany extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }
