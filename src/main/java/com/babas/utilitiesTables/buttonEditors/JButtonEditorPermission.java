@@ -32,11 +32,11 @@ public class JButtonEditorPermission extends AbstractCellEditor implements Table
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Permission permission=((PermissionAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             DGroupPermition dGroupPermition=new DGroupPermition(permission);
             dGroupPermition.setVisible(true);
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

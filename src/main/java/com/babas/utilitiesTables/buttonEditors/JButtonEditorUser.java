@@ -41,6 +41,7 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             User user=((UserAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DUser dUser=new DUser(false,user);
@@ -71,7 +72,6 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

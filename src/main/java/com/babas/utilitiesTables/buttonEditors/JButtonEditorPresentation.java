@@ -40,6 +40,7 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Presentation presentation=((PresentationsAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DPresentation dPresentation=new DPresentation(presentation);
@@ -48,6 +49,7 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                 if (presentation.getProduct().getPresentations().size()>1){
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Presentación",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
+                        presentation.getProduct().getPresentations().remove(presentation);
                         if(presentation.getId()!=null){
                             presentation.refresh();
                             if(presentation.isDefault()){
@@ -58,7 +60,6 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                             presentation.getPrices().forEach(Babas::delete);
                             presentation.delete();
                         }
-                        presentation.getProduct().getPresentations().remove(presentation);
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación eliminada");
                     }
                 }else{
@@ -66,7 +67,6 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

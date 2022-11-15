@@ -39,6 +39,7 @@ public class JButtonEditorPrice extends AbstractCellEditor implements TableCellE
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Price price=((PriceAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DPrice dPrice=new DPrice(price);
@@ -64,7 +65,6 @@ public class JButtonEditorPrice extends AbstractCellEditor implements TableCellE
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

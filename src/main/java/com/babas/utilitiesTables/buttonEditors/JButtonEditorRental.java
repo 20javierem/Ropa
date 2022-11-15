@@ -43,6 +43,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             if(detail){
                 if(Babas.boxSession.getId()!=null){
                     Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
@@ -51,7 +52,6 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                         Utilities.getTabbedPane().addTab(tabFinishRental.getTabPane().getTitle(),tabFinishRental.getTabPane());
                     }
                     Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle()));
-                    fireEditingStopped();
                     Utilities.getTabbedPane().updateTab();
                     Utilities.updateDialog();
                 }else{

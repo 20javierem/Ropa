@@ -39,6 +39,7 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Sex sex=((SexAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DSex dSex=new DSex(sex);
@@ -57,7 +58,6 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

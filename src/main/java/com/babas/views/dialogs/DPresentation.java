@@ -134,6 +134,8 @@ public class DPresentation extends JDialog {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación registrada");
             } else {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación actualizada");
+                Utilities.updateDialog();
+                Utilities.getTabbedPane().updateTab();
                 onHecho();
             }
 

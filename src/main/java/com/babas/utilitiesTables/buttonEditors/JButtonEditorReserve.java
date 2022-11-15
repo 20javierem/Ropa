@@ -40,6 +40,7 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             if(detail){
                 if(Babas.boxSession.getId()!=null){
                     Reserve reserve=((ReserveAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
@@ -48,7 +49,6 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
                         Utilities.getTabbedPane().addTab(tabNewRental.getTabPane().getTitle(),tabNewRental.getTabPane());
                     }
                     Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabNewRental.getTabPane().getTitle()));
-                    fireEditingStopped();
                     Utilities.getTabbedPane().updateTab();
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");

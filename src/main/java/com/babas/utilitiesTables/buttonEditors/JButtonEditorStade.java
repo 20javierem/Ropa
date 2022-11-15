@@ -38,6 +38,7 @@ public class JButtonEditorStade extends AbstractCellEditor implements TableCellE
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Stade stade=((StadeAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DStade dStade=new DStade(stade);
@@ -56,7 +57,6 @@ public class JButtonEditorStade extends AbstractCellEditor implements TableCellE
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

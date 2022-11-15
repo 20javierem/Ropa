@@ -44,6 +44,7 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Transfer transfer=((TransferAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(show){
                 TabNewTraslade tabNewTraslade=new TabNewTraslade(transfer);
@@ -70,7 +71,6 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La transferencia ya está cancelada");
                 }
             }
-            fireEditingStopped();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
         }

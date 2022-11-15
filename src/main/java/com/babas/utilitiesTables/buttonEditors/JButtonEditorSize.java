@@ -38,6 +38,7 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Size size=((SizeAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DSize dSize=new DSize(size);
@@ -56,7 +57,6 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

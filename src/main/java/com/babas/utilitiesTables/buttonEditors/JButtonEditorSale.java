@@ -43,6 +43,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Sale sale=((SaleAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(show){
                 UtilitiesReports.generateTicketSale(sale,false);
@@ -75,7 +76,6 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
                 }
             }
-            fireEditingStopped();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
         }

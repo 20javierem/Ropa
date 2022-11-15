@@ -42,6 +42,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Product product=((ProductAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             switch (type){
                 case "edit":
@@ -66,7 +67,6 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                     dImageProduct.setVisible(true);
                     break;
             }
-            fireEditingStopped();
         }
     }
 

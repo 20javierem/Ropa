@@ -31,13 +31,13 @@ public class JButtonEditorDetailTransfer extends AbstractCellEditor implements T
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
-            DetailTransfer detailTransfer=((DetailTransferAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar detalle",JOptionPane.YES_NO_OPTION)==0;
-            if(si){
-                detailTransfer.getTransfer().getDetailTransfers().remove(detailTransfer);
-            }
-            Utilities.updateDialog();
             fireEditingStopped();
+            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?","Quitar producto",JOptionPane.YES_NO_OPTION)==0;
+            if(si){
+                DetailTransfer detailTransfer=((DetailTransferAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+                detailTransfer.getTransfer().getDetailTransfers().remove(detailTransfer);
+                Utilities.getTabbedPane().updateTab();
+            }
         }
     }
 

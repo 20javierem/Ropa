@@ -52,7 +52,7 @@ public class ColorCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(100);
                     break;
                 default:
-                    componente.setHorizontalAlignment(SwingConstants.CENTER);
+                    componente.setHorizontalAlignment(SwingConstants.LEFT);
                     break;
             }
             return componente.getContentPane();
