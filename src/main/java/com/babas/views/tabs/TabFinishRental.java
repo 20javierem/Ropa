@@ -131,7 +131,7 @@ public class TabFinishRental {
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
                     } else {
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "El alquiler ya fue finalizado por otro usuario");
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "MENSAJE", "El alquiler ya fue finalizado por otro usuario");
                     }
                     FPrincipal.rentalsActives.remove(rental);
                     btnFinishRental.setVisible(false);
@@ -168,9 +168,13 @@ public class TabFinishRental {
     private void loadTotals() {
         rental.calculateTotals();
 
-        lblTotal.setText(Utilities.moneda.format(rental.getTotal()));
-        lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
+        lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
+        if (rental.getReserve() == null) {
+            lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount()));
+        } else {
+            lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount() + rental.getReserve().getAdvance()));
+        }
         lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
 

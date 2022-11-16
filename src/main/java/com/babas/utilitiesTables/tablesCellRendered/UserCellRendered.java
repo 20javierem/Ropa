@@ -5,17 +5,19 @@ import com.babas.views.dialogs.DesingTxtTable;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class UserCellRendered extends DefaultTableCellRenderer {
+    private Map<Integer, String> listaFiltros;
 
-    public UserCellRendered(){
-
+    public UserCellRendered(Map<Integer, String> listaFiltros){
+        this.listaFiltros=listaFiltros;
     }
 
-    public static void setCellRenderer(JTable table){
-        UserCellRendered cellRendered=new UserCellRendered();
+    public static void setCellRenderer(JTable table,Map<Integer, String> listaFiltros){
+        UserCellRendered cellRendered=new UserCellRendered(listaFiltros);
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -33,7 +35,7 @@ public class UserCellRendered extends DefaultTableCellRenderer {
             button.setForeground(component.getForeground());
             return button;
         }else{
-            DesingTxtTable componente=buscarTexto2(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "CELULAR":
                 case "ULTIMA SESIÓN":

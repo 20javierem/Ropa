@@ -5,17 +5,21 @@ import com.babas.views.dialogs.DesingTxtTable;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
 import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.babas.utilitiesTables.UtilitiesTables.buscarTexto2;
 
 public class BranchCellRendered extends DefaultTableCellRenderer {
+    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
 
-    public BranchCellRendered(){
 
+    public BranchCellRendered(Map<Integer, String> listaFiltros){
+        this.listaFiltros=listaFiltros;
     }
 
-    public static void setCellRenderer(JTable table){
-        BranchCellRendered cellRendered=new BranchCellRendered();
+    public static void setCellRenderer(JTable table,Map<Integer, String> listaFiltros){
+        BranchCellRendered cellRendered=new BranchCellRendered(listaFiltros);
         for (int i=0;i<table.getColumnCount();i++){
             table.getColumnModel().getColumn(i).setCellRenderer(cellRendered);
         }
@@ -33,7 +37,7 @@ public class BranchCellRendered extends DefaultTableCellRenderer {
             button.setForeground(component.getForeground());
             return button;
         }else{
-            DesingTxtTable componente=buscarTexto2(null,value,column,component);
+            DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
                 case "EMAIL":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);

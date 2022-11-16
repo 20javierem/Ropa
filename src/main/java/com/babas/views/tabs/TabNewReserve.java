@@ -65,6 +65,16 @@ public class TabNewReserve {
         this.reserve = reserve;
         $$$setupUI$$$();
         init();
+        tabPane.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    if (e.isControlDown()) {
+                        loadAddProducts();
+                    }
+                }
+            }
+        });
         btnAddProducts.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

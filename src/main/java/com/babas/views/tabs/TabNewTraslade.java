@@ -30,6 +30,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.*;
 
 public class TabNewTraslade {
@@ -57,6 +59,16 @@ public class TabNewTraslade {
         this.transfer = transfer;
         update = transfer.getId() != null;
         init();
+        tabPane.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    if (e.isControlDown()) {
+                        loadAddProducts();
+                    }
+                }
+            }
+        });
         cbbTypeTransfer.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

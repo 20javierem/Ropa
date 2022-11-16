@@ -171,7 +171,7 @@ public class TabCatalogue {
         }
         if (!search.isBlank()) {
             productsFilters.removeIf(product1 -> {
-                if (product1.getBarcode().toString().toLowerCase().contains(search.toLowerCase()) ||
+                if (product1.getBarcode().toLowerCase().contains(search.toLowerCase()) ||
                         product1.getStyle().getName().toLowerCase().contains(search.toLowerCase()) ||
                         product1.getSex().getName().toLowerCase().contains(search.toLowerCase()) ||
                         product1.getStyle().getCategory().getName().toLowerCase().contains(search.toLowerCase()) ||
@@ -413,13 +413,19 @@ public class TabCatalogue {
         pane.add(spacer3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final FlatTabbedPane flatTabbedPane1 = new FlatTabbedPane();
         tabPane.add(flatTabbedPane1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JPanel panel4 = new JPanel();
+        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        flatTabbedPane1.addTab("", new ImageIcon(getClass().getResource("/com/babas/icons/x24/catalogue2.png")), panel4);
         final JScrollPane scrollPane1 = new JScrollPane();
-        flatTabbedPane1.addTab("", new ImageIcon(getClass().getResource("/com/babas/icons/x24/catalogue2.png")), scrollPane1);
+        panel4.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         table = new FlatTable();
-        table.setRowHeight(25);
+        table.setAutoCreateRowSorter(true);
         scrollPane1.setViewportView(table);
+        final JPanel panel5 = new JPanel();
+        panel5.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        flatTabbedPane1.addTab("", new ImageIcon(getClass().getResource("/com/babas/icons/x24/catalogue.png")), panel5);
         scrollPane = new JScrollPane();
-        flatTabbedPane1.addTab("", new ImageIcon(getClass().getResource("/com/babas/icons/x24/catalogue.png")), scrollPane);
+        panel5.add(scrollPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         panelProducts = new JPanel();
         panelProducts.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         scrollPane.setViewportView(panelProducts);

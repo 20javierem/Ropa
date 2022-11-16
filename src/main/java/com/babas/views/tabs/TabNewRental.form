@@ -313,7 +313,7 @@
                         </constraints>
                         <properties>
                           <font size="14"/>
-                          <text value="Cancelar con transferencia"/>
+                          <text value="Confirmar con transferencia"/>
                         </properties>
                       </component>
                       <component id="ef92d" class="javax.swing.JButton" binding="btnSaleWithCash">
@@ -322,7 +322,7 @@
                         </constraints>
                         <properties>
                           <font size="14"/>
-                          <text value="Cancelar con efectivo"/>
+                          <text value="Confirmar con efectivo"/>
                         </properties>
                       </component>
                     </children>

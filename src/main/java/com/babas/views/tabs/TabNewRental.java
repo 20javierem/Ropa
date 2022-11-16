@@ -62,6 +62,16 @@ public class TabNewRental {
         this.rental = rental;
         $$$setupUI$$$();
         init();
+        tabPane.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_A) {
+                    if (e.isControlDown()) {
+                        loadAddProducts();
+                    }
+                }
+            }
+        });
         btnAddProducts.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -123,7 +133,6 @@ public class TabNewRental {
     private void init() {
         if (rental.getReserve() != null) {
             tabPane.setTitle("Alquiler/Reserva Nro: " + rental.getReserve().getNumberReserve());
-            lblReserve.setText(Utilities.moneda.format(rental.getReserve().getAdvance()));
             txtDocument.setText(rental.getReserve().getClient().getDni());
             searchClient();
         } else {
@@ -185,8 +194,10 @@ public class TabNewRental {
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
         spinnerWarranty.setValue(rental.getWarranty());
         if (rental.getReserve() == null) {
+            lblReserve.setText(Utilities.moneda.format(0.0));
             lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount()));
         } else {
+            lblReserve.setText(Utilities.moneda.format(rental.getReserve().getAdvance()));
             lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount() + rental.getReserve().getAdvance()));
         }
         spinnerDiscount.setValue(rental.getDiscount());
@@ -221,9 +232,13 @@ public class TabNewRental {
                             UtilitiesReports.generateTicketRental(rental, true);
                         }
                     }
-                    rental = new Rental();
-                    clear();
-                    Utilities.getTabbedPane().updateTab();
+                    if (rental.getReserve() == null) {
+                        rental = new Rental();
+                        clear();
+                        Utilities.getTabbedPane().updateTab();
+                    } else {
+                        Utilities.getTabbedPane().remove(getTabPane());
+                    }
                 }
             } else {
                 ProgramValidator.mostrarErrores(constraintViolationSet);
@@ -410,12 +425,12 @@ public class TabNewRental {
         btnSaleWithTrasnfer = new JButton();
         Font btnSaleWithTrasnferFont = this.$$$getFont$$$(null, -1, 14, btnSaleWithTrasnfer.getFont());
         if (btnSaleWithTrasnferFont != null) btnSaleWithTrasnfer.setFont(btnSaleWithTrasnferFont);
-        btnSaleWithTrasnfer.setText("Cancelar con transferencia");
+        btnSaleWithTrasnfer.setText("Confirmar con transferencia");
         panel9.add(btnSaleWithTrasnfer, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnSaleWithCash = new JButton();
         Font btnSaleWithCashFont = this.$$$getFont$$$(null, -1, 14, btnSaleWithCash.getFont());
         if (btnSaleWithCashFont != null) btnSaleWithCash.setFont(btnSaleWithCashFont);
-        btnSaleWithCash.setText("Cancelar con efectivo");
+        btnSaleWithCash.setText("Confirmar con efectivo");
         panel9.add(btnSaleWithCash, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblLogo = new JLabel();
         lblLogo.setHorizontalAlignment(0);
@@ -445,4 +460,5 @@ public class TabNewRental {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

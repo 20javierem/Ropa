@@ -5,7 +5,6 @@ import com.babas.models.Branch;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorBranch;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorUser;
 import com.babas.utilitiesTables.tablesCellRendered.BranchCellRendered;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.views.dialogs.DBranch;
@@ -16,20 +15,30 @@ import com.formdev.flatlaf.icons.FlatSearchIcon;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
-import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TabBranchs {
     private TabPane tabPane;
     private JButton btnNewBranch;
     private FlatTable table;
-    private FlatTextField flatTextField;
+    private FlatTextField txtSearch;
     private BranchAbstractModel model;
+    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
+    private TableRowSorter<BranchAbstractModel> modeloOrdenado;
+    private List<RowFilter<BranchAbstractModel, String>> filtros = new ArrayList<>();
+    private RowFilter filtroand;
 
     public TabBranchs() {
         init();
@@ -37,6 +46,19 @@ public class TabBranchs {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadNewBranch();
+            }
+        });
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filter();
+            }
+        });
+        ((JButton) txtSearch.getComponent(0)).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtSearch.setText(null);
+                filter();
             }
         });
     }
@@ -52,6 +74,7 @@ public class TabBranchs {
             @Override
             public void actionPerformed(ActionEvent e) {
                 model.fireTableDataChanged();
+                filter();
                 Utilities.getLblCentro().setText("Sucursales");
             }
         });
@@ -61,16 +84,36 @@ public class TabBranchs {
     }
 
     private void loadIcons() {
-        flatTextField.setLeadingIcon(new FlatSearchIcon());
+        txtSearch.setLeadingIcon(new FlatSearchIcon());
     }
 
     private void loadTable() {
         model = new BranchAbstractModel(FPrincipal.branchs);
         table.setModel(model);
-        BranchCellRendered.setCellRenderer(table);
         UtilitiesTables.headerNegrita(table);
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorBranch(false));
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorBranch(true));
+        BranchCellRendered.setCellRenderer(table, listaFiltros);
+        modeloOrdenado = new TableRowSorter<>(model);
+        table.setRowSorter(modeloOrdenado);
+    }
+
+    private void filter() {
+        String busqueda = txtSearch.getText().trim();
+        filtros.clear();
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4));
+        listaFiltros.put(0, busqueda);
+        listaFiltros.put(1, busqueda);
+        listaFiltros.put(2, busqueda);
+        listaFiltros.put(3, busqueda);
+        listaFiltros.put(4, busqueda);
+        filtroand = RowFilter.andFilter(filtros);
+        modeloOrdenado.setRowFilter(filtroand);
+        if (model.getList().size() == table.getRowCount()) {
+            Utilities.getLblCentro().setText("Sucursales: " + model.getList().size());
+        } else {
+            Utilities.getLblCentro().setText("Sucursales filtradas: " + table.getRowCount());
+        }
     }
 
     public TabPane getTabPane() {
@@ -118,10 +161,10 @@ public class TabBranchs {
         panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabPane.add(panel4, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel4.setBorder(BorderFactory.createTitledBorder(null, "Buscar", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        flatTextField = new FlatTextField();
-        flatTextField.setPlaceholderText("Sucursal...");
-        flatTextField.setShowClearButton(true);
-        flatTextField.setText("");
-        panel4.add(flatTextField, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        txtSearch = new FlatTextField();
+        txtSearch.setPlaceholderText("Sucursal...");
+        txtSearch.setShowClearButton(true);
+        txtSearch.setText("");
+        panel4.add(txtSearch, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 }

@@ -31,7 +31,6 @@
                 </constraints>
                 <properties>
                   <background color="-1049857"/>
-                  <borderPainted value="false"/>
                   <foreground color="-16777216"/>
                   <text value="Inicio"/>
                 </properties>
@@ -50,7 +49,6 @@
                 </constraints>
                 <properties>
                   <background color="-1049857"/>
-                  <borderPainted value="false"/>
                   <foreground color="-16777216"/>
                   <text value="Caja"/>
                 </properties>

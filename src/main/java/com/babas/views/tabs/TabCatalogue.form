@@ -3,7 +3,7 @@
   <grid id="27dc6" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="1213" height="214"/>
+      <xy x="20" y="20" width="1213" height="237"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -216,37 +216,57 @@
             </properties>
             <border type="none"/>
             <children>
-              <scrollpane id="bb918">
+              <grid id="19cbf" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="" icon="com/babas/icons/x24/catalogue2.png"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="9080d" class="com.formdev.flatlaf.extras.components.FlatTable" binding="table">
-                    <constraints/>
-                    <properties>
-                      <rowHeight value="25"/>
-                    </properties>
-                  </component>
+                  <scrollpane id="bb918">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="9080d" class="com.formdev.flatlaf.extras.components.FlatTable" binding="table">
+                        <constraints/>
+                        <properties>
+                          <autoCreateRowSorter value="true"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </scrollpane>
                 </children>
-              </scrollpane>
-              <scrollpane id="ac2f2" binding="scrollPane">
+              </grid>
+              <grid id="52515" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <tabbedpane title="" icon="com/babas/icons/x24/catalogue.png"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <grid id="211bd" binding="panelProducts" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints/>
+                  <scrollpane id="ac2f2" binding="scrollPane">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
                     <properties/>
                     <border type="none"/>
-                    <children/>
-                  </grid>
+                    <children>
+                      <grid id="211bd" binding="panelProducts" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                        <margin top="0" left="0" bottom="0" right="0"/>
+                        <constraints/>
+                        <properties/>
+                        <border type="none"/>
+                        <children/>
+                      </grid>
+                    </children>
+                  </scrollpane>
                 </children>
-              </scrollpane>
+              </grid>
             </children>
           </tabbedpane>
         </children>

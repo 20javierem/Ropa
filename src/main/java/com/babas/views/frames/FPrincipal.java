@@ -230,20 +230,27 @@ public class FPrincipal extends JFrame {
             boolean find = false;
             switch (comboBox.getSelectedItem().toString()) {
                 case "VENTA":
-                    if (Sales.getByNumber(number) != null) {
-                        UtilitiesReports.generateTicketSale(Sales.getByNumber(number), false);
+                    Sale sale = Sales.getByNumber(number);
+                    if (sale != null) {
+                        UtilitiesReports.generateTicketSale(sale, false);
                         find = true;
                     }
                     break;
                 case "ALQUILER":
-                    if (Rentals.getByNumber(number) != null) {
-                        UtilitiesReports.generateTicketRental(Rentals.getByNumber(number), false);
+                    Rental rental = Rentals.getByNumber(number);
+                    if (rental != null) {
+                        if (rental.isActive()) {
+                            UtilitiesReports.generateTicketRental(rental, false);
+                        } else {
+                            UtilitiesReports.generateTicketRentalFinish(rental, false);
+                        }
                         find = true;
                     }
                     break;
                 case "RESERVA":
-                    if (Reserves.getByNumber(number) != null) {
-                        UtilitiesReports.generateTicketReserve(Reserves.getByNumber(number), false);
+                    Reserve reserve = Reserves.getByNumber(number);
+                    if (reserve != null) {
+                        UtilitiesReports.generateTicketReserve(reserve, false);
                         find = true;
                     }
                     break;
@@ -315,14 +322,10 @@ public class FPrincipal extends JFrame {
 
     private void loadMenuItems() {
         pop_up.setBorder(BorderFactory.createEmptyBorder());
-        JMenuItem menuSettings = new JMenuItem("Configuraciones");
-        JMenuItem menuCompany = new JMenuItem("Compañia");
-        JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja");
-        JMenuItem menuShowBox = new JMenuItem("Ver movimientos de caja");
-        menuSettings.setIcon(new ImageIcon(App.class.getResource("icons/x16/settings.png")));
-        menuCompany.setIcon(new ImageIcon(App.class.getResource("icons/x16/settings.png")));
-        menuBox.setIcon(new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
-        menuShowBox.setIcon(new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuSettings = new JMenuItem("Configuraciones", new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        JMenuItem menuCompany = new JMenuItem("Compañia", new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuShowBox = new JMenuItem("Ver movimientos de caja", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
         menuCompany.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -595,7 +598,6 @@ public class FPrincipal extends JFrame {
         btnMenuInicio = new JMenu();
         btnMenuInicio.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         btnMenuInicio.setBackground(new java.awt.Color(-1049857));
-        btnMenuInicio.setBorderPainted(false);
         btnMenuInicio.setForeground(new java.awt.Color(-16777216));
         btnMenuInicio.setText("Inicio");
         menuBar1.add(btnMenuInicio, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -604,7 +606,6 @@ public class FPrincipal extends JFrame {
         btnMenuBox = new JMenu();
         btnMenuBox.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         btnMenuBox.setBackground(new java.awt.Color(-1049857));
-        btnMenuBox.setBorderPainted(false);
         btnMenuBox.setForeground(new java.awt.Color(-16777216));
         btnMenuBox.setText("Caja");
         menuBar1.add(btnMenuBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));

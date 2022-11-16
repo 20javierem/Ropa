@@ -181,7 +181,7 @@ public class DUser extends JDialog {
     private void loadTables() {
         modelBranchs = new BranchAbstractModel(new ArrayList<>(FPrincipal.branchs));
         tableBranchs.setModel(modelBranchs);
-        BranchCellRendered.setCellRenderer(tableBranchs);
+        BranchCellRendered.setCellRenderer(tableBranchs, null);
         UtilitiesTables.headerNegrita(tableBranchs);
         tableBranchs.removeColumn(tableBranchs.getColumn("EMAIL"));
         tableBranchs.removeColumn(tableBranchs.getColumn("DIRECCIÓN"));
@@ -203,7 +203,7 @@ public class DUser extends JDialog {
         ckActive.setSelected(user.isStaff());
         modelBranchsUsers = new BranchAbstractModel(user.getBranchs());
         tableBranchsUser.setModel(modelBranchsUsers);
-        BranchCellRendered.setCellRenderer(tableBranchsUser);
+        BranchCellRendered.setCellRenderer(tableBranchsUser, null);
         UtilitiesTables.headerNegrita(tableBranchsUser);
         tableBranchsUser.removeColumn(tableBranchsUser.getColumn("EMAIL"));
         tableBranchsUser.removeColumn(tableBranchsUser.getColumn("DIRECCIÓN"));
@@ -645,4 +645,5 @@ public class DUser extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

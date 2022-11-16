@@ -159,7 +159,7 @@ public class DBranch extends JDialog {
         txtPhone.setText(branch.getPhone());
         modelUsersBranchs = new UserAbstractModel(branch.getUsers());
         tableUserBranch.setModel(modelUsersBranchs);
-        UserCellRendered.setCellRenderer(tableUserBranch);
+        UserCellRendered.setCellRenderer(tableUserBranch, null);
         UtilitiesTables.headerNegrita(tableUserBranch);
         tableUserBranch.removeColumn(tableUserBranch.getColumn("CELULAR"));
         tableUserBranch.removeColumn(tableUserBranch.getColumn("ULTIMA SESIÓN"));
@@ -175,7 +175,7 @@ public class DBranch extends JDialog {
     private void loadTables() {
         modelUsers = new UserAbstractModel(new ArrayList<>(FPrincipal.users));
         tableUsers.setModel(modelUsers);
-        UserCellRendered.setCellRenderer(tableUsers);
+        UserCellRendered.setCellRenderer(tableUsers, null);
         UtilitiesTables.headerNegrita(tableUsers);
         tableUsers.removeColumn(tableUsers.getColumn("CELULAR"));
         tableUsers.removeColumn(tableUsers.getColumn("ULTIMA SESIÓN"));
@@ -340,4 +340,5 @@ public class DBranch extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
