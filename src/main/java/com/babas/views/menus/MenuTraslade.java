@@ -43,6 +43,7 @@ public class MenuTraslade {
     }
 
     public void loadNewTraslade() {
+        btnNewTraslade.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordTraslades);
         Utilities.buttonSelected(btnNewTraslade);
         if (tabNewTraslade == null) {
@@ -54,9 +55,11 @@ public class MenuTraslade {
             tabbedPane.addTab(tabNewTraslade.getTabPane().getTitle(), tabNewTraslade.getTabPane().getIcon(), tabNewTraslade.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabNewTraslade.getTabPane().getTitle()));
+        btnNewTraslade.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadRecordTraslades() {
+        btnRecordTraslades.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnNewTraslade);
         Utilities.buttonSelected(btnRecordTraslades);
         if (tabRecordTransfers == null) {
@@ -68,6 +71,7 @@ public class MenuTraslade {
             tabbedPane.addTab(tabRecordTransfers.getTabPane().getTitle(), tabRecordTransfers.getTabPane().getIcon(), tabRecordTransfers.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordTransfers.getTabPane().getTitle()));
+        btnRecordTraslades.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public JPanel getContentPane() {

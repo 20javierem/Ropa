@@ -38,6 +38,7 @@ public class JButtonEditorCategory extends AbstractCellEditor implements TableCe
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Category category=((CategoryAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DCategory dCategory=new DCategory(category);
@@ -56,7 +57,6 @@ public class JButtonEditorCategory extends AbstractCellEditor implements TableCe
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

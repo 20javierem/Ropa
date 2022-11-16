@@ -35,6 +35,7 @@ public class JButtonEditorColor extends AbstractCellEditor implements TableCellE
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Color color=((ColorAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DColor dColor=new DColor(color);
@@ -53,7 +54,6 @@ public class JButtonEditorColor extends AbstractCellEditor implements TableCellE
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

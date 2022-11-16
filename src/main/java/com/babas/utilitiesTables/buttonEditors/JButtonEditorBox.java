@@ -38,6 +38,7 @@ public class JButtonEditorBox extends AbstractCellEditor implements TableCellEdi
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Box box =((BoxAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DBox dBox=new DBox(box);
@@ -55,7 +56,6 @@ public class JButtonEditorBox extends AbstractCellEditor implements TableCellEdi
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

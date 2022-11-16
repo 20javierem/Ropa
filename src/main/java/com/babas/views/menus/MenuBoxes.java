@@ -33,6 +33,7 @@ public class MenuBoxes {
     }
 
     public void loadRecordBoxSessions() {
+        btnRecordBoxSessions.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.buttonSelected(btnRecordBoxSessions);
         if (tabRecordBoxSesions == null) {
             tabRecordBoxSesions = new TabRecordBoxSesions();
@@ -43,6 +44,7 @@ public class MenuBoxes {
             tabbedPane.addTab(tabRecordBoxSesions.getTabPane().getTitle(), tabRecordBoxSesions.getTabPane().getIcon(), tabRecordBoxSesions.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordBoxSesions.getTabPane().getTitle()));
+        btnRecordBoxSessions.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public JPanel getContentPane() {

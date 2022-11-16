@@ -52,6 +52,7 @@ public class MenuManage {
     }
 
     public void loadProducts() {
+        btnProducts.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnUsers);
         Utilities.despintarButton(btnBranchs);
         Utilities.buttonSelected(btnProducts);
@@ -64,9 +65,11 @@ public class MenuManage {
             tabbedPane.addTab(tabProducts.getTabPane().getTitle(), tabProducts.getTabPane().getIcon(), tabProducts.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabProducts.getTabPane().getTitle()));
+        btnProducts.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadUsers() {
+        btnUsers.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnProducts);
         Utilities.despintarButton(btnBranchs);
         Utilities.buttonSelected(btnUsers);
@@ -79,9 +82,11 @@ public class MenuManage {
             tabbedPane.addTab(tabUsers.getTabPane().getTitle(), tabUsers.getTabPane().getIcon(), tabUsers.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabUsers.getTabPane().getTitle()));
+        btnUsers.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadBranchs() {
+        btnBranchs.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnProducts);
         Utilities.despintarButton(btnUsers);
         Utilities.buttonSelected(btnBranchs);
@@ -94,6 +99,7 @@ public class MenuManage {
             tabbedPane.addTab(tabBranchs.getTabPane().getTitle(), tabBranchs.getTabPane().getIcon(), tabBranchs.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabBranchs.getTabPane().getTitle()));
+        btnBranchs.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public JPanel getContentPane() {

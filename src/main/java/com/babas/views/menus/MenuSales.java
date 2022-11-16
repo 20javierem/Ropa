@@ -53,6 +53,7 @@ public class MenuSales {
     }
 
     public void loadCatalogue() {
+        btnCatalogue.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordSales);
         Utilities.despintarButton(btnNewSale);
         Utilities.buttonSelected(btnCatalogue);
@@ -65,9 +66,11 @@ public class MenuSales {
             tabbedPane.addTab(tabCatalogue.getTabPane().getTitle(), tabCatalogue.getTabPane().getIcon(), tabCatalogue.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabCatalogue.getTabPane().getTitle()));
+        btnCatalogue.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadNewSale(boolean selected) {
+        btnNewSale.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordSales);
         Utilities.despintarButton(btnCatalogue);
         Utilities.buttonSelected(btnNewSale);
@@ -84,9 +87,11 @@ public class MenuSales {
         } else {
             loadCatalogue();
         }
+        btnNewSale.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadRecordSales() {
+        btnRecordSales.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnNewSale);
         Utilities.despintarButton(btnCatalogue);
         Utilities.buttonSelected(btnRecordSales);
@@ -99,6 +104,7 @@ public class MenuSales {
             tabbedPane.addTab(tabRecordSales.getTabPane().getTitle(), tabRecordSales.getTabPane().getIcon(), tabRecordSales.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordSales.getTabPane().getTitle()));
+        btnRecordSales.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public JPanel getContentPane() {

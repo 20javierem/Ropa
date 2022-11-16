@@ -53,6 +53,7 @@ public class MenuRentals {
     }
 
     public void loadNewRental() {
+        btnNewRental.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordRentals);
         Utilities.despintarButton(btnRentalsActives);
         Utilities.buttonSelected(btnNewRental);
@@ -65,9 +66,11 @@ public class MenuRentals {
             tabbedPane.addTab(tabNewRental.getTabPane().getTitle(), tabNewRental.getTabPane().getIcon(), tabNewRental.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabNewRental.getTabPane().getTitle()));
+        btnNewRental.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadRentalsActives() {
+        btnRentalsActives.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnNewRental);
         Utilities.despintarButton(btnRecordRentals);
         Utilities.buttonSelected(btnRentalsActives);
@@ -80,9 +83,11 @@ public class MenuRentals {
             tabbedPane.addTab(tabRentalsActives.getTabPane().getTitle(), tabRentalsActives.getTabPane().getIcon(), tabRentalsActives.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRentalsActives.getTabPane().getTitle()));
+        btnRentalsActives.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadRecordRentals() {
+        btnRecordRentals.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnNewRental);
         Utilities.despintarButton(btnRentalsActives);
         Utilities.buttonSelected(btnRecordRentals);
@@ -95,6 +100,7 @@ public class MenuRentals {
             tabbedPane.addTab(tabRecordRentals.getTabPane().getTitle(), tabRecordRentals.getTabPane().getIcon(), tabRecordRentals.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordRentals.getTabPane().getTitle()));
+        btnRecordRentals.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public JPanel getContentPane() {

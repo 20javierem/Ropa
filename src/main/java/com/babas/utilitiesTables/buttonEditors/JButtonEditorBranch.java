@@ -38,6 +38,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             Branch branch=((BranchAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
                 DBranch dBranch=new DBranch(branch,false);
@@ -58,10 +59,10 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                         branch.setActive(false);
                         branch.save();
                     }
+                    Utilities.getTabbedPane().updateTab();
                 }
             }
             Utilities.updateDialog();
-            fireEditingStopped();
         }
     }
 

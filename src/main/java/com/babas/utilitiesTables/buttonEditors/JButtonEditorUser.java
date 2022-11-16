@@ -1,6 +1,7 @@
 package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.controllers.Branchs;
+import com.babas.controllers.Users;
 import com.babas.models.Branch;
 import com.babas.models.User;
 import com.babas.utilities.Babas;
@@ -48,29 +49,34 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
                 dUser.setVisible(true);
             }else{
                 if(!user.getId().equals(Babas.user.getId())){
-                    if(Branchs.getTodos().size()>1){
-                        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Usuario",JOptionPane.YES_NO_OPTION)==0;
-                        if(si){
-                            user.refresh();
-                            user.getBranchs().forEach(branch -> {
-                                branch.getUsers().remove(user);
-                                branch.save();
-                            });
-                            if(user.getSales().isEmpty()){
-                                user.delete();
-                            }else{
-                                user.setActive(false);
-                                user.save();
+                    if(!user.getId().equals(1L)){
+                        if(FPrincipal.users.size()>1){
+                            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Usuario",JOptionPane.YES_NO_OPTION)==0;
+                            if(si){
+                                user.refresh();
+                                user.getBranchs().forEach(branch -> {
+                                    branch.getUsers().remove(user);
+                                    branch.save();
+                                });
+                                if(user.getSales().isEmpty()){
+                                    user.delete();
+                                }else{
+                                    user.setActive(false);
+                                    user.save();
+                                }
+                                FPrincipal.users.remove(user);
                             }
-                            FPrincipal.users.remove(user);
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminar a todos los usuarios");
                         }
                     }else{
-                        Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminar a todos los usuarios");
+                        Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminar al administrador");
                     }
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminarse a si mismo");
                 }
             }
+            Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
         }
     }

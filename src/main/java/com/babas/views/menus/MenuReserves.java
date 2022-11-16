@@ -53,6 +53,7 @@ public class MenuReserves {
     }
 
     public void loadNewReserve() {
+        btnNewReserve.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordReserves);
         Utilities.buttonSelected(btnNewReserve);
         if (tabNewReserve == null) {
@@ -64,9 +65,11 @@ public class MenuReserves {
             tabbedPane.addTab(tabNewReserve.getTabPane().getTitle(), tabNewReserve.getTabPane().getIcon(), tabNewReserve.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabNewReserve.getTabPane().getTitle()));
+        btnNewReserve.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadRecordRentals() {
+        btnRecordReserves.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnNewReserve);
         Utilities.despintarButton(btnReservesActives);
         Utilities.buttonSelected(btnRecordReserves);
@@ -79,9 +82,11 @@ public class MenuReserves {
             tabbedPane.addTab(tabRecordReserves.getTabPane().getTitle(), tabRecordReserves.getTabPane().getIcon(), tabRecordReserves.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabRecordReserves.getTabPane().getTitle()));
+        btnRecordReserves.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public void loadReservesActives() {
+        btnReservesActives.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnNewReserve);
         Utilities.despintarButton(btnRecordReserves);
         Utilities.buttonSelected(btnReservesActives);
@@ -94,6 +99,7 @@ public class MenuReserves {
             tabbedPane.addTab(tabReservesActives.getTabPane().getTitle(), tabReservesActives.getTabPane().getIcon(), tabReservesActives.getTabPane());
         }
         tabbedPane.setSelectedIndex(tabbedPane.indexOfTab(tabReservesActives.getTabPane().getTitle()));
+        btnReservesActives.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     public JPanel getContentPane() {

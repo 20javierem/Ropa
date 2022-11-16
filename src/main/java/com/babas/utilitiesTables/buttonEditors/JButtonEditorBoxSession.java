@@ -36,13 +36,13 @@ public class JButtonEditorBoxSession extends AbstractCellEditor implements Table
     public void actionPerformed(ActionEvent e) {
         JTable table = (JTable)button.getParent();
         if(table.getSelectedRow()!=-1){
+            fireEditingStopped();
             BoxSession boxSession=((BoxSesionAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             TabBoxSesion tabBoxSesion=new TabBoxSesion(boxSession);
             if(Utilities.getTabbedPane().indexOfTab(tabBoxSesion.getTabPane().getTitle())==-1){
                 Utilities.getTabbedPane().addTab(tabBoxSesion.getTabPane().getTitle(),tabBoxSesion.getTabPane());
             }
             Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabBoxSesion.getTabPane().getTitle()));
-            fireEditingStopped();
             Utilities.getTabbedPane().updateTab();
         }
     }

@@ -53,7 +53,7 @@ public class TabNewTraslade {
     private DetailTransferAbstractModel model;
     private Branch olBranchSource;
     private int oldIndexType = 0;
-    private boolean update;
+    private final boolean update;
 
     public TabNewTraslade(Transfer transfer) {
         this.transfer = transfer;
