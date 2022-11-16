@@ -1,16 +1,21 @@
 package com.babas.views.dialogs;
 
+import com.babas.controllers.Stocks;
 import com.babas.custom.ImageSlide;
 import com.babas.custom.JPanelGradiente;
 import com.babas.models.*;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
 import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.moreno.Notify;
+import com.thoughtworks.qdox.model.expression.Not;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -40,6 +45,7 @@ public class DProductCatalogue extends JDialog {
     private JComboBox cbbStyle;
     private JLabel lblCode;
     private FlatTable table;
+    private JButton btnAddToSale;
     private Product product;
     private StockProductAbstractModel model;
     private int pX, pY;
@@ -103,6 +109,45 @@ public class DProductCatalogue extends JDialog {
                 loadPrices();
             }
         });
+        btnAddToSale.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addProductToSale();
+            }
+        });
+    }
+
+    private void addProductToSale() {
+        if (Babas.boxSession.getId() != null) {
+            Product product = (Product) cbbStyle.getSelectedItem();
+            if (Stocks.getStock(Babas.boxSession.getBox().getBranch(), product) != null) {
+                FPrincipal fPrincipal = (FPrincipal) Utilities.getJFrame();
+                fPrincipal.getMenuSales().loadNewSale(false);
+                boolean find = false;
+                for (DetailSale detailSale : fPrincipal.getMenuSales().getTabNewSale().getSale().getDetailSales()) {
+                    if (detailSale.getProduct().getId().equals(product.getId())) {
+                        detailSale.setQuantity(detailSale.getQuantity() + 1);
+                        find = true;
+                        break;
+                    }
+                }
+                if (!find) {
+                    DetailSale detailSale = new DetailSale();
+                    detailSale.setSale(fPrincipal.getMenuSales().getTabNewSale().getSale());
+                    detailSale.setProduct(product);
+                    detailSale.setPrice(((Price) cbbPrice.getSelectedItem()).getPrice());
+                    detailSale.setPresentation((Presentation) cbbPresentation.getSelectedItem());
+                    detailSale.setQuantity(1);
+                    fPrincipal.getMenuSales().getTabNewSale().getSale().getDetailSales().add(detailSale);
+                }
+                dispose();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Producto agregado");
+            } else {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "MENSAJE", "La sucursal no contiene el producto");
+            }
+        } else {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "MENSAJE", "Debe aperturar una caja");
+        }
     }
 
     private void init() {
@@ -254,8 +299,6 @@ public class DProductCatalogue extends JDialog {
         panel5.setOpaque(false);
         contentPane.add(panel5, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panel5.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        final Spacer spacer3 = new Spacer();
-        panel5.add(spacer3, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JLabel label1 = new JLabel();
         Font label1Font = this.$$$getFont$$$(null, Font.BOLD, 14, label1.getFont());
         if (label1Font != null) label1.setFont(label1Font);
@@ -354,6 +397,9 @@ public class DProductCatalogue extends JDialog {
         panel5.add(scrollPane1, new GridConstraints(9, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(580, 180), null, 0, false));
         table = new FlatTable();
         scrollPane1.setViewportView(table);
+        btnAddToSale = new JButton();
+        btnAddToSale.setText("Agregar al carrito");
+        panel5.add(btnAddToSale, new GridConstraints(10, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel6 = new JPanel();
         panel6.setLayout(new GridLayoutManager(2, 2, new Insets(10, 10, 10, 10), 10, 5));
         panel6.setOpaque(false);
@@ -405,4 +451,5 @@ public class DProductCatalogue extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

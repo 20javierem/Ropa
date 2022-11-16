@@ -22,7 +22,9 @@ public class Rentals extends Babas {
 
     public static Rental getByNumber(Long numberSale){
         criteria = builder.createQuery(Rental.class);
-        criteria.select(criteria.from(Rental.class)).where(root.get("numberRental")).equals(numberSale);
+        root=criteria.from(Rental.class);
+        criteria.select(root).where(
+                builder.equal(root.get("numberRental"),numberSale));
         return session.createQuery(criteria).getSingleResultOrNull();
     }
 

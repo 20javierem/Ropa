@@ -90,10 +90,6 @@ public class DetailSale extends Babas {
         return quantityPresentation;
     }
 
-    public void setQuantityPresentation(Integer quantityPresentation) {
-        this.quantityPresentation = quantityPresentation;
-    }
-
     public Double getPrice() {
         return price;
     }

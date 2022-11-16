@@ -107,7 +107,7 @@ public class FPrincipal extends JFrame {
         btnNewSale.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuSales.loadNewSale();
+                menuSales.loadNewSale(true);
             }
         });
         btnRecordSales.addActionListener(new ActionListener() {
@@ -215,18 +215,44 @@ public class FPrincipal extends JFrame {
     }
 
     private void getComprobante() {
-//        SpinnerNumberModel sModel = new SpinnerNumberModel(0L, Long.MIN_VALUE, Long.MAX_VALUE, 1L);
-//        JSpinner spinner = new JSpinner(sModel);
-//        int option = JOptionPane.showOptionDialog(this, spinner, "Ingrese el numero de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
-//        if (option == JOptionPane.OK_OPTION) {
-//            if (Sales.getByNumber((Long) spinner.getValue()) != null) {
-//                UtilitiesReports.generateTicketSale(Sales.getByNumber((Long) spinner.getValue()), false);
-//            } else if (Rentals.getByNumber((Long) spinner.getValue()) != null) {
-//                UtilitiesReports.generateTicketRental(Rentals.getByNumber((Long) spinner.getValue()), false);
-//            } else if (Reserves.getByNumber((Long) spinner.getValue()) != null) {
-//                UtilitiesReports.generateTicketReserve(Reserves.getByNumber((Long) spinner.getValue()), false);
-//            }
-//        }
+        JPanel jPanel = new JPanel();
+        JComboBox comboBox = new JComboBox();
+        comboBox.addItem("VENTA");
+        comboBox.addItem("ALQUILER");
+        comboBox.addItem("RESERVA");
+        SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 99999, 1);
+        JSpinner spinner = new JSpinner(sModel);
+        jPanel.add(comboBox);
+        jPanel.add(spinner);
+        int option = JOptionPane.showOptionDialog(this, jPanel, "Ingrese el numero de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
+        if (option == JOptionPane.OK_OPTION) {
+            Long number = Long.valueOf((Integer) spinner.getValue());
+            boolean find = false;
+            switch (comboBox.getSelectedItem().toString()) {
+                case "VENTA":
+                    if (Sales.getByNumber(number) != null) {
+                        UtilitiesReports.generateTicketSale(Sales.getByNumber(number), false);
+                        find = true;
+                    }
+                    break;
+                case "ALQUILER":
+                    if (Rentals.getByNumber(number) != null) {
+                        UtilitiesReports.generateTicketRental(Rentals.getByNumber(number), false);
+                        find = true;
+                    }
+                    break;
+                case "RESERVA":
+                    if (Reserves.getByNumber(number) != null) {
+                        UtilitiesReports.generateTicketReserve(Reserves.getByNumber(number), false);
+                        find = true;
+                    }
+                    break;
+            }
+            if (!find) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "No se encontró el comprobante");
+                getComprobante();
+            }
+        }
     }
 
     private void loadSettingUser() {
@@ -437,6 +463,10 @@ public class FPrincipal extends JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
 
+    public MenuSales getMenuSales() {
+        return menuSales;
+    }
+
     private void loadPermisses() {
         btnCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
         btnNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
@@ -525,6 +555,7 @@ public class FPrincipal extends JFrame {
         btnExit.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnSearchComprobante.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {

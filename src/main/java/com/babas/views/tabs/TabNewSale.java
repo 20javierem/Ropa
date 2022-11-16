@@ -141,6 +141,10 @@ public class TabNewSale {
         }
     }
 
+    public Sale getSale() {
+        return sale;
+    }
+
     private void loadTotals() {
         if (Babas.boxSession.getId() == null) {
             sale.getDetailSales().clear();
@@ -384,4 +388,5 @@ public class TabNewSale {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

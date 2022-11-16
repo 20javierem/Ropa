@@ -114,11 +114,6 @@
         </properties>
         <border type="none" title=""/>
         <children>
-          <vspacer id="4f3f4">
-            <constraints>
-              <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-            </constraints>
-          </vspacer>
           <component id="a05ee" class="javax.swing.JLabel">
             <constraints>
               <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -300,6 +295,14 @@
               </component>
             </children>
           </scrollpane>
+          <component id="5663b" class="javax.swing.JButton" binding="btnAddToSale">
+            <constraints>
+              <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="Agregar al carrito"/>
+            </properties>
+          </component>
         </children>
       </grid>
       <grid id="d168e" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="5">

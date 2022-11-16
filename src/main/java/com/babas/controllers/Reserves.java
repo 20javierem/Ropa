@@ -22,7 +22,9 @@ public class Reserves extends Babas {
 
     public static Reserve getByNumber(Long numberSale){
         criteria = builder.createQuery(Reserve.class);
-        criteria.select(criteria.from(Reserve.class)).where(root.get("numberReserve")).equals(numberSale);
+        root=criteria.from(Reserve.class);
+        criteria.select(root).where(
+                builder.equal(root.get("numberReserve"),numberSale));
         return session.createQuery(criteria).getSingleResultOrNull();
     }
 
