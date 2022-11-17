@@ -20,7 +20,6 @@ import javax.swing.*;
 public class App 
 {
     public static void main( String[] args ) {
-
         Utilities.propiedades=new Propiedades();
         Utilities.propiedades.save();
         Utilities.loadTheme();

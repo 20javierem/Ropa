@@ -146,7 +146,6 @@ public class TabbedPane extends FlatTabbedPane {
     private void insertarButtons(){
         //creacion de pop_up
         pop_up = new JPopupMenu();
-        pop_up.setBorder(BorderFactory.createEmptyBorder());
         JMenuItem moveToLeft = new JMenuItem("Mover a la izquierda",new FlatSVGIcon(App.class.getResource("icons/svg/arrowCollapse.svg")));
         JMenuItem moveToRight = new JMenuItem("Mover a la derecha",new FlatSVGIcon(App.class.getResource("icons/svg/arrowExpand.svg")));
         JMenuItem closeTab = new JMenuItem("Cerrar Pestaña");

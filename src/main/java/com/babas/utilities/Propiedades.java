@@ -40,6 +40,7 @@ public class Propiedades {
             save();
             setTema("Claro");
             setFont(String.valueOf(new JTextField().getFont().getSize()));
+            setLocalImages("local");
             setUserPassword("");
             setUserName("");
             setServerUrl("");
@@ -72,6 +73,12 @@ public class Propiedades {
         String pasword=properties.getProperty("userPassword");
         return pasword.isEmpty()?"":Utilities.desencriptar(pasword);
     }
+    public void setLocalImages(String localImages){
+        properties.put("localImages",localImages);
+    }
+    public String getLocalImages(){
+        return properties.getProperty("localImages");
+    }
     public void setUserPassword(String password){
         properties.put("userPassword",Utilities.encriptar(password));
     }
@@ -99,7 +106,7 @@ public class Propiedades {
     public void setServerName(String userServer){
         properties.put("userNameServer",userServer);
     }
-    public String getServerPassword(){
+    public String getPasswordServer(){
         String pasword=properties.getProperty("passwordServer");
         return pasword==null?"":pasword;
     }

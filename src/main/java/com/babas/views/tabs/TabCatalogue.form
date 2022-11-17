@@ -233,9 +233,7 @@
                     <children>
                       <component id="9080d" class="com.formdev.flatlaf.extras.components.FlatTable" binding="table">
                         <constraints/>
-                        <properties>
-                          <autoCreateRowSorter value="true"/>
-                        </properties>
+                        <properties/>
                       </component>
                     </children>
                   </scrollpane>

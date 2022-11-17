@@ -13,7 +13,10 @@ import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatButton;
+import com.formdev.flatlaf.extras.components.FlatMenu;
+import com.formdev.flatlaf.extras.components.FlatMenuBar;
 import com.formdev.flatlaf.extras.components.FlatToggleButton;
+import com.formdev.flatlaf.ui.FlatRootPaneUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -30,7 +33,7 @@ import java.util.List;
 
 public class FPrincipal extends JFrame {
     private JPanel contentPane;
-    private JMenu btnMenuInicio;
+    private JMenu btnMenuStart;
     private JButton btnNewSale;
     private JButton btnRecordSales;
     private JButton btnCatalogue;
@@ -62,6 +65,12 @@ public class FPrincipal extends JFrame {
     private FlatButton btnSettings;
     private FlatButton btnNotify;
     private JButton btnSearchComprobante;
+    private JMenu btnMenuSales;
+    private JMenu btnMenuRentals;
+    private JMenu btnMenuReserves;
+    private JMenu btnMenuTransfers;
+    private JMenu btnMenuManages;
+    private JMenuBar menuBar;
     private MenuSales menuSales;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
@@ -321,40 +330,92 @@ public class FPrincipal extends JFrame {
     }
 
     private void loadMenuItems() {
-        pop_up.setBorder(BorderFactory.createEmptyBorder());
         JMenuItem menuSettings = new JMenuItem("Configuraciones", new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        menuSettings.addActionListener(e -> loadSettings());
         JMenuItem menuCompany = new JMenuItem("Compañia", new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        menuCompany.addActionListener(e -> loadCompany());
+        btnMenuStart.setMnemonic(KeyEvent.VK_I);
+        btnMenuStart.add(menuSettings);
+        btnMenuStart.add(menuCompany);
+        menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
+
         JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuBox.addActionListener(e -> loadBox());
         JMenuItem menuShowBox = new JMenuItem("Ver movimientos de caja", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
-        menuCompany.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadCompany();
-            }
-        });
-        menuSettings.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadSettings();
-            }
-        });
-        menuBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadBox();
-            }
-        });
-        menuShowBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadBoxSesion();
-            }
-        });
-        btnMenuInicio.add(menuSettings);
-        btnMenuInicio.add(menuCompany);
+        menuShowBox.addActionListener(e -> loadBoxSesion());
+        JMenuItem menuRecordBoxes = new JMenuItem("Historial de cajas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuRecordBoxes.addActionListener(e -> menuBoxes.loadRecordBoxSessions());
+        btnMenuBox.setMnemonic(KeyEvent.VK_C);
         btnMenuBox.add(menuBox);
         btnMenuBox.add(menuShowBox);
-        menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
+        btnMenuBox.add(menuRecordBoxes);
+        menuRecordBoxes.setEnabled(Babas.user.getPermitions().isRecordBoxes());
+
+        JMenuItem menuNewSale = new JMenuItem("Nueva venta", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuNewSale.addActionListener(e -> menuSales.loadNewSale(true));
+        JMenuItem menuCatalogue = new JMenuItem("Catálogo", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuCatalogue.addActionListener(e -> menuSales.loadCatalogue());
+        JMenuItem menuRecordSales = new JMenuItem("Historial de ventas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuRecordSales.addActionListener(e -> menuSales.loadCatalogue());
+        btnMenuSales.setMnemonic(KeyEvent.VK_V);
+        btnMenuSales.add(menuNewSale);
+        btnMenuSales.add(menuCatalogue);
+        btnMenuSales.add(menuRecordSales);
+        menuNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
+        menuCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
+        menuRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
+
+        JMenuItem menuNewRental = new JMenuItem("Nuevo alquiler", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuNewRental.addActionListener(e -> menuRentals.loadNewRental());
+        JMenuItem menuRentalsActives = new JMenuItem("Alquileres activos", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuRentalsActives.addActionListener(e -> menuRentals.loadRentalsActives());
+        JMenuItem menuRecordRentals = new JMenuItem("Historial de alquileres", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuRecordRentals.addActionListener(e -> menuRentals.loadRecordRentals());
+        btnMenuRentals.setMnemonic(KeyEvent.VK_A);
+        btnMenuRentals.add(menuNewRental);
+        btnMenuRentals.add(menuRentalsActives);
+        btnMenuRentals.add(menuRecordRentals);
+        menuNewRental.setEnabled(Babas.user.getPermitions().isNewRental());
+        menuRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
+        menuRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
+
+        JMenuItem menuNewReserve = new JMenuItem("Nuevo alquiler", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuNewReserve.addActionListener(e -> menuReserves.loadNewReserve());
+        JMenuItem menuReservesActives = new JMenuItem("Reservas activas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuReservesActives.addActionListener(e -> menuReserves.loadReservesActives());
+        JMenuItem menuRecordReserves = new JMenuItem("Historial de reservas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuRecordReserves.addActionListener(e -> menuReserves.loadRecordRentals());
+        btnMenuReserves.setMnemonic(KeyEvent.VK_R);
+        btnMenuReserves.add(menuNewReserve);
+        btnMenuReserves.add(menuReservesActives);
+        btnMenuReserves.add(menuRecordReserves);
+        menuNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
+        menuReservesActives.setEnabled(Babas.user.getPermitions().isReservesActives());
+        menuRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
+
+        JMenuItem menuNewTransfer = new JMenuItem("Nuevo traslado", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuNewTransfer.addActionListener(e -> menuTraslade.loadNewTraslade());
+        JMenuItem menuRecordTransfers = new JMenuItem("Historial de traslados", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuRecordTransfers.addActionListener(e -> menuTraslade.loadRecordTraslades());
+        btnMenuTransfers.setMnemonic(KeyEvent.VK_T);
+        btnMenuTransfers.add(menuNewTransfer);
+        btnMenuTransfers.add(menuRecordTransfers);
+        menuNewTransfer.setEnabled(Babas.user.getPermitions().isNewTransfer());
+        menuRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
+
+        JMenuItem menuProducts = new JMenuItem("Productos", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuProducts.addActionListener(e -> menuManage.loadProducts());
+        JMenuItem menuUsers = new JMenuItem("Usuarios", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuUsers.addActionListener(e -> menuManage.loadUsers());
+        JMenuItem menuBranchs = new JMenuItem("Sucursales", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        menuBranchs.addActionListener(e -> menuManage.loadBranchs());
+        btnMenuManages.setMnemonic(KeyEvent.VK_G);
+        btnMenuManages.add(menuProducts);
+        btnMenuManages.add(menuUsers);
+        btnMenuManages.add(menuBranchs);
+        menuProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
+        menuUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
+        menuBranchs.setEnabled(Babas.user.getPermitions().isManageUsers());
     }
 
     private void loadIcons() {
@@ -438,6 +499,8 @@ public class FPrincipal extends JFrame {
 
     private void init() {
         setContentPane(contentPane);
+        Image icon = (new ImageIcon(App.class.getResource("images/java.png"))).getImage();
+        setIconImage(icon);
         setTitle("Software-Tienda");
         Utilities.setJFrame(this);
         Utilities.setTabbedPane(tabbedPane);
@@ -464,6 +527,7 @@ public class FPrincipal extends JFrame {
         loadTransferOnWait();
         loadIcons();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+//        setJMenuBar(menuBar);
     }
 
     public MenuSales getMenuSales() {
@@ -592,26 +656,36 @@ public class FPrincipal extends JFrame {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, 0));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JMenuBar menuBar1 = new JMenuBar();
-        menuBar1.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        panel1.add(menuBar1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        btnMenuInicio = new JMenu();
-        btnMenuInicio.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        btnMenuInicio.setBackground(new java.awt.Color(-1049857));
-        btnMenuInicio.setForeground(new java.awt.Color(-16777216));
-        btnMenuInicio.setText("Inicio");
-        menuBar1.add(btnMenuInicio, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        menuBar = new JMenuBar();
+        menuBar.setLayout(new GridLayoutManager(1, 8, new Insets(0, 0, 0, 0), -1, -1));
+        panel1.add(menuBar, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        menuBar1.add(spacer1, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        menuBar.add(spacer1, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         btnMenuBox = new JMenu();
-        btnMenuBox.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        btnMenuBox.setBackground(new java.awt.Color(-1049857));
-        btnMenuBox.setForeground(new java.awt.Color(-16777216));
         btnMenuBox.setText("Caja");
-        menuBar1.add(btnMenuBox, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        menuBar.add(btnMenuBox, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuManages = new JMenu();
+        btnMenuManages.setText("Gestionar");
+        menuBar.add(btnMenuManages, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuTransfers = new JMenu();
+        btnMenuTransfers.setText("Traslados");
+        menuBar.add(btnMenuTransfers, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuReserves = new JMenu();
+        btnMenuReserves.setText("Reservas");
+        menuBar.add(btnMenuReserves, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuRentals = new JMenu();
+        btnMenuRentals.setText("Alquileres");
+        menuBar.add(btnMenuRentals, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuSales = new JMenu();
+        btnMenuSales.setText("Ventas");
+        menuBar.add(btnMenuSales, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuStart = new JMenu();
+        btnMenuStart.setText("Inicio");
+        menuBar.add(btnMenuStart, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel1.add(toolBar1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
+        toolBar1.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         btnNewSale = new JButton();
         btnNewSale.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/nuevaVenta.png")));
         btnNewSale.setText("Nueva venta");
@@ -851,7 +925,6 @@ public class FPrincipal extends JFrame {
         final JPanel panel10 = new JPanel();
         panel10.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel10, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        panel10.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         tabbedPane = new TabbedPane();
         tabbedPane.setTabLayoutPolicy(1);
         panel10.add(tabbedPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));

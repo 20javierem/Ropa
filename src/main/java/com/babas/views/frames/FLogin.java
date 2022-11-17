@@ -1,5 +1,6 @@
 package com.babas.views.frames;
 
+import com.babas.App;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.custom.JPanelGradiente;
@@ -56,7 +57,9 @@ public class FLogin extends JFrame {
 
     private void init() {
         setContentPane(contentPane);
-        setTitle("Login");
+        Image icon = (new ImageIcon(App.class.getResource("images/java.png"))).getImage();
+        setIconImage(icon);
+        setTitle("Software-Tienda");
         Utilities.setJFrame(this);
         getRootPane().setDefaultButton(btnInitSession);
         loadUserSaved();

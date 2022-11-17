@@ -19,6 +19,7 @@ import java.util.Map;
 public class UtilitiesTables {
 
     public static void headerNegrita(FlatTable table){
+        table.setAutoCreateRowSorter(true);
         table.getTableHeader().setBorder(null);
         table.getTableHeader().setBackground(Color.black);
         table.getTableHeader().setForeground(Color.WHITE);

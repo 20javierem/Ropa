@@ -3,6 +3,7 @@ package com.babas.views.dialogs;
 import com.babas.utilities.Utilities;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatComboBox;
+import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -34,6 +35,11 @@ public class DSettings extends JDialog {
     private JRadioButton rbSaleQuestion;
     private JRadioButton rbReserveQuestion;
     private JRadioButton rbRentalQuestion;
+    private FlatTextField txtServerIp;
+    private FlatTextField txtNameUserServer;
+    private FlatTextField txtNameUserPassword;
+    private JRadioButton rbLocalImages;
+    private JRadioButton rbServerImages;
     private FPrincipal fPrincipal;
 
     public DSettings(FPrincipal fPrincipal) {
@@ -91,6 +97,24 @@ public class DSettings extends JDialog {
                 verify();
             }
         });
+        rbLocalImages.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verifyImages(!rbLocalImages.isSelected());
+            }
+        });
+        rbServerImages.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                verifyImages(rbServerImages.isSelected());
+            }
+        });
+    }
+
+    private void verifyImages(boolean server) {
+        txtServerIp.setVisible(server);
+        txtNameUserPassword.setVisible(server);
+        txtNameUserServer.setVisible(server);
     }
 
     private void verify() {
@@ -160,6 +184,15 @@ public class DSettings extends JDialog {
             Utilities.propiedades.setPrintTicketRental("question");
         }
 
+        if (rbLocalImages.isSelected()) {
+            Utilities.propiedades.setLocalImages("local");
+        } else {
+            Utilities.propiedades.setLocalImages("server");
+            Utilities.propiedades.setServerUrl(txtServerIp.getText().trim());
+            Utilities.propiedades.setServerName(txtNameUserServer.getText().trim());
+            Utilities.propiedades.setServerPassword(txtNameUserPassword.getText().trim());
+        }
+
         Utilities.propiedades.save();
         onDispose();
         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Cambios guardados");
@@ -189,6 +222,17 @@ public class DSettings extends JDialog {
     private void loadSetings() {
         cbbThemes.setSelectedItem(Utilities.propiedades.getTema());
         cbbFontSize.setSelectedItem(Utilities.propiedades.getFont().getSize());
+        txtServerIp.setText(Utilities.propiedades.getServerUrl());
+        txtNameUserServer.setText(Utilities.propiedades.getServerName());
+        txtNameUserPassword.setText(Utilities.propiedades.getPasswordServer());
+
+        if (Utilities.propiedades.getLocalImages().equals("local")) {
+            verifyImages(false);
+            rbLocalImages.setSelected(true);
+        } else {
+            rbServerImages.setSelected(true);
+        }
+
         if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
             rbSaleAlways.setSelected(true);
         } else if (Utilities.propiedades.getPrintTicketSale().equals("never")) {
@@ -354,7 +398,7 @@ public class DSettings extends JDialog {
         final Spacer spacer3 = new Spacer();
         panel3.add(spacer3, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(5, 2, new Insets(10, 10, 10, 10), 5, 5));
+        panel4.setLayout(new GridLayoutManager(7, 2, new Insets(10, 10, 10, 10), 5, 5));
         tabbedPane1.addTab("Sistema", panel4);
         final JLabel label3 = new JLabel();
         Font label3Font = this.$$$getFont$$$(null, Font.BOLD, -1, label3.getFont());
@@ -421,22 +465,49 @@ public class DSettings extends JDialog {
         rbReserveQuestion.setText("Preguntar");
         panel7.add(rbReserveQuestion, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer8 = new Spacer();
-        panel4.add(spacer8, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel4.add(spacer8, new GridConstraints(6, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        final JLabel label7 = new JLabel();
+        Font label7Font = this.$$$getFont$$$(null, Font.BOLD, -1, label7.getFont());
+        if (label7Font != null) label7.setFont(label7Font);
+        label7.setText("Imagenes:");
+        panel4.add(label7, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
-        panel8.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel8, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel8.setLayout(new GridLayoutManager(4, 4, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.add(panel8, new GridConstraints(5, 0, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer9 = new Spacer();
+        panel8.add(spacer9, new GridConstraints(0, 2, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        rbLocalImages = new JRadioButton();
+        rbLocalImages.setText("Local");
+        panel8.add(rbLocalImages, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        rbServerImages = new JRadioButton();
+        rbServerImages.setText("Servidor");
+        panel8.add(rbServerImages, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        txtServerIp = new FlatTextField();
+        txtServerIp.setPlaceholderText("Dirección ip");
+        panel8.add(txtServerIp, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final Spacer spacer10 = new Spacer();
+        panel8.add(spacer10, new GridConstraints(1, 3, 3, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        txtNameUserServer = new FlatTextField();
+        txtNameUserServer.setPlaceholderText("Nombre de usuario");
+        panel8.add(txtNameUserServer, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        txtNameUserPassword = new FlatTextField();
+        txtNameUserPassword.setPlaceholderText("Contraseña");
+        panel8.add(txtNameUserPassword, new GridConstraints(3, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JPanel panel9 = new JPanel();
+        panel9.setLayout(new GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel9, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         hechoButton = new JButton();
         hechoButton.setText("Cancel");
-        panel8.add(hechoButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer9 = new Spacer();
-        panel8.add(spacer9, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel9.add(hechoButton, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final Spacer spacer11 = new Spacer();
+        panel9.add(spacer11, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         btnSave = new JButton();
         btnSave.setText("OK");
-        panel8.add(btnSave, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel9.add(btnSave, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnApply = new JButton();
         btnApply.setEnabled(false);
         btnApply.setText("Aplicar");
-        panel8.add(btnApply, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel9.add(btnApply, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         ButtonGroup buttonGroup;
         buttonGroup = new ButtonGroup();
         buttonGroup.add(rbSaleAlways);
@@ -450,6 +521,9 @@ public class DSettings extends JDialog {
         buttonGroup.add(rbRentalAlways);
         buttonGroup.add(rbRentalNever);
         buttonGroup.add(rbRentalQuestion);
+        buttonGroup = new ButtonGroup();
+        buttonGroup.add(rbLocalImages);
+        buttonGroup.add(rbServerImages);
     }
 
     /**
@@ -480,4 +554,5 @@ public class DSettings extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }
