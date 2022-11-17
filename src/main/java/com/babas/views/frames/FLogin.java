@@ -71,13 +71,11 @@ public class FLogin extends JFrame {
         if (Utilities.iconCompanyx255x220 != null) {
             lblLogo.setIcon(Utilities.iconCompanyx255x220);
         } else if (Babas.company.getLogo() != null) {
-            if (Utilities.openConection()) {
-                Image logo = Utilities.getImage(Babas.company.getLogo());
-                if (logo != null) {
-                    Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-                    Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(420, 420, Image.SCALE_SMOOTH));
-                    lblLogo.setIcon(Utilities.iconCompanyx255x220);
-                }
+            Image logo = Utilities.getImage(Babas.company.getLogo());
+            if (logo != null) {
+                Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+                Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(420, 420, Image.SCALE_SMOOTH));
+                lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
         btnInitSession.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -201,11 +199,13 @@ public class FLogin extends JFrame {
         lblError.setHorizontalTextPosition(11);
         lblError.setText("Credenciales incorrectas");
         panelDatos.add(lblError, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        fieldPasword = new CustomPasswordField();
-        fieldPasword.setPlaceholderText("Contraseña");
-        panelDatos.add(fieldPasword, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(185, -1), null, 0, false));
         final Spacer spacer2 = new Spacer();
         panelDatos.add(spacer2, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        fieldPasword = new CustomPasswordField();
+        Font fieldPaswordFont = this.$$$getFont$$$(null, -1, 17, fieldPasword.getFont());
+        if (fieldPaswordFont != null) fieldPasword.setFont(fieldPaswordFont);
+        fieldPasword.setPlaceholderText("Contraseña");
+        panelDatos.add(fieldPasword, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(185, -1), null, 0, false));
         lblLogo = new JLabel();
         lblLogo.setHorizontalAlignment(0);
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));

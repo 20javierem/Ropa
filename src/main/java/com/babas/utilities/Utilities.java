@@ -17,6 +17,7 @@ import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 import com.formdev.flatlaf.intellijthemes.*;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
+import com.hierynomus.mssmb2.SMBApiException;
 import com.hierynomus.smbj.SmbConfig;
 import com.hierynomus.smbj.auth.AuthenticationContext;
 import com.moreno.Notify;
@@ -105,7 +106,7 @@ public class Utilities {
                 auth = new AuthenticationContext(propiedades.getServerName(), propiedades.getPasswordServer().toCharArray(), "localhost");
                 smbConnection = new SmbConnection(propiedades.getServerUrl(), "clothes", auth);
                 return true;
-            }catch (IOException e) {
+            }catch (IOException|SMBApiException e) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
                 return false;
             }
@@ -131,18 +132,21 @@ public class Utilities {
                 return false;
             }
         }else if(consult){
-            try {
-                SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-                SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
-                OutputStream out = file.getOutputStream();
-                IOUtils.copy(imageImput, out);
-                imageImput.close();
-                out.close();
-                return true;
-            }catch (IOException e) {
-                consult=false;
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
+            if(openConection()){
+                try {
+                    SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                    SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                    OutputStream out = file.getOutputStream();
+                    IOUtils.copy(imageImput, out);
+                    imageImput.close();
+                    out.close();
+                    return true;
+                }catch (IOException e) {
+                    consult=false;
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
+                }
             }
+
         }
         return false;
     }
@@ -153,13 +157,15 @@ public class Utilities {
             String directoryName = home + "/.Tienda-Ropa/products/";
             return new ImageIcon(directoryName+imageName).getImage();
         }else if(consult){
-            try {
-                SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-                SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
-                return ImageIO.read(file.getInputStream());
-            }catch (IOException e) {
-                consult=false;
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
+            if(openConection()){
+                try {
+                    SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                    SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                    return ImageIO.read(file.getInputStream());
+                }catch (IOException e) {
+                    consult=false;
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
+                }
             }
         }
         return null;
@@ -168,16 +174,18 @@ public class Utilities {
     public static void downloadLogo(String imageName){
         if (!propiedades.getLocalImages().equals("local")) {
             if(consult){
-                try {
-                    File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
-                    SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
-                    SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
-                    OutputStream out = new FileOutputStream(carpeta.getAbsolutePath()+"/"+imageName);
-                    IOUtils.copy(file.getInputStream(), out);
-                    out.close();
-                }catch (IOException e) {
-                    consult=false;
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
+                if(openConection()){
+                    try {
+                        File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
+                        SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                        SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                        OutputStream out = new FileOutputStream(carpeta.getAbsolutePath()+"/"+imageName);
+                        IOUtils.copy(file.getInputStream(), out);
+                        out.close();
+                    }catch (IOException e) {
+                        consult=false;
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Error al conectar con el servidor de imágenes");
+                    }
                 }
             }
         }

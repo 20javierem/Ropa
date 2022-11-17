@@ -25,11 +25,16 @@ public class Excel {
     private File file;
     private String[] sheets;
     private Sex sex;
+
     public Excel() {
-        sex = new Sex();
-        sex.setName("Unisex");
-        sex.setActive(true);
-        sex.save();
+        Sex sex=Sexs.getByName("Unisex");
+        if(sex==null){
+            sex=new Sex("Unisex");
+            sex.setActive(true);
+            sex.save();
+            FPrincipal.sexs.add(sex);
+            FPrincipal.sexsWithAll.add(sex);
+        }
         sheets = new String[]{
                 "categorias",
                 "estilos",
@@ -51,7 +56,7 @@ public class Excel {
         return false;
     }
     public void loadData() {
-        boolean alive=true;
+        Utilities.getLblIzquierda().setText("Importando productos...");
         try {
             XSSFWorkbook book = new XSSFWorkbook(file);
             for (String nameSheet : sheets) {
@@ -135,8 +140,6 @@ public class Excel {
                                 size = Sizes.get(row.getCell(2).getStringCellValue().trim());
                                 product.setSize(size);
                                 color = Colors.get(row.getCell(3).getStringCellValue().trim());
-                                System.out.println(row.getCell(3).getStringCellValue());
-                                System.out.println(color);
                                 product.setColor(color);
                                 brand = Brands.get(row.getCell(4).getStringCellValue().trim());
                                 product.setBrand(brand);

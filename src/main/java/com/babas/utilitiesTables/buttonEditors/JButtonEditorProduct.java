@@ -6,6 +6,7 @@ import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.dialogs.DProduct;
 import com.babas.views.dialogs.DProductCatalogue;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -60,6 +61,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                         product.getStyle().getProducts().remove(product);
                         Utilities.updateDialog();
                         Utilities.getTabbedPane().updateTab();
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Producto eliminado");
                     }
                     break;
                 case "images":

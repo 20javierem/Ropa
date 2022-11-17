@@ -1,5 +1,6 @@
 package com.babas.controllers;
 
+import com.babas.models.Brand;
 import com.babas.models.Color;
 import com.babas.models.Product;
 import com.babas.models.Sex;
@@ -16,6 +17,14 @@ public class Sexs extends Babas {
 
     public static Sex get(Integer id) {
         return session.find(Sex.class, id);
+    }
+
+    public static Sex getByName(String name) {
+        criteria = builder.createQuery(Sex.class);
+        root = criteria.from(Sex.class);
+        criteria.select(root).
+                where(builder.equal(root.get("name"), name));
+        return session.createQuery(criteria).getSingleResultOrNull();
     }
 
     public static Vector<Sex> getTodos(){

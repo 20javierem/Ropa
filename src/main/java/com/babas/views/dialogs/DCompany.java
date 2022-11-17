@@ -105,21 +105,19 @@ public class DCompany extends JDialog {
                 ImageIO.write(bufferedImage, "png", os);
                 String nameImage = "logoCompany.png";
                 InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
-                if (Utilities.openConection()) {
-                    if (Utilities.newImage(inputStream, nameImage)) {
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
-                        Babas.company.setLogo(nameImage);
-                        Image image = Utilities.getImage(nameImage);
-                        if (image != null) {
-                            Utilities.iconCompanyx420x420 = new ImageIcon(image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
-                            Utilities.iconCompanyx255x220 = new ImageIcon(image.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-                            lblLogo.setIcon(Utilities.iconCompanyx420x420);
-                        } else {
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
-                        }
+                if (Utilities.newImage(inputStream, nameImage)) {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
+                    Babas.company.setLogo(nameImage);
+                    Image image = Utilities.getImage(nameImage);
+                    if (image != null) {
+                        Utilities.iconCompanyx420x420 = new ImageIcon(image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
+                        Utilities.iconCompanyx255x220 = new ImageIcon(image.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+                        lblLogo.setIcon(Utilities.iconCompanyx420x420);
                     } else {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
                     }
+                } else {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
                 }
             } catch (IOException e) {
                 e.printStackTrace();

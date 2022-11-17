@@ -298,9 +298,7 @@ public class FPrincipal extends JFrame {
         loadPermisses();
         Babas.company.refresh();
         if (Babas.company.getLogo() != null) {
-            if (Utilities.openConection()) {
-                Utilities.downloadLogo(Babas.company.getLogo());
-            }
+            Utilities.downloadLogo(Babas.company.getLogo());
         }
         btnActualizar.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
@@ -332,32 +330,40 @@ public class FPrincipal extends JFrame {
     private void loadMenuItems() {
         JMenuItem menuSettings = new JMenuItem("Configuraciones", new ImageIcon(App.class.getResource("icons/x16/settings.png")));
         menuSettings.addActionListener(e -> loadSettings());
-        JMenuItem menuCompany = new JMenuItem("Compañia", new ImageIcon(App.class.getResource("icons/x16/settings.png")));
+        JMenuItem menuCompany = new JMenuItem("Compañia");
         menuCompany.addActionListener(e -> loadCompany());
         btnMenuStart.setMnemonic(KeyEvent.VK_I);
+        menuSettings.setMnemonic(KeyEvent.VK_C);
+        menuCompany.setMnemonic(KeyEvent.VK_M);
         btnMenuStart.add(menuSettings);
         btnMenuStart.add(menuCompany);
         menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
 
-        JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja");
         menuBox.addActionListener(e -> loadBox());
-        JMenuItem menuShowBox = new JMenuItem("Ver movimientos de caja", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuShowBox = new JMenuItem("Ver movimientos de caja");
         menuShowBox.addActionListener(e -> loadBoxSesion());
-        JMenuItem menuRecordBoxes = new JMenuItem("Historial de cajas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuRecordBoxes = new JMenuItem("Historial de cajas");
         menuRecordBoxes.addActionListener(e -> menuBoxes.loadRecordBoxSessions());
         btnMenuBox.setMnemonic(KeyEvent.VK_C);
+        menuBox.setMnemonic(KeyEvent.VK_A);
+        menuShowBox.setMnemonic(KeyEvent.VK_V);
+        menuRecordBoxes.setMnemonic(KeyEvent.VK_H);
         btnMenuBox.add(menuBox);
         btnMenuBox.add(menuShowBox);
         btnMenuBox.add(menuRecordBoxes);
         menuRecordBoxes.setEnabled(Babas.user.getPermitions().isRecordBoxes());
 
-        JMenuItem menuNewSale = new JMenuItem("Nueva venta", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuNewSale = new JMenuItem("Nueva venta");
         menuNewSale.addActionListener(e -> menuSales.loadNewSale(true));
-        JMenuItem menuCatalogue = new JMenuItem("Catálogo", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuCatalogue = new JMenuItem("Catálogo");
         menuCatalogue.addActionListener(e -> menuSales.loadCatalogue());
-        JMenuItem menuRecordSales = new JMenuItem("Historial de ventas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuRecordSales = new JMenuItem("Historial de ventas");
         menuRecordSales.addActionListener(e -> menuSales.loadCatalogue());
         btnMenuSales.setMnemonic(KeyEvent.VK_V);
+        menuNewSale.setMnemonic(KeyEvent.VK_N);
+        menuCatalogue.setMnemonic(KeyEvent.VK_C);
+        menuRecordSales.setMnemonic(KeyEvent.VK_H);
         btnMenuSales.add(menuNewSale);
         btnMenuSales.add(menuCatalogue);
         btnMenuSales.add(menuRecordSales);
@@ -365,13 +371,16 @@ public class FPrincipal extends JFrame {
         menuCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
         menuRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
 
-        JMenuItem menuNewRental = new JMenuItem("Nuevo alquiler", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuNewRental = new JMenuItem("Nuevo alquiler");
         menuNewRental.addActionListener(e -> menuRentals.loadNewRental());
-        JMenuItem menuRentalsActives = new JMenuItem("Alquileres activos", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuRentalsActives = new JMenuItem("Alquileres activos");
         menuRentalsActives.addActionListener(e -> menuRentals.loadRentalsActives());
-        JMenuItem menuRecordRentals = new JMenuItem("Historial de alquileres", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuRecordRentals = new JMenuItem("Historial de alquileres");
         menuRecordRentals.addActionListener(e -> menuRentals.loadRecordRentals());
         btnMenuRentals.setMnemonic(KeyEvent.VK_A);
+        menuNewRental.setMnemonic(KeyEvent.VK_N);
+        menuRentalsActives.setMnemonic(KeyEvent.VK_A);
+        menuRecordRentals.setMnemonic(KeyEvent.VK_H);
         btnMenuRentals.add(menuNewRental);
         btnMenuRentals.add(menuRentalsActives);
         btnMenuRentals.add(menuRecordRentals);
@@ -379,13 +388,16 @@ public class FPrincipal extends JFrame {
         menuRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
         menuRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
 
-        JMenuItem menuNewReserve = new JMenuItem("Nuevo alquiler", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuNewReserve = new JMenuItem("Nuevo alquiler");
         menuNewReserve.addActionListener(e -> menuReserves.loadNewReserve());
-        JMenuItem menuReservesActives = new JMenuItem("Reservas activas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuReservesActives = new JMenuItem("Reservas activas");
         menuReservesActives.addActionListener(e -> menuReserves.loadReservesActives());
-        JMenuItem menuRecordReserves = new JMenuItem("Historial de reservas", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuRecordReserves = new JMenuItem("Historial de reservas");
         menuRecordReserves.addActionListener(e -> menuReserves.loadRecordRentals());
         btnMenuReserves.setMnemonic(KeyEvent.VK_R);
+        menuNewReserve.setMnemonic(KeyEvent.VK_N);
+        menuReservesActives.setMnemonic(KeyEvent.VK_R);
+        menuRecordReserves.setMnemonic(KeyEvent.VK_H);
         btnMenuReserves.add(menuNewReserve);
         btnMenuReserves.add(menuReservesActives);
         btnMenuReserves.add(menuRecordReserves);
@@ -393,23 +405,28 @@ public class FPrincipal extends JFrame {
         menuReservesActives.setEnabled(Babas.user.getPermitions().isReservesActives());
         menuRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
 
-        JMenuItem menuNewTransfer = new JMenuItem("Nuevo traslado", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuNewTransfer = new JMenuItem("Nuevo traslado");
         menuNewTransfer.addActionListener(e -> menuTraslade.loadNewTraslade());
-        JMenuItem menuRecordTransfers = new JMenuItem("Historial de traslados", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuRecordTransfers = new JMenuItem("Historial de traslados");
         menuRecordTransfers.addActionListener(e -> menuTraslade.loadRecordTraslades());
         btnMenuTransfers.setMnemonic(KeyEvent.VK_T);
+        menuNewTransfer.setMnemonic(KeyEvent.VK_N);
+        menuRecordTransfers.setMnemonic(KeyEvent.VK_H);
         btnMenuTransfers.add(menuNewTransfer);
         btnMenuTransfers.add(menuRecordTransfers);
         menuNewTransfer.setEnabled(Babas.user.getPermitions().isNewTransfer());
         menuRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
 
-        JMenuItem menuProducts = new JMenuItem("Productos", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuProducts = new JMenuItem("Productos");
         menuProducts.addActionListener(e -> menuManage.loadProducts());
-        JMenuItem menuUsers = new JMenuItem("Usuarios", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuUsers = new JMenuItem("Usuarios");
         menuUsers.addActionListener(e -> menuManage.loadUsers());
-        JMenuItem menuBranchs = new JMenuItem("Sucursales", new ImageIcon(App.class.getResource("icons/x16/caja-registradora.png")));
+        JMenuItem menuBranchs = new JMenuItem("Sucursales");
         menuBranchs.addActionListener(e -> menuManage.loadBranchs());
         btnMenuManages.setMnemonic(KeyEvent.VK_G);
+        menuProducts.setMnemonic(KeyEvent.VK_P);
+        menuUsers.setMnemonic(KeyEvent.VK_U);
+        menuBranchs.setMnemonic(KeyEvent.VK_S);
         btnMenuManages.add(menuProducts);
         btnMenuManages.add(menuUsers);
         btnMenuManages.add(menuBranchs);
@@ -527,7 +544,6 @@ public class FPrincipal extends JFrame {
         loadTransferOnWait();
         loadIcons();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-//        setJMenuBar(menuBar);
     }
 
     public MenuSales getMenuSales() {
