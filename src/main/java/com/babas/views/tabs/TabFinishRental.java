@@ -171,13 +171,14 @@ public class TabFinishRental {
 
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
+        lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         if (rental.getReserve() == null) {
             lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount()));
+            lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
         } else {
             lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount() + rental.getReserve().getAdvance()));
+            lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getReserve().getAdvance()));
         }
-        lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
-        lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
 
         lblWarranty2.setText(Utilities.moneda.format(rental.getWarranty()));
         spinnerPenalty.setValue(rental.getPenalty());
@@ -400,4 +401,5 @@ public class TabFinishRental {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

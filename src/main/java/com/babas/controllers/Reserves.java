@@ -69,8 +69,8 @@ public class Reserves extends Babas {
         root=criteria.from(Reserve.class);
         criteria.select(root).where(builder.and(
                 builder.equal(root.get("branch"),branch),
-                builder.isTrue(root.get("active"))
-        )).orderBy(builder.desc(root.get("id")));
+                        builder.isTrue(root.get("active"))))
+                .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 

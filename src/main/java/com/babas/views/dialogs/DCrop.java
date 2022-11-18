@@ -25,6 +25,7 @@ public class DCrop extends JDialog {
     private JPanel contentPane;
     public static BufferedImage imageSelectedx200;
     public static BufferedImage imageSelectedx400;
+    private boolean open = true;
 
     public DCrop() {
         super(Utilities.getJFrame(), "Editar Logo", true);
@@ -57,11 +58,17 @@ public class DCrop extends JDialog {
 
     @Override
     public void setVisible(boolean b) {
-        if (loadImage()) {
-            super.setVisible(b);
+        if (open) {
+            if (loadImage()) {
+                open = false;
+                super.setVisible(b);
+            } else {
+                dispose();
+            }
         } else {
             dispose();
         }
+
     }
 
     private BufferedImage getImage(BufferedImage bufferedImage, double scal) {
@@ -159,7 +166,7 @@ public class DCrop extends JDialog {
         panel2.setLayout(new GridLayoutManager(1, 1, new Insets(20, 20, 20, 20), -1, -1));
         contentPane.add(panel2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         panel2.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
-        panel2.add(panelImagen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(800, 800), new Dimension(800, 800), new Dimension(800, 800), 0, false));
+        panel2.add(panelImagen, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(550, 550), new Dimension(550, 550), new Dimension(550, 550), 0, false));
     }
 
     /**
@@ -168,4 +175,5 @@ public class DCrop extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

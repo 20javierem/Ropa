@@ -166,12 +166,12 @@ public class ImagePanel extends JPanel {
         int width=Math.abs(x1 - x2);
         int heigth=Math.abs(y1 - y2);
 
-        if(width>750&&shape!=null){
+        if(width>500&&shape!=null){
             width=shape.getBounds().width;
         }else{
             startX=Math.min(x1,x2);
         }
-        if(heigth>750&&shape!=null){
+        if(heigth>500&&shape!=null){
             heigth=shape.getBounds().height;
         }else{
             startY=Math.min(y1,y2);
@@ -184,8 +184,8 @@ public class ImagePanel extends JPanel {
             Image image = ImageIO.read(new File(inputImage));
             int width=image.getWidth(this);
             int height=image.getHeight(this);
-            if(width>800||height>800){
-                double percen= Math.min(800.00/width,800.00/height);
+            if(width>550||height>550){
+                double percen= Math.min(550.00/width,550.00/height);
                 width= (int) (percen*width);
                 height=(int) (percen*height);
             }

@@ -237,6 +237,8 @@ public class Excel {
                     }
                 }
             }
+            inputStream.close();
+            book.close();
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Datos importados");
             Utilities.getLblIzquierda().setText("Éxito: Registros cargados");
             Utilities.getTabbedPane().updateTab();
@@ -249,23 +251,23 @@ public class Excel {
 
     public void exportData(Branch branch){
         Utilities.getLblIzquierda().setText("Exportando productos...");
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        CellStyle headerStyle = workbook.createCellStyle();
-        Font font = workbook.createFont();
+        HSSFWorkbook book = new HSSFWorkbook();
+        CellStyle headerStyle = book.createCellStyle();
+        Font font = book.createFont();
         font.setBold(true);
         headerStyle.setFont(font);
 
-        HSSFSheet categorias = workbook.createSheet("categorias");
-        HSSFSheet estilos = workbook.createSheet("estilos");
-        HSSFSheet tallas = workbook.createSheet("tallas");
-        HSSFSheet colores = workbook.createSheet("colores");
-        HSSFSheet marcas = workbook.createSheet("marcas");
-        HSSFSheet dimensiones = workbook.createSheet("dimensiones");
-        HSSFSheet estados = workbook.createSheet("estados");
-        HSSFSheet generos = workbook.createSheet("generos");
-        HSSFSheet productos = workbook.createSheet("productos");
-        HSSFSheet presentaciones = workbook.createSheet("presentaciones");
-        HSSFSheet precios = workbook.createSheet("precios");
+        HSSFSheet categorias = book.createSheet("categorias");
+        HSSFSheet estilos = book.createSheet("estilos");
+        HSSFSheet tallas = book.createSheet("tallas");
+        HSSFSheet colores = book.createSheet("colores");
+        HSSFSheet marcas = book.createSheet("marcas");
+        HSSFSheet dimensiones = book.createSheet("dimensiones");
+        HSSFSheet estados = book.createSheet("estados");
+        HSSFSheet generos = book.createSheet("generos");
+        HSSFSheet productos = book.createSheet("productos");
+        HSSFSheet presentaciones = book.createSheet("presentaciones");
+        HSSFSheet precios = book.createSheet("precios");
 
         List<Category> categories=new ArrayList<>();
         List<Style> styles=new ArrayList<>();
@@ -512,8 +514,9 @@ public class Excel {
         try {
             String destiny=file.getAbsolutePath();
             FileOutputStream fileOutputStream = new FileOutputStream(destiny+".xls");
-            workbook.write(fileOutputStream);
+            book.write(fileOutputStream);
             fileOutputStream.close();
+            book.close();
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Datos exportados");
             Utilities.getLblIzquierda().setText("Éxito: Registros exportados");
             Utilities.getTabbedPane().updateTab();
