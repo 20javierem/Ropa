@@ -133,17 +133,25 @@ public class DBoxSesion extends JDialog {
                 }
             }
             if (index == 0) {
-                boxSession.save();
                 if (update) {
-                    Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(0.00));
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Caja cerrada");
-                    Babas.boxSession = new BoxSession();
+                    index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "¿Está seguro?", "Cerrar caja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Si", "No"}, "Si");
+                    if (index == 0) {
+                        boxSession.save();
+                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(0.00));
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Caja cerrada");
+                        Babas.boxSession = new BoxSession();
+                        onHecho();
+                    }
                 } else {
-                    boxSession.calculateTotals();
-                    Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(boxSession.getAmountToDelivered()));
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Caja aperturada");
+                    index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "¿Está seguro?", "Abrir caja", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Si", "No"}, "Si");
+                    if (index == 0) {
+                        boxSession.save();
+                        boxSession.calculateTotals();
+                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(boxSession.getAmountToDelivered()));
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Caja aperturada");
+                        onHecho();
+                    }
                 }
-                onHecho();
             }
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
@@ -236,4 +244,5 @@ public class DBoxSesion extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

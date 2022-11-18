@@ -142,7 +142,7 @@ public class DBranch extends JDialog {
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Cajas"));
         }
         if (update) {
-            setTitle("Actualizar Usuario");
+            setTitle("Actualizar Sucursal");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
         }

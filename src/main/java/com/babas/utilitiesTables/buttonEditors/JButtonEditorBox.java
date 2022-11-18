@@ -2,12 +2,14 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.models.Box;
 import com.babas.models.Color;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.BoxAbstractModel;
 import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
 import com.babas.views.dialogs.DBox;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -46,13 +48,18 @@ public class JButtonEditorBox extends AbstractCellEditor implements TableCellEdi
             }else{
                 boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Caja",JOptionPane.YES_NO_OPTION)==0;
                 if(si){
-                    box.refresh();
-                    if(box.getBoxSesions().isEmpty()){
-                        box.delete();
-                    }else{
-                        box.setDeleted(true);
-                    }
                     box.getBranch().getBoxs().remove(box);
+                    if(box.getId()!=null){
+                        box.refresh();
+                        if(box.getBoxSesions().isEmpty()){
+                            box.delete();
+                        }else{
+                            box.setDeleted(true);
+                        }
+                    }else{
+                        box.delete();
+                    }
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja eliminada");
                 }
             }
             Utilities.updateDialog();

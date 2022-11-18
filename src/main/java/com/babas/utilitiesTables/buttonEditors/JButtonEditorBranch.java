@@ -53,6 +53,10 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Sucursal",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         branch.refresh();
+                        branch.getUsers().forEach(user -> {
+                            user.getBranchs().remove(branch);
+                            user.save();
+                        });
                         if(!branch.getStocks().isEmpty()){
                             JComboBox comboBox = new JComboBox();
                             comboBox.setModel(new DefaultComboBoxModel(new Vector(FPrincipal.branchs)));

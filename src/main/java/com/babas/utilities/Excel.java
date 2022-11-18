@@ -352,10 +352,14 @@ public class Excel {
                 colors.add(stock.getProduct().getColor());
                 brands.remove(stock.getProduct().getBrand());
                 brands.add(stock.getProduct().getBrand());
-                dimentions.remove(stock.getProduct().getDimention());
-                dimentions.add(stock.getProduct().getDimention());
-                stades.remove(stock.getProduct().getStade());
-                stades.add(stock.getProduct().getStade());
+                if(stock.getProduct().getDimention()!=null){
+                    dimentions.remove(stock.getProduct().getDimention());
+                    dimentions.add(stock.getProduct().getDimention());
+                }
+                if(stock.getProduct().getStade()!=null){
+                    stades.remove(stock.getProduct().getStade());
+                    stades.add(stock.getProduct().getStade());
+                }
                 sexes.remove(stock.getProduct().getSex());
                 sexes.add(stock.getProduct().getSex());
                 products.add(stock.getProduct());
@@ -416,11 +420,9 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         categories.forEach(category -> {
-            if(category!=null){
-                HSSFRow row = categorias.createRow(categorias.getLastRowNum()+1);
-                row.createCell(0).setCellValue(category.getId());
-                row.createCell(1).setCellValue(category.getName());
-            }
+            HSSFRow row = categorias.createRow(categorias.getLastRowNum()+1);
+            row.createCell(0).setCellValue(category.getId());
+            row.createCell(1).setCellValue(category.getName());
         });
 
         header = estilos.createRow(estilos.getLastRowNum() + 1);
@@ -434,12 +436,10 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("CATEGORIA");
         styles.forEach(style -> {
-            if(style!=null){
-                HSSFRow row = estilos.createRow(estilos.getLastRowNum()+1);
-                row.createCell(0).setCellValue(style.getId());
-                row.createCell(1).setCellValue(style.getName());
-                row.createCell(2).setCellValue(style.getCategory().getName());
-            }
+            HSSFRow row = estilos.createRow(estilos.getLastRowNum()+1);
+            row.createCell(0).setCellValue(style.getId());
+            row.createCell(1).setCellValue(style.getName());
+            row.createCell(2).setCellValue(style.getCategory().getName());
         });
 
         header = tallas.createRow(tallas.getLastRowNum() + 1);
@@ -450,11 +450,9 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         sizes.forEach(size -> {
-            if(size!=null){
-                HSSFRow row = tallas.createRow(tallas.getLastRowNum()+1);
-                row.createCell(0).setCellValue(size.getId());
-                row.createCell(1).setCellValue(size.getName());
-            }
+            HSSFRow row = tallas.createRow(tallas.getLastRowNum()+1);
+            row.createCell(0).setCellValue(size.getId());
+            row.createCell(1).setCellValue(size.getName());
         });
 
         header = colores.createRow(colores.getLastRowNum() + 1);
@@ -465,11 +463,9 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         colors.forEach(color -> {
-            if(color!=null){
-                HSSFRow row = colores.createRow(colores.getLastRowNum()+1);
-                row.createCell(0).setCellValue(color.getId());
-                row.createCell(1).setCellValue(color.getName());
-            }
+            HSSFRow row = colores.createRow(colores.getLastRowNum()+1);
+            row.createCell(0).setCellValue(color.getId());
+            row.createCell(1).setCellValue(color.getName());
         });
 
         header = marcas.createRow(marcas.getLastRowNum() + 1);
@@ -480,11 +476,9 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         brands.forEach(brand -> {
-            if(brand!=null){
-                HSSFRow row = marcas.createRow(marcas.getLastRowNum()+1);
-                row.createCell(0).setCellValue(brand.getId());
-                row.createCell(1).setCellValue(brand.getName());
-            }
+            HSSFRow row = marcas.createRow(marcas.getLastRowNum()+1);
+            row.createCell(0).setCellValue(brand.getId());
+            row.createCell(1).setCellValue(brand.getName());
         });
 
         header = dimensiones.createRow(dimensiones.getLastRowNum() + 1);
@@ -495,11 +489,9 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         dimentions.forEach(dimention -> {
-            if(dimention!=null){
-                HSSFRow row = dimensiones.createRow(dimensiones.getLastRowNum()+1);
-                row.createCell(0).setCellValue(dimention.getId());
-                row.createCell(1).setCellValue(dimention.getName());
-            }
+            HSSFRow row = dimensiones.createRow(dimensiones.getLastRowNum()+1);
+            row.createCell(0).setCellValue(dimention.getId());
+            row.createCell(1).setCellValue(dimention.getName());
         });
 
         header = estados.createRow(estados.getLastRowNum() + 1);
@@ -511,11 +503,9 @@ public class Excel {
         hssfCell.setCellValue("NOMBRE");
         System.out.println(stades.size());
         stades.forEach(stade -> {
-            if(stade!=null){
-                HSSFRow row = estados.createRow(estados.getLastRowNum()+1);
-                row.createCell(0).setCellValue(stade.getId());
-                row.createCell(1).setCellValue(stade.getName());
-            }
+            HSSFRow row = estados.createRow(estados.getLastRowNum()+1);
+            row.createCell(0).setCellValue(stade.getId());
+            row.createCell(1).setCellValue(stade.getName());
         });
 
         header = generos.createRow(generos.getLastRowNum() + 1);
@@ -526,11 +516,9 @@ public class Excel {
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         sexes.forEach(sex -> {
-            if(sex!=null){
-                HSSFRow row = generos.createRow(generos.getLastRowNum()+1);
-                row.createCell(0).setCellValue(sex.getId());
-                row.createCell(1).setCellValue(sex.getName());
-            }
+            HSSFRow row = generos.createRow(generos.getLastRowNum()+1);
+            row.createCell(0).setCellValue(sex.getId());
+            row.createCell(1).setCellValue(sex.getName());
         });
         try {
             String destiny=file.getAbsolutePath();

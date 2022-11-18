@@ -182,5 +182,6 @@ public class Branch extends Babas {
         }
         updated=new Date();
         super.save();
+        getBoxs().forEach(Box::save);
     }
 }

@@ -16,6 +16,8 @@ import jakarta.validation.ConstraintViolation;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
@@ -91,9 +93,9 @@ public class DaddProductToReserve extends JDialog {
                 }
             }
         });
-        table.addMouseListener(new MouseAdapter() {
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void valueChanged(ListSelectionEvent e) {
                 loadProduct();
             }
         });

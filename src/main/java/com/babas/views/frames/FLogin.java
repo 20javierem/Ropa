@@ -14,12 +14,14 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Date;
 import java.util.Locale;
 
@@ -73,8 +75,20 @@ public class FLogin extends JFrame {
         } else if (Babas.company.getLogo() != null) {
             Image logo = Utilities.getImage(Babas.company.getLogo(), true);
             if (logo != null) {
-                Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
-                Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(420, 420, Image.SCALE_SMOOTH));
+                int width = logo.getWidth(this);
+                int height = logo.getHeight(this);
+                if (width > 255 || height > 220) {
+                    double percen = Math.min(255.00 / width, 220.00 / height);
+                    width = (int) (percen * width);
+                    height = (int) (percen * height);
+                }
+                Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+                if (width > 420 || height > 420) {
+                    double percen = Math.min(420.00 / width, 420.00 / height);
+                    width = (int) (percen * width);
+                    height = (int) (percen * height);
+                }
+                Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(width, height, Image.SCALE_SMOOTH));
                 lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }

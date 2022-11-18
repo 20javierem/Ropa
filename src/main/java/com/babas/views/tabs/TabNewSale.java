@@ -152,6 +152,7 @@ public class TabNewSale {
             sale.setBranch(null);
         }
         sale.calculateTotal();
+        lblReserve.setText(Utilities.moneda.format(0.0));
         lblSubTotal.setText(Utilities.moneda.format(sale.getTotal()));
         spinnerDiscount.setValue(sale.getDiscount());
         lblTotal.setText(Utilities.moneda.format(sale.getTotalCurrent()));

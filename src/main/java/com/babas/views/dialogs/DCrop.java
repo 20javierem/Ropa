@@ -50,8 +50,8 @@ public class DCrop extends JDialog {
     private void loadImagesScaled() {
         BufferedImage bufferedImage = ((ImagePanel) panelImagen).getImageSelected();
         if (bufferedImage != null) {
-            imageSelectedx200 = getImage(bufferedImage, 200.00);
-            imageSelectedx400 = getImage(bufferedImage, 400.00);
+            imageSelectedx200 = getImage(bufferedImage, 200.00, 200.00);
+            imageSelectedx400 = getImage(bufferedImage, 400.00, 400.00);
         }
         onDispose();
     }
@@ -71,11 +71,11 @@ public class DCrop extends JDialog {
 
     }
 
-    private BufferedImage getImage(BufferedImage bufferedImage, double scal) {
+    public static BufferedImage getImage(BufferedImage bufferedImage, double scalWidth, double scalHeight) {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
-        if (width > scal || height > scal) {
-            double percen = Math.min(scal / width, scal / height);
+        if (width > scalWidth || height > scalHeight) {
+            double percen = Math.min(scalWidth / width, scalHeight / height);
             width = (int) (percen * width);
             height = (int) (percen * height);
         }

@@ -111,6 +111,7 @@ public class ImagePanel extends JPanel {
                 graphics2D.fill(rectangle2D2);
             }
         }
+        setBackground(new Color(87, 236, 38));
     }
 
     private void moveRectangle(Point point) {

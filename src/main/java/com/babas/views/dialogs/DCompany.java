@@ -113,11 +113,12 @@ public class DCompany extends JDialog {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
                     }
                     Babas.company.setLogo(nameImage);
-                    Image image = Utilities.getImage(nameImage, true);
-                    if (image != null) {
-                        Utilities.iconCompanyx420x420 = new ImageIcon(image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
-                        Utilities.iconCompanyx255x220 = new ImageIcon(image.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
+                    Image logo = Utilities.getImage(nameImage, true);
+                    if (logo != null) {
+                        Utilities.iconCompanyx255x220 = new ImageIcon(DCrop.getImage(bufferedImage, 255.00, 220.00));
+                        Utilities.iconCompanyx420x420 = new ImageIcon(DCrop.getImage(bufferedImage, 420.00, 420.00));
                         lblLogo.setIcon(Utilities.iconCompanyx420x420);
+
                     } else {
                         if (Utilities.getJFrame() != null) {
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
