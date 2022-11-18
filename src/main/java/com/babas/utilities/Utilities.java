@@ -113,10 +113,13 @@ public class Utilities {
         }
     }
 
-    public static boolean newImage(InputStream imageImput,String imageName){
+    public static boolean newImage(InputStream imageImput,String imageName,boolean logo){
         if(propiedades.getLocalImages().equals("local")){
             String home = System.getProperty("user.home");
             String directoryName = home + "/.Tienda-Ropa/products/";
+            if(logo){
+                directoryName = home + "/.Tienda-Ropa/";
+            }
             File directory = new File(directoryName);
             if (!directory.exists()) {
                 directory.mkdirs();
@@ -151,10 +154,13 @@ public class Utilities {
         return false;
     }
 
-    public static Image getImage(String imageName){
+    public static Image getImage(String imageName,boolean logo){
         if(propiedades.getLocalImages().equals("local")){
             String home = System.getProperty("user.home");
             String directoryName = home + "/.Tienda-Ropa/products/";
+            if(logo){
+                directoryName = home + "/.Tienda-Ropa/";
+            }
             return new ImageIcon(directoryName+imageName).getImage();
         }else if(consult){
             if(openConection()){

@@ -24,10 +24,6 @@ public class App
         Utilities.propiedades.save();
         Utilities.loadTheme();
 
-        JFrame jFrame=new JFrame();
-        jFrame.setLocationRelativeTo(null);
-        Utilities.setJFrame(jFrame);
-
         Babas.initialize();
         if(Babas.state){
             Babas.company=Companys.get(1);
@@ -39,14 +35,12 @@ public class App
                     Utilities.downloadLogo(Babas.company.getLogo());
                 }
             }
-
             if(Babas.company!=null){
                 if(Branchs.getTodos().isEmpty()){
                     DBranch dBranch=new DBranch(new Branch(),true);
                     dBranch.setVisible(true);
                 }
             }
-
             if(Babas.company!=null&&!Branchs.getTodos().isEmpty()){
                 if(Users.getTodos().isEmpty()){
                     User user=new User();
@@ -63,13 +57,8 @@ public class App
                 fLogin.setVisible(true);
             }
         }else{
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión con la base de datos");
-            try {
-                Thread.sleep(5000);
-                System.exit(0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            System.exit(0);
         }
+
     }
 }

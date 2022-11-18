@@ -36,7 +36,7 @@ public class Company extends Babas {
     }
 
     public void setBusinessName(String businessName) {
-        this.businessName = businessName;
+        this.businessName = businessName.toUpperCase();
     }
 
     public String getTradeName() {
@@ -44,7 +44,7 @@ public class Company extends Babas {
     }
 
     public void setTradeName(String tradeName) {
-        this.tradeName = tradeName;
+        this.tradeName = tradeName.toUpperCase();
     }
 
     public String getDirectionPrincipal() {

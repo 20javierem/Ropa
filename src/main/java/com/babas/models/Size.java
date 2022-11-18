@@ -30,7 +30,7 @@ public class Size extends Babas {
     }
 
     public Size(String name){
-        this.name=name;
+        this.name = name.toUpperCase();
     }
 
     public Long getId() {
@@ -42,7 +42,7 @@ public class Size extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public boolean isActive() {

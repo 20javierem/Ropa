@@ -20,6 +20,8 @@ public abstract class ProgramValidator {
     public static void mostrarErrores(Set<ConstraintViolation<Object>> errors){
         Object[] errores=errors.toArray();
         String error = "Verfique el campo: "+((ConstraintViolation<?>) errores[0]).getMessage();
-        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",error);
+        if(Utilities.getJFrame()!=null){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",error);
+        }
     }
 }

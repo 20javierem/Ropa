@@ -154,39 +154,45 @@ public class TabCatalogue {
 
     private void loadTableFilter() {
         productsFilters = new ArrayList<>(new ArrayList<>(FPrincipal.products));
-        if (product.getStyle().getCategory() != null) {
-            productsFilters.removeIf(product1 -> !product1.getStyle().getCategory().getId().equals(product.getStyle().getCategory().getId()));
-        }
-        if (product.getSize() != null) {
-            productsFilters.removeIf(product1 -> !product1.getSize().getId().equals(product.getSize().getId()));
-        }
-        if (product.getColor() != null) {
-            productsFilters.removeIf(product1 -> !product1.getColor().getId().equals(product.getColor().getId()));
-        }
-        if (product.getSex() != null) {
-            productsFilters.removeIf(product1 -> !product1.getSex().getId().equals(product.getSex().getId()));
-        }
-        if (product.getBrand() != null) {
-            productsFilters.removeIf(product1 -> !product1.getBrand().getId().equals(product.getBrand().getId()));
-        }
-        if (!search.isBlank()) {
-            productsFilters.removeIf(product1 -> {
-                if (product1.getBarcode().toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getStyle().getName().toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getSex().getName().toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getStyle().getCategory().getName().toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getBrand().getName().toLowerCase().contains(search.toLowerCase()) ||
-                        Utilities.moneda.format(product1.getPresentationDefault().getPriceDefault().getPrice()).toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getSize().getName().toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getColor().getName().toLowerCase().contains(search.toLowerCase()) ||
-                        product1.getStockTotal().toString().contains(search.toLowerCase())
-                ) {
-                    return false;
-                } else {
+        productsFilters.removeIf(product1 -> {
+            if (product.getStyle().getCategory() != null) {
+                if (!product1.getStyle().getCategory().getId().equals(product.getStyle().getCategory().getId())) {
                     return true;
                 }
-            });
-        }
+            }
+            if (product.getSize() != null) {
+                if (!product1.getSize().getId().equals(product.getSize().getId())) {
+                    return true;
+                }
+            }
+            if (product.getColor() != null) {
+                if (!product1.getColor().getId().equals(product.getColor().getId())) {
+                    return true;
+                }
+            }
+            if (product.getSex() != null) {
+                if (!product1.getSex().getId().equals(product.getSex().getId())) {
+                    return true;
+                }
+            }
+            if (product.getBrand() != null) {
+                if (!product1.getBrand().getId().equals(product.getBrand().getId())) {
+                    return true;
+                }
+            }
+            if (!search.isBlank()) {
+                return !product1.getBarcode().toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getStyle().getName().toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getSex().getName().toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getStyle().getCategory().getName().toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getBrand().getName().toLowerCase().contains(search.toLowerCase()) &&
+                        !Utilities.moneda.format(product1.getPresentationDefault().getPriceDefault().getPrice()).toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getSize().getName().toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getColor().getName().toLowerCase().contains(search.toLowerCase()) &&
+                        !product1.getStockTotal().toString().contains(search.toLowerCase());
+            }
+            return false;
+        });
         reloadTable();
         reloadCards();
     }

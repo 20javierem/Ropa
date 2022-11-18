@@ -17,6 +17,7 @@ import jakarta.validation.ConstraintViolation;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
@@ -85,12 +86,17 @@ public class DCompany extends JDialog {
         if (constraintViolationSet.isEmpty()) {
             Babas.company.save();
             if (Babas.company.getId() == null) {
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos registrados");
+                if (Utilities.getJFrame() != null) {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos registrados");
+                }
             } else {
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos actualizados");
+                if (Utilities.getJFrame() != null) {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos actualizados");
+                }
             }
             onHecho();
         } else {
+            Babas.company = null;
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }
     }
@@ -105,19 +111,25 @@ public class DCompany extends JDialog {
                 ImageIO.write(bufferedImage, "png", os);
                 String nameImage = "logoCompany.png";
                 InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
-                if (Utilities.newImage(inputStream, nameImage)) {
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
+                if (Utilities.newImage(inputStream, nameImage, true)) {
+                    if (Utilities.getJFrame() != null) {
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
+                    }
                     Babas.company.setLogo(nameImage);
-                    Image image = Utilities.getImage(nameImage);
+                    Image image = Utilities.getImage(nameImage, true);
                     if (image != null) {
                         Utilities.iconCompanyx420x420 = new ImageIcon(image.getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), Image.SCALE_SMOOTH));
                         Utilities.iconCompanyx255x220 = new ImageIcon(image.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
                         lblLogo.setIcon(Utilities.iconCompanyx420x420);
                     } else {
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
+                        if (Utilities.getJFrame() != null) {
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
+                        }
                     }
                 } else {
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
+                    if (Utilities.getJFrame() != null) {
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -131,7 +143,6 @@ public class DCompany extends JDialog {
         if (Babas.company != null) {
             load();
         } else {
-            Babas.company = new Company();
             btnSave.setText("Registrar");
             btnHecho.setText("Cancelar");
         }
@@ -151,8 +162,10 @@ public class DCompany extends JDialog {
     }
 
     private void onHecho() {
-        if (Babas.company.getId() != null) {
-            Babas.company.refresh();
+        if (Babas.company != null) {
+            if (Babas.company.getId() != null) {
+                Babas.company.refresh();
+            }
         }
         dispose();
     }
@@ -220,10 +233,14 @@ public class DCompany extends JDialog {
         scrollPane1.setViewportView(txtSlogan);
         txtRuc = new FlatTextField();
         panel2.add(txtRuc, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        final JPanel panel3 = new JPanel();
+        panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.add(panel3, new GridConstraints(0, 0, 6, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel3.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         lblLogo = new JLabel();
         lblLogo.setHorizontalAlignment(0);
         lblLogo.setText("");
-        panel2.add(lblLogo, new GridConstraints(0, 0, 6, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(420, 420), new Dimension(420, 420), new Dimension(420, 420), 0, false));
+        panel3.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(420, 420), new Dimension(420, 420), new Dimension(420, 420), 0, false));
     }
 
     /**
@@ -232,4 +249,5 @@ public class DCompany extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

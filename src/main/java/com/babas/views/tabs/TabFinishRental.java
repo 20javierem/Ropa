@@ -128,6 +128,7 @@ public class TabFinishRental {
                         movement.save();
                         movement.getBoxSesion().getMovements().add(0, movement);
                         movement.getBoxSesion().calculateTotals();
+                        Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getNumberRental() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
                     } else {

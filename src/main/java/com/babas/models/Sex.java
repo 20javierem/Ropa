@@ -29,7 +29,7 @@ public class Sex extends Babas {
     }
 
     public Sex(String name){
-        this.name=name;
+        this.name = name.toUpperCase();
     }
 
     public Long getId() {
@@ -41,7 +41,7 @@ public class Sex extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public boolean isActive() {

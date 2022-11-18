@@ -112,6 +112,9 @@ public class DUser extends JDialog {
     private void loadNewSex() {
         DSex dSex = new DSex(new Sex());
         dSex.setVisible(true);
+        if (cbbSex.getItemCount() > 0) {
+            cbbSex.setSelectedItem(0);
+        }
     }
 
     private void addBranch() {
@@ -313,7 +316,9 @@ public class DUser extends JDialog {
                     clearPermirmitios();
                     user = new User();
                     load();
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Usuario registrado");
+                    if (Utilities.getJFrame() != null) {
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Usuario registrado");
+                    }
                 } else {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Nombre de usuario ya registrado");
                 }

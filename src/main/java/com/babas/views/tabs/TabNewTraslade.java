@@ -210,6 +210,7 @@ public class TabNewTraslade {
             btnConfirm.setText("Confirmar");
             table.removeColumn(table.getColumn(""));
             if (transfer.getState() == 1) {
+                table.setEnabled(false);
                 btnRechase.setVisible(false);
                 btnConfirm.setVisible(false);
             }

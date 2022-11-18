@@ -212,7 +212,9 @@ public class DBranch extends JDialog {
                 }
                 branch = new Branch();
                 load();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Sucursal registrada");
+                if (Utilities.getJFrame() != null) {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Sucursal registrada");
+                }
             } else {
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();

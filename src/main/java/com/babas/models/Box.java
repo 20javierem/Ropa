@@ -66,7 +66,7 @@ public class Box extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public boolean isActive() {

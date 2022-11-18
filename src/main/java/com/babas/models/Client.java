@@ -49,7 +49,7 @@ public class Client extends Babas {
     }
 
     public void setNames(String names) {
-        this.names = names;
+        this.names = names.toUpperCase();
     }
 
     public List<Sale> getSales() {

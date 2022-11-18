@@ -85,7 +85,9 @@ public class DSex extends JDialog {
                 }
                 sex = new Sex();
                 clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Género registrado");
+                if (Utilities.getJFrame() != null) {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Género registrado");
+                }
             } else {
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
@@ -157,4 +159,5 @@ public class DSex extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

@@ -222,7 +222,7 @@ public class Product extends Babas {
         }else{
             iconsx200.clear();
                 imagesx200.forEach(icon->{
-                    Image image=Utilities.getImage(icon);
+                    Image image=Utilities.getImage(icon,false);
                     if(image!=null){
                         iconsx200.add(new ImageIcon(image));
                     }else{
@@ -242,7 +242,7 @@ public class Product extends Babas {
         }else{
             iconsx400.clear();
             imagesx400.forEach(icon->{
-                Image image=Utilities.getImage(icon);
+                Image image=Utilities.getImage(icon,false);
                 if(image!=null){
                     iconsx400.add(new ImageIcon(image));
                 }else{

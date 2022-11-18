@@ -29,7 +29,7 @@ public class Category extends Babas {
     }
 
     public Category(String name){
-        this.name=name;
+        this.name = name.toUpperCase();
     }
     public Long getId() {
         return id;
@@ -40,7 +40,7 @@ public class Category extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public boolean isActive() {

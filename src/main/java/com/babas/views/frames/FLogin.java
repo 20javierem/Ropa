@@ -71,7 +71,7 @@ public class FLogin extends JFrame {
         if (Utilities.iconCompanyx255x220 != null) {
             lblLogo.setIcon(Utilities.iconCompanyx255x220);
         } else if (Babas.company.getLogo() != null) {
-            Image logo = Utilities.getImage(Babas.company.getLogo());
+            Image logo = Utilities.getImage(Babas.company.getLogo(), true);
             if (logo != null) {
                 Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(255, 220, Image.SCALE_SMOOTH));
                 Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(420, 420, Image.SCALE_SMOOTH));

@@ -214,20 +214,20 @@ public class DProduct extends JDialog {
                 String nameImage2 = id + "-" + product.getImagesx200().size() + "x400" + "." + "png";
                 InputStream inputStream1 = new ByteArrayInputStream(os1.toByteArray());
                 InputStream inputStream2 = new ByteArrayInputStream(os2.toByteArray());
-                if (Utilities.newImage(inputStream1, nameImage1)) {
+                if (Utilities.newImage(inputStream1, nameImage1, false)) {
                     product.getImagesx200().add(nameImage1);
-                    product.getIconsx200(false).add(new ImageIcon(Utilities.getImage(nameImage1)));
+                    product.getIconsx200(false).add(new ImageIcon(Utilities.getImage(nameImage1, false)));
                     if (update) {
                         product.save();
                     }
-                    if (Utilities.newImage(inputStream2, nameImage2)) {
+                    if (Utilities.newImage(inputStream2, nameImage2, false)) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
                         product.getImagesx400().add(nameImage2);
-                        product.getIconsx400(false).add(new ImageIcon(Utilities.getImage(nameImage2)));
+                        product.getIconsx400(false).add(new ImageIcon(Utilities.getImage(nameImage2, false)));
                         if (update) {
                             product.save();
                         }
-                        imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage2)));
+                        imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage2, false)));
                         loadQuantityImages();
                         imageSlide.toNext();
                     } else {

@@ -28,7 +28,7 @@ public class Dimention extends Babas {
 
     }
     public Dimention(String name){
-        this.name=name;
+        this.name = name.toUpperCase();
     }
 
     public Long getId() {
@@ -40,7 +40,7 @@ public class Dimention extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public Date getCreated() {

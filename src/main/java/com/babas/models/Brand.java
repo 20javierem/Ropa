@@ -39,7 +39,7 @@ public class Brand extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toUpperCase();
     }
 
     public Date getCreated() {

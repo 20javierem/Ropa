@@ -197,7 +197,7 @@ public class Excel {
                                 try {
                                     product.setBarcode(row.getCell(8).getStringCellValue().trim());
                                 } catch (IllegalStateException e) {
-                                    product.setBarcode(String.valueOf(row.getCell(8).getNumericCellValue()));
+                                    product.setBarcode(String.valueOf((int)row.getCell(8).getNumericCellValue()));
                                 }
                                 product.setSex(sex);
                                 product.getStyle().getProducts().add(product);

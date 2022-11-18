@@ -54,7 +54,7 @@ public class Movement extends Babas {
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.description = description.toUpperCase();
     }
 
     public boolean isEntrance() {
