@@ -42,7 +42,6 @@ public class Product extends Babas {
     private Dimention dimention;
     @ManyToOne
     private Brand brand;
-    @NotEmpty(message = "Presentaciones")
     @OneToMany(mappedBy = "product")
     private List<Presentation> presentations=new ArrayList<>();
     @Transient

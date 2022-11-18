@@ -388,26 +388,29 @@ public class DProduct extends JDialog {
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(product);
         constraintViolationSet.addAll(ProgramValidator.loadViolations(style));
         if (constraintViolationSet.isEmpty()) {
-            if (style.getId() == null) {
-                FPrincipal.styles.add(style);
-            }
-            style.save();
-            product.save();
-            if (!update) {
-                style.getProducts().add(product);
-                FPrincipal.products.add(product);
-                Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
-                product = new Product();
-                clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Producto registrado");
+            if (!product.getPresentations().isEmpty()) {
+                if (style.getId() == null) {
+                    FPrincipal.styles.add(style);
+                }
+                style.save();
+                product.save();
+                if (!update) {
+                    style.getProducts().add(product);
+                    FPrincipal.products.add(product);
+                    Utilities.updateDialog();
+                    Utilities.getTabbedPane().updateTab();
+                    product = new Product();
+                    clear();
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Producto registrado");
+                } else {
+                    Utilities.updateDialog();
+                    Utilities.getTabbedPane().updateTab();
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Producto actualizado");
+                    onHecho();
+                }
             } else {
-                Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Producto actualizado");
-                onHecho();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Verifique el campo: Presentaciones");
             }
-
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }
@@ -600,4 +603,5 @@ public class DProduct extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

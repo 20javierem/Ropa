@@ -124,21 +124,24 @@ public class DPresentation extends JDialog {
         }
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(presentation);
         if (constraintViolationSet.isEmpty()) {
-            updatePresentationDefault();
-            if (!presentation.getProduct().getPresentations().contains(presentation)) {
-                presentation.getProduct().getPresentations().add(presentation);
-                Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
-                presentation = new Presentation(presentation.getProduct());
-                clear();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación registrada");
+            if (!presentation.getPrices().isEmpty()) {
+                updatePresentationDefault();
+                if (!presentation.getProduct().getPresentations().contains(presentation)) {
+                    presentation.getProduct().getPresentations().add(presentation);
+                    Utilities.updateDialog();
+                    Utilities.getTabbedPane().updateTab();
+                    presentation = new Presentation(presentation.getProduct());
+                    clear();
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación registrada");
+                } else {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación actualizada");
+                    Utilities.updateDialog();
+                    Utilities.getTabbedPane().updateTab();
+                    onHecho();
+                }
             } else {
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Presentación actualizada");
-                Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
-                onHecho();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Verfique el campo: Precios");
             }
-
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }

@@ -16,7 +16,7 @@ public class Brands extends Babas {
     public static Brand get(Integer id) {
         return session.find(Brand.class, id);
     }
-    public static Brand get(String name) {
+    public static Brand getByName(String name) {
         criteria = builder.createQuery(Brand.class);
         root = criteria.from(Brand.class);
         criteria.select(root).

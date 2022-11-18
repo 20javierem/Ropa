@@ -1,7 +1,9 @@
 package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
+import com.babas.models.Branch;
 import com.babas.models.Product;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Excel;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
@@ -26,10 +28,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 public class TabProducts {
     private TabPane tabPane;
@@ -131,11 +131,23 @@ public class TabProducts {
         JButton button = (JButton) event.getSource();
         if ("import".equals(button.getActionCommand())) {
             Excel excel = new Excel();
-            if (excel.initialize()) {
+            if (excel.initialize(true)) {
                 excel.loadData();
             }
         } else {
-            //export
+            JComboBox jComboBox = new JComboBox();
+            Vector<Branch> branches = new Vector<>(Babas.user.getBranchs());
+            branches.add(0, new Branch("Todas"));
+            jComboBox.setModel(new DefaultComboBoxModel(branches));
+            jComboBox.setRenderer(new Branch.ListCellRenderer());
+            int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jComboBox, "Seleccione la sucursal a importar", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
+            if (option == JOptionPane.OK_OPTION) {
+                Branch branch = (Branch) jComboBox.getSelectedItem();
+                Excel excel = new Excel();
+                if (excel.initialize(false)) {
+                    excel.exportData(branch);
+                }
+            }
         }
         tabPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }

@@ -11,7 +11,7 @@
         <property name="connection.pool_size">5</property>
         <property name="hibernate.show_sql">true</property>
         <property name="dialect">org.hibernate.dialect.MariaDBDialect</property>
-        <property name="hbm2ddl.auto">update</property>
+        <property name="hbm2ddl.auto">create-drop</property>
         <mapping class="com.babas.models.Branch"/>
         <mapping class="com.babas.models.Category" />
         <mapping class="com.babas.models.Client" />

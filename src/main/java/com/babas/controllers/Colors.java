@@ -17,7 +17,7 @@ public class Colors extends Babas {
     public static Color get(Integer id) {
         return session.find(Color.class, id);
     }
-    public static Color get(String name) {
+    public static Color getByName(String name) {
         criteria = builder.createQuery(Color.class);
         root = criteria.from(Color.class);
         criteria.select(root).

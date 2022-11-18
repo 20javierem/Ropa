@@ -26,7 +26,6 @@ public class Presentation extends Babas {
     private String name;
     @NotNull
     private Integer quantity;
-    @NotEmpty(message = "Precios")
     @OneToMany(mappedBy = "presentation")
     private List<Price> prices =new ArrayList<>();
     private Date created=new Date();
