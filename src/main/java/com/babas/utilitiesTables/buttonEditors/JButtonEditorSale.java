@@ -2,14 +2,10 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.models.Movement;
 import com.babas.models.Sale;
-import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
-import com.babas.utilitiesTables.tablesModels.TransferAbstractModel;
-import com.babas.views.tabs.TabNewSale;
-import com.babas.views.tabs.TabNewTraslade;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -17,7 +13,6 @@ import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Date;
 
 public class JButtonEditorSale extends AbstractCellEditor implements TableCellEditor, ActionListener {
     private JButtonAction button;
@@ -64,6 +59,8 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                 movement.save();
                                 movement.getBoxSesion().getMovements().add(movement);
                                 movement.getBoxSesion().calculateTotals();
+                                Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getNumberSale() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
+                                Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
                             }else{
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","La venta ya fué cancelada por otro usuario");
