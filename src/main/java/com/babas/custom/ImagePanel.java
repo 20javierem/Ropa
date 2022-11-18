@@ -23,6 +23,7 @@ public class ImagePanel extends JPanel {
     private Point startDrag, endDrag;
     private int diferenceX,diferenceY;
     private boolean isRelesed=false;
+    private int width,height;
 
     public ImagePanel() throws IOException {
         this.addMouseListener(new MouseAdapter() {
@@ -163,27 +164,27 @@ public class ImagePanel extends JPanel {
             startX=shape.getBounds().x;
             startY=shape.getBounds().y;
         }
-        int width=Math.abs(x1 - x2);
-        int heigth=Math.abs(y1 - y2);
+        int width1=Math.abs(x1 - x2);
+        int height1=Math.abs(y1 - y2);
 
-        if(width>500&&shape!=null){
-            width=shape.getBounds().width;
+        if(width1>width&&shape!=null){
+            width1=shape.getBounds().width;
         }else{
             startX=Math.min(x1,x2);
         }
-        if(heigth>500&&shape!=null){
-            heigth=shape.getBounds().height;
+        if(height1>height&&shape!=null){
+            height1=shape.getBounds().height;
         }else{
             startY=Math.min(y1,y2);
         }
-        return new Rectangle2D.Float(startX,startY,width,heigth);
+        return new Rectangle2D.Float(startX,startY,width1,height1);
     }
 
     public void loadImage(String inputImage){
         try {
             Image image = ImageIO.read(new File(inputImage));
-            int width=image.getWidth(this);
-            int height=image.getHeight(this);
+            width=image.getWidth(this);
+            height=image.getHeight(this);
             if(width>550||height>550){
                 double percen= Math.min(550.00/width,550.00/height);
                 width= (int) (percen*width);

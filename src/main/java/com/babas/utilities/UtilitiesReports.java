@@ -48,6 +48,7 @@ public class UtilitiesReports {
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("formaDePago",sale.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",sale.getUser().getUserName());
+                parameters.put("observacion",sale.getObservation());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
                     JasperPrintManager.printReport(jasperPrint,true);
@@ -99,6 +100,7 @@ public class UtilitiesReports {
                 parameters.put("total",Utilities.moneda.format(reserve.getToCancel()));
                 parameters.put("formaDePago",reserve.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",reserve.getUser().getUserName());
+                parameters.put("observacion",reserve.getObservation());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
                     JasperPrintManager.printReport(jasperPrint,true);
@@ -154,6 +156,7 @@ public class UtilitiesReports {
                 parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
                 parameters.put("formaDePago",rental.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",rental.getUser().getUserName());
+                parameters.put("observacion",rental.getObservation());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
                     JasperPrintManager.printReport(jasperPrint,true);
@@ -211,6 +214,7 @@ public class UtilitiesReports {
                 parameters.put("totalDevolucion",Utilities.moneda.format(rental.getWarranty()-rental.getPenalty()));
                 parameters.put("formaDePago",rental.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",rental.getUser().getUserName());
+                parameters.put("observacion",rental.getObservation());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
                     JasperPrintManager.printReport(jasperPrint,true);

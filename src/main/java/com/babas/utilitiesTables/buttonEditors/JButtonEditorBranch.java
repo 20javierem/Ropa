@@ -2,18 +2,23 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.models.Branch;
 import com.babas.models.Brand;
+import com.babas.models.DetailTransfer;
+import com.babas.models.Transfer;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.utilitiesTables.tablesModels.BrandAbstractModel;
 import com.babas.views.dialogs.DBranch;
 import com.babas.views.dialogs.DBrand;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.util.Vector;
 
 public class JButtonEditorBranch extends AbstractCellEditor implements TableCellEditor, ActionListener {
     private JButtonAction button;
@@ -44,23 +49,56 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                 DBranch dBranch=new DBranch(branch,false);
                 dBranch.setVisible(true);
             }else{
-                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Sucursal",JOptionPane.YES_NO_OPTION)==0;
-                if(si){
-                    branch.refresh();
-                    branch.getUsers().forEach(user -> {
-                        user.getBranchs().remove(branch);
-                        user.save();
-                    });
-                    FPrincipal.branchs.remove(branch);
-                    FPrincipal.branchesWithAll.remove(branch);
-                    if(branch.getSales().isEmpty()){
-                        branch.delete();
-                    }else{
-                        branch.setActive(false);
-                        branch.save();
+                if(FPrincipal.branchs.size()>1){
+                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Sucursal",JOptionPane.YES_NO_OPTION)==0;
+                    if(si){
+                        branch.refresh();
+                        if(!branch.getStocks().isEmpty()){
+                            JComboBox comboBox = new JComboBox();
+                            comboBox.setModel(new DefaultComboBoxModel(new Vector(FPrincipal.branchs)));
+                            comboBox.setRenderer(new Branch.ListCellRenderer());
+                            comboBox.removeItem(branch);
+                            int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), comboBox, "Transferencia de productos", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Transferir", "Cancelar"}, "Transferir");
+                            if (option == JOptionPane.OK_OPTION) {
+                                Transfer transfer=new Transfer();
+                                transfer.setState(1);
+                                transfer.setSource(branch);
+                                transfer.setDestiny((Branch) comboBox.getSelectedItem());
+                                transfer.setDescription("Traslado por Sucursal cerrada");
+                                branch.getStocks().forEach(stock -> {
+                                    DetailTransfer detailTransfer=new DetailTransfer();
+                                    detailTransfer.setTransfer(transfer);
+                                    detailTransfer.setQuantity(stock.getQuantity());
+                                    detailTransfer.setProduct(stock.getProduct());
+                                    transfer.getDetailTransfers().add(detailTransfer);
+                                });
+                                transfer.setState(0);
+                                transfer.save();
+                                transfer.setState(1);
+                                transfer.setUpdated(new Date());
+                                transfer.save();
+                                branch.getUsers().forEach(user -> {
+                                    user.getBranchs().remove(branch);
+                                    user.save();
+                                });
+                                FPrincipal.branchs.remove(branch);
+                                FPrincipal.branchesWithAll.remove(branch);
+                                branch.setActive(false);
+                                branch.save();
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Sucursal eliminada");
+                            }
+                        }else{
+                            FPrincipal.branchs.remove(branch);
+                            FPrincipal.branchesWithAll.remove(branch);
+                            branch.setActive(false);
+                            branch.save();
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Sucursal eliminada");
+                        }
                     }
-                    Utilities.getTabbedPane().updateTab();
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No puede eliminar todas las sucursales");
                 }
+                Utilities.getTabbedPane().updateTab();
             }
             Utilities.updateDialog();
         }

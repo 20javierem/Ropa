@@ -53,6 +53,7 @@ public class TabFinishRental {
     private JLabel lblLogo;
     private JLabel lblTotalWithPenalty;
     private JLabel lblWarranty2;
+    private JTextArea txtObservation;
     private Rental rental;
     private DetailRentalAbstractModel model;
 
@@ -114,6 +115,7 @@ public class TabFinishRental {
                         rental.calculateTotals();
                         rental.setDelivery(jDateFinish.getDate());
                         rental.setActive(false);
+                        rental.setObservation(txtObservation.getText().trim());
                         rental.save();
                         Movement movement = new Movement();
                         if (rental.getPenalty() > rental.getWarranty()) {
@@ -156,6 +158,7 @@ public class TabFinishRental {
         txtNameClient.setText(rental.getClient().getNames());
         txtPhone.setText(rental.getClient().getPhone());
         txtMail.setText(rental.getClient().getMail());
+        txtObservation.setText(rental.getObservation());
         table.removeColumn(table.getColumn(""));
         if (!rental.isActive()) {
             spinnerPenalty.setValue(rental.getPenalty());
@@ -256,7 +259,7 @@ public class TabFinishRental {
         panel5.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         tabPane.add(panel5, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel6 = new JPanel();
-        panel6.setLayout(new GridLayoutManager(5, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel6.setLayout(new GridLayoutManager(7, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel5.add(panel6, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
         panel7.setLayout(new GridLayoutManager(2, 1, new Insets(20, 20, 20, 20), 5, 20));
@@ -367,7 +370,7 @@ public class TabFinishRental {
         panel6.add(spacer8, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel10 = new JPanel();
         panel10.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
-        panel6.add(panel10, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel6.add(panel10, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnFinishRental = new JButton();
         Font btnFinishRentalFont = this.$$$getFont$$$(null, -1, 14, btnFinishRental.getFont());
         if (btnFinishRentalFont != null) btnFinishRental.setFont(btnFinishRentalFont);
@@ -378,6 +381,17 @@ public class TabFinishRental {
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));
         lblLogo.setText("");
         panel6.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(255, 220), new Dimension(255, 220), new Dimension(255, 220), 0, false));
+        final JScrollPane scrollPane2 = new JScrollPane();
+        panel6.add(scrollPane2, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(-1, 50), null, 0, false));
+        txtObservation = new JTextArea();
+        txtObservation.setLineWrap(true);
+        txtObservation.setWrapStyleWord(true);
+        scrollPane2.setViewportView(txtObservation);
+        final JLabel label10 = new JLabel();
+        Font label10Font = this.$$$getFont$$$(null, Font.BOLD, 14, label10.getFont());
+        if (label10Font != null) label10.setFont(label10Font);
+        label10.setText("Observación:");
+        panel6.add(label10, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

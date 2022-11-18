@@ -40,7 +40,14 @@ public class Sale extends Babas {
     private Branch branch;
     @OneToOne
     private Reserve reserve;
+    private String observation;
+    public String getObservation() {
+        return observation;
+    }
 
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
     public Long getId() {
         return id;
     }

@@ -50,7 +50,14 @@ public class Rental extends Babas {
     @ManyToOne
     @NotNull(message ="Usuario")
     private User user;
+    private String observation;
+    public String getObservation() {
+        return observation;
+    }
 
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
     public Rental(){
 
     }

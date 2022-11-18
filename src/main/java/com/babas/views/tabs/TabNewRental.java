@@ -1,6 +1,5 @@
 package com.babas.views.tabs;
 
-import com.babas.App;
 import com.babas.controllers.Clients;
 import com.babas.custom.TabPane;
 import com.babas.models.Client;
@@ -11,8 +10,6 @@ import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailRental2;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale2;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
 import com.babas.validators.ProgramValidator;
@@ -55,6 +52,7 @@ public class TabNewRental {
     private FlatSpinner spinnerWarranty;
     private JLabel lblTotalCurrent;
     private JLabel lblReserve;
+    private JTextArea txtObservation;
     private Rental rental;
     private DetailRentalAbstractModel model;
 
@@ -182,6 +180,9 @@ public class TabNewRental {
         table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailRental());
         table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailRental());
         loadTotals();
+        if (rental.getReserve() != null) {
+            txtObservation.setText(rental.getReserve().getObservation());
+        }
         model.fireTableDataChanged();
     }
 
@@ -213,6 +214,7 @@ public class TabNewRental {
             rental.setBoxSession(Babas.boxSession);
             rental.setUser(Babas.user);
             rental.setEnded(jDateFinish.getDate());
+            rental.setObservation(txtObservation.getText().trim());
             Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(rental);
             if (constraintViolationSet.isEmpty()) {
                 boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Alquiler", JOptionPane.YES_NO_OPTION) == 0;
@@ -420,23 +422,29 @@ public class TabNewRental {
         final Spacer spacer5 = new Spacer();
         panel7.add(spacer5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel9 = new JPanel();
-        panel9.setLayout(new GridLayoutManager(3, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel9.setLayout(new GridLayoutManager(4, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel7.add(panel9, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnSaleWithTrasnfer = new JButton();
         Font btnSaleWithTrasnferFont = this.$$$getFont$$$(null, -1, 14, btnSaleWithTrasnfer.getFont());
         if (btnSaleWithTrasnferFont != null) btnSaleWithTrasnfer.setFont(btnSaleWithTrasnferFont);
         btnSaleWithTrasnfer.setText("Confirmar con transferencia");
-        panel9.add(btnSaleWithTrasnfer, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel9.add(btnSaleWithTrasnfer, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         btnSaleWithCash = new JButton();
         Font btnSaleWithCashFont = this.$$$getFont$$$(null, -1, 14, btnSaleWithCash.getFont());
         if (btnSaleWithCashFont != null) btnSaleWithCash.setFont(btnSaleWithCashFont);
         btnSaleWithCash.setText("Confirmar con efectivo");
-        panel9.add(btnSaleWithCash, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel9.add(btnSaleWithCash, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label8 = new JLabel();
         Font label8Font = this.$$$getFont$$$(null, Font.BOLD, 14, label8.getFont());
         if (label8Font != null) label8.setFont(label8Font);
         label8.setText("Opciones de pago:");
-        panel9.add(label8, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel9.add(label8, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JScrollPane scrollPane2 = new JScrollPane();
+        panel9.add(scrollPane2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(-1, 50), null, 0, false));
+        txtObservation = new JTextArea();
+        txtObservation.setLineWrap(true);
+        txtObservation.setWrapStyleWord(true);
+        scrollPane2.setViewportView(txtObservation);
         lblLogo = new JLabel();
         lblLogo.setHorizontalAlignment(0);
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));

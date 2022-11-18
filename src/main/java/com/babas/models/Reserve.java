@@ -43,7 +43,14 @@ public class Reserve extends Babas {
     private Rental rental;
     private boolean active=true;
     private boolean cash;
+    private String observation;
+    public String getObservation() {
+        return observation;
+    }
 
+    public void setObservation(String observation) {
+        this.observation = observation;
+    }
     public User getUser() {
         return user;
     }
