@@ -1,13 +1,10 @@
 package com.babas.views.dialogs;
 
-import com.babas.models.Size;
 import com.babas.models.Stade;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorSize;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorStade;
 import com.babas.utilitiesTables.tablesCellRendered.ColorCellRendered;
-import com.babas.utilitiesTables.tablesModels.SizeAbstractModel;
 import com.babas.utilitiesTables.tablesModels.StadeAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatButton;

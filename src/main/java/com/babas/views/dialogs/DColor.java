@@ -8,14 +8,11 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.moreno.Notify;
-import com.moreno.Principal;
 import jakarta.validation.ConstraintViolation;
-import org.jdesktop.swingx.plaf.basic.BasicTaskPaneUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Date;
 import java.util.Set;
 
 public class DColor extends JDialog {

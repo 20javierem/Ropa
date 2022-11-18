@@ -1,13 +1,10 @@
 package com.babas.views.dialogs;
 
-import com.babas.models.Brand;
 import com.babas.models.Company;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.validators.ProgramValidator;
-import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatButton;
-import com.formdev.flatlaf.extras.components.FlatComboBox;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;

@@ -15,7 +15,6 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.moreno.Notify;
-import com.thoughtworks.qdox.model.expression.Not;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
