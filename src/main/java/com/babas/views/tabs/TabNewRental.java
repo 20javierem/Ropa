@@ -227,11 +227,21 @@ public class TabNewRental {
                     Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler registrado");
                     if (Utilities.propiedades.getPrintTicketRental().equals("always")) {
-                        UtilitiesReports.generateTicketRental(rental, true);
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateTicketRental(true, rental, true);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateTicketRental(false, rental, true);
+                        }
                     } else if (Utilities.propiedades.getPrintTicketRental().equals("question")) {
                         si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de alquiler", JOptionPane.YES_NO_OPTION) == 0;
                         if (si) {
-                            UtilitiesReports.generateTicketRental(rental, true);
+                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketRental(true, rental, true);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketRental(false, rental, true);
+                            }
                         }
                     }
                     if (rental.getReserve() == null) {

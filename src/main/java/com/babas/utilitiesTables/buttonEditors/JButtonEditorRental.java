@@ -10,6 +10,7 @@ import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
+import com.babas.views.frames.FPrincipal;
 import com.babas.views.tabs.TabFinishRental;
 import com.moreno.Notify;
 
@@ -60,7 +61,13 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
             }else{
                 Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
                 if(rental.isActive()){
-                    UtilitiesReports.generateTicketRental(rental,false);
+                    int index=JOptionPane.showOptionDialog(Utilities.getJFrame(),"Seleccione el formato a ver","Ver ticket",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"A4", "Ticket","Cancelar"}, "A4");
+                    if(index==0){
+                        UtilitiesReports.generateTicketRental(true,rental,false);
+                    }else if(index==1){
+                        UtilitiesReports.generateTicketRental(false,rental,false);
+                    }
+
                 }else{
                     UtilitiesReports.generateTicketRentalFinish(rental,false);
                 }

@@ -89,6 +89,12 @@ public class DetailRental extends Babas {
         this.price = price;
         this.subtotal= quantity*price ;
     }
+    public String getNameUnity(){
+        return namePresentation;
+    }
+    public String getCodeProduct(){
+        return product.getBarcode();
+    }
     public String getProductString(){
         return product.getStyle().getName();
     }
