@@ -124,9 +124,13 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
-    public static void generateTicketRental(Rental rental, boolean print) {
-        InputStream pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental.jasper");
+    public static void generateTicketRental(boolean a4,Rental rental, boolean print) {
+        InputStream pathReport;
+        if(a4){
+            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-rental.jasper");
+        }else{
+            pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental.jasper");
+        }
         File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
@@ -145,10 +149,12 @@ public class UtilitiesReports {
                 parameters.put("nameTicket","Ticket de alquiler");
                 parameters.put("numberTicket",rental.getNumberRental());
                 parameters.put("detalles",sp);
-                parameters.put("nameCompany",Babas.company.getTradeName());
-                parameters.put("fechaEmision", rental.getCreated());
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("nameComercial",Babas.company.getTradeName());
+                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()+rental.getWarranty()));
                 parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
+                parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
                 parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
