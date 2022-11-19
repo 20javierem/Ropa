@@ -17,7 +17,7 @@ public class Sizes extends Babas {
     public static Size get(Integer id) {
         return session.find(Size.class, id);
     }
-    public static Size get(String name) {
+    public static Size getByName(String name) {
         criteria = builder.createQuery(Size.class);
         root = criteria.from(Size.class);
         criteria.select(root).

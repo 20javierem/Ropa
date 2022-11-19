@@ -117,10 +117,19 @@ public class Excel {
                                 }
                                 break;
                             case "tallas":
-                                Size size = Sizes.get(row.getCell(1).getStringCellValue().trim());
+                                Size size;
+                                try {
+                                    size = Sizes.getByName(row.getCell(1).getStringCellValue().trim());
+                                } catch (IllegalStateException e) {
+                                    size = Sizes.getByName(String.valueOf(row.getCell(1).getNumericCellValue()));
+                                }
                                 if (size == null) {
                                     size = new Size();
-                                    size.setName(row.getCell(1).getStringCellValue().trim());
+                                    try {
+                                        size.setName(row.getCell(1).getStringCellValue().trim());
+                                    } catch (IllegalStateException e) {
+                                        size.setName(String.valueOf(row.getCell(1).getNumericCellValue()));
+                                    }
                                     size.setActive(true);
                                     size.save();
                                     FPrincipal.sizes.add(size);
@@ -174,7 +183,11 @@ public class Excel {
                                 Product product = new Product();
                                 style = Styles.get(row.getCell(1).getStringCellValue().trim());
                                 product.setStyle(style);
-                                size = Sizes.get(row.getCell(2).getStringCellValue().trim());
+                                try {
+                                    size = Sizes.getByName(row.getCell(1).getStringCellValue().trim());
+                                } catch (IllegalStateException e) {
+                                    size = Sizes.getByName(String.valueOf(row.getCell(1).getNumericCellValue()));
+                                }
                                 product.setSize(size);
                                 color = Colors.getByName(row.getCell(3).getStringCellValue().trim());
                                 product.setColor(color);

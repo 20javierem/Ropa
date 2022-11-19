@@ -65,7 +65,6 @@ public class Style extends Babas {
         return products;
     }
 
-
     public static class ListCellRenderer extends DefaultListCellRenderer {
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             if (value instanceof Style) {
