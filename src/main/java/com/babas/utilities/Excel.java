@@ -127,8 +127,10 @@ public class Excel {
                                     size = new Size();
                                     try {
                                         size.setName(row.getCell(1).getStringCellValue().trim());
+                                        System.out.println(row.getCell(1).getStringCellValue().trim());
                                     } catch (IllegalStateException e) {
                                         size.setName(String.valueOf(row.getCell(1).getNumericCellValue()));
+                                        System.out.println(row.getCell(1).getNumericCellValue());
                                     }
                                     size.setActive(true);
                                     size.save();
