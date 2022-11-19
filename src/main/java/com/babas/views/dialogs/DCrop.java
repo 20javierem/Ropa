@@ -25,7 +25,6 @@ public class DCrop extends JDialog {
     private JPanel contentPane;
     public static BufferedImage imageSelectedx200;
     public static BufferedImage imageSelectedx400;
-    private boolean open = true;
 
     public DCrop() {
         super(Utilities.getJFrame(), "Editar Logo", true);
@@ -58,17 +57,11 @@ public class DCrop extends JDialog {
 
     @Override
     public void setVisible(boolean b) {
-        if (open) {
-            if (loadImage()) {
-                open = false;
-                super.setVisible(b);
-            } else {
-                dispose();
-            }
+        if (loadImage()) {
+            super.setVisible(b);
         } else {
             dispose();
         }
-
     }
 
     public static BufferedImage getImage(BufferedImage bufferedImage, double scalWidth, double scalHeight) {

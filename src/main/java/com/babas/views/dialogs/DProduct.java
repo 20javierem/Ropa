@@ -603,5 +603,4 @@ public class DProduct extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

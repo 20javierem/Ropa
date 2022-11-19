@@ -129,11 +129,9 @@ public class TabProducts {
     private void fileExcelData(ActionEvent event) {
         tabPane.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         JButton button = (JButton) event.getSource();
+        Excel excel = new Excel();
         if ("import".equals(button.getActionCommand())) {
-            Excel excel = new Excel();
-            if (excel.initialize(true)) {
-                excel.loadData();
-            }
+            excel.loadData();
         } else {
             JComboBox jComboBox = new JComboBox();
             Vector<Branch> branches = new Vector<>(Babas.user.getBranchs());
@@ -143,10 +141,7 @@ public class TabProducts {
             int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jComboBox, "Seleccione la sucursal a importar", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
             if (option == JOptionPane.OK_OPTION) {
                 Branch branch = (Branch) jComboBox.getSelectedItem();
-                Excel excel = new Excel();
-                if (excel.initialize(false)) {
-                    excel.exportData(branch);
-                }
+                excel.exportData(branch);
             }
         }
         tabPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
