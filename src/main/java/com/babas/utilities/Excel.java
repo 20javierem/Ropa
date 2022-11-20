@@ -24,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Excel {
-    private File file;
     private String[] sheets;
 
     public Excel() {
@@ -49,33 +48,18 @@ public class Excel {
                 "presentaciones",
                 "precios"};
     }
-
-    public boolean initialize(boolean impor) {
-        if(impor){
-            JFileChooser selectFile = new JFileChooser();
-            FileFilter filter = new FileNameExtensionFilter("*.excel", "xlsx","xls", "slxs");
-            selectFile.addChoosableFileFilter(filter);
-            int result = selectFile.showOpenDialog(Utilities.getJFrame());
-            if (result == JFileChooser.APPROVE_OPTION) {
-                file = selectFile.getSelectedFile();
-                return true;
-            }
-        }else{
-            JFileChooser selectFile = new JFileChooser();
-            int result = selectFile.showSaveDialog(Utilities.getJFrame());
-            if (result == JFileChooser.APPROVE_OPTION) {
-                file = selectFile.getSelectedFile();
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void loadData() {
+        JFileChooser selectFile = new JFileChooser();
+        FileFilter filter = new FileNameExtensionFilter("*.excel", "xlsx","xls", "slxs");
+        selectFile.addChoosableFileFilter(filter);
+        int result = selectFile.showOpenDialog(Utilities.getJFrame());
+        if (result != JFileChooser.APPROVE_OPTION) return;
         Utilities.getLblIzquierda().setText("Importando productos...");
         try {
-            FileInputStream inputStream = new FileInputStream(file);
+            FileInputStream inputStream = new FileInputStream(selectFile.getSelectedFile());
             HSSFWorkbook book = new HSSFWorkbook(inputStream);
+            DataFormatter formatter = new DataFormatter();
+            FormulaEvaluator evaluator = book.getCreationHelper().createFormulaEvaluator();
             for (String nameSheet : sheets) {
                 Sheet sheet = book.getSheet(nameSheet.toUpperCase());
                 if (sheet != null) {
@@ -86,52 +70,49 @@ public class Excel {
                         Utilities.getLblIzquierda().setText("Importando registros...");
                         switch (nameSheet) {
                             case "categorias":
-                                Category category = Categorys.get(row.getCell(1).getStringCellValue().trim());
+                                String data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Category category = Categorys.get(data);
                                 if (category == null) {
                                     category = new Category();
-                                    category.setName(row.getCell(1).getStringCellValue().trim());
+                                    category.setName(data);
                                     category.save();
                                     FPrincipal.categories.add(category);
                                     FPrincipal.categoriesWithAll.add(category);
                                 }
                                 break;
                             case "generos":
-                                Sex sex = Sexs.getByName(row.getCell(1).getStringCellValue().trim());
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Sex sex = Sexs.getByName(data);
                                 if (sex == null) {
                                     sex = new Sex();
-                                    sex.setName(row.getCell(1).getStringCellValue().trim());
+                                    sex.setName(data);
                                     sex.save();
                                     FPrincipal.sexs.add(sex);
                                     FPrincipal.sexsWithAll.add(sex);
                                 }
                                 break;
                             case "estilos":
-                                category = Categorys.get(row.getCell(2).getStringCellValue().trim());
-                                Style style = Styles.get(row.getCell(1).getStringCellValue().trim());
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                category = Categorys.get(formatter.formatCellValue(row.getCell(2), evaluator).trim());
+                                Style style = Styles.get(data);
                                 if (style == null) {
                                     style = new Style();
-                                    style.setName(row.getCell(1).getStringCellValue().trim());
+                                    style.setName(data);
                                     style.setCategory(category);
                                     style.save();
                                     FPrincipal.styles.add(style);
                                 }
                                 break;
                             case "tallas":
-                                Size size;
-                                try {
-                                    size = Sizes.getByName(row.getCell(1).getStringCellValue().trim());
-                                } catch (IllegalStateException e) {
-                                    size = Sizes.getByName(String.valueOf(row.getCell(1).getNumericCellValue()));
-                                }
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Size size = Sizes.getByName(data);
                                 if (size == null) {
                                     size = new Size();
-                                    try {
-                                        size.setName(row.getCell(1).getStringCellValue().trim());
-                                        System.out.println(row.getCell(1).getStringCellValue().trim());
-                                    } catch (IllegalStateException e) {
-                                        size.setName(String.valueOf(row.getCell(1).getNumericCellValue()));
-                                        System.out.println(row.getCell(1).getNumericCellValue());
-                                    }
+                                    size.setName(data);
                                     size.setActive(true);
                                     size.save();
                                     FPrincipal.sizes.add(size);
@@ -139,10 +120,12 @@ public class Excel {
                                 }
                                 break;
                             case "colores":
-                                Color color = Colors.getByName(row.getCell(1).getStringCellValue().trim());
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Color color = Colors.getByName(data);
                                 if (color == null) {
                                     color = new Color();
-                                    color.setName(row.getCell(1).getStringCellValue().trim());
+                                    color.setName(data);
                                     color.setActive(true);
                                     color.save();
                                     FPrincipal.colors.add(color);
@@ -150,10 +133,12 @@ public class Excel {
                                 }
                                 break;
                             case "marcas":
-                                Brand brand = Brands.getByName(row.getCell(1).getStringCellValue().trim());
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Brand brand = Brands.getByName(data);
                                 if (brand == null) {
                                     brand = new Brand();
-                                    brand.setName(row.getCell(1).getStringCellValue().trim());
+                                    brand.setName(data);
                                     brand.setActive(true);
                                     brand.save();
                                     FPrincipal.brands.add(brand);
@@ -161,10 +146,12 @@ public class Excel {
                                 }
                                 break;
                             case "dimensiones":
-                                Dimention dimention = Dimentions.get(row.getCell(1).getStringCellValue().trim());
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Dimention dimention = Dimentions.get(data);
                                 if (dimention == null) {
                                     dimention = new Dimention();
-                                    dimention.setName(row.getCell(1).getStringCellValue().trim());
+                                    dimention.setName(data);
                                     dimention.setActive(true);
                                     dimention.save();
                                     FPrincipal.dimentions.add(dimention);
@@ -172,10 +159,12 @@ public class Excel {
                                 }
                                 break;
                             case "estados":
-                                Stade stade = Stades.getByName(row.getCell(1).getStringCellValue().trim());
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                if (data.isEmpty()) continue;
+                                Stade stade = Stades.getByName(data);
                                 if (stade == null) {
                                     stade = new Stade();
-                                    stade.setName(row.getCell(1).getStringCellValue().trim());
+                                    stade.setName(data);
                                     stade.save();
                                     FPrincipal.stades.add(stade);
                                     FPrincipal.stadesWithAll.add(stade);
@@ -183,37 +172,27 @@ public class Excel {
                                 break;
                             case "productos":
                                 Product product = new Product();
-                                style = Styles.get(row.getCell(1).getStringCellValue().trim());
+                                style = Styles.get(formatter.formatCellValue(row.getCell(1), evaluator).trim());
                                 product.setStyle(style);
-                                try {
-                                    size = Sizes.getByName(row.getCell(1).getStringCellValue().trim());
-                                } catch (IllegalStateException e) {
-                                    size = Sizes.getByName(String.valueOf(row.getCell(1).getNumericCellValue()));
-                                }
+                                size = Sizes.getByName(formatter.formatCellValue(row.getCell(2), evaluator).trim());
                                 product.setSize(size);
-                                color = Colors.getByName(row.getCell(3).getStringCellValue().trim());
+                                color = Colors.getByName(formatter.formatCellValue(row.getCell(3), evaluator).trim());
                                 product.setColor(color);
-                                sex = Sexs.getByName(row.getCell(4).getStringCellValue().trim());
+                                sex = Sexs.getByName(formatter.formatCellValue(row.getCell(4), evaluator).trim());
                                 product.setSex(sex);
-                                brand = Brands.getByName(row.getCell(5).getStringCellValue().trim());
+                                brand = Brands.getByName(formatter.formatCellValue(row.getCell(5), evaluator).trim());
                                 product.setBrand(brand);
-                                Cell cell=row.getCell(6);
-                                if(cell!=null){
-                                    String valueDimension=cell.getStringCellValue();
-                                    dimention = Dimentions.get(valueDimension.trim());
+                                data = formatter.formatCellValue(row.getCell(6), evaluator).trim();
+                                if(!data.isEmpty()){
+                                    dimention = Dimentions.get(data);
                                     product.setDimention(dimention);
                                 }
-                                cell=row.getCell(7);
-                                if(cell!=null){
-                                    String valueStade=cell.getStringCellValue();
-                                    stade = Stades.getByName(valueStade.trim());
+                                data = formatter.formatCellValue(row.getCell(7), evaluator).trim();
+                                if(!data.isEmpty()){
+                                    stade = Stades.getByName(data);
                                     product.setStade(stade);
                                 }
-                                try {
-                                    product.setBarcode(row.getCell(8).getStringCellValue().trim());
-                                } catch (IllegalStateException e) {
-                                    product.setBarcode(String.valueOf((int)row.getCell(8).getNumericCellValue()));
-                                }
+                                product.setBarcode(formatter.formatCellValue(row.getCell(8), evaluator).trim());
                                 product.setSex(sex);
                                 product.getStyle().getProducts().add(product);
                                 product.save();
@@ -223,9 +202,9 @@ public class Excel {
                                 product = Products.get((int) row.getCell(1).getNumericCellValue());
                                 if (product != null) {
                                     Presentation presentation= new Presentation(product);
-                                    presentation.setName(row.getCell(2).getStringCellValue().trim());
+                                    presentation.setName(formatter.formatCellValue(row.getCell(2), evaluator).trim());
                                     presentation.setQuantity((int)row.getCell(3).getNumericCellValue());
-                                    presentation.setDefault(row.getCell(4).getBooleanCellValue());
+                                    presentation.setDefault(row.getCell(4).getStringCellValue().trim().equalsIgnoreCase("true"));
                                     if(presentation.isDefault()){
                                         product.setPresentationDefault(presentation);
                                     }
@@ -239,7 +218,7 @@ public class Excel {
                                 if (presentation != null) {
                                     Price price= new Price(presentation);
                                     price.setPrice(row.getCell(2).getNumericCellValue());
-                                    price.setDefault(row.getCell(3).getBooleanCellValue());
+                                    price.setDefault(row.getCell(3).getStringCellValue().trim().equalsIgnoreCase("true"));
                                     if(price.isDefault()){
                                         presentation.setPriceDefault(price);
                                     }
@@ -265,6 +244,10 @@ public class Excel {
     }
 
     public void exportData(Branch branch){
+        JFileChooser selectFile = new JFileChooser();
+        int result = selectFile.showSaveDialog(Utilities.getJFrame());
+        if (result != JFileChooser.APPROVE_OPTION) return;
+
         Utilities.getLblIzquierda().setText("Exportando productos...");
         HSSFWorkbook book = new HSSFWorkbook();
         CellStyle headerStyle = book.createCellStyle();
@@ -536,7 +519,7 @@ public class Excel {
             row.createCell(1).setCellValue(sex.getName());
         });
         try {
-            String destiny=file.getAbsolutePath();
+            String destiny=selectFile.getSelectedFile().getAbsolutePath();
             FileOutputStream fileOutputStream = new FileOutputStream(destiny+".xls");
             book.write(fileOutputStream);
             fileOutputStream.close();

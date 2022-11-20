@@ -9,14 +9,6 @@ import com.babas.views.dialogs.DBranch;
 import com.babas.views.dialogs.DCompany;
 import com.babas.views.dialogs.DUser;
 import com.babas.views.frames.FLogin;
-import com.moreno.Notify;
-
-import javax.swing.*;
-
-/**
- * Hello world!
-     *
-     */
 public class App 
 {
     public static void main( String[] args ) {

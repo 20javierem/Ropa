@@ -159,5 +159,4 @@ public class MenuSales {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

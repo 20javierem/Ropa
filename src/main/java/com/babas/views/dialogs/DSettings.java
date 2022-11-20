@@ -554,5 +554,4 @@ public class DSettings extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

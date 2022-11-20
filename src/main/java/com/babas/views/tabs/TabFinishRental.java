@@ -10,7 +10,6 @@ import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
-import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
@@ -19,9 +18,7 @@ import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
 import com.moreno.Notify;
-import com.thoughtworks.qdox.model.expression.Not;
 import com.toedter.calendar.JDateChooser;
-import jakarta.validation.ConstraintViolation;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
@@ -33,7 +30,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Set;
 
 public class TabFinishRental {
     private TabPane tabPane;
@@ -174,14 +170,13 @@ public class TabFinishRental {
 
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
         lblWarranty.setText(Utilities.moneda.format(rental.getWarranty()));
-        lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
         if (rental.getReserve() == null) {
             lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount()));
-            lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
         } else {
             lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount() + rental.getReserve().getAdvance()));
-            lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getReserve().getAdvance()));
         }
+        lblDiscount.setText(Utilities.moneda.format(rental.getDiscount()));
+        lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
 
         lblWarranty2.setText(Utilities.moneda.format(rental.getWarranty()));
         spinnerPenalty.setValue(rental.getPenalty());
@@ -415,5 +410,4 @@ public class TabFinishRental {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
-
 }
