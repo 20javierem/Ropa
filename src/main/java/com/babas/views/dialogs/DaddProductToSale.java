@@ -88,14 +88,6 @@ public class DaddProductToSale extends JDialog {
                 filtrar();
             }
         });
-        table.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                if (e.getKeyCode() == 38 || e.getKeyCode() == 40) {
-                    loadProduct();
-                }
-            }
-        });
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
