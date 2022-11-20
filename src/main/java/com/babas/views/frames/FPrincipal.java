@@ -71,6 +71,7 @@ public class FPrincipal extends JFrame {
     private JMenu btnMenuTransfers;
     private JMenu btnMenuManages;
     private JMenuBar menuBar;
+    private JLabel lblLogo;
     private MenuSales menuSales;
     private MenuManage menuManage;
     private MenuTraslade menuTraslade;
@@ -241,7 +242,12 @@ public class FPrincipal extends JFrame {
                 case "VENTA":
                     Sale sale = Sales.getByNumber(number);
                     if (sale != null) {
-                        UtilitiesReports.generateTicketSale(sale, false);
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateTicketSale(true, sale, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateTicketSale(false, sale, false);
+                        }
                         find = true;
                     }
                     break;
@@ -256,7 +262,12 @@ public class FPrincipal extends JFrame {
                                 UtilitiesReports.generateTicketRental(false, rental, false);
                             }
                         } else {
-                            UtilitiesReports.generateTicketRentalFinish(rental, false);
+                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketRentalFinish(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketRentalFinish(false, rental, false);
+                            }
                         }
                         find = true;
                     }
@@ -264,7 +275,12 @@ public class FPrincipal extends JFrame {
                 case "RESERVA":
                     Reserve reserve = Reserves.getByNumber(number);
                     if (reserve != null) {
-                        UtilitiesReports.generateTicketReserve(reserve, false);
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateTicketReserve(true, reserve, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateTicketReserve(false, reserve, false);
+                        }
                         find = true;
                     }
                     break;
@@ -704,7 +720,6 @@ public class FPrincipal extends JFrame {
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         panel1.add(toolBar1, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
-        toolBar1.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         btnNewSale = new JButton();
         btnNewSale.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/nuevaVenta.png")));
         btnNewSale.setText("Nueva venta");
@@ -944,6 +959,7 @@ public class FPrincipal extends JFrame {
         final JPanel panel10 = new JPanel();
         panel10.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel10, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel10.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         tabbedPane = new TabbedPane();
         tabbedPane.setTabLayoutPolicy(1);
         panel10.add(tabbedPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));

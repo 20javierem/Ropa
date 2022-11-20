@@ -55,7 +55,12 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
                 }
             }else{
                 Reserve reserve=((ReserveAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-                UtilitiesReports.generateTicketReserve(reserve,false);
+                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                if (index == 0) {
+                    UtilitiesReports.generateTicketReserve(true, reserve, false);
+                } else if (index == 1) {
+                    UtilitiesReports.generateTicketReserve(false, reserve, false);
+                }
             }
         }
     }

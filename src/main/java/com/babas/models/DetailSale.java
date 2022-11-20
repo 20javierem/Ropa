@@ -69,6 +69,12 @@ public class DetailSale extends Babas {
         this.quantity = quantity;
         this.subtotal= quantity*price;
     }
+    public String getNameUnity(){
+        return namePresentation;
+    }
+    public String getCodeProduct(){
+        return product.getBarcode();
+    }
     public String getProductString(){
         return product.getStyle().getName();
     }

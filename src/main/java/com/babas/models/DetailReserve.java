@@ -25,6 +25,7 @@ public class DetailReserve extends Babas {
     private Double subtotal=0.0;
     private Double price=0.0;
     private Integer quantityPresentation=0;
+    private String namePresentation;
 
     public Long getId() {
         return id;
@@ -54,6 +55,7 @@ public class DetailReserve extends Babas {
         this.presentation = presentation;
         if(presentation!=null){
             quantityPresentation=presentation.getQuantity();
+            namePresentation=presentation.getName();
         }
     }
 
@@ -64,6 +66,12 @@ public class DetailReserve extends Babas {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
         this.subtotal= quantity*price;
+    }
+    public String getNameUnity(){
+        return namePresentation;
+    }
+    public String getCodeProduct(){
+        return product.getBarcode();
     }
     public String getProductString(){
         return product.getStyle().getName();

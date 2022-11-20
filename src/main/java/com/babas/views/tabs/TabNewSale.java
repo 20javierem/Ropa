@@ -190,11 +190,21 @@ public class TabNewSale {
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
                         if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
-                            UtilitiesReports.generateTicketSale(sale, true);
+                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketSale(true, sale, true);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketSale(false, sale, true);
+                            }
                         } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
                             si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION) == 0;
                             if (si) {
-                                UtilitiesReports.generateTicketSale(sale, true);
+                                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                                if (index == 0) {
+                                    UtilitiesReports.generateTicketSale(true, sale, true);
+                                } else if (index == 1) {
+                                    UtilitiesReports.generateTicketSale(false, sale, true);
+                                }
                             }
                         }
                         sale = new Sale();
@@ -217,6 +227,7 @@ public class TabNewSale {
         txtDocument.setText(null);
         txtPhone.setText(null);
         txtNameClient.setText(null);
+        txtObservation.setText(null);
         load();
     }
 
@@ -370,7 +381,7 @@ public class TabNewSale {
         label5.setText("Opciones de pago:");
         panel9.add(label5, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane2 = new JScrollPane();
-        panel9.add(scrollPane2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(-1, 50), null, 0, false));
+        panel9.add(scrollPane2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(-1, 75), null, 0, false));
         txtObservation = new JTextArea();
         txtObservation.setLineWrap(true);
         txtObservation.setWrapStyleWord(true);

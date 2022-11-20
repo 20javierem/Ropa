@@ -67,9 +67,13 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     }else if(index==1){
                         UtilitiesReports.generateTicketRental(false,rental,false);
                     }
-
                 }else{
-                    UtilitiesReports.generateTicketRentalFinish(rental,false);
+                    int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                    if (index == 0) {
+                        UtilitiesReports.generateTicketRentalFinish(true,rental,false);
+                    } else if (index == 1) {
+                        UtilitiesReports.generateTicketRentalFinish(false,rental,false);
+                    }
                 }
 
             }

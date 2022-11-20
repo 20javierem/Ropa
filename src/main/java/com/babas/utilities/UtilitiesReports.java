@@ -20,8 +20,13 @@ import java.util.*;
 
 public class UtilitiesReports {
 
-    public static void generateTicketSale(Sale sale,boolean print) {
-        InputStream pathReport = App.class.getResourceAsStream("jasperReports/ticket-sale.jasper");
+    public static void generateTicketSale(boolean a4,Sale sale,boolean print) {
+        InputStream pathReport;
+        if(a4){
+            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-sale.jasper");
+        }else{
+            pathReport = App.class.getResourceAsStream("jasperReports/ticket-sale.jasper");
+        }
         File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
@@ -40,10 +45,12 @@ public class UtilitiesReports {
                 parameters.put("nameTicket","Ticket de venta");
                 parameters.put("numberTicket",sale.getNumberSale());
                 parameters.put("detalles",sp);
-                parameters.put("nameCompany",Babas.company.getTradeName());
-                parameters.put("fechaEmision", sale.getCreated());
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("nameComercial",Babas.company.getTradeName());
+                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(sale.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("nombreCliente",sale.getClient()!=null?sale.getClient().getNames():"");
+                parameters.put("clienteDni",sale.getClient()!=null?sale.getClient().getDni():"");
                 parameters.put("descuento",Utilities.moneda.format(sale.getDiscount()));
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("formaDePago",sale.isCash()?"EFECTIVO":"TRANSFERENCIA");
@@ -72,8 +79,13 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-    public static void generateTicketReserve(Reserve reserve, boolean print) {
-        InputStream pathReport = App.class.getResourceAsStream("jasperReports/ticket-reserve.jasper");
+    public static void generateTicketReserve(boolean a4,Reserve reserve, boolean print) {
+        InputStream pathReport;
+        if(a4){
+            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-reserve.jasper");
+        }else{
+            pathReport = App.class.getResourceAsStream("jasperReports/ticket-reserve.jasper");
+        }
         File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
@@ -92,10 +104,12 @@ public class UtilitiesReports {
                 parameters.put("nameTicket","Ticket de reserva");
                 parameters.put("numberTicket",reserve.getNumberReserve());
                 parameters.put("detalles",sp);
-                parameters.put("nameCompany",Babas.company.getTradeName());
-                parameters.put("fechaEmision", reserve.getCreated());
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("nameComercial",Babas.company.getTradeName());
+                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(reserve.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(reserve.getTotal()));
                 parameters.put("nombreCliente",reserve.getClient()!=null?reserve.getClient().getNames():"");
+                parameters.put("clienteDni",reserve.getClient()!=null?reserve.getClient().getDni():"");
                 parameters.put("advance",Utilities.moneda.format(reserve.getAdvance()));
                 parameters.put("total",Utilities.moneda.format(reserve.getToCancel()));
                 parameters.put("formaDePago",reserve.isCash()?"EFECTIVO":"TRANSFERENCIA");
@@ -187,8 +201,13 @@ public class UtilitiesReports {
         }
     }
 
-    public static void generateTicketRentalFinish(Rental rental, boolean print) {
-        InputStream pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental-finish.jasper");
+    public static void generateTicketRentalFinish(boolean a4,Rental rental, boolean print) {
+        InputStream pathReport;
+        if(a4){
+            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-rental-finish.jasper");
+        }else{
+            pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental-finish.jasper");
+        }
         File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
@@ -207,10 +226,12 @@ public class UtilitiesReports {
                 parameters.put("nameTicket","Ticket de alquiler");
                 parameters.put("numberTicket",rental.getNumberRental());
                 parameters.put("detalles",sp);
-                parameters.put("nameCompany",Babas.company.getTradeName());
-                parameters.put("fechaEmision", rental.getCreated());
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("nameComercial",Babas.company.getTradeName());
+                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()+rental.getWarranty()));
                 parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
+                parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
                 parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
