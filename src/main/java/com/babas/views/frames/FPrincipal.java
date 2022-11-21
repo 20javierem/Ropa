@@ -245,6 +245,7 @@ public class FPrincipal extends JFrame {
         comboBox.addItem("VENTA");
         comboBox.addItem("ALQUILER");
         comboBox.addItem("RESERVA");
+        comboBox.addItem("COTIZACIÓN");
         SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 99999, 1);
         JSpinner spinner = new JSpinner(sModel);
         jPanel.add(comboBox);
@@ -295,6 +296,18 @@ public class FPrincipal extends JFrame {
                             UtilitiesReports.generateTicketReserve(true, reserve, false);
                         } else if (index == 1) {
                             UtilitiesReports.generateTicketReserve(false, reserve, false);
+                        }
+                        find = true;
+                    }
+                    break;
+                case "COTIZACIÓN":
+                    Quotation quotation = Quotations.getByNumber(number);
+                    if (quotation != null) {
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateTicketQuotation(true, quotation, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateTicketQuotation(false, quotation, false);
                         }
                         find = true;
                     }
@@ -760,7 +773,7 @@ public class FPrincipal extends JFrame {
         btnCatalogue.setText("Catálogo");
         toolBar1.add(btnCatalogue);
         btnNewQuotation = new JButton();
-        btnNewQuotation.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/nuevaVenta.png")));
+        btnNewQuotation.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/quotationSelected.png")));
         btnNewQuotation.setText("Nueva cotización");
         toolBar1.add(btnNewQuotation);
         btnBoxSesion = new JButton();
