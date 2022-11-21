@@ -21,6 +21,7 @@ import com.babas.validators.ProgramValidator;
 import com.babas.views.dialogs.DAddProductToTransfer;
 import com.babas.views.dialogs.DaddProductToSale;
 import com.babas.views.dialogs.DaddProductsToQuotation;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -223,6 +224,7 @@ public class TabNewQuotation {
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());
+                FPrincipal.clients.add(client);
             }
             client.setNames(txtNameClient.getText().trim());
             client.setMail(txtMail.getText().trim());

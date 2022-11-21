@@ -35,7 +35,6 @@ public class DetailTransferCellRendered extends DefaultTableCellRenderer {
         }else{
             DesingTxtTable componente=buscarTexto2(null,value,column,component);
             switch(table.getColumnName(column)){
-                case "COLOR":
                 case "GÉNERO":
                 case "TALLA":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);

@@ -724,6 +724,7 @@ public class FPrincipal extends JFrame {
         btnSearchComprobante.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnQuotations.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewQuotation.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnSearchClient.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {

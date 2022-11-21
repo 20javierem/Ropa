@@ -38,7 +38,6 @@ public class DetailRentalCellRendered extends DefaultTableCellRenderer {
             DesingTxtTable componente=buscarTexto2(null,value,column,component);
             DetailRental detailRental;
             switch(table.getColumnName(column)){
-                case "COLOR":
                 case "GÉNERO":
                 case "TALLA":
                 case "T-STOCK":

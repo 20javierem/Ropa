@@ -138,6 +138,7 @@ public class MenuManage {
         contentPane.updateUI();
         btnProducts.updateUI();
         btnBranchs.updateUI();
+        btnClients.updateUI();
         btnUsers.updateUI();
         return contentPane;
     }

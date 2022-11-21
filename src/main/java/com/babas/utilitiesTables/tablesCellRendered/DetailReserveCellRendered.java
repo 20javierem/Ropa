@@ -39,7 +39,6 @@ public class DetailReserveCellRendered extends DefaultTableCellRenderer {
             DesingTxtTable componente=buscarTexto2(null,value,column,component);
             DetailReserve detailReserve;
             switch(table.getColumnName(column)){
-                case "COLOR":
                 case "GÉNERO":
                 case "TALLA":
                 case "T-STOCK":
@@ -67,7 +66,7 @@ public class DetailReserveCellRendered extends DefaultTableCellRenderer {
                     comboBox.setBorder(null);
                     comboBox.setForeground(component.getForeground());
                     comboBox.setBackground(component.getBackground());
-                    comboBox.addItem(detailReserve.getPresentation().getName());
+                    comboBox.addItem(detailReserve.getNamePresentation());
 //                    table.getColumn(table.getColumnName(column)).setMaxWidth(120);
 //                    table.getColumn(table.getColumnName(column)).setMinWidth(120);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(120);

@@ -268,6 +268,7 @@ public class TabNewRental {
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());
+                FPrincipal.clients.add(client);
             }
             client.setNames(txtNameClient.getText().trim());
             client.setMail(txtMail.getText().trim());
