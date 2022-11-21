@@ -130,9 +130,7 @@ public class TabRecordQuotations {
 
     private void loadTable() {
         quotations = new ArrayList<>();
-        for (Branch branch : Babas.user.getBranchs()) {
-            quotations.addAll(Quotations.getAfter(branch, new Date()));
-        }
+        quotations.addAll(Quotations.getAfter(new Date()));
         model = new QuotationAbstractModel(quotations);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -177,27 +175,21 @@ public class TabRecordQuotations {
         }
         if (start != null && end != null) {
             quotations.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                quotations.addAll(Quotations.getByRangeOfDate(branch, start, end));
-            }
+            quotations.addAll(Quotations.getByRangeOfDate(start, end));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cotizaciones cargadas");
             }
             model.fireTableDataChanged();
         } else if (start != null) {
             quotations.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                quotations.addAll(Quotations.getAfter(branch, start));
-            }
+            quotations.addAll(Quotations.getAfter(start));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cotizaciones cargadas");
             }
             model.fireTableDataChanged();
         } else if (end != null) {
             quotations.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                quotations.addAll(Quotations.getBefore(branch, end));
-            }
+            quotations.addAll(Quotations.getBefore(end));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Cotizaciones cargadas");
             }
