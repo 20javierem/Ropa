@@ -6,8 +6,11 @@ import com.babas.models.Color;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorPresentation;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorStock;
 import com.babas.utilitiesTables.tablesCellRendered.PresentationCellRendered;
+import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
 import com.babas.utilitiesTables.tablesModels.PresentationsAbstractModel;
+import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
@@ -57,9 +60,11 @@ public class DProduct extends JDialog {
     private JComboBox cbbStade;
     private JXHyperlink btnRemoveImage;
     private JTextField txtBarcode;
+    private FlatTable tableStocks;
     private Product product;
     private final boolean update;
     private PresentationsAbstractModel model;
+    private StockProductAbstractModel model1;
     private Style style = new Style();
     private ActionListener actionListener;
 
@@ -293,6 +298,7 @@ public class DProduct extends JDialog {
         Utilities.getActionsOfDialog().addActionListener(actionListener);
         loadCombos();
         if (update) {
+            setTitle("Editar producto");
             btnHecho.setText("Cancelar");
             btnSave.setText("Guardar");
             load();
@@ -368,6 +374,14 @@ public class DProduct extends JDialog {
         PresentationCellRendered.setCellRenderer(table);
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorPresentation(false));
         table.getColumnModel().getColumn(model.getColumnCount() - 2).setCellEditor(new JButtonEditorPresentation(true));
+
+        model1 = new StockProductAbstractModel(product.getStocks());
+        tableStocks.setModel(model1);
+        UtilitiesTables.headerNegrita(tableStocks);
+        tableStocks.removeColumn(tableStocks.getColumn("PRODUCTO"));
+        tableStocks.removeColumn(tableStocks.getColumn("CÓDIGO"));
+        StockCellRendered.setCellRenderer(tableStocks, null);
+        tableStocks.getColumnModel().getColumn(tableStocks.getColumnCount() - 1).setCellEditor(new JButtonEditorStock());
     }
 
     private void onSave() {
@@ -488,7 +502,7 @@ public class DProduct extends JDialog {
         cbbColor.setModel(defaultComboBoxModel2);
         panel2.add(cbbColor, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane1 = new JScrollPane();
-        panel2.add(scrollPane1, new GridConstraints(9, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 200), null, null, 0, false));
+        panel2.add(scrollPane1, new GridConstraints(9, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(600, 200), null, null, 0, false));
         scrollPane1.setBorder(BorderFactory.createTitledBorder(null, "Presentaciones", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         table = new FlatTable();
         scrollPane1.setViewportView(table);
@@ -585,16 +599,23 @@ public class DProduct extends JDialog {
         imageSlide = new ImageSlide();
         panel6.add(imageSlide, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
-        panel7.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
-        contentPane.add(panel7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel7.setLayout(new GridLayoutManager(1, 1, new Insets(10, 10, 0, 10), -1, 5));
+        tabbedPane.addTab("Stocks", panel7);
+        final JScrollPane scrollPane2 = new JScrollPane();
+        panel7.add(scrollPane2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        tableStocks = new FlatTable();
+        scrollPane2.setViewportView(tableStocks);
+        final JPanel panel8 = new JPanel();
+        panel8.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        contentPane.add(panel8, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnHecho = new JButton();
         btnHecho.setText("Hecho");
-        panel7.add(btnHecho, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel8.add(btnHecho, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel7.add(spacer3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel8.add(spacer3, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         btnSave = new JButton();
         btnSave.setText("Registrar");
-        panel7.add(btnSave, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel8.add(btnSave, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -603,4 +624,5 @@ public class DProduct extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

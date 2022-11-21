@@ -239,7 +239,7 @@ public class Rental extends Babas {
     public String getStringType(){
         return cash?"Efectivo":"Transferencia";
     }
-        public String getStringMulta(){
+    public String getStringMulta(){
         return Utilities.moneda.format(getPenalty());
     }
     @Override

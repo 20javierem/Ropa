@@ -53,7 +53,7 @@ import java.util.List;
 import java.util.*;
 
 public class Utilities {
-    public static DateFormat formatoFecha=new SimpleDateFormat("dd-MM-yyyy");
+    public static DateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
     public static DateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy: H:mm");
     public static DateFormat formatoFechaHora2=new SimpleDateFormat("dd/MM/yyyy: H:mm a");
     public static DateFormat formatoHora=new SimpleDateFormat("HH:mm a");
@@ -61,7 +61,7 @@ public class Utilities {
     public static NumberFormat moneda = NumberFormat.getCurrencyInstance();
     public static NumberFormat numberFormat=new DecimalFormat("###,###,###.##");
     public static String getFormatoFecha(){
-        return "dd-MM-yyyy";
+        return "dd/MM/yyyy";
     }
     private static JFrame jFrame;
     private static TabbedPane tabbedPane;

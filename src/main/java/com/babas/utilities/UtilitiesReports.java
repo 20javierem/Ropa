@@ -79,6 +79,65 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
+    public static void generateTicketQuotation(boolean a4,Quotation quotation,boolean print) {
+        InputStream pathReport;
+        if(a4){
+            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-quotation.jasper");
+        }else{
+            pathReport = App.class.getResourceAsStream("jasperReports/ticket-quotation.jasper");
+        }
+        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        String logo=file.getAbsolutePath();
+        try {
+            if(pathReport!=null){
+                List<DetailQuotation> list=new ArrayList<>(new Vector<>(quotation.getDetailQuotations()));
+                list.add(0,new DetailQuotation());
+                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
+                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
+                Map<String,Object> parameters=new HashMap<>();
+                parameters.put("ruc",Babas.company.getRuc());
+                parameters.put("direccion",quotation.getBranch().getDirection());
+                parameters.put("telefono",quotation.getBranch().getPhone());
+                parameters.put("email",quotation.getBranch().getEmail());
+                parameters.put("logo",logo);
+                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("nameTicket","TICKET DE COTIZACIÓN");
+                parameters.put("numberTicket",quotation.getNumberQuotation());
+                parameters.put("detalles",sp);
+                parameters.put("nameCompany",Babas.company.getBusinessName());
+                parameters.put("nameComercial",Babas.company.getTradeName());
+                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(quotation.getCreated()));
+                parameters.put("subtotal",Utilities.moneda.format(quotation.getTotal()));
+                parameters.put("nombreCliente",quotation.getClient()!=null?quotation.getClient().getNames():"");
+                parameters.put("clienteDni",quotation.getClient()!=null?quotation.getClient().getDni():"");
+                parameters.put("descuento",Utilities.moneda.format(quotation.getDiscount()));
+                parameters.put("total",Utilities.moneda.format(quotation.getTotalCurrent()));
+                parameters.put("validoHasta",Utilities.formatoFecha.format(quotation.getEnded()));
+                parameters.put("vendedor",quotation.getUser().getUserName());
+                parameters.put("observacion",quotation.getObservation());
+                if(print){
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
+                    JasperPrintManager.printReport(jasperPrint,true);
+                }else{
+                    JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
+                    if(viewer!=null){
+                        viewer.setTitle("Cotización Nro. "+quotation.getNumberQuotation());
+                        if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
+                            Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                        }
+                        Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
+                        Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
+                    }
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
+            }
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
     public static void generateTicketReserve(boolean a4,Reserve reserve, boolean print) {
         InputStream pathReport;
         if(a4){
@@ -101,7 +160,7 @@ public class UtilitiesReports {
                 parameters.put("email",reserve.getBranch().getEmail());
                 parameters.put("logo",logo);
                 parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
-                parameters.put("nameTicket","Ticket de reserva");
+                parameters.put("nameTicket","TICKET DE RESERVA");
                 parameters.put("numberTicket",reserve.getNumberReserve());
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());
@@ -160,7 +219,7 @@ public class UtilitiesReports {
                 parameters.put("email",rental.getBranch().getEmail());
                 parameters.put("logo",logo);
                 parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
-                parameters.put("nameTicket","Ticket de alquiler");
+                parameters.put("nameTicket","TICKET DE ALQUILER");
                 parameters.put("numberTicket",rental.getNumberRental());
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());
@@ -223,7 +282,7 @@ public class UtilitiesReports {
                 parameters.put("email",rental.getBranch().getEmail());
                 parameters.put("logo",logo);
                 parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
-                parameters.put("nameTicket","Ticket de alquiler");
+                parameters.put("nameTicket","TICKET DE ALQUILER");
                 parameters.put("numberTicket",rental.getNumberRental());
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());

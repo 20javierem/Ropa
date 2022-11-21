@@ -3,9 +3,12 @@ package com.babas.views.dialogs;
 import com.babas.models.*;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
+import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.babas.validators.ProgramValidator;
+import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -26,28 +29,28 @@ import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
-public class DaddProductToReserve extends JDialog {
-    private JPanel contentPane;
+public class DaddProductsToQuotation extends JDialog {
     private FlatTextField txtSearchProduct;
     private FlatTable table;
     private JLabel lblProduct;
     private JButton btnHecho;
     private FlatSpinner spinerQuantity;
     private JButton btnAddProduct;
+    private JPanel contentPane;
     private JComboBox cbbPresentation;
     private JComboBox cbbPrice;
-    private Reserve reserve;
-    private StockProductAbstractModel model;
+    private Quotation quotation;
     private int pX, pY;
+    private ProductAbstractModel model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
-    private TableRowSorter<StockProductAbstractModel> modeloOrdenado;
-    private List<RowFilter<StockProductAbstractModel, String>> filtros = new ArrayList<>();
+    private TableRowSorter<ProductAbstractModel> modeloOrdenado1;
+    private List<RowFilter<ProductAbstractModel, String>> filtros1 = new ArrayList<>();
     private RowFilter filtroand;
     private Product product;
 
-    public DaddProductToReserve(Reserve reserve) {
+    public DaddProductsToQuotation(Quotation quotation) {
         super(Utilities.getJFrame(), true);
-        this.reserve = reserve;
+        this.quotation = quotation;
         $$$setupUI$$$();
         init();
         addMouseListener(new MouseAdapter() {
@@ -72,16 +75,15 @@ public class DaddProductToReserve extends JDialog {
                 onHecho();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        btnHecho.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                onHecho();
+            }
+        });
         txtSearchProduct.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                filtrar();
-            }
-        });
-        ((JButton) txtSearchProduct.getComponent(0)).addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                txtSearchProduct.setText(null);
                 filtrar();
             }
         });
@@ -97,62 +99,59 @@ public class DaddProductToReserve extends JDialog {
                 addProduct();
             }
         });
-        btnHecho.addActionListener(new ActionListener() {
+        ((JButton) txtSearchProduct.getComponent(0)).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        });
-        cbbPresentation.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadPrices();
+                txtSearchProduct.setText(null);
+                filtrar();
             }
         });
     }
 
-    private void loadPrices() {
-        Presentation presentation = (Presentation) cbbPresentation.getSelectedItem();
-        cbbPrice.removeAllItems();
-        presentation.getPrices().forEach(price -> cbbPrice.addItem(price.getPrice()));
-        cbbPrice.setSelectedItem(presentation.getPriceDefault().getPrice());
+    private void addProduct() {
+        DetailQuotation detailQuotation = new DetailQuotation();
+        detailQuotation.setQuotation(quotation);
+        detailQuotation.setProduct(product);
+        detailQuotation.setPresentation((Presentation) cbbPresentation.getSelectedItem());
+        detailQuotation.setQuantity((Integer) spinerQuantity.getValue());
+        if (!((JTextField) cbbPrice.getEditor().getEditorComponent()).getText().isEmpty()) {
+            detailQuotation.setPrice(Double.valueOf(((JTextField) cbbPrice.getEditor().getEditorComponent()).getText()));
+        } else {
+            if (detailQuotation.getPresentation() != null) {
+                detailQuotation.setPrice(detailQuotation.getPresentation().getPriceDefault().getPrice());
+            } else {
+                detailQuotation.setPrice(0.0);
+            }
+        }
+        Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(detailQuotation);
+        if (constraintViolationSet.isEmpty()) {
+            searchProduct(detailQuotation);
+        } else {
+            ProgramValidator.mostrarErrores(constraintViolationSet);
+        }
     }
 
-    private void init() {
-        setUndecorated(true);
-        setContentPane(contentPane);
-        loadTables();
-        pack();
-        lblProduct.setText(null);
-        setLocationRelativeTo(getOwner());
-    }
-
-    public void filtrar() {
-        String busqueda = txtSearchProduct.getText().trim();
-        filtros.clear();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2));
-        listaFiltros.put(0, busqueda);
-        listaFiltros.put(1, busqueda);
-        listaFiltros.put(2, busqueda);
-        filtroand = RowFilter.andFilter(filtros);
-        modeloOrdenado.setRowFilter(filtroand);
-    }
-
-    private void loadTables() {
-        model = new StockProductAbstractModel(reserve.getBranch().getStocks());
-        table.setModel(model);
-        StockCellRendered.setCellRenderer(table, listaFiltros);
-        UtilitiesTables.headerNegrita(table);
-        table.removeColumn(table.getColumn("SUCURSAL"));
-        table.removeColumn(table.getColumn("ALQUILERES"));
-        table.removeColumn(table.getColumn(""));
-        modeloOrdenado = new TableRowSorter<>(model);
-        table.setRowSorter(modeloOrdenado);
+    private void searchProduct(DetailQuotation detailQuotation) {
+        boolean entro = false;
+        for (DetailQuotation detailQuotation1 : quotation.getDetailQuotations()) {
+            if (Objects.equals(detailQuotation1.getProduct().getId(), detailQuotation.getProduct().getId())) {
+                detailQuotation1.setQuantity(detailQuotation1.getQuantity() + detailQuotation.getQuantity());
+                entro = true;
+                break;
+            }
+        }
+        if (!entro) {
+            quotation.getDetailQuotations().add(detailQuotation);
+        }
+        Utilities.getTabbedPane().updateTab();
+        table.clearSelection();
+        product = null;
+        loadProduct();
     }
 
     private void loadProduct() {
         if (table.getSelectedRow() != -1) {
-            product = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow())).getProduct();
+            product = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
         }
         if (product != null) {
             lblProduct.setText(product.getStyle().getName() + ", " + product.getSex().getName() + ", " + product.getSize().getName() + ", " + product.getColor().getName());
@@ -167,46 +166,49 @@ public class DaddProductToReserve extends JDialog {
             cbbPrice.removeAllItems();
         }
     }
-
-    private void addProduct() {
-        DetailReserve detailReserve = new DetailReserve();
-        detailReserve.setReserve(reserve);
-        detailReserve.setProduct(product);
-        detailReserve.setPresentation((Presentation) cbbPresentation.getSelectedItem());
-        detailReserve.setQuantity((Integer) spinerQuantity.getValue());
-        if (!((JTextField) cbbPrice.getEditor().getEditorComponent()).getText().isEmpty()) {
-            detailReserve.setPrice(Double.valueOf(((JTextField) cbbPrice.getEditor().getEditorComponent()).getText()));
-        } else {
-            if (detailReserve.getPresentation() != null) {
-                detailReserve.setPrice(detailReserve.getPresentation().getPriceDefault().getPrice());
-            } else {
-                detailReserve.setPrice(0.0);
-            }
-        }
-        Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(detailReserve);
-        if (constraintViolationSet.isEmpty()) {
-            searchProduct(detailReserve);
-        } else {
-            ProgramValidator.mostrarErrores(constraintViolationSet);
-        }
+    private void loadPrices() {
+        Presentation presentation = (Presentation) cbbPresentation.getSelectedItem();
+        cbbPrice.removeAllItems();
+        presentation.getPrices().forEach(price -> cbbPrice.addItem(price.getPrice()));
+        cbbPrice.setSelectedItem(presentation.getPriceDefault().getPrice());
+    }
+    public void filtrar() {
+        String busqueda;
+        busqueda = txtSearchProduct.getText().trim();
+        filtros1.clear();
+        filtros1.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 6, 7));
+        listaFiltros.put(0, busqueda);
+        listaFiltros.put(1, busqueda);
+        listaFiltros.put(2, busqueda);
+        listaFiltros.put(3, busqueda);
+        listaFiltros.put(4, busqueda);
+        filtroand = RowFilter.andFilter(filtros1);
+        modeloOrdenado1.setRowFilter(filtroand);
     }
 
-    private void searchProduct(DetailReserve detailReserve) {
-        boolean entro = false;
-        for (DetailReserve detailReserve1 : reserve.getDetailReserves()) {
-            if (Objects.equals(detailReserve1.getProduct().getId(), detailReserve.getProduct().getId()) && Objects.equals(detailReserve.getPresentation().getId(), detailReserve1.getProduct().getId())) {
-                detailReserve1.setQuantity(detailReserve1.getQuantity() + detailReserve.getQuantity());
-                entro = true;
-                break;
-            }
-        }
-        if (!entro) {
-            reserve.getDetailReserves().add(detailReserve);
-        }
-        Utilities.getTabbedPane().updateTab();
-        table.clearSelection();
-        product = null;
-        loadProduct();
+    private void init() {
+        setContentPane(contentPane);
+        setUndecorated(true);
+        loadTable1();
+        pack();
+        lblProduct.setText(null);
+        setLocationRelativeTo(getOwner());
+    }
+
+    private void loadTable1() {
+        model = new ProductAbstractModel(FPrincipal.products);
+        table.setModel(model);
+        UtilitiesTables.headerNegrita(table);
+        ProductCellRendered.setCellRenderer(table, listaFiltros);
+        table.removeColumn(table.getColumn("PRECIO"));
+        table.removeColumn(table.getColumn("TOTAL-STOCK"));
+        table.removeColumn(table.getColumn("CATEGORÍA"));
+        table.removeColumn(table.getColumn("MARCA"));
+        table.removeColumn(table.getColumn(""));
+        table.removeColumn(table.getColumn(""));
+        table.removeColumn(table.getColumn(""));
+        modeloOrdenado1 = new TableRowSorter<>(model);
+        table.setRowSorter(modeloOrdenado1);
     }
 
     private void onHecho() {
@@ -319,4 +321,5 @@ public class DaddProductToReserve extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

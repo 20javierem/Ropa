@@ -237,7 +237,10 @@ public class DProductCatalogue extends JDialog {
         table.setModel(model);
         StockCellRendered.setCellRenderer(table, null);
         UtilitiesTables.headerNegrita(table);
+        table.removeColumn(table.getColumn(""));
         table.removeColumn(table.getColumn("PRODUCTO"));
+        table.removeColumn(table.getColumn("CÓDIGO"));
+        table.removeColumn(table.getColumn("RESERVADOS"));
     }
 
     private void createUIComponents() {

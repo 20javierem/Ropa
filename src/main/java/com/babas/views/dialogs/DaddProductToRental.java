@@ -145,6 +145,7 @@ public class DaddProductToRental extends JDialog {
         UtilitiesTables.headerNegrita(table);
         table.removeColumn(table.getColumn("SUCURSAL"));
         table.removeColumn(table.getColumn("ALQUILERES"));
+        table.removeColumn(table.getColumn(""));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

@@ -71,6 +71,8 @@ public class FPrincipal extends JFrame {
     private JMenu btnMenuTransfers;
     private JMenu btnMenuManages;
     private JMenuBar menuBar;
+    private FlatToggleButton btnQuotations;
+    private JButton btnNewQuotation;
     private JLabel lblLogo;
     private MenuSales menuSales;
     private MenuManage menuManage;
@@ -78,6 +80,7 @@ public class FPrincipal extends JFrame {
     private MenuReserves menuReserves;
     private MenuRentals menuRentals;
     private MenuBoxes menuBoxes;
+    private MenuQuotations menuQuotations;
     public static Vector<Branch> branchs = new Vector<>();
     public static Vector<Branch> branchesWithAll = new Vector<>();
     public static Vector<User> users = Users.getActives();
@@ -220,6 +223,18 @@ public class FPrincipal extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getComprobante();
+            }
+        });
+        btnQuotations.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadMenuQuotations();
+            }
+        });
+        btnNewQuotation.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuQuotations.loadNewQuotation();
             }
         });
     }
@@ -533,6 +548,10 @@ public class FPrincipal extends JFrame {
         splitPane.setRightComponent(menuBoxes.getContentPane());
     }
 
+    private void loadMenuQuotations() {
+        splitPane.setRightComponent(menuQuotations.getContentPane());
+    }
+
     private void init() {
         setContentPane(contentPane);
         Image icon = (new ImageIcon(App.class.getResource("images/java.png"))).getImage();
@@ -555,6 +574,7 @@ public class FPrincipal extends JFrame {
         menuReserves = new MenuReserves(tabbedPane);
         menuRentals = new MenuRentals(tabbedPane);
         menuBoxes = new MenuBoxes(tabbedPane);
+        menuQuotations = new MenuQuotations(tabbedPane);
         setExtendedState(MAXIMIZED_BOTH);
         loadPermisses();
         loadMenuItems();
@@ -658,6 +678,8 @@ public class FPrincipal extends JFrame {
         btnSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNotify.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnSearchComprobante.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnQuotations.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnNewQuotation.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }
 
     private void createUIComponents() {
@@ -675,6 +697,7 @@ public class FPrincipal extends JFrame {
         btnReserves = new CToggleButton();
         btnRentals = new CToggleButton();
         btnBoxes = new CToggleButton();
+        btnQuotations = new CToggleButton();
     }
 
     /**
@@ -736,6 +759,10 @@ public class FPrincipal extends JFrame {
         btnCatalogue.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/catalogue.png")));
         btnCatalogue.setText("Catálogo");
         toolBar1.add(btnCatalogue);
+        btnNewQuotation = new JButton();
+        btnNewQuotation.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/nuevaVenta.png")));
+        btnNewQuotation.setText("Nueva cotización");
+        toolBar1.add(btnNewQuotation);
         btnBoxSesion = new JButton();
         btnBoxSesion.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/caja-registradora.png")));
         btnBoxSesion.setText("Movimientos de caja");
@@ -812,14 +839,14 @@ public class FPrincipal extends JFrame {
         splitPane = new JSplitPane();
         splitPane.setDividerSize(0);
         panel7.add(splitPane, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(200, 200), null, 0, false));
-        panelControles.setLayout(new GridLayoutManager(10, 1, new Insets(0, 0, 0, 0), -1, 0));
+        panelControles.setLayout(new GridLayoutManager(11, 1, new Insets(0, 0, 0, 0), -1, 0));
         splitPane.setLeftComponent(panelControles);
         final JSeparator separator2 = new JSeparator();
-        panelControles.add(separator2, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelControles.add(separator2, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
         panel8.setLayout(new GridLayoutManager(1, 4, new Insets(2, 0, 2, 0), -1, -1));
         panel8.setOpaque(false);
-        panelControles.add(panel8, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelControles.add(panel8, new GridConstraints(10, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panel8.add(spacer3, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
@@ -841,11 +868,11 @@ public class FPrincipal extends JFrame {
         btnExit.setText("");
         panel8.add(btnExit, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
-        panelControles.add(spacer5, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panelControles.add(spacer5, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JPanel panel9 = new JPanel();
         panel9.setLayout(new GridLayoutManager(1, 3, new Insets(2, 0, 2, 0), -1, -1));
         panel9.setOpaque(false);
-        panelControles.add(panel9, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelControles.add(panel9, new GridConstraints(8, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnNotify = new FlatButton();
         btnNotify.setButtonType(FlatButton.ButtonType.toolBarButton);
         btnNotify.setHorizontalTextPosition(0);
@@ -886,7 +913,7 @@ public class FPrincipal extends JFrame {
         btnManagement.setTabUnderlinePlacement(2);
         btnManagement.setText("Gestionar");
         btnManagement.setVerticalTextPosition(3);
-        panelControles.add(btnManagement, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelControles.add(btnManagement, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnReserves.setButtonType(FlatButton.ButtonType.tab);
         btnReserves.setFocusable(false);
         Font btnReservesFont = this.$$$getFont$$$(null, Font.BOLD, -1, btnReserves.getFont());
@@ -916,7 +943,7 @@ public class FPrincipal extends JFrame {
         btnTraslades.setTabUnderlinePlacement(2);
         btnTraslades.setText("Traslados");
         btnTraslades.setVerticalTextPosition(3);
-        panelControles.add(btnTraslades, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelControles.add(btnTraslades, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnRentals.setButtonType(FlatButton.ButtonType.tab);
         btnRentals.setFocusable(false);
         Font btnRentalsFont = this.$$$getFont$$$(null, Font.BOLD, -1, btnRentals.getFont());
@@ -946,7 +973,22 @@ public class FPrincipal extends JFrame {
         btnBoxes.setTabUnderlinePlacement(2);
         btnBoxes.setText("Cajas");
         btnBoxes.setVerticalTextPosition(3);
-        panelControles.add(btnBoxes, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panelControles.add(btnBoxes, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnQuotations.setButtonType(FlatButton.ButtonType.tab);
+        btnQuotations.setFocusable(false);
+        Font btnQuotationsFont = this.$$$getFont$$$(null, Font.BOLD, -1, btnQuotations.getFont());
+        if (btnQuotationsFont != null) btnQuotations.setFont(btnQuotationsFont);
+        btnQuotations.setHorizontalTextPosition(0);
+        btnQuotations.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/quotationSelected.png")));
+        btnQuotations.setIconTextGap(-2);
+        btnQuotations.setMargin(new Insets(10, 5, 10, 5));
+        btnQuotations.setRolloverEnabled(false);
+        btnQuotations.setSelectedIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/quotationDefault.png")));
+        btnQuotations.setTabUnderlineHeight(5);
+        btnQuotations.setTabUnderlinePlacement(2);
+        btnQuotations.setText("Cotizaciones");
+        btnQuotations.setVerticalTextPosition(3);
+        panelControles.add(btnQuotations, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         panelMenus = new JPanel();
         panelMenus.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         splitPane.setRightComponent(panelMenus);
@@ -971,6 +1013,7 @@ public class FPrincipal extends JFrame {
         buttonGroup.add(btnReserves);
         buttonGroup.add(btnRentals);
         buttonGroup.add(btnBoxes);
+        buttonGroup.add(btnQuotations);
     }
 
     /**
@@ -1001,4 +1044,5 @@ public class FPrincipal extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

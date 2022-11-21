@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="10" vgap="10">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="20" y="20" width="561" height="703"/>
+      <xy x="20" y="20" width="602" height="703"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -92,7 +92,7 @@
                   <scrollpane id="d072d">
                     <constraints>
                       <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                        <minimum-size width="-1" height="200"/>
+                        <minimum-size width="600" height="200"/>
                       </grid>
                     </constraints>
                     <properties/>
@@ -356,6 +356,29 @@
                       </component>
                     </children>
                   </grid>
+                </children>
+              </grid>
+              <grid id="cef8a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="5">
+                <margin top="10" left="10" bottom="0" right="10"/>
+                <constraints>
+                  <tabbedpane title="Stocks"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <scrollpane id="343f3">
+                    <constraints>
+                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="df651" class="com.formdev.flatlaf.extras.components.FlatTable" binding="tableStocks">
+                        <constraints/>
+                        <properties/>
+                      </component>
+                    </children>
+                  </scrollpane>
                 </children>
               </grid>
             </children>

@@ -1,24 +1,22 @@
 package com.babas.models;
 
-import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.annotations.GenericGenerator;
 
-@Entity(name = "detail_reserve_tbl")
-public class DetailReserve extends Babas {
+@Entity(name = "detailQuotation_tbl")
+public class DetailQuotation extends Babas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Reserve reserve;
+    private Quotation quotation;
     @ManyToOne
     @NotNull(message = "Producto")
     private Product product;
-    @ManyToOne
+    @Transient
     @NotNull(message = "Producto")
     private Presentation presentation;
     @Min(value = 1,message = "Cantidad")
@@ -32,12 +30,12 @@ public class DetailReserve extends Babas {
         return id;
     }
 
-    public Reserve getReserve() {
-        return reserve;
+    public Quotation getQuotation() {
+        return quotation;
     }
 
-    public void setReserve(Reserve reserve) {
-        this.reserve = reserve;
+    public void setQuotation(Quotation quotation) {
+        this.quotation = quotation;
     }
 
     public Product getProduct() {
@@ -60,6 +58,7 @@ public class DetailReserve extends Babas {
         }
     }
 
+
     public Integer getQuantity() {
         return quantity;
     }
@@ -68,6 +67,40 @@ public class DetailReserve extends Babas {
         this.quantity = quantity;
         this.subtotal= quantity*price;
     }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+        this.subtotal= quantity*price ;
+    }
+
+    public Integer getQuantityPresentation() {
+        return quantityPresentation;
+    }
+
+    public void setQuantityPresentation(Integer quantityPresentation) {
+        this.quantityPresentation = quantityPresentation;
+    }
+
+    public String getNamePresentation() {
+        return namePresentation;
+    }
+
+    public void setNamePresentation(String namePresentation) {
+        this.namePresentation = namePresentation;
+    }
+
     public String getNameUnity(){
         return namePresentation;
     }
@@ -82,38 +115,5 @@ public class DetailReserve extends Babas {
     }
     public String getPriceString(){
         return Utilities.moneda.format(getPrice());
-    }
-    public Double getSubtotal() {
-        return subtotal;
-    }
-
-    public Integer getQuantityPresentation() {
-        return quantityPresentation;
-    }
-
-    public void setQuantityPresentation(Integer quantityPresentation) {
-        this.quantityPresentation = quantityPresentation;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-        this.subtotal= quantity*price ;
-    }
-
-    @Override
-    public void save() {
-        Stock stock= Stocks.getStock(getReserve().getBranch(),getProduct());
-        stock.refresh();
-        if(getReserve().isActive()){
-            stock.setOnReserve(stock.getOnReserve()+getQuantity()*getQuantityPresentation());
-        }else{
-            stock.setOnReserve(stock.getOnReserve()-getQuantity()*getQuantityPresentation());
-        }
-        stock.save();
-        super.save();
     }
 }

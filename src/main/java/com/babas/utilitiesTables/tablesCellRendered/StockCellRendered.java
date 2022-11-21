@@ -46,6 +46,7 @@ public class StockCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMinWidth(80);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(80);
                     break;
+                case "RESERVADOS":
                 case "EN ALQUILER":
                 case "ALQUILERES":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);

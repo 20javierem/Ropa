@@ -1,13 +1,14 @@
 package com.babas.utilitiesTables.tablesModels;
 import com.babas.models.Stock;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 
 public class StockProductAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"CÓDIGO","SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","ALQUILERES"};
-    private final Class[] typeColumns={String.class,String.class,String.class,Integer.class,Integer.class,Integer.class,Integer.class};
+    private final String[] nameColumns={"CÓDIGO","SUCURSAL","PRODUCTO","TOTAL","ACTUAL","EN ALQUILER","RESERVADOS","ALQUILERES",""};
+    private final Class[] typeColumns={String.class,String.class,String.class,Integer.class,Integer.class,Integer.class,Integer.class,Integer.class,JButton.class};
     private final List<Stock> list;
 
     public StockProductAbstractModel(List<Stock> list){
@@ -50,8 +51,12 @@ public class StockProductAbstractModel extends AbstractTableModel {
                 return stock.getOnStock();
             case 5:
                 return stock.getOnRental();
-            default:
+            case 6:
+                return stock.getOnReserve();
+            case 7:
                 return stock.getTimesRented();
+            default:
+                return new JButtonAction("x16/editar.png");
         }
     }
 

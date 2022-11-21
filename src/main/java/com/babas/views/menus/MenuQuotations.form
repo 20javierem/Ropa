@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.babas.views.menus.MenuQuotations">
+  <grid id="27dc6" binding="contentPane" custom-create="true" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
+    <margin top="10" left="5" bottom="5" right="5"/>
+    <constraints>
+      <xy x="20" y="20" width="130" height="400"/>
+    </constraints>
+    <properties>
+      <maximumSize width="130" height="2147483647"/>
+      <minimumSize width="130" height="149"/>
+      <preferredSize width="130" height="149"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <vspacer id="5b8ed">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+        </constraints>
+      </vspacer>
+      <component id="3e3b8" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnNewQuotation">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="&lt;html&gt;&lt;center&gt;Nueva cotización&lt;center&gt;&lt;/html&gt;"/>
+        </properties>
+      </component>
+      <component id="99a3e" class="com.formdev.flatlaf.extras.components.FlatToggleButton" binding="btnRecordQuotations">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="&lt;html&gt;&lt;center&gt;Historial de cotizaciones&lt;center&gt;&lt;/html&gt;"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
