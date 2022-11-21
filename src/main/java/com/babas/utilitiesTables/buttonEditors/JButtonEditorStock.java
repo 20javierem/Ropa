@@ -34,6 +34,7 @@ public class JButtonEditorStock extends AbstractCellEditor implements TableCellE
         if(table.getSelectedRow()!=-1){
             fireEditingStopped();
             Stock stock=((StockProductAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            stock.refresh();
             DStockProduct dStockProduct=new DStockProduct(stock);
             dStockProduct.setVisible(true);
             Utilities.updateDialog();
