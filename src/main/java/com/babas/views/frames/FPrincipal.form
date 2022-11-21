@@ -129,7 +129,7 @@
               <component id="345e" class="javax.swing.JButton" binding="btnNewQuotation">
                 <constraints/>
                 <properties>
-                  <icon value="com/babas/icons/x32/nuevaVenta.png"/>
+                  <icon value="com/babas/icons/x32/quotationSelected.png"/>
                   <text value="Nueva cotización"/>
                 </properties>
               </component>

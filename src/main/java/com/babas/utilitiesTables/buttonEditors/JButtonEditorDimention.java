@@ -49,11 +49,8 @@ public class JButtonEditorDimention extends AbstractCellEditor implements TableC
                     dimention.refresh();
                     FPrincipal.dimentions.remove(dimention);
                     FPrincipal.dimentionsWithAll.remove(dimention);
-                    if(dimention.getProducts().isEmpty()){
-                        dimention.delete();
-                    }else{
-                        dimention.setActive(false);
-                    }
+                    dimention.setActive(false);
+                    dimention.save();
                 }
             }
             Utilities.updateDialog();

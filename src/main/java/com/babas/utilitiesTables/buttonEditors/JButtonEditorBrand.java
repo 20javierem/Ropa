@@ -49,11 +49,8 @@ public class JButtonEditorBrand extends AbstractCellEditor implements TableCellE
                     brand.refresh();
                     FPrincipal.brands.remove(brand);
                     FPrincipal.brandsWithAll.remove(brand);
-                    if(brand.getProducts().isEmpty()){
-                        brand.delete();
-                    }else{
-                        brand.setActive(false);
-                    }
+                    brand.setActive(false);
+                    brand.save();
                 }
             }
             Utilities.updateDialog();

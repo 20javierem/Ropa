@@ -51,11 +51,8 @@ public class JButtonEditorBox extends AbstractCellEditor implements TableCellEdi
                     box.getBranch().getBoxs().remove(box);
                     if(box.getId()!=null){
                         box.refresh();
-                        if(box.getBoxSesions().isEmpty()){
-                            box.delete();
-                        }else{
-                            box.setDeleted(true);
-                        }
+                        box.setDeleted(true);
+                        box.save();
                     }else{
                         box.delete();
                     }

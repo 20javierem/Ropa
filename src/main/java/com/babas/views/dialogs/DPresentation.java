@@ -117,7 +117,7 @@ public class DPresentation extends JDialog {
     private void onSave() {
         presentation.setQuantity((Integer) spinnerQuantity.getValue());
         presentation.setName(txtName.getText());
-        if (presentation.getProduct().getPresentations().size() < 2) {
+        if (presentation.getProduct().getPresentations().size() == 0) {
             presentation.setDefault(true);
         } else {
             presentation.setDefault(ckDefault.isSelected());

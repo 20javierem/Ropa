@@ -93,8 +93,9 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 });
                                 branch.getStocks().forEach(stock -> {
                                     stock.getProduct().getStocks().remove(stock);
+                                    stock.setActive(false);
+                                    stock.save();
                                 });
-                                branch.getStocks().forEach(Babas::delete);
                                 FPrincipal.branchs.remove(branch);
                                 FPrincipal.branchesWithAll.remove(branch);
                                 branch.setActive(false);

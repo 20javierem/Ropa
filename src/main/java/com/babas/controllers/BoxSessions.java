@@ -26,7 +26,9 @@ public class BoxSessions extends Babas {
     public static BoxSession getByBox(Box box) {
         criteria = builder.createQuery(BoxSession.class);
         root = criteria.from(BoxSession.class);
-        criteria.select(root).where(builder.and(builder.equal(root.get("box"), box), builder.isNull(root.get("updated"))));
+        criteria.select(root).where(builder.and(
+                builder.equal(root.get("box"), box),
+                builder.isNull(root.get("updated"))));
         return session.createQuery(criteria).uniqueResult();
     }
 

@@ -49,11 +49,8 @@ public class JButtonEditorCategory extends AbstractCellEditor implements TableCe
                     category.refresh();
                     FPrincipal.categories.remove(category);
                     FPrincipal.categoriesWithAll.remove(category);
-                    if(category.getStyles().isEmpty()){
-                        category.delete();
-                    }else{
-                        category.setActive(false);
-                    }
+                    category.setActive(false);
+                    category.save();
                 }
             }
             Utilities.updateDialog();

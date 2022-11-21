@@ -49,11 +49,8 @@ public class JButtonEditorStade extends AbstractCellEditor implements TableCellE
                     stade.refresh();
                     FPrincipal.stades.remove(stade);
                     FPrincipal.stadesWithAll.remove(stade);
-                    if(stade.getProducts().isEmpty()){
-                        stade.delete();
-                    }else{
-                        stade.setActive(false);
-                    }
+                    stade.setActive(false);
+                    stade.save();
                 }
             }
             Utilities.updateDialog();

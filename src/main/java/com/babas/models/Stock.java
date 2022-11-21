@@ -26,6 +26,7 @@ public class Stock extends Babas {
     private Integer onStock=0;
     private Integer timesRented=0;
     private Integer onReserve=0;
+    private boolean active=true;
 
     public Date getCreated() {
         return created;
@@ -97,6 +98,14 @@ public class Stock extends Babas {
 
     public void setOnReserve(Integer onReserve) {
         this.onReserve = onReserve;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

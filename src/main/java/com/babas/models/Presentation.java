@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Where;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,10 +28,12 @@ public class Presentation extends Babas {
     @NotNull
     private Integer quantity;
     @OneToMany(mappedBy = "presentation")
+    @Where(clause = "active=1")
     private List<Price> prices =new ArrayList<>();
     private Date created=new Date();
     private Date updated;
     private boolean isDefault=false;
+    private boolean active=true;
     @Transient
     private Price priceDefault;
 
@@ -110,6 +113,14 @@ public class Presentation extends Babas {
             }
         }
         return priceDefault;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

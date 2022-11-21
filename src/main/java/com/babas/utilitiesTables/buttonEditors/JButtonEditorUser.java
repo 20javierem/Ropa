@@ -58,12 +58,8 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
                                     branch.getUsers().remove(user);
                                     branch.save();
                                 });
-                                if(user.getSales().isEmpty()){
-                                    user.delete();
-                                }else{
-                                    user.setActive(false);
-                                    user.save();
-                                }
+                                user.setActive(false);
+                                user.save();
                                 FPrincipal.users.remove(user);
                             }
                         }else{

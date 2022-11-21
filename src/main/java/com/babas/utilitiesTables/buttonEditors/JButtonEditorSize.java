@@ -49,11 +49,8 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
                     size.refresh();
                     FPrincipal.sizes.remove(size);
                     FPrincipal.sizesWithAll.remove(size);
-                    if(size.getProducts().isEmpty()){
-                        size.delete();
-                    }else{
-                        size.setActive(false);
-                    }
+                    size.setActive(false);
+                    size.save();
                 }
             }
             Utilities.updateDialog();

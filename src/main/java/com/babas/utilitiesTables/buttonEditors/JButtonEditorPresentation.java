@@ -57,8 +57,12 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                                 presentation.getProduct().getPresentations().get(0).save();
                                 presentation.getProduct().setPresentationDefault(presentation.getProduct().getPresentations().get(0));
                             }
-                            presentation.getPrices().forEach(Babas::delete);
-                            presentation.delete();
+                            presentation.getPrices().forEach(price -> {
+                                price.setActive(false);
+                                price.save();
+                            });
+                            presentation.setActive(false);
+                            presentation.save();
                         }
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación eliminada");
                     }

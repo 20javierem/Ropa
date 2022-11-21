@@ -32,7 +32,9 @@ public class Users extends Babas {
     public static User getByUserName(String userName){
         criteria = builder.createQuery(User.class);
         root=criteria.from(User.class);
-        criteria.select(root).where(builder.equal(root.get("userName"), userName));
+        criteria.select(root).where(builder.and(
+                builder.isTrue(root.get("active")),
+                builder.equal(root.get("userName"), userName)));
         return session.createQuery(criteria).uniqueResult();
     }
 }

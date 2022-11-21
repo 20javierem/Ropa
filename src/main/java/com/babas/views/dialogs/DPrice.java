@@ -71,7 +71,7 @@ public class DPrice extends JDialog {
 
     private void onSave() {
         price.setPrice((Double) spinnerPrice.getValue());
-        if (price.getPresentation().getPrices().size() < 2) {
+        if (price.getPresentation().getPrices().size() == 0) {
             price.setDefault(true);
         } else {
             price.setDefault(ckDefault.isSelected());
@@ -178,4 +178,5 @@ public class DPrice extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

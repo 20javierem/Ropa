@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Where;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,6 +31,7 @@ public class Product extends Babas {
     @NotNull(message = "Talla")
     private Size size;
     @OneToMany(mappedBy = "product")
+    @Where(clause = "active=1")
     private List<Stock> stocks=new ArrayList<>();
     private Date created;
     private Date updated;
@@ -43,6 +45,7 @@ public class Product extends Babas {
     @ManyToOne
     private Brand brand;
     @OneToMany(mappedBy = "product")
+    @Where(clause = "active=1")
     private List<Presentation> presentations=new ArrayList<>();
     @Transient
     private Presentation presentationDefault;

@@ -21,6 +21,7 @@ public class Price extends Babas {
     private Date created;
     private Date updated;
     private boolean isDefault=false;
+    private boolean active=true;
 
     public Price(Presentation presentation){
         this.presentation=presentation;
@@ -73,6 +74,14 @@ public class Price extends Babas {
             setHorizontalAlignment(JLabel.RIGHT);
             return this;
         }
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

@@ -50,11 +50,8 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
                     sex.refresh();
                     FPrincipal.sexs.remove(sex);
                     FPrincipal.sexsWithAll.remove(sex);
-                    if(sex.getProducts().isEmpty()){
-                        sex.delete();
-                    }else{
-                        sex.setActive(false);
-                    }
+                    sex.setActive(false);
+                    sex.save();
                 }
             }
             Utilities.updateDialog();

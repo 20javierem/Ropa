@@ -46,11 +46,8 @@ public class JButtonEditorColor extends AbstractCellEditor implements TableCellE
                     color.refresh();
                     FPrincipal.colors.remove(color);
                     FPrincipal.colorsWithAll.remove(color);
-                    if(color.getProducts().isEmpty()){
-                        color.delete();
-                    }else{
-                        color.setActive(false);
-                    }
+                    color.setActive(false);
+                    color.save();
                 }
             }
             Utilities.updateDialog();
