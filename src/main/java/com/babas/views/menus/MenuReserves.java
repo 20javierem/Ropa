@@ -35,7 +35,7 @@ public class MenuReserves {
         btnNewReserve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadNewReserve();
+                loadNewReserve(new Reserve());
             }
         });
         btnRecordReserves.addActionListener(new ActionListener() {
@@ -52,15 +52,15 @@ public class MenuReserves {
         });
     }
 
-    public void loadNewReserve() {
+    public void loadNewReserve(Reserve reserve) {
         btnNewReserve.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordReserves);
         Utilities.buttonSelected(btnNewReserve);
         if (tabNewReserve == null) {
-            tabNewReserve = new TabNewReserve(new Reserve());
+            tabNewReserve = new TabNewReserve(reserve);
         }
         if (tabbedPane.indexOfTab(tabNewReserve.getTabPane().getTitle()) == -1) {
-            tabNewReserve = new TabNewReserve(new Reserve());
+            tabNewReserve = new TabNewReserve(reserve);
             tabNewReserve.getTabPane().setOption(btnNewReserve);
             tabbedPane.addTab(tabNewReserve.getTabPane().getTitle(), tabNewReserve.getTabPane().getIcon(), tabNewReserve.getTabPane());
         }

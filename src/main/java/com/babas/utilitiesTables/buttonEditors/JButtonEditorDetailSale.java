@@ -3,6 +3,7 @@ package com.babas.utilitiesTables.buttonEditors;
 import com.babas.models.DetailSale;
 import com.babas.models.Presentation;
 import com.babas.utilities.Utilities;
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,22 +31,30 @@ public class JButtonEditorDetailSale extends DefaultCellEditor {
             }
         });
         if(column == 5){
-            comboBox.setEditable(false);
+            comboBox.setEditable(true);
             comboBox.setModel(new DefaultComboBoxModel(new Vector(detailSale.getProduct().getPresentations())));
-            comboBox.setRenderer(new Presentation.ListCellRenderer());
-            comboBox.setSelectedItem(detailSale.getPresentation());
+            comboBox.setSelectedItem(detailSale.getNamePresentation());
             comboBox.addActionListener(e -> {
-                Presentation presentation=(Presentation) comboBox.getSelectedItem();
-                detailSale.setPresentation(presentation);
-                detailSale.setPrice(presentation.getPriceDefault().getPrice());
+                if(comboBox.getSelectedItem() instanceof Presentation){
+                    Presentation presentation=(Presentation) comboBox.getSelectedItem();
+                    detailSale.setPresentation(presentation);
+                    detailSale.setPrice(presentation.getPriceDefault().getPrice());
+                }else{
+                    detailSale.setPresentation(null);
+                    detailSale.setNamePresentation(comboBox.getSelectedItem().toString());
+                }
                 stopCellEditing();
                 Utilities.getTabbedPane().updateTab();
             });
         }else{
             comboBox.setEditable(true);
-            detailSale.getPresentation().getPrices().forEach(price -> {
-                comboBox.addItem(price.getPrice());
-            });
+            if(detailSale.getPresentation()!=null){
+                detailSale.getPresentation().getPrices().forEach(price -> {
+                    comboBox.addItem(price.getPrice());
+                });
+            }else{
+                comboBox.addItem(detailSale.getPrice());
+            }
             comboBox.setSelectedItem(detailSale.getPrice());
             comboBox.addActionListener(e -> {
                 try{

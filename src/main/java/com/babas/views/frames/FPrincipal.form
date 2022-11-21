@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="3" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="0" vgap="0">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="44" y="20" width="1523" height="828"/>
+      <xy x="44" y="20" width="1703" height="828"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -157,8 +157,15 @@
               <component id="63b0f" class="javax.swing.JButton" binding="btnSearchComprobante">
                 <constraints/>
                 <properties>
-                  <icon value="com/babas/icons/x32/recordTransactions.png"/>
+                  <icon value="com/babas/icons/x32/searchComprobante.png"/>
                   <text value="Buscar comprobante"/>
+                </properties>
+              </component>
+              <component id="754ff" class="javax.swing.JButton" binding="btnSearchClient">
+                <constraints/>
+                <properties>
+                  <icon value="com/babas/icons/x32/searchClient.png"/>
+                  <text value="Buscar cliente"/>
                 </properties>
               </component>
               <hspacer id="bfee9">

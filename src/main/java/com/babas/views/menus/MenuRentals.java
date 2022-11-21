@@ -35,7 +35,7 @@ public class MenuRentals {
         btnNewRental.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadNewRental();
+                loadNewRental(new Rental());
             }
         });
         btnRecordRentals.addActionListener(new ActionListener() {
@@ -52,16 +52,16 @@ public class MenuRentals {
         });
     }
 
-    public void loadNewRental() {
+    public void loadNewRental(Rental rental) {
         btnNewRental.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordRentals);
         Utilities.despintarButton(btnRentalsActives);
         Utilities.buttonSelected(btnNewRental);
         if (tabNewRental == null) {
-            tabNewRental = new TabNewRental(new Rental());
+            tabNewRental = new TabNewRental(rental);
         }
         if (tabbedPane.indexOfTab(tabNewRental.getTabPane().getTitle()) == -1) {
-            tabNewRental = new TabNewRental(new Rental());
+            tabNewRental = new TabNewRental(rental);
             tabNewRental.getTabPane().setOption(btnNewRental);
             tabbedPane.addTab(tabNewRental.getTabPane().getTitle(), tabNewRental.getTabPane().getIcon(), tabNewRental.getTabPane());
         }

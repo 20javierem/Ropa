@@ -35,7 +35,7 @@ public class MenuSales {
         btnNewSale.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadNewSale(true);
+                loadNewSale(true, new Sale());
             }
         });
         btnRecordSales.addActionListener(new ActionListener() {
@@ -69,16 +69,16 @@ public class MenuSales {
         btnCatalogue.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
-    public void loadNewSale(boolean selected) {
+    public void loadNewSale(boolean selected, Sale sale) {
         btnNewSale.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         Utilities.despintarButton(btnRecordSales);
         Utilities.despintarButton(btnCatalogue);
         Utilities.buttonSelected(btnNewSale);
         if (tabNewSale == null) {
-            tabNewSale = new TabNewSale(new Sale());
+            tabNewSale = new TabNewSale(sale);
         }
         if (tabbedPane.indexOfTab(tabNewSale.getTabPane().getTitle()) == -1) {
-            tabNewSale = new TabNewSale(new Sale());
+            tabNewSale = new TabNewSale(sale);
             tabNewSale.getTabPane().setOption(btnNewSale);
             tabbedPane.addTab(tabNewSale.getTabPane().getTitle(), tabNewSale.getTabPane().getIcon(), tabNewSale.getTabPane());
         }
@@ -159,4 +159,5 @@ public class MenuSales {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

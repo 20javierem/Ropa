@@ -129,4 +129,9 @@ public class Presentation extends Babas {
         super.save();
         getPrices().forEach(Price::save);
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

@@ -121,7 +121,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <placeholderText value="Correo..."/>
+                      <placeholderText value="Dirección..."/>
                     </properties>
                   </component>
                   <component id="ebf95" class="javax.swing.JLabel">

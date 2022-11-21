@@ -121,7 +121,7 @@ public class DProductCatalogue extends JDialog {
             Product product = (Product) cbbStyle.getSelectedItem();
             if (Stocks.getStock(Babas.boxSession.getBox().getBranch(), product) != null) {
                 FPrincipal fPrincipal = (FPrincipal) Utilities.getJFrame();
-                fPrincipal.getMenuSales().loadNewSale(false);
+                fPrincipal.getMenuSales().loadNewSale(false, new Sale());
                 boolean find = false;
                 for (DetailSale detailSale : fPrincipal.getMenuSales().getTabNewSale().getSale().getDetailSales()) {
                     if (detailSale.getProduct().getId().equals(product.getId())) {
@@ -453,4 +453,5 @@ public class DProductCatalogue extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

@@ -60,6 +60,14 @@ public class DetailReserve extends Babas {
         }
     }
 
+    public String getNamePresentation() {
+        return namePresentation;
+    }
+
+    public void setNamePresentation(String namePresentation) {
+        this.namePresentation = namePresentation;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }

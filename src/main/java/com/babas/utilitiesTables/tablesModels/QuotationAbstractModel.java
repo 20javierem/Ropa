@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class QuotationAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","VÁLIDO","SUCURSAL","CLIENTE","SUBTOTAL","DESCUENTO","TOTAL",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class, Double.class,Double.class,Double.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","VÁLIDO","SUCURSAL","CLIENTE","SUBTOTAL","DESCUENTO","TOTAL","",""};
+    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class, Double.class,Double.class,Double.class,JButton.class,JButton.class};
     private final List<Quotation> list;
 
     public QuotationAbstractModel(List<Quotation> list){
@@ -60,6 +60,8 @@ public class QuotationAbstractModel extends AbstractTableModel {
                 return Utilities.moneda.format(quotation.getDiscount());
             case 7:
                 return Utilities.moneda.format(quotation.getTotalCurrent());
+            case 8:
+                return new JButtonAction("x16/checkbox.png");
             default:
                 return new JButtonAction("x16/mostrarContraseña.png");
         }

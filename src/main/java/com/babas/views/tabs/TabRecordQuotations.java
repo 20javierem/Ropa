@@ -93,7 +93,7 @@ public class TabRecordQuotations {
     }
 
     private void init() {
-        tabPane.setTitle("Historial de ventas");
+        tabPane.setTitle("Historial de cotizaciones");
         tabPane.getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,7 +137,8 @@ public class TabRecordQuotations {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         QuotationCellRendered.setCellRenderer(table, null);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorQuotation());
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorQuotation(false));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorQuotation(true));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

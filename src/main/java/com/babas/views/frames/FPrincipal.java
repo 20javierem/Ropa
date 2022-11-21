@@ -12,10 +12,7 @@ import com.babas.views.dialogs.*;
 import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
-import com.formdev.flatlaf.extras.components.FlatButton;
-import com.formdev.flatlaf.extras.components.FlatMenu;
-import com.formdev.flatlaf.extras.components.FlatMenuBar;
-import com.formdev.flatlaf.extras.components.FlatToggleButton;
+import com.formdev.flatlaf.extras.components.*;
 import com.formdev.flatlaf.ui.FlatRootPaneUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
@@ -73,6 +70,7 @@ public class FPrincipal extends JFrame {
     private JMenuBar menuBar;
     private FlatToggleButton btnQuotations;
     private JButton btnNewQuotation;
+    private JButton btnSearchClient;
     private JLabel lblLogo;
     private MenuSales menuSales;
     private MenuManage menuManage;
@@ -83,8 +81,8 @@ public class FPrincipal extends JFrame {
     private MenuQuotations menuQuotations;
     public static Vector<Branch> branchs = new Vector<>();
     public static Vector<Branch> branchesWithAll = new Vector<>();
-    public static Vector<User> users = Users.getActives();
-    public static Vector<User> usersWithAll = new Vector<>();
+    public static Vector<User> users = new Vector<>();
+    public static Vector<Client> clients = new Vector<>();
     public static Vector<Product> products = new Vector<>();
     public static Vector<Category> categories = new Vector<>();
     public static Vector<Category> categoriesWithAll = new Vector<>();
@@ -120,7 +118,7 @@ public class FPrincipal extends JFrame {
         btnNewSale.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuSales.loadNewSale(true);
+                menuSales.loadNewSale(true, new Sale());
             }
         });
         btnRecordSales.addActionListener(new ActionListener() {
@@ -180,13 +178,13 @@ public class FPrincipal extends JFrame {
         btnNewRental.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuRentals.loadNewRental();
+                menuRentals.loadNewRental(new Rental());
             }
         });
         btnNewReserve.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                menuReserves.loadNewReserve();
+                menuReserves.loadNewReserve(new Reserve());
             }
         });
         addWindowListener(new WindowAdapter() {
@@ -237,6 +235,31 @@ public class FPrincipal extends JFrame {
                 menuQuotations.loadNewQuotation();
             }
         });
+        btnSearchClient.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                getClient();
+            }
+        });
+    }
+
+    private void getClient() {
+        FlatTextField flatTextField = new FlatTextField();
+        flatTextField.setPlaceholderText("DNI/RUC...");
+        int option = JOptionPane.showOptionDialog(this, flatTextField, "Buscar cliente", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
+        if (option == JOptionPane.OK_OPTION) {
+            boolean find = false;
+            Client client = Clients.getByDNI(flatTextField.getText().trim());
+            if (client != null) {
+                DClient dClient = new DClient(true, client);
+                dClient.setVisible(true);
+                find = true;
+            }
+            if (!find) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "No se encontró el cliente");
+                getClient();
+            }
+        }
     }
 
     private void getComprobante() {
@@ -250,7 +273,7 @@ public class FPrincipal extends JFrame {
         JSpinner spinner = new JSpinner(sModel);
         jPanel.add(comboBox);
         jPanel.add(spinner);
-        int option = JOptionPane.showOptionDialog(this, jPanel, "Ingrese el numero de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
+        int option = JOptionPane.showOptionDialog(this, jPanel, "Buscar comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
         if (option == JOptionPane.OK_OPTION) {
             Long number = Long.valueOf((Integer) spinner.getValue());
             boolean find = false;
@@ -402,7 +425,7 @@ public class FPrincipal extends JFrame {
         menuRecordBoxes.setEnabled(Babas.user.getPermitions().isRecordBoxes());
 
         JMenuItem menuNewSale = new JMenuItem("Nueva venta");
-        menuNewSale.addActionListener(e -> menuSales.loadNewSale(true));
+        menuNewSale.addActionListener(e -> menuSales.loadNewSale(true, new Sale()));
         JMenuItem menuCatalogue = new JMenuItem("Catálogo");
         menuCatalogue.addActionListener(e -> menuSales.loadCatalogue());
         JMenuItem menuRecordSales = new JMenuItem("Historial de ventas");
@@ -419,7 +442,7 @@ public class FPrincipal extends JFrame {
         menuRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
 
         JMenuItem menuNewRental = new JMenuItem("Nuevo alquiler");
-        menuNewRental.addActionListener(e -> menuRentals.loadNewRental());
+        menuNewRental.addActionListener(e -> menuRentals.loadNewRental(new Rental()));
         JMenuItem menuRentalsActives = new JMenuItem("Alquileres activos");
         menuRentalsActives.addActionListener(e -> menuRentals.loadRentalsActives());
         JMenuItem menuRecordRentals = new JMenuItem("Historial de alquileres");
@@ -436,7 +459,7 @@ public class FPrincipal extends JFrame {
         menuRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
 
         JMenuItem menuNewReserve = new JMenuItem("Nuevo alquiler");
-        menuNewReserve.addActionListener(e -> menuReserves.loadNewReserve());
+        menuNewReserve.addActionListener(e -> menuReserves.loadNewReserve(new Reserve()));
         JMenuItem menuReservesActives = new JMenuItem("Reservas activas");
         menuReservesActives.addActionListener(e -> menuReserves.loadReservesActives());
         JMenuItem menuRecordReserves = new JMenuItem("Historial de reservas");
@@ -567,8 +590,6 @@ public class FPrincipal extends JFrame {
 
     private void init() {
         setContentPane(contentPane);
-        Image icon = (new ImageIcon(App.class.getResource("images/java.png"))).getImage();
-        setIconImage(icon);
         setTitle("Software-Tienda");
         Utilities.setJFrame(this);
         Utilities.setTabbedPane(tabbedPane);
@@ -600,6 +621,14 @@ public class FPrincipal extends JFrame {
 
     public MenuSales getMenuSales() {
         return menuSales;
+    }
+
+    public MenuRentals getMenuRentals() {
+        return menuRentals;
+    }
+
+    public MenuReserves getMenuReserves() {
+        return menuReserves;
     }
 
     private void loadPermisses() {
@@ -637,6 +666,8 @@ public class FPrincipal extends JFrame {
     }
 
     private void loadLists() {
+        users = Users.getActives();
+        clients = Clients.getTodos();
         branchs = Branchs.getActives();
         stades = Stades.getActives();
         stadesWithAll = new Vector<>(stades);
@@ -789,9 +820,13 @@ public class FPrincipal extends JFrame {
         btnRecordTransfers.setText("Historial de transferencias");
         toolBar1.add(btnRecordTransfers);
         btnSearchComprobante = new JButton();
-        btnSearchComprobante.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/recordTransactions.png")));
+        btnSearchComprobante.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/searchComprobante.png")));
         btnSearchComprobante.setText("Buscar comprobante");
         toolBar1.add(btnSearchComprobante);
+        btnSearchClient = new JButton();
+        btnSearchClient.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/searchClient.png")));
+        btnSearchClient.setText("Buscar cliente");
+        toolBar1.add(btnSearchClient);
         final Spacer spacer2 = new Spacer();
         toolBar1.add(spacer2);
         final JPanel panel2 = new JPanel();

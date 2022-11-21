@@ -31,14 +31,18 @@ public class JButtonEditorDetailRental extends DefaultCellEditor {
             }
         });
         if(column == 5){
-            comboBox.setEditable(false);
+            comboBox.setEditable(true);
             comboBox.setModel(new DefaultComboBoxModel(new Vector(detailRental.getProduct().getPresentations())));
-            comboBox.setRenderer(new Presentation.ListCellRenderer());
-            comboBox.setSelectedItem(detailRental.getPresentation());
+            comboBox.setSelectedItem(detailRental.getNamePresentation());
             comboBox.addActionListener(e -> {
-                Presentation presentation=(Presentation) comboBox.getSelectedItem();
-                detailRental.setPresentation(presentation);
-                detailRental.setPrice(presentation.getPriceDefault().getPrice());
+                if(comboBox.getSelectedItem() instanceof Presentation){
+                    Presentation presentation=(Presentation) comboBox.getSelectedItem();
+                    detailRental.setPresentation(presentation);
+                    detailRental.setPrice(presentation.getPriceDefault().getPrice());
+                }else{
+                    detailRental.setPresentation(null);
+                    detailRental.setNamePresentation(comboBox.getSelectedItem().toString());
+                }
                 stopCellEditing();
                 Utilities.getTabbedPane().updateTab();
             });

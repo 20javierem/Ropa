@@ -2,6 +2,7 @@ package com.babas.models;
 
 import com.babas.utilities.Babas;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,7 +17,9 @@ public class Client extends Babas {
     private Long id;
     private Date created;
     private Date updated;
+    @NotBlank(message = "Dni")
     private String dni;
+    @NotBlank(message = "Cliente")
     private String names;
     private String mail;
     private String phone;

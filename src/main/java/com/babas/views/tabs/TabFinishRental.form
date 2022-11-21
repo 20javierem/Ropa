@@ -104,7 +104,7 @@
                     </constraints>
                     <properties>
                       <enabled value="false"/>
-                      <placeholderText value="Correo..."/>
+                      <placeholderText value="Dirección..."/>
                     </properties>
                   </component>
                   <component id="b9866" class="javax.swing.JLabel">

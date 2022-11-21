@@ -59,8 +59,6 @@ public class FLogin extends JFrame {
 
     private void init() {
         setContentPane(contentPane);
-        Image icon = (new ImageIcon(App.class.getResource("images/java.png"))).getImage();
-        setIconImage(icon);
         setTitle("Software-Tienda");
         Utilities.setJFrame(this);
         getRootPane().setDefaultButton(btnInitSession);

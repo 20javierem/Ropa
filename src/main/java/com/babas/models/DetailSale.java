@@ -61,6 +61,14 @@ public class DetailSale extends Babas {
         }
     }
 
+    public void setNamePresentation(String namePresentation) {
+        this.namePresentation = namePresentation;
+    }
+
+    public void setQuantityPresentation(Integer quantityPresentation) {
+        this.quantityPresentation = quantityPresentation;
+    }
+
     public Integer getQuantity() {
         return quantity;
     }
