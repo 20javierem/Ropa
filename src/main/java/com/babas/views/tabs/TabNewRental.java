@@ -80,7 +80,7 @@ public class TabNewRental {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    searchClient();
+                    searchClient(txtDocument.getText().trim());
                 }
             }
         });
@@ -129,14 +129,13 @@ public class TabNewRental {
     }
 
     private void init() {
+        tabPane.setTitle("Nuevo alquiler");
+        load();
         if (rental.getReserve() != null) {
             tabPane.setTitle("Alquiler/Reserva Nro: " + rental.getReserve().getNumberReserve());
             txtDocument.setText(rental.getReserve().getClient().getDni());
-            searchClient();
-        } else {
-            tabPane.setTitle("Nuevo alquiler");
+            searchClient(txtDocument.getText().trim());
         }
-        load();
         tabPane.getActions().addActionListener(e -> {
             model.fireTableDataChanged();
             loadTotals();
@@ -148,9 +147,10 @@ public class TabNewRental {
         }
     }
 
-    private void searchClient() {
-        Client client = Clients.getByDNI(txtDocument.getText().trim());
+    private void searchClient(String document) {
+        Client client = Clients.getByDNI(document);
         if (client != null) {
+            txtDocument.setText(document);
             txtNameClient.setText(client.getNames());
             txtPhone.setText(client.getPhone());
             txtMail.setText(client.getMail());
@@ -179,6 +179,9 @@ public class TabNewRental {
         table.getColumnModel().getColumn(model.getColumnCount() - 1).setCellEditor(new JButtonEditorDetailRental2());
         table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailRental());
         table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailRental());
+        if (rental.getClient() != null) {
+            searchClient(rental.getClient().getDni());
+        }
         loadTotals();
         if (rental.getReserve() != null) {
             txtObservation.setText(rental.getReserve().getObservation());

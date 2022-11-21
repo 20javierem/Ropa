@@ -1,10 +1,8 @@
 package com.babas.views.tabs;
 
-import com.babas.App;
 import com.babas.controllers.Clients;
 import com.babas.custom.TabPane;
 import com.babas.models.Client;
-import com.babas.models.Rental;
 import com.babas.models.Reserve;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
@@ -12,16 +10,9 @@ import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve2;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale;
-import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailSale2;
 import com.babas.utilitiesTables.tablesCellRendered.DetailReserveCellRendered;
-import com.babas.utilitiesTables.tablesCellRendered.DetailSaleCellRendered;
-import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
-import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.DetailReserveAbstractModel;
-import com.babas.utilitiesTables.tablesModels.DetailSaleAbstractModel;
 import com.babas.validators.ProgramValidator;
-import com.babas.views.dialogs.DaddProductToRental;
 import com.babas.views.dialogs.DaddProductToReserve;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
@@ -86,7 +77,7 @@ public class TabNewReserve {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    searchClient();
+                    searchClient(txtDocument.getText().trim());
                 }
             }
         });
@@ -123,7 +114,7 @@ public class TabNewReserve {
 
     private void init() {
         tabPane.setTitle("Nueva reserva");
-        loadTable();
+        load();
         tabPane.getActions().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -138,9 +129,10 @@ public class TabNewReserve {
         }
     }
 
-    private void searchClient() {
-        Client client = Clients.getByDNI(txtDocument.getText().trim());
+    private void searchClient(String document) {
+        Client client = Clients.getByDNI(document);
         if (client != null) {
+            txtDocument.setText(document);
             txtNameClient.setText(client.getNames());
             txtPhone.setText(client.getPhone());
             txtMail.setText(client.getMail());
@@ -159,7 +151,7 @@ public class TabNewReserve {
         Utilities.getLblCentro().setText("Nueva reserva");
     }
 
-    private void loadTable() {
+    private void load() {
         model = new DetailReserveAbstractModel(reserve.getDetailReserves());
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -168,6 +160,9 @@ public class TabNewReserve {
         table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailReserve());
         table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailReserve());
         txtObservation.setText(reserve.getObservation());
+        if (reserve.getClient() != null) {
+            searchClient(reserve.getClient().getDni());
+        }
     }
 
     private void loadAddProducts() {
@@ -263,7 +258,7 @@ public class TabNewReserve {
         txtObservation.setText(null);
         spinnerAdvance.setValue(0.0);
         spinnerAdvance.setValue(0.0);
-        loadTable();
+        load();
         loadTotals();
     }
 

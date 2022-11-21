@@ -172,6 +172,7 @@ public class DPresentation extends JDialog {
     }
 
     private void clear() {
+        txtName.setText(null);
         spinnerQuantity.setValue(1);
         spinnerPriceNew.setValue(1.0);
         loadTable();

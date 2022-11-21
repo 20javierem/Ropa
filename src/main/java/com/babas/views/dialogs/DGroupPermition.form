@@ -54,15 +54,15 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="baf2d" layout-manager="GridLayoutManager" row-count="27" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                <margin top="0" left="20" bottom="0" right="20"/>
+              <grid id="edc60" layout-manager="GridLayoutManager" row-count="32" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="d0a99" class="javax.swing.JLabel">
+                  <component id="25314" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -70,17 +70,17 @@
                       <text value="Nueva venta:"/>
                     </properties>
                   </component>
-                  <hspacer id="30852">
+                  <hspacer id="837b">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </hspacer>
-                  <vspacer id="532d0">
+                  <vspacer id="ede9d">
                     <constraints>
-                      <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                      <grid row="31" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                     </constraints>
                   </vspacer>
-                  <component id="33d6d" class="javax.swing.JCheckBox" binding="ckNewSale">
+                  <component id="c0c89" class="javax.swing.JCheckBox" binding="ckNewSale">
                     <constraints>
                       <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -88,7 +88,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="be80d" class="javax.swing.JLabel">
+                  <component id="e3843" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -96,7 +96,7 @@
                       <text value="Catálogo:"/>
                     </properties>
                   </component>
-                  <component id="3edf0" class="javax.swing.JLabel">
+                  <component id="a34ad" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -104,7 +104,7 @@
                       <text value="Historial de ventas:"/>
                     </properties>
                   </component>
-                  <component id="fe000" class="javax.swing.JCheckBox" binding="ckCatalogue">
+                  <component id="c76fe" class="javax.swing.JCheckBox" binding="ckCatalogue">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -112,7 +112,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="e136" class="javax.swing.JCheckBox" binding="ckRecordSales">
+                  <component id="681af" class="javax.swing.JCheckBox" binding="ckRecordSales">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -120,7 +120,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="8c262" class="javax.swing.JSeparator">
+                  <component id="f43f1" class="javax.swing.JSeparator">
                     <constraints>
                       <grid row="4" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="-1" height="5"/>
@@ -128,7 +128,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="d89de" class="javax.swing.JLabel">
+                  <component id="82f7f" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -137,7 +137,7 @@
                       <text value="Ventas"/>
                     </properties>
                   </component>
-                  <component id="e1fa3" class="javax.swing.JLabel">
+                  <component id="82a26" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="5" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -146,7 +146,7 @@
                       <text value="Alquileres"/>
                     </properties>
                   </component>
-                  <component id="88a6e" class="javax.swing.JLabel">
+                  <component id="e1a38" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -154,7 +154,7 @@
                       <text value="Nuevo alquiler:"/>
                     </properties>
                   </component>
-                  <component id="c9e49" class="javax.swing.JLabel">
+                  <component id="7bf5a" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -162,7 +162,7 @@
                       <text value="Alquileres activos:"/>
                     </properties>
                   </component>
-                  <component id="2453d" class="javax.swing.JLabel">
+                  <component id="3c43c" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -170,7 +170,7 @@
                       <text value="Historial de alquileres:"/>
                     </properties>
                   </component>
-                  <component id="c9812" class="javax.swing.JCheckBox" binding="ckNewRental">
+                  <component id="6ed61" class="javax.swing.JCheckBox" binding="ckNewRental">
                     <constraints>
                       <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -178,7 +178,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="9ac37" class="javax.swing.JCheckBox" binding="ckRentalsActives">
+                  <component id="d367b" class="javax.swing.JCheckBox" binding="ckRentalsActives">
                     <constraints>
                       <grid row="7" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -186,7 +186,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="55039" class="javax.swing.JCheckBox" binding="ckRecordRentals">
+                  <component id="f6a12" class="javax.swing.JCheckBox" binding="ckRecordRentals">
                     <constraints>
                       <grid row="8" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -194,7 +194,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="f15e1" class="javax.swing.JSeparator">
+                  <component id="3c028" class="javax.swing.JSeparator">
                     <constraints>
                       <grid row="9" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="-1" height="5"/>
@@ -202,89 +202,48 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="4ba17" class="javax.swing.JLabel">
+                  <component id="bb450" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="10" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="14" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <font style="1"/>
                       <text value="Reservas"/>
                     </properties>
                   </component>
-                  <component id="f6555" class="javax.swing.JLabel">
+                  <component id="8ce67" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="15" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Nueva reserva:"/>
                     </properties>
                   </component>
-                  <component id="549ae" class="javax.swing.JLabel">
+                  <component id="f9b99" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Reservas activas:"/>
                     </properties>
                   </component>
-                  <component id="fa41d" class="javax.swing.JLabel">
+                  <component id="8b7d7" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="13" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Historial de reservas:"/>
                     </properties>
                   </component>
-                  <component id="eee53" class="javax.swing.JCheckBox" binding="ckNewReserve">
+                  <component id="490cd" class="javax.swing.JCheckBox" binding="ckNewReserve">
                     <constraints>
-                      <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="15" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="ac89b" class="javax.swing.JCheckBox" binding="ckReservesActives">
-                    <constraints>
-                      <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value=""/>
-                    </properties>
-                  </component>
-                  <component id="a2e51" class="javax.swing.JCheckBox" binding="ckRecordReserves">
-                    <constraints>
-                      <grid row="13" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value=""/>
-                    </properties>
-                  </component>
-                  <component id="28d33" class="javax.swing.JSeparator">
-                    <constraints>
-                      <grid row="14" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="-1" height="5"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="b5cee" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="15" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <font style="1"/>
-                      <text value="Traslados"/>
-                    </properties>
-                  </component>
-                  <component id="e741" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="16" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Nuevo traslado:"/>
-                    </properties>
-                  </component>
-                  <component id="13748" class="javax.swing.JCheckBox" binding="ckNewTransfer">
+                  <component id="42fdf" class="javax.swing.JCheckBox" binding="ckReservesActives">
                     <constraints>
                       <grid row="16" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -292,24 +251,7 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="fcc7e" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="17" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Historial de traslados:"/>
-                    </properties>
-                  </component>
-                  <component id="ce73f" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="20" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <font style="1"/>
-                      <text value="Otros"/>
-                    </properties>
-                  </component>
-                  <component id="8e1cc" class="javax.swing.JCheckBox" binding="ckRecordTransfers">
+                  <component id="7260f" class="javax.swing.JCheckBox" binding="ckRecordReserves">
                     <constraints>
                       <grid row="17" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -317,47 +259,57 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="68814" class="javax.swing.JLabel">
+                  <component id="32562" class="javax.swing.JSeparator">
+                    <constraints>
+                      <grid row="18" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="5"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="5dd7d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="19" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="Traslados"/>
+                    </properties>
+                  </component>
+                  <component id="25d03" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="20" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Nuevo traslado:"/>
+                    </properties>
+                  </component>
+                  <component id="39632" class="javax.swing.JCheckBox" binding="ckNewTransfer">
+                    <constraints>
+                      <grid row="20" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="1a37e" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="21" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Historial de cajas:"/>
+                      <text value="Historial de traslados:"/>
                     </properties>
                   </component>
-                  <component id="ae271" class="javax.swing.JLabel">
+                  <component id="ab143" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="24" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Gestionar productos:"/>
+                      <font style="1"/>
+                      <text value="Otros"/>
                     </properties>
                   </component>
-                  <component id="283a4" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="23" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Gestionar usuarios:"/>
-                    </properties>
-                  </component>
-                  <component id="a0ed3" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="24" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Gestionar sucursales:"/>
-                    </properties>
-                  </component>
-                  <component id="ec7f5" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Gestionar empresa:"/>
-                    </properties>
-                  </component>
-                  <component id="289c3" class="javax.swing.JCheckBox" binding="ckRecordBoxes">
+                  <component id="ac569" class="javax.swing.JCheckBox" binding="ckRecordTransfers">
                     <constraints>
                       <grid row="21" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -365,31 +317,47 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="3858d" class="javax.swing.JCheckBox" binding="ckManageProducts">
+                  <component id="8d0c9" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="22" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="25" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value=""/>
+                      <text value="Historial de cajas:"/>
                     </properties>
                   </component>
-                  <component id="bc123" class="javax.swing.JCheckBox" binding="ckManageUsers">
+                  <component id="992b5" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="23" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="26" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value=""/>
+                      <text value="Gestionar productos:"/>
                     </properties>
                   </component>
-                  <component id="63597" class="javax.swing.JCheckBox" binding="ckManageBranchs">
+                  <component id="f7da6" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="24" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="27" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value=""/>
+                      <text value="Gestionar usuarios:"/>
                     </properties>
                   </component>
-                  <component id="224da" class="javax.swing.JCheckBox" binding="ckManageCompany">
+                  <component id="7598d" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="29" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Gestionar sucursales:"/>
+                    </properties>
+                  </component>
+                  <component id="3f197" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="30" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Gestionar empresa:"/>
+                    </properties>
+                  </component>
+                  <component id="cf9bd" class="javax.swing.JCheckBox" binding="ckRecordBoxes">
                     <constraints>
                       <grid row="25" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -397,28 +365,125 @@
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="2e161" class="javax.swing.JSeparator">
+                  <component id="9de58" class="javax.swing.JCheckBox" binding="ckManageProducts">
                     <constraints>
-                      <grid row="19" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="-1" height="5"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="2babb" class="javax.swing.JCheckBox" binding="ckAceptTransfer">
-                    <constraints>
-                      <grid row="18" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="26" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value=""/>
                     </properties>
                   </component>
-                  <component id="8dc5b" class="javax.swing.JLabel">
+                  <component id="6bb6d" class="javax.swing.JCheckBox" binding="ckManageUsers">
                     <constraints>
-                      <grid row="18" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="27" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="2b3f1" class="javax.swing.JCheckBox" binding="ckManageBranchs">
+                    <constraints>
+                      <grid row="29" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="d7633" class="javax.swing.JCheckBox" binding="ckManageCompany">
+                    <constraints>
+                      <grid row="30" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="f43eb" class="javax.swing.JSeparator">
+                    <constraints>
+                      <grid row="23" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="5"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="69394" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="22" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Aceptar traslados:"/>
+                    </properties>
+                  </component>
+                  <component id="d9123" class="javax.swing.JCheckBox" binding="ckAceptTransfer">
+                    <constraints>
+                      <grid row="22" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="596b6" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="28" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Gestionar clientes:"/>
+                    </properties>
+                  </component>
+                  <component id="b47ea" class="javax.swing.JCheckBox" binding="ckManageClients">
+                    <constraints>
+                      <grid row="28" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="7d5a1" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="10" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <font style="1"/>
+                      <text value="Alquileres"/>
+                    </properties>
+                  </component>
+                  <component id="24c0" class="javax.swing.JSeparator">
+                    <constraints>
+                      <grid row="13" column="0" row-span="1" col-span="3" vsize-policy="3" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="-1" height="5"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="7fba0" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="11" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Nueva cotización:"/>
+                    </properties>
+                  </component>
+                  <component id="61c62" class="javax.swing.JLabel">
+                    <constraints>
+                      <grid row="12" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Historial de cotizaciones:"/>
+                    </properties>
+                  </component>
+                  <component id="1036c" class="javax.swing.JCheckBox" binding="ckNewQuotation">
+                    <constraints>
+                      <grid row="11" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
+                    </properties>
+                  </component>
+                  <component id="14af2" class="javax.swing.JCheckBox" binding="ckRecordQuotations">
+                    <constraints>
+                      <grid row="12" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value=""/>
                     </properties>
                   </component>
                 </children>

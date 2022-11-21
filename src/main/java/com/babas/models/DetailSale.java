@@ -20,7 +20,6 @@ public class DetailSale extends Babas {
     @NotNull(message = "Producto")
     private Product product;
     @Transient
-    @NotNull(message = "Producto")
     private Presentation presentation;
     @Min(value = 1,message = "Cantidad")
     private Integer quantity=0;

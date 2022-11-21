@@ -76,8 +76,8 @@ public class MenuQuotations {
     }
 
     public JPanel getContentPane() {
-        btnRecordQuotations.setEnabled(Babas.user.getPermitions().isReservesActives());
-        btnNewQuotation.setEnabled(Babas.user.getPermitions().isRecordReserves());
+        btnRecordQuotations.setEnabled(Babas.user.getPermitions().isRecordQuotations());
+        btnNewQuotation.setEnabled(Babas.user.getPermitions().isNewQuotation());
         contentPane.updateUI();
         btnRecordQuotations.updateUI();
         btnNewQuotation.updateUI();

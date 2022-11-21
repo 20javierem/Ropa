@@ -35,6 +35,9 @@ public class Permission extends Babas {
     private boolean manageBranchs=false;
     private boolean manageCompany=false;
     private boolean aceptTransfer=false;
+    private boolean newQuotation=false;
+    private boolean recordQuotations=false;
+    private boolean manageClients=false;
 
     public Permission(){
 
@@ -57,6 +60,9 @@ public class Permission extends Babas {
         manageBranchs = true;
         manageCompany = true;
         aceptTransfer = true;
+        newQuotation=true;
+        recordQuotations=true;
+        manageClients=true;
     }
 
     @OneToMany(mappedBy = "permission")
@@ -221,6 +227,30 @@ public class Permission extends Babas {
 
     public void setAceptTransfer(boolean aceptTransfer) {
         this.aceptTransfer = aceptTransfer;
+    }
+
+    public boolean isNewQuotation() {
+        return newQuotation;
+    }
+
+    public void setNewQuotation(boolean newQuotation) {
+        this.newQuotation = newQuotation;
+    }
+
+    public boolean isRecordQuotations() {
+        return recordQuotations;
+    }
+
+    public void setRecordQuotations(boolean recordQuotations) {
+        this.recordQuotations = recordQuotations;
+    }
+
+    public boolean isManageClients() {
+        return manageClients;
+    }
+
+    public void setManageClients(boolean manageClients) {
+        this.manageClients = manageClients;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

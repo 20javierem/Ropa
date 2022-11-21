@@ -135,6 +135,7 @@ public class MenuManage {
         btnProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
         btnBranchs.setEnabled(Babas.user.getPermitions().isManageBranchs());
         btnUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
+        btnClients.setEnabled(Babas.user.getPermitions().isManageClients());
         contentPane.updateUI();
         btnProducts.updateUI();
         btnBranchs.updateUI();

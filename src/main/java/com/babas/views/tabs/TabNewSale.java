@@ -66,7 +66,7 @@ public class TabNewSale {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    searchClient();
+                    searchClient(txtDocument.getText().trim());
                 }
             }
         });
@@ -101,9 +101,10 @@ public class TabNewSale {
         });
     }
 
-    private void searchClient() {
-        Client client = Clients.getByDNI(txtDocument.getText().trim());
+    private void searchClient(String document) {
+        Client client = Clients.getByDNI(document);
         if (client != null) {
+            txtDocument.setText(document);
             txtNameClient.setText(client.getNames());
             txtPhone.setText(client.getPhone());
             txtMail.setText(client.getMail());
@@ -166,6 +167,9 @@ public class TabNewSale {
         table.getColumnModel().getColumn(model.getColumnCount() - 3).setCellEditor(new JButtonEditorDetailSale());
         table.getColumnModel().getColumn(model.getColumnCount() - 4).setCellEditor(new JButtonEditorDetailSale());
         txtObservation.setText(sale.getObservation());
+        if (sale.getClient() != null) {
+            searchClient(sale.getClient().getDni());
+        }
         loadTotals();
     }
 
