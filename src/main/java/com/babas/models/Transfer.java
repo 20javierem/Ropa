@@ -177,6 +177,7 @@ public class Transfer extends Babas {
                     });
                     getDetailTransfers().forEach(detailTransfer -> {
                         Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
+                        stock.refresh();
                         stock.setOnStock(stock.getOnStock()-detailTransfer.getQuantity());
                         stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
                         stock.save();
@@ -184,6 +185,7 @@ public class Transfer extends Babas {
                 }else{
                     getDetailTransfers().forEach(detailTransfer -> {
                         Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
+                        stock.refresh();
                         stock.setOnStock(stock.getOnStock()+detailTransfer.getQuantity());
                         stock.setQuantity(stock.getQuantity()+detailTransfer.getQuantity());
                         stock.save();
@@ -191,6 +193,7 @@ public class Transfer extends Babas {
                     if(isAcept()){
                         getDetailTransfers().forEach(detailTransfer -> {
                             Stock stock= Stocks.getStock(getDestiny(),detailTransfer.getProduct());
+                            stock.refresh();
                             stock.setOnStock(stock.getOnStock()-detailTransfer.getQuantity());
                             stock.setQuantity(stock.getQuantity()-detailTransfer.getQuantity());
                             stock.save();

@@ -4,6 +4,7 @@ import com.babas.models.Branch;
 import com.babas.models.Brand;
 import com.babas.models.DetailTransfer;
 import com.babas.models.Transfer;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.utilitiesTables.tablesModels.BrandAbstractModel;
@@ -69,6 +70,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 transfer.setSource(branch);
                                 transfer.setDestiny((Branch) comboBox.getSelectedItem());
                                 transfer.setDescription("Traslado por Sucursal cerrada");
+
                                 branch.getStocks().forEach(stock -> {
                                     DetailTransfer detailTransfer=new DetailTransfer();
                                     detailTransfer.setTransfer(transfer);
@@ -81,10 +83,18 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 transfer.setState(1);
                                 transfer.setUpdated(new Date());
                                 transfer.save();
+                                branch.getTransfers().forEach(transfer1 -> {
+                                    transfer1.setState(2);
+                                    transfer1.save();
+                                });
                                 branch.getUsers().forEach(user -> {
                                     user.getBranchs().remove(branch);
                                     user.save();
                                 });
+                                branch.getStocks().forEach(stock -> {
+                                    stock.getProduct().getStocks().remove(stock);
+                                });
+                                branch.getStocks().forEach(Babas::delete);
                                 FPrincipal.branchs.remove(branch);
                                 FPrincipal.branchesWithAll.remove(branch);
                                 branch.setActive(false);
