@@ -17,7 +17,7 @@ public class Rentals extends Babas {
     private static CriteriaQuery<Rental> criteria;
 
     public static Rental get(Integer id) {
-        return session.find(Rental.class, id, LockModeType.NONE);
+        return session.find(Rental.class, id);
     }
 
     public static Rental getByNumber(Long numberSale){

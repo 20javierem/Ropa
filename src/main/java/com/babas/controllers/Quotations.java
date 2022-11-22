@@ -17,7 +17,7 @@ public class Quotations extends Babas {
     private static CriteriaQuery<Quotation> criteria;
 
     public static Quotation get(Integer id) {
-        return session.find(Quotation.class, id, LockModeType.NONE);
+        return session.find(Quotation.class, id);
     }
 
     public static Quotation getByNumber(Long numberSale){

@@ -44,7 +44,7 @@ public class TabNewRental {
     private FlatTextField txtMail;
     private FlatSpinner spinnerDiscount;
     private JLabel lblSubTotal;
-    private JLabel lblTotal;
+    private JLabel lblSubtotalWithDiscount;
     private JButton btnSaleWithTrasnfer;
     private JButton btnSaleWithCash;
     private JLabel lblLogo;
@@ -53,6 +53,7 @@ public class TabNewRental {
     private JLabel lblTotalCurrent;
     private JLabel lblReserve;
     private JTextArea txtObservation;
+    private JLabel lblSubtotal2;
     private Rental rental;
     private DetailRentalAbstractModel model;
 
@@ -195,16 +196,18 @@ public class TabNewRental {
             rental.setBranch(null);
         }
         rental.calculateTotals();
+
         lblSubTotal.setText(Utilities.moneda.format(rental.getTotal()));
-        spinnerWarranty.setValue(rental.getWarranty());
+        spinnerDiscount.setValue(rental.getDiscount());
+        lblSubtotalWithDiscount.setText(Utilities.moneda.format(rental.getTotalWithDiscount()));
+
         if (rental.getReserve() == null) {
             lblReserve.setText(Utilities.moneda.format(0.0));
-            lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount()));
         } else {
             lblReserve.setText(Utilities.moneda.format(rental.getReserve().getAdvance()));
-            lblTotal.setText(Utilities.moneda.format(rental.getTotalCurrent() + rental.getDiscount() + rental.getReserve().getAdvance()));
         }
-        spinnerDiscount.setValue(rental.getDiscount());
+        lblSubtotal2.setText(Utilities.moneda.format(rental.getTotalCurrent() - rental.getWarranty()));
+        spinnerWarranty.setValue(rental.getWarranty());
         lblTotalCurrent.setText(Utilities.moneda.format(rental.getTotalCurrent()));
         Utilities.getLblCentro().setText("Nuevo alquiler");
     }
@@ -372,7 +375,7 @@ public class TabNewRental {
         panel7.setLayout(new GridLayoutManager(6, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel6.add(panel7, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
-        panel8.setLayout(new GridLayoutManager(8, 3, new Insets(0, 20, 0, 20), 5, 0));
+        panel8.setLayout(new GridLayoutManager(10, 3, new Insets(0, 20, 0, 20), 5, 0));
         panel7.add(panel8, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         lblSubTotal = new JLabel();
         Font lblSubTotalFont = this.$$$getFont$$$(null, Font.BOLD, 14, lblSubTotal.getFont());
@@ -386,52 +389,64 @@ public class TabNewRental {
         panel8.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
         panel8.add(spacer3, new GridConstraints(0, 1, 2, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final JSeparator separator1 = new JSeparator();
+        panel8.add(separator1, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label3 = new JLabel();
         Font label3Font = this.$$$getFont$$$(null, Font.BOLD, 14, label3.getFont());
         if (label3Font != null) label3.setFont(label3Font);
-        label3.setText("Descuento:");
-        panel8.add(label3, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label3.setText("Subtotal:");
+        panel8.add(label3, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lblSubtotalWithDiscount = new JLabel();
+        Font lblSubtotalWithDiscountFont = this.$$$getFont$$$(null, Font.BOLD, 14, lblSubtotalWithDiscount.getFont());
+        if (lblSubtotalWithDiscountFont != null) lblSubtotalWithDiscount.setFont(lblSubtotalWithDiscountFont);
+        lblSubtotalWithDiscount.setText("S/0.00");
+        panel8.add(lblSubtotalWithDiscount, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JSeparator separator2 = new JSeparator();
+        panel8.add(separator2, new GridConstraints(8, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
         Font label4Font = this.$$$getFont$$$(null, Font.BOLD, 14, label4.getFont());
         if (label4Font != null) label4.setFont(label4Font);
-        label4.setText("Garantía:");
-        panel8.add(label4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JSeparator separator1 = new JSeparator();
-        panel8.add(separator1, new GridConstraints(2, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label5 = new JLabel();
-        Font label5Font = this.$$$getFont$$$(null, Font.BOLD, 14, label5.getFont());
-        if (label5Font != null) label5.setFont(label5Font);
-        label5.setText("Subtotal:");
-        panel8.add(label5, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        lblTotal = new JLabel();
-        Font lblTotalFont = this.$$$getFont$$$(null, Font.BOLD, 14, lblTotal.getFont());
-        if (lblTotalFont != null) lblTotal.setFont(lblTotalFont);
-        lblTotal.setText("S/0.00");
-        panel8.add(lblTotal, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JSeparator separator2 = new JSeparator();
-        panel8.add(separator2, new GridConstraints(6, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label6 = new JLabel();
-        Font label6Font = this.$$$getFont$$$(null, Font.BOLD, 14, label6.getFont());
-        if (label6Font != null) label6.setFont(label6Font);
-        label6.setText("Total:");
-        panel8.add(label6, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label4.setText("Total:");
+        panel8.add(label4, new GridConstraints(9, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblTotalCurrent = new JLabel();
         Font lblTotalCurrentFont = this.$$$getFont$$$(null, Font.BOLD, 14, lblTotalCurrent.getFont());
         if (lblTotalCurrentFont != null) lblTotalCurrent.setFont(lblTotalCurrentFont);
         lblTotalCurrent.setText("S/0.00");
-        panel8.add(lblTotalCurrent, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label7 = new JLabel();
-        Font label7Font = this.$$$getFont$$$(null, Font.BOLD, 14, label7.getFont());
-        if (label7Font != null) label7.setFont(label7Font);
-        label7.setText("Adelanto(Reserva):");
-        panel8.add(label7, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel8.add(lblTotalCurrent, new GridConstraints(9, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        Font label5Font = this.$$$getFont$$$(null, Font.BOLD, 14, label5.getFont());
+        if (label5Font != null) label5.setFont(label5Font);
+        label5.setText("Adelanto(Reserva):");
+        panel8.add(label5, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblReserve = new JLabel();
         Font lblReserveFont = this.$$$getFont$$$(null, Font.BOLD, 14, lblReserve.getFont());
         if (lblReserveFont != null) lblReserve.setFont(lblReserveFont);
         lblReserve.setText("S/0.00");
         panel8.add(lblReserve, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        panel8.add(spinnerWarranty, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        panel8.add(spinnerDiscount, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label6 = new JLabel();
+        Font label6Font = this.$$$getFont$$$(null, Font.BOLD, 14, label6.getFont());
+        if (label6Font != null) label6.setFont(label6Font);
+        label6.setText("Descuento:");
+        panel8.add(label6, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel8.add(spinnerDiscount, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label7 = new JLabel();
+        Font label7Font = this.$$$getFont$$$(null, Font.BOLD, 14, label7.getFont());
+        if (label7Font != null) label7.setFont(label7Font);
+        label7.setText("Garantía:");
+        panel8.add(label7, new GridConstraints(7, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel8.add(spinnerWarranty, new GridConstraints(7, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JSeparator separator3 = new JSeparator();
+        panel8.add(separator3, new GridConstraints(5, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label8 = new JLabel();
+        Font label8Font = this.$$$getFont$$$(null, Font.BOLD, 14, label8.getFont());
+        if (label8Font != null) label8.setFont(label8Font);
+        label8.setText("Subtotal 2");
+        panel8.add(label8, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        lblSubtotal2 = new JLabel();
+        Font lblSubtotal2Font = this.$$$getFont$$$(null, Font.BOLD, 14, lblSubtotal2.getFont());
+        if (lblSubtotal2Font != null) lblSubtotal2.setFont(lblSubtotal2Font);
+        lblSubtotal2.setText("S/0.00");
+        panel8.add(lblSubtotal2, new GridConstraints(6, 2, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
         panel7.add(spacer4, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer5 = new Spacer();
@@ -449,11 +464,11 @@ public class TabNewRental {
         if (btnSaleWithCashFont != null) btnSaleWithCash.setFont(btnSaleWithCashFont);
         btnSaleWithCash.setText("Confirmar con efectivo");
         panel9.add(btnSaleWithCash, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label8 = new JLabel();
-        Font label8Font = this.$$$getFont$$$(null, Font.BOLD, 14, label8.getFont());
-        if (label8Font != null) label8.setFont(label8Font);
-        label8.setText("Opciones de pago:");
-        panel9.add(label8, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label9 = new JLabel();
+        Font label9Font = this.$$$getFont$$$(null, Font.BOLD, 14, label9.getFont());
+        if (label9Font != null) label9.setFont(label9Font);
+        label9.setText("Opciones de pago:");
+        panel9.add(label9, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JScrollPane scrollPane2 = new JScrollPane();
         panel9.add(scrollPane2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(-1, 75), null, 0, false));
         txtObservation = new JTextArea();
@@ -465,11 +480,11 @@ public class TabNewRental {
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));
         lblLogo.setText("");
         panel7.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(255, 200), new Dimension(255, 200), new Dimension(255, 200), 0, false));
-        final JLabel label9 = new JLabel();
-        Font label9Font = this.$$$getFont$$$(null, Font.BOLD, 14, label9.getFont());
-        if (label9Font != null) label9.setFont(label9Font);
-        label9.setText("Observación:");
-        panel7.add(label9, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label10 = new JLabel();
+        Font label10Font = this.$$$getFont$$$(null, Font.BOLD, 14, label10.getFont());
+        if (label10Font != null) label10.setFont(label10Font);
+        label10.setText("Observación:");
+        panel7.add(label10, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

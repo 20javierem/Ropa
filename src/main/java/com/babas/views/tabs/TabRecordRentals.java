@@ -216,9 +216,9 @@ public class TabRecordRentals {
         for (int i = 0; i < table.getRowCount(); i++) {
             Rental rental = model.getList().get(table.convertRowIndexToModel(i));
             if (rental.isCash()) {
-                totalCash += rental.getTotalCurrentWithPenalty();
+                totalCash += rental.getTotalWithDiscount();
             } else {
-                totalTransfer += rental.getTotalCurrentWithPenalty();
+                totalTransfer += rental.getTotalWithDiscount();
             }
         }
         lblTotalEfectivo.setText("Total efectivo: " + Utilities.moneda.format(totalCash));

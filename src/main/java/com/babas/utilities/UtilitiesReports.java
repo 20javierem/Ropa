@@ -225,13 +225,14 @@ public class UtilitiesReports {
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
                 parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
-                parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()+rental.getWarranty()));
                 parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
                 parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
+                parameters.put("subtotal",Utilities.moneda.format(rental.getTotalWithDiscount()));
                 parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
+                parameters.put("subtotal2",Utilities.moneda.format(rental.getTotalCurrent() - rental.getWarranty()));
+                parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
-                parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));
                 parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
                 parameters.put("formaDePago",rental.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",rental.getUser().getUserName());
@@ -288,16 +289,20 @@ public class UtilitiesReports {
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
                 parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
-                parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()+rental.getWarranty()));
-                parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
                 parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
-                parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
-                parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
+                parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
+
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
-                parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));
                 parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
+                parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()+rental.getWarranty()));
+                parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
+                parameters.put("subtotal2",Utilities.moneda.format(rental.getTotalCurrent() - rental.getWarranty()));
+                parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));
+                parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
+
                 parameters.put("multa",Utilities.moneda.format(rental.getPenalty()));
                 parameters.put("totalDevolucion",Utilities.moneda.format(rental.getWarranty()-rental.getPenalty()));
+
                 parameters.put("formaDePago",rental.isCash()?"EFECTIVO":"TRANSFERENCIA");
                 parameters.put("vendedor",rental.getUser().getUserName());
                 parameters.put("observacion",rental.getObservation());

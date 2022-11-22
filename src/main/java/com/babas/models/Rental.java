@@ -41,8 +41,8 @@ public class Rental extends Babas {
     private boolean cash;
     private Double total=0.0;
     private Double discount=0.0;
+    private Double totalWithDiscount=0.0;
     private Double totalCurrent=0.0;
-    private Double totalCurrentWithPenalty=0.0;
     private Double warranty=0.0;
     private Double penalty=0.0;
     @OneToOne
@@ -164,15 +164,15 @@ public class Rental extends Babas {
         detailRentals.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        totalCurrent=total+warranty-discount;
+        totalWithDiscount=total-discount;
+        totalCurrent=totalWithDiscount+warranty;
         if(reserve!=null){
             totalCurrent=totalCurrent-reserve.getAdvance();
         }
-        totalCurrentWithPenalty=totalCurrent+penalty-warranty;
     }
 
-    public Double getTotalCurrentWithPenalty() {
-        return totalCurrentWithPenalty;
+    public Double getTotalWithDiscount() {
+        return totalWithDiscount;
     }
 
     public Double getWarranty() {
@@ -234,7 +234,7 @@ public class Rental extends Babas {
         return Utilities.moneda.format(discount);
     }
     public String getStringTotal(){
-        return Utilities.moneda.format(totalCurrentWithPenalty);
+        return Utilities.moneda.format(totalCurrent);
     }
     public String getStringType(){
         return cash?"Efectivo":"Transferencia";
@@ -252,8 +252,9 @@ public class Rental extends Babas {
         numberRental=1000+id;
         super.save();
         if(reserve!=null){
-            reserve.setRental(Rental.this);
             reserve.setActive(false);
+            reserve.save();
+            reserve.setRental(Rental.this);
             reserve.save();
             FPrincipal.reservesActives.remove(reserve);
         }

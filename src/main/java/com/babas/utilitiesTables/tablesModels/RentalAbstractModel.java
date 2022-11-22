@@ -67,7 +67,7 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 10:
                 return Utilities.moneda.format(rental.getPenalty());
             case 11:
-                return Utilities.moneda.format(rental.getTotalCurrentWithPenalty());
+                return Utilities.moneda.format(rental.getTotalWithDiscount());
             case 12:
                 return new JButtonAction("x16/mostrarContraseña.png","Finalizar");
             default:

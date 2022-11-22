@@ -17,7 +17,7 @@ public class Reserves extends Babas {
     private static CriteriaQuery<Reserve> criteria;
 
     public static Reserve get(Integer id) {
-        return session.find(Reserve.class, id, LockModeType.NONE);
+        return session.find(Reserve.class, id);
     }
 
     public static Reserve getByNumber(Long numberSale){

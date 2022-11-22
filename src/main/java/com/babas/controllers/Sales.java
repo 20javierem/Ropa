@@ -18,7 +18,7 @@ public class Sales extends Babas {
     private static CriteriaQuery<Sale> criteria;
 
     public static Sale get(Integer id) {
-        return session.find(Sale.class, id, LockModeType.NONE);
+        return session.find(Sale.class, id);
     }
 
     public static Sale getByNumber(Long numberSale){

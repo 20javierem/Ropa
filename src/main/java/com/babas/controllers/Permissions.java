@@ -13,7 +13,7 @@ public class Permissions extends Babas {
     private static CriteriaQuery<Permission> criteria;
 
     public static Permission get(Integer id) {
-        return session.find(Permission.class, id, LockModeType.NONE);
+        return session.find(Permission.class, id);
     }
 
     public static Vector<Permission> getGroups(){
