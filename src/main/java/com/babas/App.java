@@ -63,7 +63,6 @@ public class App
                     dUser.setVisible(true);
                 }
             }
-
             if(!Users.getTodos().isEmpty()){
                 FLogin fLogin=new FLogin();
                 fLogin.setVisible(true);

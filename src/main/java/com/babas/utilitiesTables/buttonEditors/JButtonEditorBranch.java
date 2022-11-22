@@ -81,14 +81,6 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 transfer.setState(1);
                                 transfer.setUpdated(new Date());
                                 transfer.save();
-                                branch.getStocks().forEach(stock -> {
-                                    Stock stock1= Stocks.getStock((Branch) comboBox.getSelectedItem(),stock.getProduct());
-                                    stock1.refresh();
-                                    stock1.setOnStock(stock1.getOnStock()+stock.getOnStock());
-                                    stock1.setOnRental(stock1.getOnRental()+stock.getOnRental());
-                                    stock1.setOnReserve(stock1.getOnReserve()+stock.getOnReserve());
-                                    stock1.save();
-                                });
                                 branch.getTransfers().forEach(transfer1 -> {
                                     transfer1.setState(2);
                                     transfer1.save();
