@@ -38,6 +38,7 @@ public class Product extends Babas {
     private Integer stockTotal=0;
     private boolean active=true;
     private String barcode;
+    private String uniqueCode;
     @ManyToOne
     private Stade stade;
     @ManyToOne
@@ -216,6 +217,14 @@ public class Product extends Babas {
         return presentationDefault;
     }
 
+    public String getUniqueCode() {
+        return uniqueCode;
+    }
+
+    public void setUniqueCode(String uniqueCode) {
+        this.uniqueCode = uniqueCode;
+    }
+
     public List<Icon> getIconsx200(boolean clear){
         if(clear){
             iconsx200.clear();
@@ -255,6 +264,7 @@ public class Product extends Babas {
             return iconsx400;
         }
     }
+
     @Override
     public void save() {
         if(created==null){
@@ -264,6 +274,10 @@ public class Product extends Babas {
         super.save();
         if(barcode.isBlank()){
             barcode= String.valueOf(1000+getId());
+            super.save();
+        }
+        if(uniqueCode==null){
+            uniqueCode=Utilities.formatUniqueCode.format(new Date())+"-"+id;
             super.save();
         }
         getPresentations().forEach(Presentation::save);

@@ -2,6 +2,8 @@ package com.babas.controllers;
 
 import com.babas.models.Branch;
 import com.babas.models.Brand;
+import com.babas.models.Product;
+import com.babas.models.Stock;
 import com.babas.utilities.Babas;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -14,6 +16,15 @@ public class Branchs extends Babas {
 
     public static Branch get(Integer id) {
         return session.find(Branch.class, id);
+    }
+
+    public static Branch getByName(String name){
+        criteria = builder.createQuery(Branch.class);
+        root=criteria.from(Branch.class);
+        criteria.select(root).where(builder.and(
+                        builder.equal(root.get("name"), name)),
+                builder.isTrue(root.get("active")));
+        return session.createQuery(criteria).getSingleResultOrNull();
     }
 
     public static Vector<Branch> getTodos(){

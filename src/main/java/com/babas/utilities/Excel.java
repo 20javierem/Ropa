@@ -36,17 +36,18 @@ public class Excel {
             FPrincipal.sexsWithAll.add(sex);
         }
         sheets = new String[]{
-                "categorias",
-                "estilos",
-                "generos",
-                "tallas",
-                "colores",
-                "marcas",
-                "dimensiones",
-                "estados",
-                "productos",
-                "presentaciones",
-                "precios"};
+                "CATEGORIAS",
+                "ESTILOS",
+                "GENEROS",
+                "TALLAS",
+                "COLORES",
+                "MARCAS",
+                "DIMENSIONES",
+                "ESTADOS",
+                "PRODUCTOS",
+                "PRESENTACIONES",
+                "PRECIOS",
+                "STOCKS"};
     }
     public void loadData() {
         JFileChooser selectFile = new JFileChooser();
@@ -69,8 +70,8 @@ public class Excel {
                         Row row = iterator.next();
                         Utilities.getLblIzquierda().setText("Importando registros...");
                         switch (nameSheet) {
-                            case "categorias":
-                                String data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "CATEGORIAS":
+                                String data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Category category = Categorys.get(data);
                                 if (category == null) {
@@ -81,8 +82,8 @@ public class Excel {
                                     FPrincipal.categoriesWithAll.add(category);
                                 }
                                 break;
-                            case "generos":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "GENEROS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Sex sex = Sexs.getByName(data);
                                 if (sex == null) {
@@ -93,10 +94,10 @@ public class Excel {
                                     FPrincipal.sexsWithAll.add(sex);
                                 }
                                 break;
-                            case "estilos":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "ESTILOS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
-                                category = Categorys.get(formatter.formatCellValue(row.getCell(2), evaluator).trim());
+                                category = Categorys.get(formatter.formatCellValue(row.getCell(1), evaluator).trim());
                                 Style style = Styles.get(data);
                                 if (style == null) {
                                     style = new Style();
@@ -106,8 +107,8 @@ public class Excel {
                                     FPrincipal.styles.add(style);
                                 }
                                 break;
-                            case "tallas":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "TALLAS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Size size = Sizes.getByName(data);
                                 if (size == null) {
@@ -119,8 +120,8 @@ public class Excel {
                                     FPrincipal.sizesWithAll.add(size);
                                 }
                                 break;
-                            case "colores":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "COLORES":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Color color = Colors.getByName(data);
                                 if (color == null) {
@@ -132,8 +133,8 @@ public class Excel {
                                     FPrincipal.colorsWithAll.add(color);
                                 }
                                 break;
-                            case "marcas":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "MARCAS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Brand brand = Brands.getByName(data);
                                 if (brand == null) {
@@ -145,8 +146,8 @@ public class Excel {
                                     FPrincipal.brandsWithAll.add(brand);
                                 }
                                 break;
-                            case "dimensiones":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "DIMENSIONES":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Dimention dimention = Dimentions.get(data);
                                 if (dimention == null) {
@@ -158,8 +159,8 @@ public class Excel {
                                     FPrincipal.dimentionsWithAll.add(dimention);
                                 }
                                 break;
-                            case "estados":
-                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                            case "ESTADOS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
                                 if (data.isEmpty()) continue;
                                 Stade stade = Stades.getByName(data);
                                 if (stade == null) {
@@ -170,38 +171,47 @@ public class Excel {
                                     FPrincipal.stadesWithAll.add(stade);
                                 }
                                 break;
-                            case "productos":
-                                Product product = new Product();
-                                style = Styles.get(formatter.formatCellValue(row.getCell(1), evaluator).trim());
-                                product.setStyle(style);
-                                size = Sizes.getByName(formatter.formatCellValue(row.getCell(2), evaluator).trim());
-                                product.setSize(size);
-                                color = Colors.getByName(formatter.formatCellValue(row.getCell(3), evaluator).trim());
-                                product.setColor(color);
-                                sex = Sexs.getByName(formatter.formatCellValue(row.getCell(4), evaluator).trim());
-                                product.setSex(sex);
-                                brand = Brands.getByName(formatter.formatCellValue(row.getCell(5), evaluator).trim());
-                                product.setBrand(brand);
-                                data = formatter.formatCellValue(row.getCell(6), evaluator).trim();
-                                if(!data.isEmpty()){
-                                    dimention = Dimentions.get(data);
-                                    product.setDimention(dimention);
+                            case "PRODUCTOS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
+                                Product product=Products.getByUniqueCode(data);
+                                if(product==null){
+                                    product = new Product();
+                                    product.setUniqueCode(data);
+                                    style = Styles.get(formatter.formatCellValue(row.getCell(1), evaluator).trim());
+                                    product.setStyle(style);
+                                    size = Sizes.getByName(formatter.formatCellValue(row.getCell(2), evaluator).trim());
+                                    product.setSize(size);
+                                    color = Colors.getByName(formatter.formatCellValue(row.getCell(3), evaluator).trim());
+                                    product.setColor(color);
+                                    sex = Sexs.getByName(formatter.formatCellValue(row.getCell(4), evaluator).trim());
+                                    product.setSex(sex);
+                                    brand = Brands.getByName(formatter.formatCellValue(row.getCell(5), evaluator).trim());
+                                    product.setBrand(brand);
+                                    data = formatter.formatCellValue(row.getCell(6), evaluator).trim();
+                                    if(!data.isEmpty()){
+                                        dimention = Dimentions.get(data);
+                                        product.setDimention(dimention);
+                                    }
+                                    data = formatter.formatCellValue(row.getCell(7), evaluator).trim();
+                                    if(!data.isEmpty()){
+                                        stade = Stades.getByName(data);
+                                        product.setStade(stade);
+                                    }
+                                    product.setBarcode(formatter.formatCellValue(row.getCell(8), evaluator).trim());
+                                    product.setSex(sex);
+                                    product.getStyle().getProducts().add(product);
+                                    product.save();
+                                    FPrincipal.products.add(product);
                                 }
-                                data = formatter.formatCellValue(row.getCell(7), evaluator).trim();
-                                if(!data.isEmpty()){
-                                    stade = Stades.getByName(data);
-                                    product.setStade(stade);
-                                }
-                                product.setBarcode(formatter.formatCellValue(row.getCell(8), evaluator).trim());
-                                product.setSex(sex);
-                                product.getStyle().getProducts().add(product);
-                                product.save();
-                                FPrincipal.products.add(product);
                                 break;
-                            case "presentaciones":
-                                product = Products.get((int) row.getCell(1).getNumericCellValue());
-                                if (product != null) {
-                                    Presentation presentation= new Presentation(product);
+                            case "PRESENTACIONES":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
+                                Presentation presentation=Presentations.getByUniqueCode(data);
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                product = Products.getByUniqueCode(data);
+                                if (presentation==null&&product != null) {
+                                    presentation= new Presentation(product);
+                                    presentation.setUniqueCode(formatter.formatCellValue(row.getCell(0), evaluator).trim());
                                     presentation.setName(formatter.formatCellValue(row.getCell(2), evaluator).trim());
                                     presentation.setQuantity((int)row.getCell(3).getNumericCellValue());
                                     presentation.setDefault(row.getCell(4).getStringCellValue().trim().equalsIgnoreCase("true"));
@@ -213,20 +223,49 @@ public class Excel {
                                     presentation.save();
                                 }
                                 break;
-                            case "precios":
-                                Presentation presentation = Presentations.get((int) row.getCell(1).getNumericCellValue());
+                            case "PRECIOS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
+                                presentation = Presentations.getByUniqueCode(data);
                                 if (presentation != null) {
-                                    Price price= new Price(presentation);
-                                    price.setPrice(row.getCell(2).getNumericCellValue());
-                                    price.setDefault(row.getCell(3).getStringCellValue().trim().equalsIgnoreCase("true"));
-                                    if(price.isDefault()){
-                                        presentation.setPriceDefault(price);
+                                    data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                    if(!data.isEmpty()){
+                                        Price price=Prices.getByUniqueCode(presentation.getUniqueCode(), Double.parseDouble(data));
+                                        if(price==null){
+                                            price= new Price(presentation);
+                                            price.setPrice(row.getCell(1).getNumericCellValue());
+                                            price.setDefault(row.getCell(2).getStringCellValue().trim().equalsIgnoreCase("true"));
+                                            if(price.isDefault()){
+                                                presentation.setPriceDefault(price);
+                                            }
+                                            presentation.save();
+                                            price.save();
+                                            presentation.getPrices().add(price);
+                                        }
                                     }
-                                    presentation.save();
-                                    price.save();
-                                    presentation.getPrices().add(price);
+
                                 }
                                 break;
+                            case "STOCKS":
+                                data = formatter.formatCellValue(row.getCell(0), evaluator).trim();
+                                product=Products.getByUniqueCode(data);
+                                data = formatter.formatCellValue(row.getCell(1), evaluator).trim();
+                                Branch branch=Branchs.getByName(data);
+                                if(product!=null&&branch!=null){
+                                    Stock stock=Stocks.getStock(branch,product);
+                                    if(stock==null){
+                                        stock=new Stock();
+                                        stock.setBranch(branch);
+                                        stock.setProduct(product);
+                                        product.getStocks().add(stock);
+                                        branch.getStocks().add(stock);
+                                    }
+                                    stock.setQuantity((int)row.getCell(2).getNumericCellValue());
+                                    stock.setOnRental((int)row.getCell(3).getNumericCellValue());
+                                    stock.setOnStock((int)row.getCell(4).getNumericCellValue());
+                                    stock.setTimesRented((int)row.getCell(5).getNumericCellValue());
+                                    stock.setOnReserve((int)row.getCell(6).getNumericCellValue());
+                                    stock.save();
+                                }
                         }
                     }
                 }
@@ -255,17 +294,18 @@ public class Excel {
         font.setBold(true);
         headerStyle.setFont(font);
 
-        HSSFSheet categorias = book.createSheet("categorias");
-        HSSFSheet estilos = book.createSheet("estilos");
-        HSSFSheet tallas = book.createSheet("tallas");
-        HSSFSheet colores = book.createSheet("colores");
-        HSSFSheet marcas = book.createSheet("marcas");
-        HSSFSheet dimensiones = book.createSheet("dimensiones");
-        HSSFSheet estados = book.createSheet("estados");
-        HSSFSheet generos = book.createSheet("generos");
-        HSSFSheet productos = book.createSheet("productos");
-        HSSFSheet presentaciones = book.createSheet("presentaciones");
-        HSSFSheet precios = book.createSheet("precios");
+        HSSFSheet categorias = book.createSheet("CATEGORIAS");
+        HSSFSheet estilos = book.createSheet("ESTILOS");
+        HSSFSheet tallas = book.createSheet("TALLAS");
+        HSSFSheet colores = book.createSheet("COLORES");
+        HSSFSheet marcas = book.createSheet("MARCAS");
+        HSSFSheet dimensiones = book.createSheet("DIMENSIONES");
+        HSSFSheet estados = book.createSheet("ESTADOS");
+        HSSFSheet generos = book.createSheet("GENEROS");
+        HSSFSheet productos = book.createSheet("PRODUCTOS");
+        HSSFSheet presentaciones = book.createSheet("PRESENTACIONES");
+        HSSFSheet precios = book.createSheet("PRECIOS");
+        HSSFSheet stocks = book.createSheet("STOCKS");
 
         List<Category> categories=new ArrayList<>();
         List<Style> styles=new ArrayList<>();
@@ -276,12 +316,14 @@ public class Excel {
         List<Stade> stades=new ArrayList<>();
         List<Sex> sexes=new ArrayList<>();
         List<Product> products=new ArrayList<>();
+        List<Stock> stocks1=new ArrayList<>();
+
+        HSSFCell hssfCell;
 
         HSSFRow productRow = productos.createRow(productos.getLastRowNum()+1);
-        HSSFCell hssfCell;
         hssfCell=productRow.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
+        hssfCell.setCellValue("IDENTIFICADOR");
         hssfCell=productRow.createCell(1);
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("ESTILO");
@@ -310,10 +352,10 @@ public class Excel {
         HSSFRow presentacionesRow = presentaciones.createRow(presentaciones.getLastRowNum()+1);
         hssfCell=presentacionesRow.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
+        hssfCell.setCellValue("IDENTIFICADOR");
         hssfCell=presentacionesRow.createCell(1);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID-PRODUCTO");
+        hssfCell.setCellValue("IDENTIFICADOR-PRODUCTO");
         hssfCell=presentacionesRow.createCell(2);
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
@@ -327,18 +369,16 @@ public class Excel {
         HSSFRow pricesRow = precios.createRow(precios.getLastRowNum()+1);
         hssfCell=pricesRow.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
+        hssfCell.setCellValue("IDENTIFICADOR-PRESENTACION");
         hssfCell=pricesRow.createCell(1);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID-PRESENTACION");
-        hssfCell=pricesRow.createCell(2);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("PRECIO");
-        hssfCell=pricesRow.createCell(3);
+        hssfCell=pricesRow.createCell(2);
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("DEFECTO");
 
         if(branch.getId()!=null){
+            stocks1.addAll(branch.getStocks());
             branch.getStocks().forEach(stock->{
                 categories.remove(stock.getProduct().getStyle().getCategory());
                 categories.add(stock.getProduct().getStyle().getCategory());
@@ -372,12 +412,13 @@ public class Excel {
             stades.addAll(FPrincipal.stades);
             sexes.addAll(FPrincipal.sexs);
             products.addAll(FPrincipal.products);
+            stocks1.addAll(Stocks.getActives());
         }
 
         products.forEach(product -> {
             if(product!=null){
                 HSSFRow productosRow = productos.createRow(productos.getLastRowNum()+1);
-                productosRow.createCell(0).setCellValue(product.getId());
+                productosRow.createCell(0).setCellValue(product.getUniqueCode());
                 productosRow.createCell(1).setCellValue(product.getStyle().getName());
                 productosRow.createCell(2).setCellValue(product.getSize().getName());
                 productosRow.createCell(3).setCellValue(product.getColor().getName());
@@ -392,131 +433,130 @@ public class Excel {
                 productosRow.createCell(8).setCellValue(product.getBarcode());
                 product.getPresentations().forEach(presentation -> {
                     HSSFRow presentacionesRow1=presentaciones.createRow(presentaciones.getLastRowNum()+1);
-                    presentacionesRow1.createCell(0).setCellValue(presentation.getId());
-                    presentacionesRow1.createCell(1).setCellValue(presentation.getProduct().getId());
+                    presentacionesRow1.createCell(0).setCellValue(presentation.getUniqueCode());
+                    presentacionesRow1.createCell(1).setCellValue(presentation.getProduct().getUniqueCode());
                     presentacionesRow1.createCell(2).setCellValue(presentation.getName());
                     presentacionesRow1.createCell(3).setCellValue(presentation.getQuantity());
-                    presentacionesRow1.createCell(4).setCellValue(presentation.isDefault());
+                    presentacionesRow1.createCell(4).setCellValue(String.valueOf(presentation.isDefault()));
                     presentation.getPrices().forEach(price -> {
                         if(price!=null){
                             HSSFRow pricesRow1=precios.createRow(precios.getLastRowNum()+1);
-                            pricesRow1.createCell(0).setCellValue(price.getId());
-                            pricesRow1.createCell(1).setCellValue(price.getPresentation().getId());
-                            pricesRow1.createCell(2).setCellValue(price.getPrice());
-                            pricesRow1.createCell(3).setCellValue(price.isDefault());
+                            pricesRow1.createCell(0).setCellValue(price.getPresentation().getUniqueCode());
+                            pricesRow1.createCell(1).setCellValue(price.getPrice());
+                            pricesRow1.createCell(2).setCellValue(String.valueOf(price.isDefault()));
                         }
                     });
                 });
             }
         });
+        HSSFRow stocksRow = stocks.createRow(stocks.getLastRowNum()+1);
+        hssfCell=stocksRow.createCell(0);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("IDENTIFICADOR-PRODUCTO");
+        hssfCell=stocksRow.createCell(1);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("NOMBRE-SUCURSAL");
+        hssfCell=stocksRow.createCell(2);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("CANTIDAD");
+        hssfCell=stocksRow.createCell(3);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("EN ALQUILER");
+        hssfCell=stocksRow.createCell(4);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("EN STOCK");
+        hssfCell=stocksRow.createCell(5);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("VECES ALQUILADO");
+        hssfCell=stocksRow.createCell(6);
+        hssfCell.setCellStyle(headerStyle);
+        hssfCell.setCellValue("EN RESERVA");
+        stocks1.forEach(stock -> {
+            HSSFRow row = stocks.createRow(stocks.getLastRowNum()+1);
+            row.createCell(0).setCellValue(stock.getProduct().getUniqueCode());
+            row.createCell(1).setCellValue(stock.getBranch().getName());
+            row.createCell(2).setCellValue(stock.getQuantity());
+            row.createCell(3).setCellValue(stock.getOnRental());
+            row.createCell(4).setCellValue(stock.getOnStock());
+            row.createCell(5).setCellValue(stock.getTimesRented());
+            row.createCell(6).setCellValue(stock.getOnReserve());
+        });
 
         HSSFRow header = categorias.createRow(categorias.getLastRowNum()+1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         categories.forEach(category -> {
             HSSFRow row = categorias.createRow(categorias.getLastRowNum()+1);
-            row.createCell(0).setCellValue(category.getId());
-            row.createCell(1).setCellValue(category.getName());
+            row.createCell(0).setCellValue(category.getName());
         });
 
         header = estilos.createRow(estilos.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
-        hssfCell=header.createCell(2);
+        hssfCell=header.createCell(1);
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("CATEGORIA");
         styles.forEach(style -> {
             HSSFRow row = estilos.createRow(estilos.getLastRowNum()+1);
-            row.createCell(0).setCellValue(style.getId());
-            row.createCell(1).setCellValue(style.getName());
-            row.createCell(2).setCellValue(style.getCategory().getName());
+            row.createCell(0).setCellValue(style.getName());
+            row.createCell(1).setCellValue(style.getCategory().getName());
         });
 
         header = tallas.createRow(tallas.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         sizes.forEach(size -> {
             HSSFRow row = tallas.createRow(tallas.getLastRowNum()+1);
-            row.createCell(0).setCellValue(size.getId());
-            row.createCell(1).setCellValue(size.getName());
+            row.createCell(0).setCellValue(size.getName());
         });
 
         header = colores.createRow(colores.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         colors.forEach(color -> {
             HSSFRow row = colores.createRow(colores.getLastRowNum()+1);
-            row.createCell(0).setCellValue(color.getId());
-            row.createCell(1).setCellValue(color.getName());
+            row.createCell(0).setCellValue(color.getName());
         });
 
         header = marcas.createRow(marcas.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         brands.forEach(brand -> {
             HSSFRow row = marcas.createRow(marcas.getLastRowNum()+1);
-            row.createCell(0).setCellValue(brand.getId());
-            row.createCell(1).setCellValue(brand.getName());
+            row.createCell(0).setCellValue(brand.getName());
         });
 
         header = dimensiones.createRow(dimensiones.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         dimentions.forEach(dimention -> {
             HSSFRow row = dimensiones.createRow(dimensiones.getLastRowNum()+1);
-            row.createCell(0).setCellValue(dimention.getId());
-            row.createCell(1).setCellValue(dimention.getName());
+            row.createCell(0).setCellValue(dimention.getName());
         });
 
         header = estados.createRow(estados.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         System.out.println(stades.size());
         stades.forEach(stade -> {
             HSSFRow row = estados.createRow(estados.getLastRowNum()+1);
-            row.createCell(0).setCellValue(stade.getId());
-            row.createCell(1).setCellValue(stade.getName());
+            row.createCell(0).setCellValue(stade.getName());
         });
 
         header = generos.createRow(generos.getLastRowNum() + 1);
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
-        hssfCell.setCellValue("ID");
-        hssfCell=header.createCell(1);
-        hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
         sexes.forEach(sex -> {
             HSSFRow row = generos.createRow(generos.getLastRowNum()+1);
-            row.createCell(0).setCellValue(sex.getId());
-            row.createCell(1).setCellValue(sex.getName());
+            row.createCell(0).setCellValue(sex.getName());
         });
         try {
             String destiny=selectFile.getSelectedFile().getAbsolutePath();

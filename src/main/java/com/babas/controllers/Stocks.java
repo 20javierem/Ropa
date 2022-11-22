@@ -1,9 +1,6 @@
 package com.babas.controllers;
 
-import com.babas.models.Branch;
-import com.babas.models.Product;
-import com.babas.models.Sex;
-import com.babas.models.Stock;
+import com.babas.models.*;
 import com.babas.utilities.Babas;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -18,9 +15,10 @@ public class Stocks extends Babas {
         return session.find(Stock.class, id);
     }
 
-    public static Vector<Stock> getTodos(){
+    public static Vector<Stock> getActives(){
         criteria = builder.createQuery(Stock.class);
-        criteria.select(criteria.from(Stock.class));
+        root=criteria.from(Stock.class);
+        criteria.select(root).where(builder.isTrue(root.get("active")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 

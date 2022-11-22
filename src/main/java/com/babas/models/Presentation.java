@@ -36,6 +36,7 @@ public class Presentation extends Babas {
     private boolean active=true;
     @Transient
     private Price priceDefault;
+    private String uniqueCode;
 
     public Presentation(Product product){
         this.product=product;
@@ -44,7 +45,13 @@ public class Presentation extends Babas {
     public Presentation() {
 
     }
+    public String getUniqueCode() {
+        return uniqueCode;
+    }
 
+    public void setUniqueCode(String uniqueCode) {
+        this.uniqueCode = uniqueCode;
+    }
     public String getName() {
         return name;
     }
@@ -127,6 +134,10 @@ public class Presentation extends Babas {
     public void save() {
         updated=new Date();
         super.save();
+        if(uniqueCode==null){
+            uniqueCode=Utilities.formatUniqueCode.format(new Date())+"-"+id;
+            super.save();
+        }
         getPrices().forEach(Price::save);
     }
 

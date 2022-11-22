@@ -55,6 +55,7 @@ import java.util.*;
 public class Utilities {
     public static DateFormat formatoFecha=new SimpleDateFormat("dd/MM/yyyy");
     public static DateFormat formatoFechaHora=new SimpleDateFormat("dd/MM/yyyy: H:mm");
+    public static DateFormat formatUniqueCode=new SimpleDateFormat("ddMMyyyyHHmmss");
     public static DateFormat formatoFechaHora2=new SimpleDateFormat("dd/MM/yyyy: H:mm a");
     public static DateFormat formatoHora=new SimpleDateFormat("HH:mm a");
     public static DateFormat año=new SimpleDateFormat("yyyy");
