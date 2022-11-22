@@ -275,6 +275,6 @@ public class TabbedPane extends FlatTabbedPane {
                 verificarSelected();
             }
         });
-
+        toolBar.setVisible(false);
     }
 }

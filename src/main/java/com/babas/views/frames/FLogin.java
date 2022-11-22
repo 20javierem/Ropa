@@ -75,8 +75,8 @@ public class FLogin extends JFrame {
             if (logo != null) {
                 int width = logo.getWidth(this);
                 int height = logo.getHeight(this);
-                if (width > 255 || height > 220) {
-                    double percen = Math.min(255.00 / width, 220.00 / height);
+                if (width > 255 || height > 200) {
+                    double percen = Math.min(255.00 / width, 200.00 / height);
                     width = (int) (percen * width);
                     height = (int) (percen * height);
                 }
@@ -222,7 +222,7 @@ public class FLogin extends JFrame {
         lblLogo.setHorizontalAlignment(0);
         lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));
         lblLogo.setText("");
-        contentPane.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(255, 220), new Dimension(255, 220), new Dimension(255, 220), 0, false));
+        contentPane.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(255, 200), new Dimension(255, 200), new Dimension(255, 200), 0, false));
     }
 
     /**
@@ -253,4 +253,5 @@ public class FLogin extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

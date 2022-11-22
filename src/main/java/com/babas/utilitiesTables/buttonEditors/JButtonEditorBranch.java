@@ -70,7 +70,6 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 transfer.setSource(branch);
                                 transfer.setDestiny((Branch) comboBox.getSelectedItem());
                                 transfer.setDescription("Traslado por Sucursal cerrada");
-
                                 branch.getStocks().forEach(stock -> {
                                     DetailTransfer detailTransfer=new DetailTransfer();
                                     detailTransfer.setTransfer(transfer);
@@ -78,11 +77,13 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                     detailTransfer.setProduct(stock.getProduct());
                                     transfer.getDetailTransfers().add(detailTransfer);
                                 });
+                                transfer.calculateTotalProuctsTransfers();
                                 transfer.setState(0);
                                 transfer.save();
                                 transfer.setState(1);
                                 transfer.setUpdated(new Date());
                                 transfer.save();
+
                                 branch.getTransfers().forEach(transfer1 -> {
                                     transfer1.setState(2);
                                     transfer1.save();

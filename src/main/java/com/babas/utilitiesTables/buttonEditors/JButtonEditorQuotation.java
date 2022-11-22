@@ -87,7 +87,7 @@ public class JButtonEditorQuotation extends AbstractCellEditor implements TableC
                             detailSale.setNamePresentation(detailQuotation.getNamePresentation());
                             sale.getDetailSales().add(detailSale);
                         }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","No se encontró el producto: "+detailQuotation.getProduct().getStyle().getName()+" en la sucursal.");
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"MENSAJE","No se encontró el producto: "+detailQuotation.getProduct().getStyle().getName()+" en la sucursal.");
                         }
                     });
                     sale.calculateTotal();
@@ -114,7 +114,7 @@ public class JButtonEditorQuotation extends AbstractCellEditor implements TableC
                             detailRental.setNamePresentation(detailQuotation.getNamePresentation());
                             rental.getDetailRentals().add(detailRental);
                         }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","No se encontró el producto: "+detailQuotation.getProduct().getStyle().getName()+" en la sucursal.");
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"MENSAJE","No se encontró el producto: "+detailQuotation.getProduct().getStyle().getName()+" en la sucursal.");
                         }
                     });
                     rental.calculateTotals();
@@ -140,7 +140,7 @@ public class JButtonEditorQuotation extends AbstractCellEditor implements TableC
                             detailReserve.setNamePresentation(detailQuotation.getNamePresentation());
                             reserve.getDetailReserves().add(detailReserve);
                         }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","No se encontró el producto: "+detailQuotation.getProduct().getStyle().getName()+" en la sucursal.");
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"MENSAJE","No se encontró el producto: "+detailQuotation.getProduct().getStyle().getName()+" en la sucursal.");
                         }
                     });
                     reserve.calculateTotal();

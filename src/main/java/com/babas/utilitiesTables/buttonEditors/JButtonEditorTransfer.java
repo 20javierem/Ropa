@@ -54,19 +54,23 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
                 Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabNewTraslade.getTabPane().getTitle()));
             }else{
                 if(transfer.getState()!=2){
-                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar transferencia",JOptionPane.YES_NO_OPTION)==0;
-                    if(si){
-                        transfer.refresh();
-                        if(transfer.getState()!=2){
-                            transfer.setState(2);
-                            transfer.setUpdated(new Date());
-                            transfer.save();
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia cancelada");
-                        }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","La transferencia ya fue cancelada por otro usuario");
+                    if(transfer.getSource().isActive()){
+                        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar transferencia",JOptionPane.YES_NO_OPTION)==0;
+                        if(si){
+                            transfer.refresh();
+                            if(transfer.getState()!=2){
+                                transfer.setState(2);
+                                transfer.setUpdated(new Date());
+                                transfer.save();
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia cancelada");
+                            }else{
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","La transferencia ya fue cancelada por otro usuario");
+                            }
                         }
-
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la sucursal de origen");
                     }
+
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La transferencia ya está cancelada");
                 }

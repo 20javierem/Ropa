@@ -1,5 +1,6 @@
 package com.babas.views.dialogs;
 
+import com.babas.controllers.Clients;
 import com.babas.models.Client;
 import com.babas.models.Sex;
 import com.babas.utilities.Utilities;
@@ -15,6 +16,7 @@ import jakarta.validation.ConstraintViolation;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Objects;
 import java.util.Set;
 
 public class DClient extends JDialog {
@@ -64,7 +66,7 @@ public class DClient extends JDialog {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         if (update) {
-            setTitle("Actualizar Género");
+            setTitle("Actualizar Cliente");
             btnSave.setText("Guardar");
             btnHecho.setText("Cancelar");
             load();
@@ -75,7 +77,6 @@ public class DClient extends JDialog {
             txtNames.setEnabled(false);
             txtAdress.setEnabled(false);
             txtPhone.setEnabled(false);
-
             btnSave.setVisible(false);
             btnHecho.setText("Hecho");
         }
@@ -91,27 +92,36 @@ public class DClient extends JDialog {
         client.setPhone(txtPhone.getText().trim());
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(client);
         if (constraintViolationSet.isEmpty()) {
-            client.save();
             if (!update) {
-                FPrincipal.clients.add(client);
-                Utilities.updateDialog();
-                if (Utilities.getTabbedPane() != null) {
-                    Utilities.getTabbedPane().updateTab();
-                } else {
-                    onHecho();
-                }
-                client = new Client();
-                clear();
-                if (Utilities.getJFrame() != null) {
+                if (Clients.getByDNI(client.getDni()) == null) {
+                    client.save();
+                    FPrincipal.clients.add(client);
+                    Utilities.updateDialog();
+                    if (Utilities.getTabbedPane() != null) {
+                        Utilities.getTabbedPane().updateTab();
+                    } else {
+                        onHecho();
+                    }
+                    client = new Client();
+                    clear();
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Cliente registrado");
+                } else {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El documento ya está registrado");
                 }
             } else {
-                Utilities.updateDialog();
-                Utilities.getTabbedPane().updateTab();
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Cliente actualizado");
-                onHecho();
-            }
+                Client client1 = Clients.getByDNI(client.getDni());
+                if (client1 == null || Objects.equals(client1.getId(), client.getId())) {
+                    client.save();
+                    Utilities.updateDialog();
+                    Utilities.getTabbedPane().updateTab();
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Cliente actualizado");
+                    onHecho();
+                } else {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El documento ya está registrado");
 
+                }
+
+            }
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }
