@@ -177,7 +177,10 @@ public class DUser extends JDialog {
     }
 
     private void loadCombos() {
-        cbbSex.setModel(new DefaultComboBoxModel(Sexs.getActives()));
+        if(FPrincipal.sexs.isEmpty()){
+            FPrincipal.sexs=Sexs.getActives();
+        }
+        cbbSex.setModel(new DefaultComboBoxModel(FPrincipal.sexs));
         cbbSex.setRenderer(new Sex.ListCellRenderer());
         cbbSex.setSelectedIndex(-1);
         cbbGroupsPermitions.setModel(new DefaultComboBoxModel(FPrincipal.groupPermnitions));
