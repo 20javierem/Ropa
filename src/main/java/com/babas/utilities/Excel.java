@@ -55,7 +55,7 @@ public class Excel {
         selectFile.addChoosableFileFilter(filter);
         int result = selectFile.showOpenDialog(Utilities.getJFrame());
         if (result != JFileChooser.APPROVE_OPTION) return;
-        Utilities.getLblIzquierda().setText("Importando productos...");
+        Utilities.getLblIzquierda().setText("Ocurrió un error...");
         try {
             FileInputStream inputStream = new FileInputStream(selectFile.getSelectedFile());
             HSSFWorkbook book = new HSSFWorkbook(inputStream);
@@ -265,6 +265,8 @@ public class Excel {
                                     stock.setTimesRented((int)row.getCell(5).getNumericCellValue());
                                     stock.setOnReserve((int)row.getCell(6).getNumericCellValue());
                                     stock.save();
+                                    product.calculateStockTotal();
+                                    product.save();
                                 }
                         }
                     }

@@ -39,8 +39,26 @@ public class App
                 if(Users.getTodos().isEmpty()){
                     User user=new User();
                     user.getBranchs().add(Branchs.get(1));
-                    user.setPermitions(new Permission(true));
-                    Branchs.get(1).getUsers().add(user);
+                    user.getPermitions().setNewSale(true);
+                    user.getPermitions().setShowCatalogue(true);
+                    user.getPermitions().setRecordSales(true);
+                    user.getPermitions().setNewRental(true);
+                    user.getPermitions().setRentalsActives(true);
+                    user.getPermitions().setRecordRentals(true);
+                    user.getPermitions().setNewReserve(true);
+                    user.getPermitions().setReservesActives(true);
+                    user.getPermitions().setRecordReserves(true);
+                    user.getPermitions().setNewTransfer(true);
+                    user.getPermitions().setRecordTransfers(true);
+                    user.getPermitions().setRecordBoxes(true);
+                    user.getPermitions().setManageProducts(true);
+                    user.getPermitions().setManageUsers(true);
+                    user.getPermitions().setManageBranchs(true);
+                    user.getPermitions().setManageCompany(true);
+                    user.getPermitions().setAceptTransfer(true);
+                    user.getPermitions().setManageClients(true);
+                    user.getPermitions().setNewQuotation(true);
+                    user.getPermitions().setRecordQuotations(true);
                     DUser dUser=new DUser(true,user);
                     dUser.setVisible(true);
                 }

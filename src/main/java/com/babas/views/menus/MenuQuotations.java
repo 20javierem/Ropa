@@ -76,8 +76,14 @@ public class MenuQuotations {
     }
 
     public JPanel getContentPane() {
-        btnRecordQuotations.setEnabled(Babas.user.getPermitions().isRecordQuotations());
-        btnNewQuotation.setEnabled(Babas.user.getPermitions().isNewQuotation());
+        if (Babas.user.isGroupDefault()) {
+            btnRecordQuotations.setEnabled(Babas.user.getPermissionGroup().isRecordQuotations());
+            btnNewQuotation.setEnabled(Babas.user.getPermissionGroup().isNewQuotation());
+        } else {
+            btnRecordQuotations.setEnabled(Babas.user.getPermitions().isRecordQuotations());
+            btnNewQuotation.setEnabled(Babas.user.getPermitions().isNewQuotation());
+        }
+
         contentPane.updateUI();
         btnRecordQuotations.updateUI();
         btnNewQuotation.updateUI();
@@ -118,4 +124,5 @@ public class MenuQuotations {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

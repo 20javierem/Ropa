@@ -44,8 +44,27 @@ public class User extends Babas {
     @OneToMany
     private List<Sale> sales=new ArrayList<>();
     @ManyToOne
-    @NotNull(message = "Permisos")
     private Permission permission=new Permission();
+    @ManyToOne
+    private Permission permissionGroup;
+
+    private boolean groupDefault=false;
+
+    public boolean isGroupDefault() {
+        return groupDefault;
+    }
+
+    public void setGroupDefault(boolean groupDefault) {
+        this.groupDefault = groupDefault;
+    }
+
+    public Permission getPermissionGroup() {
+        return permissionGroup;
+    }
+
+    public void setPermissionGroup(Permission permissionGroup) {
+        this.permissionGroup = permissionGroup;
+    }
 
     public Long getId() {
         return id;
@@ -154,10 +173,6 @@ public class User extends Babas {
 
     public Permission getPermitions() {
         return permission;
-    }
-
-    public void setPermitions(Permission permission) {
-        this.permission = permission;
     }
 
     @Override

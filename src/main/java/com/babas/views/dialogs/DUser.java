@@ -1,6 +1,7 @@
 package com.babas.views.dialogs;
 
 import com.babas.controllers.Permissions;
+import com.babas.controllers.Sexs;
 import com.babas.controllers.Users;
 import com.babas.custom.CustomPasswordField;
 import com.babas.models.Branch;
@@ -176,7 +177,7 @@ public class DUser extends JDialog {
     }
 
     private void loadCombos() {
-        cbbSex.setModel(new DefaultComboBoxModel(FPrincipal.sexs));
+        cbbSex.setModel(new DefaultComboBoxModel(Sexs.getActives()));
         cbbSex.setRenderer(new Sex.ListCellRenderer());
         cbbSex.setSelectedIndex(-1);
         cbbGroupsPermitions.setModel(new DefaultComboBoxModel(FPrincipal.groupPermnitions));
@@ -223,66 +224,72 @@ public class DUser extends JDialog {
     }
 
     private void loadPermitions() {
-        rbPropies.setSelected(!user.getPermitions().isGroup());
+        rbGroup.setSelected(user.isGroupDefault());
         verifyPermises();
-        if (user.getPermitions().isGroup()) {
-            cbbGroupsPermitions.setSelectedItem(user.getPermitions());
-        } else {
-            ckNewSale.setSelected(user.getPermitions().isNewSale());
-            ckCatalogue.setSelected(user.getPermitions().isShowCatalogue());
-            ckRecordSales.setSelected(user.getPermitions().isRecordSales());
-            ckNewRental.setSelected(user.getPermitions().isNewRental());
-            ckRentalsActives.setSelected(user.getPermitions().isRentalsActives());
-            ckRecordRentals.setSelected(user.getPermitions().isRecordRentals());
-            ckNewReserve.setSelected(user.getPermitions().isNewReserve());
-            ckReservesActives.setSelected(user.getPermitions().isReservesActives());
-            ckRecordReserves.setSelected(user.getPermitions().isRecordReserves());
-            ckNewTransfer.setSelected(user.getPermitions().isNewTransfer());
-            ckRecordTransfers.setSelected(user.getPermitions().isRecordTransfers());
-            ckRecordBoxes.setSelected(user.getPermitions().isRecordBoxes());
-            ckManageProducts.setSelected(user.getPermitions().isManageProducts());
-            ckManageUsers.setSelected(user.getPermitions().isManageUsers());
-            ckManageBranchs.setSelected(user.getPermitions().isManageBranchs());
-            ckManageCompany.setSelected(user.getPermitions().isManageCompany());
-            ckAceptTransfer.setSelected(user.getPermitions().isAceptTransfer());
-            ckNewQuotation.setSelected(user.getPermitions().isNewQuotation());
-            ckRecordQuotations.setSelected(user.getPermitions().isRecordQuotations());
-            ckManageClients.setSelected(user.getPermitions().isManageClients());
+        if (user.isGroupDefault()) {
+            cbbGroupsPermitions.setSelectedItem(user.getPermissionGroup());
         }
+        ckNewSale.setSelected(user.getPermitions().isNewSale());
+        ckCatalogue.setSelected(user.getPermitions().isShowCatalogue());
+        ckRecordSales.setSelected(user.getPermitions().isRecordSales());
+        ckNewRental.setSelected(user.getPermitions().isNewRental());
+        ckRentalsActives.setSelected(user.getPermitions().isRentalsActives());
+        ckRecordRentals.setSelected(user.getPermitions().isRecordRentals());
+        ckNewReserve.setSelected(user.getPermitions().isNewReserve());
+        ckReservesActives.setSelected(user.getPermitions().isReservesActives());
+        ckRecordReserves.setSelected(user.getPermitions().isRecordReserves());
+        ckNewTransfer.setSelected(user.getPermitions().isNewTransfer());
+        ckRecordTransfers.setSelected(user.getPermitions().isRecordTransfers());
+        ckRecordBoxes.setSelected(user.getPermitions().isRecordBoxes());
+        ckManageProducts.setSelected(user.getPermitions().isManageProducts());
+        ckManageUsers.setSelected(user.getPermitions().isManageUsers());
+        ckManageBranchs.setSelected(user.getPermitions().isManageBranchs());
+        ckManageCompany.setSelected(user.getPermitions().isManageCompany());
+        ckAceptTransfer.setSelected(user.getPermitions().isAceptTransfer());
+        ckNewQuotation.setSelected(user.getPermitions().isNewQuotation());
+        ckRecordQuotations.setSelected(user.getPermitions().isRecordQuotations());
+        ckManageClients.setSelected(user.getPermitions().isManageClients());
     }
 
     private void savePermitions() {
-        if (user.getPermitions() != null) {
-            if (user.getPermitions().isGroup()) {
-                user.getPermitions().getUsers().remove(user);
-            }
-        }
-
         if (rbGroup.isSelected()) {
-            user.setPermitions((Permission) cbbGroupsPermitions.getSelectedItem());
+            Permission permission = (Permission) cbbGroupsPermitions.getSelectedItem();
+            if (permission != null) {
+                user.setGroupDefault(true);
+                user.setPermissionGroup(permission);
+                user.getPermissionGroup().getUsers().remove(user);
+                user.getPermissionGroup().getUsers().add(user);
+            } else {
+                user.setGroupDefault(false);
+            }
         } else {
-            Permission permission = new Permission();
-            permission.setNewSale(ckNewSale.isSelected());
-            permission.setShowCatalogue(ckCatalogue.isSelected());
-            permission.setRecordSales(ckRecordSales.isSelected());
-            permission.setNewRental(ckNewRental.isSelected());
-            permission.setRentalsActives(ckRentalsActives.isSelected());
-            permission.setRecordRentals(ckRecordRentals.isSelected());
-            permission.setNewReserve(ckNewReserve.isSelected());
-            permission.setReservesActives(ckReservesActives.isSelected());
-            permission.setRecordReserves(ckRecordReserves.isSelected());
-            permission.setNewTransfer(ckNewTransfer.isSelected());
-            permission.setRecordTransfers(ckRecordTransfers.isSelected());
-            permission.setRecordBoxes(ckRecordBoxes.isSelected());
-            permission.setManageProducts(ckManageProducts.isSelected());
-            permission.setManageUsers(ckManageUsers.isSelected());
-            permission.setManageBranchs(ckManageBranchs.isSelected());
-            permission.setManageCompany(ckManageCompany.isSelected());
-            permission.setAceptTransfer(ckAceptTransfer.isSelected());
-            permission.setManageClients(ckManageClients.isSelected());
-            permission.setNewQuotation(ckNewQuotation.isSelected());
-            permission.setRecordQuotations(ckRecordQuotations.isSelected());
-            user.setPermitions(permission);
+            user.setGroupDefault(false);
+        }
+        if (!user.isGroupDefault()) {
+            if (user.getPermissionGroup() != null) {
+                user.getPermissionGroup().getUsers().remove(user);
+                user.setPermissionGroup(null);
+            }
+            user.getPermitions().setNewSale(ckNewSale.isSelected());
+            user.getPermitions().setShowCatalogue(ckCatalogue.isSelected());
+            user.getPermitions().setRecordSales(ckRecordSales.isSelected());
+            user.getPermitions().setNewRental(ckNewRental.isSelected());
+            user.getPermitions().setRentalsActives(ckRentalsActives.isSelected());
+            user.getPermitions().setRecordRentals(ckRecordRentals.isSelected());
+            user.getPermitions().setNewReserve(ckNewReserve.isSelected());
+            user.getPermitions().setReservesActives(ckReservesActives.isSelected());
+            user.getPermitions().setRecordReserves(ckRecordReserves.isSelected());
+            user.getPermitions().setNewTransfer(ckNewTransfer.isSelected());
+            user.getPermitions().setRecordTransfers(ckRecordTransfers.isSelected());
+            user.getPermitions().setRecordBoxes(ckRecordBoxes.isSelected());
+            user.getPermitions().setManageProducts(ckManageProducts.isSelected());
+            user.getPermitions().setManageUsers(ckManageUsers.isSelected());
+            user.getPermitions().setManageBranchs(ckManageBranchs.isSelected());
+            user.getPermitions().setManageCompany(ckManageCompany.isSelected());
+            user.getPermitions().setAceptTransfer(ckAceptTransfer.isSelected());
+            user.getPermitions().setManageClients(ckManageClients.isSelected());
+            user.getPermitions().setNewQuotation(ckNewQuotation.isSelected());
+            user.getPermitions().setRecordQuotations(ckRecordQuotations.isSelected());
         }
     }
 
@@ -305,16 +312,13 @@ public class DUser extends JDialog {
         if (constraintViolationSet.isEmpty()) {
             if (update) {
                 user.save();
-                user.getPermitions().getUsers().add(user);
                 Utilities.updateDialog();
                 Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Usuario actualizado");
-                clearPermirmitios();
                 onHecho();
             } else {
                 if (Users.getByUserName(user.getUserName()) == null) {
                     user.save();
-                    user.getPermitions().getUsers().add(user);
                     FPrincipal.users.add(user);
                     Utilities.updateDialog();
                     if (Utilities.getTabbedPane() != null) {
@@ -322,7 +326,6 @@ public class DUser extends JDialog {
                     } else {
                         onHecho();
                     }
-                    clearPermirmitios();
                     user = new User();
                     load();
                     if (Utilities.getJFrame() != null) {
@@ -335,10 +338,6 @@ public class DUser extends JDialog {
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }
-    }
-
-    private void clearPermirmitios() {
-        Permissions.getPermissionToDelete().forEach(Babas::delete);
     }
 
     private void onHecho() {
@@ -458,10 +457,10 @@ public class DUser extends JDialog {
         label10.setText("Propios:");
         panel5.add(label10, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         rbGroup = new JRadioButton();
-        rbGroup.setSelected(true);
         rbGroup.setText("");
         panel5.add(rbGroup, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         rbPropies = new JRadioButton();
+        rbPropies.setSelected(true);
         rbPropies.setText("");
         panel5.add(rbPropies, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbbGroupsPermitions = new JComboBox();
@@ -621,7 +620,7 @@ public class DUser extends JDialog {
         final JLabel label34 = new JLabel();
         Font label34Font = this.$$$getFont$$$(null, Font.BOLD, -1, label34.getFont());
         if (label34Font != null) label34.setFont(label34Font);
-        label34.setText("Alquileres");
+        label34.setText("Cotizaciones");
         panel6.add(label34, new GridConstraints(10, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JSeparator separator5 = new JSeparator();
         panel6.add(separator5, new GridConstraints(13, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(-1, 5), null, 0, false));

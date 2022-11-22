@@ -253,5 +253,4 @@ public class FLogin extends JFrame {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

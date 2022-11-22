@@ -178,5 +178,4 @@ public class DPrice extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

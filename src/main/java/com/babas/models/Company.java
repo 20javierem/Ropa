@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity(name = "company_tbl")
@@ -12,9 +13,13 @@ public class Company extends Babas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "RUC")
     private String ruc;
+    @NotBlank(message = "NOMBRE DE LA EMPRESA")
     private String businessName;
+    @NotBlank(message = "NOMBRE COMERCIAL")
     private String tradeName;
+    @NotBlank(message = "DIRECCIÓN PRINCIPAL")
     private String directionPrincipal;
     private String logo;
     private String slogan;

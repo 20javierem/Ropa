@@ -113,6 +113,12 @@ public class Product extends Babas {
         return stockTotal;
     }
 
+    public void calculateStockTotal(){
+        stockTotal=0;
+        stocks.forEach(stock ->{
+            stockTotal+=stock.getQuantity();
+        });
+    }
     public boolean isActive() {
         return active;
     }

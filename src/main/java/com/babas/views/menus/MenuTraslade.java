@@ -75,8 +75,13 @@ public class MenuTraslade {
     }
 
     public JPanel getContentPane() {
-        btnRecordTraslades.setEnabled(Babas.user.getPermitions().isRecordTransfers());
-        btnNewTraslade.setEnabled(Babas.user.getPermitions().isNewTransfer());
+        if (Babas.user.isGroupDefault()) {
+            btnRecordTraslades.setEnabled(Babas.user.getPermissionGroup().isRecordTransfers());
+            btnNewTraslade.setEnabled(Babas.user.getPermissionGroup().isNewTransfer());
+        } else {
+            btnRecordTraslades.setEnabled(Babas.user.getPermitions().isRecordTransfers());
+            btnNewTraslade.setEnabled(Babas.user.getPermitions().isNewTransfer());
+        }
         contentPane.updateUI();
         btnRecordTraslades.updateUI();
         btnNewTraslade.updateUI();
@@ -117,4 +122,5 @@ public class MenuTraslade {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

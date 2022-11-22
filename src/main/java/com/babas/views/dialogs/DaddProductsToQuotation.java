@@ -166,12 +166,14 @@ public class DaddProductsToQuotation extends JDialog {
             cbbPrice.removeAllItems();
         }
     }
+
     private void loadPrices() {
         Presentation presentation = (Presentation) cbbPresentation.getSelectedItem();
         cbbPrice.removeAllItems();
         presentation.getPrices().forEach(price -> cbbPrice.addItem(price.getPrice()));
         cbbPrice.setSelectedItem(presentation.getPriceDefault().getPrice());
     }
+
     public void filtrar() {
         String busqueda;
         busqueda = txtSearchProduct.getText().trim();
@@ -321,5 +323,4 @@ public class DaddProductsToQuotation extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

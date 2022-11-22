@@ -159,5 +159,4 @@ public class DSex extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

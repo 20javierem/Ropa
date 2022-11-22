@@ -48,7 +48,11 @@ public class MenuBoxes {
     }
 
     public JPanel getContentPane() {
-        btnRecordBoxSessions.setEnabled(Babas.user.getPermitions().isRecordBoxes());
+        if (Babas.user.isGroupDefault()) {
+            btnRecordBoxSessions.setEnabled(Babas.user.getPermissionGroup().isRecordBoxes());
+        } else {
+            btnRecordBoxSessions.setEnabled(Babas.user.getPermitions().isRecordBoxes());
+        }
         contentPane.updateUI();
         btnRecordBoxSessions.updateUI();
         return contentPane;
@@ -85,4 +89,5 @@ public class MenuBoxes {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

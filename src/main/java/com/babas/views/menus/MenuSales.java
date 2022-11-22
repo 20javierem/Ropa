@@ -108,9 +108,15 @@ public class MenuSales {
     }
 
     public JPanel getContentPane() {
-        btnCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
-        btnRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
-        btnNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
+        if (Babas.user.isGroupDefault()) {
+            btnCatalogue.setEnabled(Babas.user.getPermissionGroup().isShowCatalogue());
+            btnRecordSales.setEnabled(Babas.user.getPermissionGroup().isRecordSales());
+            btnNewSale.setEnabled(Babas.user.getPermissionGroup().isNewSale());
+        } else {
+            btnCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
+            btnRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
+            btnNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
+        }
         contentPane.updateUI();
         btnCatalogue.updateUI();
         btnRecordSales.updateUI();

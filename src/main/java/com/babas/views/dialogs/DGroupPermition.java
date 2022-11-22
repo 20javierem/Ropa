@@ -348,7 +348,7 @@ public class DGroupPermition extends JDialog {
         final JLabel label24 = new JLabel();
         Font label24Font = this.$$$getFont$$$(null, Font.BOLD, -1, label24.getFont());
         if (label24Font != null) label24.setFont(label24Font);
-        label24.setText("Alquileres");
+        label24.setText("Cotizaciones");
         panel3.add(label24, new GridConstraints(10, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JSeparator separator5 = new JSeparator();
         panel3.add(separator5, new GridConstraints(13, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(-1, 5), null, 0, false));

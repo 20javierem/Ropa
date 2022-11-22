@@ -211,5 +211,4 @@ public class DClient extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
-
 }

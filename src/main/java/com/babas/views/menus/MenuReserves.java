@@ -103,9 +103,15 @@ public class MenuReserves {
     }
 
     public JPanel getContentPane() {
-        btnReservesActives.setEnabled(Babas.user.getPermitions().isReservesActives());
-        btnRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
-        btnNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
+        if (Babas.user.isGroupDefault()) {
+            btnReservesActives.setEnabled(Babas.user.getPermissionGroup().isReservesActives());
+            btnRecordReserves.setEnabled(Babas.user.getPermissionGroup().isRecordReserves());
+            btnNewReserve.setEnabled(Babas.user.getPermissionGroup().isNewReserve());
+        } else {
+            btnReservesActives.setEnabled(Babas.user.getPermitions().isReservesActives());
+            btnRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
+            btnNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
+        }
         contentPane.updateUI();
         btnRecordReserves.updateUI();
         btnReservesActives.updateUI();
@@ -150,4 +156,5 @@ public class MenuReserves {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

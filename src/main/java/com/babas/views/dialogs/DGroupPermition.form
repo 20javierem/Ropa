@@ -443,7 +443,7 @@
                     </constraints>
                     <properties>
                       <font style="1"/>
-                      <text value="Alquileres"/>
+                      <text value="Cotizaciones"/>
                     </properties>
                   </component>
                   <component id="24c0" class="javax.swing.JSeparator">

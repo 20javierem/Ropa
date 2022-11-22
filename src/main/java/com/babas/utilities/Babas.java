@@ -48,11 +48,6 @@ public class Babas {
         session.persist(this);
         session.getTransaction().commit();
     }
-    public void delete(){
-        session.beginTransaction();
-        session.remove(this);
-        session.getTransaction().commit();
-    }
     public static void close(){
         session.close();
         state=false;

@@ -132,10 +132,17 @@ public class MenuManage {
     }
 
     public JPanel getContentPane() {
-        btnProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
-        btnBranchs.setEnabled(Babas.user.getPermitions().isManageBranchs());
-        btnUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
-        btnClients.setEnabled(Babas.user.getPermitions().isManageClients());
+        if (Babas.user.isGroupDefault()) {
+            btnProducts.setEnabled(Babas.user.getPermissionGroup().isManageProducts());
+            btnBranchs.setEnabled(Babas.user.getPermissionGroup().isManageBranchs());
+            btnUsers.setEnabled(Babas.user.getPermissionGroup().isManageUsers());
+            btnClients.setEnabled(Babas.user.getPermissionGroup().isManageClients());
+        } else {
+            btnProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
+            btnBranchs.setEnabled(Babas.user.getPermitions().isManageBranchs());
+            btnUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
+            btnClients.setEnabled(Babas.user.getPermitions().isManageClients());
+        }
         contentPane.updateUI();
         btnProducts.updateUI();
         btnBranchs.updateUI();

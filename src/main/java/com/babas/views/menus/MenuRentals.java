@@ -104,9 +104,15 @@ public class MenuRentals {
     }
 
     public JPanel getContentPane() {
-        btnNewRental.setEnabled(Babas.user.getPermitions().isNewRental());
-        btnRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
-        btnRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
+        if (Babas.user.isGroupDefault()) {
+            btnNewRental.setEnabled(Babas.user.getPermissionGroup().isNewRental());
+            btnRecordRentals.setEnabled(Babas.user.getPermissionGroup().isRecordRentals());
+            btnRentalsActives.setEnabled(Babas.user.getPermissionGroup().isRentalsActives());
+        } else {
+            btnNewRental.setEnabled(Babas.user.getPermitions().isNewRental());
+            btnRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
+            btnRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
+        }
         contentPane.updateUI();
         btnNewRental.updateUI();
         btnRecordRentals.updateUI();
@@ -151,4 +157,5 @@ public class MenuRentals {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

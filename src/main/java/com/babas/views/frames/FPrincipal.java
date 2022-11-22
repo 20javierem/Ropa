@@ -13,7 +13,6 @@ import com.babas.views.menus.*;
 import com.babas.views.tabs.TabBoxSesion;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.*;
-import com.formdev.flatlaf.ui.FlatRootPaneUI;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -32,9 +31,7 @@ public class FPrincipal extends JFrame {
     private JPanel contentPane;
     private JMenu btnMenuStart;
     private JButton btnNewSale;
-    private JButton btnRecordSales;
     private JButton btnCatalogue;
-    private JButton btnRecordTransfers;
     private JButton btnActualizar;
     private JLabel lblCenter;
     private JLabel lblRigth;
@@ -55,7 +52,6 @@ public class FPrincipal extends JFrame {
     private FlatToggleButton btnReserves;
     private FlatToggleButton btnRentals;
     private JMenu btnMenuBox;
-    private JButton btnBoxSesion;
     private JButton btnNewReserve;
     private JButton btnNewRental;
     private FlatToggleButton btnBoxes;
@@ -71,6 +67,7 @@ public class FPrincipal extends JFrame {
     private FlatToggleButton btnQuotations;
     private JButton btnNewQuotation;
     private JButton btnSearchClient;
+    private JMenu btnMenuQuotations;
     private JLabel lblLogo;
     private MenuSales menuSales;
     private MenuManage menuManage;
@@ -121,12 +118,6 @@ public class FPrincipal extends JFrame {
                 menuSales.loadNewSale(true, new Sale());
             }
         });
-        btnRecordSales.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuSales.loadRecordSales();
-            }
-        });
         btnManagement.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -151,22 +142,10 @@ public class FPrincipal extends JFrame {
                 reloadData();
             }
         });
-        btnRecordTransfers.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                menuTraslade.loadRecordTraslades();
-            }
-        });
         btnRentals.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadMenuRentals();
-            }
-        });
-        btnBoxSesion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loadBoxSesion();
             }
         });
         btnCatalogue.addActionListener(new ActionListener() {
@@ -407,7 +386,6 @@ public class FPrincipal extends JFrame {
         menuCompany.setMnemonic(KeyEvent.VK_M);
         btnMenuStart.add(menuSettings);
         btnMenuStart.add(menuCompany);
-        menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
 
         JMenuItem menuBox = new JMenuItem("Apertura/Cierre de caja");
         menuBox.addActionListener(e -> loadBox());
@@ -422,7 +400,6 @@ public class FPrincipal extends JFrame {
         btnMenuBox.add(menuBox);
         btnMenuBox.add(menuShowBox);
         btnMenuBox.add(menuRecordBoxes);
-        menuRecordBoxes.setEnabled(Babas.user.getPermitions().isRecordBoxes());
 
         JMenuItem menuNewSale = new JMenuItem("Nueva venta");
         menuNewSale.addActionListener(e -> menuSales.loadNewSale(true, new Sale()));
@@ -437,9 +414,7 @@ public class FPrincipal extends JFrame {
         btnMenuSales.add(menuNewSale);
         btnMenuSales.add(menuCatalogue);
         btnMenuSales.add(menuRecordSales);
-        menuNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
-        menuCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
-        menuRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
+
 
         JMenuItem menuNewRental = new JMenuItem("Nuevo alquiler");
         menuNewRental.addActionListener(e -> menuRentals.loadNewRental(new Rental()));
@@ -454,11 +429,9 @@ public class FPrincipal extends JFrame {
         btnMenuRentals.add(menuNewRental);
         btnMenuRentals.add(menuRentalsActives);
         btnMenuRentals.add(menuRecordRentals);
-        menuNewRental.setEnabled(Babas.user.getPermitions().isNewRental());
-        menuRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
-        menuRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
 
-        JMenuItem menuNewReserve = new JMenuItem("Nuevo alquiler");
+
+        JMenuItem menuNewReserve = new JMenuItem("Nueva reserva");
         menuNewReserve.addActionListener(e -> menuReserves.loadNewReserve(new Reserve()));
         JMenuItem menuReservesActives = new JMenuItem("Reservas activas");
         menuReservesActives.addActionListener(e -> menuReserves.loadReservesActives());
@@ -471,9 +444,18 @@ public class FPrincipal extends JFrame {
         btnMenuReserves.add(menuNewReserve);
         btnMenuReserves.add(menuReservesActives);
         btnMenuReserves.add(menuRecordReserves);
-        menuNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
-        menuReservesActives.setEnabled(Babas.user.getPermitions().isReservesActives());
-        menuRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
+
+
+        JMenuItem menuNewQuotation = new JMenuItem("Nueva cotización");
+        menuNewQuotation.addActionListener(e -> menuQuotations.loadNewQuotation());
+        JMenuItem menuRecorQuotations = new JMenuItem("Historial de cotizaciones");
+        menuRecorQuotations.addActionListener(e -> menuQuotations.loadRecordQuotations());
+        btnMenuQuotations.setMnemonic(KeyEvent.VK_O);
+        menuNewQuotation.setMnemonic(KeyEvent.VK_N);
+        menuRecorQuotations.setMnemonic(KeyEvent.VK_H);
+        btnMenuQuotations.add(menuNewQuotation);
+        btnMenuQuotations.add(menuRecorQuotations);
+
 
         JMenuItem menuNewTransfer = new JMenuItem("Nuevo traslado");
         menuNewTransfer.addActionListener(e -> menuTraslade.loadNewTraslade());
@@ -484,8 +466,7 @@ public class FPrincipal extends JFrame {
         menuRecordTransfers.setMnemonic(KeyEvent.VK_H);
         btnMenuTransfers.add(menuNewTransfer);
         btnMenuTransfers.add(menuRecordTransfers);
-        menuNewTransfer.setEnabled(Babas.user.getPermitions().isNewTransfer());
-        menuRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
+
 
         JMenuItem menuProducts = new JMenuItem("Productos");
         menuProducts.addActionListener(e -> menuManage.loadProducts());
@@ -500,9 +481,46 @@ public class FPrincipal extends JFrame {
         btnMenuManages.add(menuProducts);
         btnMenuManages.add(menuUsers);
         btnMenuManages.add(menuBranchs);
-        menuProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
-        menuUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
-        menuBranchs.setEnabled(Babas.user.getPermitions().isManageUsers());
+
+        if (Babas.user.isGroupDefault()) {
+            menuCompany.setEnabled(Babas.user.getPermissionGroup().isManageCompany());
+            menuRecordBoxes.setEnabled(Babas.user.getPermissionGroup().isRecordBoxes());
+            menuNewSale.setEnabled(Babas.user.getPermissionGroup().isNewSale());
+            menuCatalogue.setEnabled(Babas.user.getPermissionGroup().isShowCatalogue());
+            menuRecordSales.setEnabled(Babas.user.getPermissionGroup().isRecordSales());
+            menuNewRental.setEnabled(Babas.user.getPermissionGroup().isNewRental());
+            menuRentalsActives.setEnabled(Babas.user.getPermissionGroup().isRentalsActives());
+            menuRecordRentals.setEnabled(Babas.user.getPermissionGroup().isRecordRentals());
+            menuNewReserve.setEnabled(Babas.user.getPermissionGroup().isNewReserve());
+            menuReservesActives.setEnabled(Babas.user.getPermissionGroup().isReservesActives());
+            menuRecordReserves.setEnabled(Babas.user.getPermissionGroup().isRecordReserves());
+            menuNewQuotation.setEnabled(Babas.user.getPermissionGroup().isNewQuotation());
+            menuRecorQuotations.setEnabled(Babas.user.getPermissionGroup().isRecordQuotations());
+            menuNewTransfer.setEnabled(Babas.user.getPermissionGroup().isNewTransfer());
+            menuRecordTransfers.setEnabled(Babas.user.getPermissionGroup().isRecordTransfers());
+            menuProducts.setEnabled(Babas.user.getPermissionGroup().isManageProducts());
+            menuUsers.setEnabled(Babas.user.getPermissionGroup().isManageUsers());
+            menuBranchs.setEnabled(Babas.user.getPermissionGroup().isManageUsers());
+        } else {
+            menuCompany.setEnabled(Babas.user.getPermitions().isManageCompany());
+            menuRecordBoxes.setEnabled(Babas.user.getPermitions().isRecordBoxes());
+            menuNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
+            menuCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
+            menuRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
+            menuNewRental.setEnabled(Babas.user.getPermitions().isNewRental());
+            menuRentalsActives.setEnabled(Babas.user.getPermitions().isRentalsActives());
+            menuRecordRentals.setEnabled(Babas.user.getPermitions().isRecordRentals());
+            menuNewReserve.setEnabled(Babas.user.getPermitions().isNewReserve());
+            menuReservesActives.setEnabled(Babas.user.getPermitions().isReservesActives());
+            menuRecordReserves.setEnabled(Babas.user.getPermitions().isRecordReserves());
+            menuNewQuotation.setEnabled(Babas.user.getPermitions().isNewQuotation());
+            menuRecorQuotations.setEnabled(Babas.user.getPermitions().isRecordQuotations());
+            menuNewTransfer.setEnabled(Babas.user.getPermitions().isNewTransfer());
+            menuRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
+            menuProducts.setEnabled(Babas.user.getPermitions().isManageProducts());
+            menuUsers.setEnabled(Babas.user.getPermitions().isManageUsers());
+            menuBranchs.setEnabled(Babas.user.getPermitions().isManageUsers());
+        }
     }
 
     private void loadIcons() {
@@ -632,14 +650,22 @@ public class FPrincipal extends JFrame {
     }
 
     private void loadPermisses() {
-        btnCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
-        btnNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
-        btnNewRental.setEnabled(Babas.user.getPermitions().isNewSale());
-        btnNewReserve.setEnabled(Babas.user.getPermitions().isNewSale());
-        btnBoxSesion.setEnabled(Babas.user.getPermitions().isNewSale());
-        btnRecordSales.setEnabled(Babas.user.getPermitions().isRecordSales());
-        btnRecordTransfers.setEnabled(Babas.user.getPermitions().isRecordTransfers());
-        btnNotify.setEnabled(Babas.user.getPermitions().isAceptTransfer());
+        if (Babas.user.isGroupDefault()) {
+            btnCatalogue.setEnabled(Babas.user.getPermissionGroup().isShowCatalogue());
+            btnNewSale.setEnabled(Babas.user.getPermissionGroup().isNewSale());
+            btnNewRental.setEnabled(Babas.user.getPermissionGroup().isNewSale());
+            btnNewReserve.setEnabled(Babas.user.getPermissionGroup().isNewSale());
+            btnNotify.setEnabled(Babas.user.getPermissionGroup().isAceptTransfer());
+            btnNewQuotation.setEnabled(Babas.user.getPermissionGroup().isNewQuotation());
+        } else {
+            btnCatalogue.setEnabled(Babas.user.getPermitions().isShowCatalogue());
+            btnNewSale.setEnabled(Babas.user.getPermitions().isNewSale());
+            btnNewRental.setEnabled(Babas.user.getPermitions().isNewSale());
+            btnNewReserve.setEnabled(Babas.user.getPermitions().isNewSale());
+            btnNotify.setEnabled(Babas.user.getPermitions().isAceptTransfer());
+            btnNewQuotation.setEnabled(Babas.user.getPermitions().isNewQuotation());
+        }
+
     }
 
     public void loadTransferOnWait() {
@@ -709,12 +735,9 @@ public class FPrincipal extends JFrame {
         btnAdministrador.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewSale.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCatalogue.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnRecordTransfers.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnRecordSales.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnTraslades.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnReserves.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnRentals.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnBoxSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewRental.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnNewReserve.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBoxes.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -760,102 +783,95 @@ public class FPrincipal extends JFrame {
         panel1.setLayout(new GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, 0));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
+        panel2.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(panel2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JScrollPane scrollPane1 = new JScrollPane();
-        scrollPane1.setVerticalScrollBarPolicy(21);
-        panel2.add(scrollPane1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(-1, 40), null, null, 0, false));
-        scrollPane1.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final JToolBar toolBar1 = new JToolBar();
         toolBar1.setFloatable(false);
         toolBar1.setMinimumSize(new Dimension(1582, 27));
         toolBar1.setPreferredSize(new Dimension(1582, 27));
-        scrollPane1.setViewportView(toolBar1);
+        panel2.add(toolBar1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 42), null, 0, false));
+        btnCatalogue = new JButton();
+        btnCatalogue.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/catalogue.png")));
+        btnCatalogue.setMaximumSize(new Dimension(118, 42));
+        btnCatalogue.setMinimumSize(new Dimension(118, 42));
+        btnCatalogue.setPreferredSize(new Dimension(118, 42));
+        btnCatalogue.setText("Catálogo");
+        toolBar1.add(btnCatalogue);
         btnNewSale = new JButton();
         btnNewSale.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/nuevaVenta.png")));
-        btnNewSale.setMinimumSize(new Dimension(136, 27));
+        btnNewSale.setMaximumSize(new Dimension(136, 42));
+        btnNewSale.setMinimumSize(new Dimension(136, 42));
+        btnNewSale.setPreferredSize(new Dimension(136, 42));
         btnNewSale.setText("Nueva venta");
         toolBar1.add(btnNewSale);
         btnNewRental = new JButton();
         btnNewRental.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/reserveSelected.png")));
-        btnNewRental.setMinimumSize(new Dimension(147, 27));
+        btnNewRental.setMaximumSize(new Dimension(147, 42));
+        btnNewRental.setMinimumSize(new Dimension(147, 42));
+        btnNewRental.setPreferredSize(new Dimension(147, 42));
         btnNewRental.setText("Nuevo alquiler");
         toolBar1.add(btnNewRental);
         btnNewReserve = new JButton();
         btnNewReserve.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/reserveSelected.png")));
-        btnNewReserve.setMinimumSize(new Dimension(144, 27));
+        btnNewReserve.setMaximumSize(new Dimension(144, 42));
+        btnNewReserve.setMinimumSize(new Dimension(144, 42));
+        btnNewReserve.setPreferredSize(new Dimension(144, 42));
         btnNewReserve.setText("Nueva reserva");
         toolBar1.add(btnNewReserve);
-        btnCatalogue = new JButton();
-        btnCatalogue.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/catalogue.png")));
-        btnCatalogue.setMinimumSize(new Dimension(118, 27));
-        btnCatalogue.setText("Catálogo");
-        toolBar1.add(btnCatalogue);
         btnNewQuotation = new JButton();
         btnNewQuotation.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/quotationSelected.png")));
-        btnNewQuotation.setMinimumSize(new Dimension(161, 27));
+        btnNewQuotation.setMaximumSize(new Dimension(161, 42));
+        btnNewQuotation.setMinimumSize(new Dimension(161, 42));
+        btnNewQuotation.setPreferredSize(new Dimension(161, 42));
         btnNewQuotation.setText("Nueva cotización");
         toolBar1.add(btnNewQuotation);
-        btnBoxSesion = new JButton();
-        btnBoxSesion.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/caja-registradora.png")));
-        btnBoxSesion.setMinimumSize(new Dimension(180, 27));
-        btnBoxSesion.setText("Movimientos de caja");
-        toolBar1.add(btnBoxSesion);
-        btnRecordSales = new JButton();
-        btnRecordSales.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/historialVentas.png")));
-        btnRecordSales.setMinimumSize(new Dimension(167, 27));
-        btnRecordSales.setText("Historial de ventas");
-        toolBar1.add(btnRecordSales);
-        btnRecordTransfers = new JButton();
-        btnRecordTransfers.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/recordTransactions.png")));
-        btnRecordTransfers.setMinimumSize(new Dimension(206, 27));
-        btnRecordTransfers.setText("Historial de transferencias");
-        toolBar1.add(btnRecordTransfers);
         btnSearchComprobante = new JButton();
         btnSearchComprobante.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/searchComprobante.png")));
-        btnSearchComprobante.setMinimumSize(new Dimension(180, 27));
+        btnSearchComprobante.setMaximumSize(new Dimension(180, 42));
+        btnSearchComprobante.setMinimumSize(new Dimension(180, 42));
+        btnSearchComprobante.setPreferredSize(new Dimension(180, 42));
         btnSearchComprobante.setText("Buscar comprobante");
         toolBar1.add(btnSearchComprobante);
         btnSearchClient = new JButton();
         btnSearchClient.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/searchClient.png")));
-        btnSearchClient.setMinimumSize(new Dimension(143, 27));
+        btnSearchClient.setMaximumSize(new Dimension(143, 42));
+        btnSearchClient.setMinimumSize(new Dimension(143, 42));
+        btnSearchClient.setPreferredSize(new Dimension(143, 42));
         btnSearchClient.setText("Buscar cliente");
         toolBar1.add(btnSearchClient);
-        final JToolBar toolBar2 = new JToolBar();
-        panel2.add(toolBar2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 20), null, 0, false));
         final Spacer spacer1 = new Spacer();
-        toolBar2.add(spacer1);
+        toolBar1.add(spacer1);
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel3.setMaximumSize(new Dimension(3, 32767));
         panel3.setOpaque(false);
-        toolBar2.add(panel3);
+        toolBar1.add(panel3);
         final JSeparator separator1 = new JSeparator();
         separator1.setOrientation(1);
-        panel3.add(separator1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel3.add(separator1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         btnActualizar = new JButton();
         btnActualizar.setBorderPainted(true);
         btnActualizar.setIcon(new ImageIcon(getClass().getResource("/com/babas/icons/x32/refresh.png")));
         btnActualizar.setMargin(new Insets(0, 0, 0, 0));
-        btnActualizar.setMaximumSize(new Dimension(45, 45));
-        btnActualizar.setMinimumSize(new Dimension(38, 38));
-        btnActualizar.setPreferredSize(new Dimension(38, 38));
+        btnActualizar.setMaximumSize(new Dimension(42, 42));
+        btnActualizar.setMinimumSize(new Dimension(42, 42));
+        btnActualizar.setPreferredSize(new Dimension(42, 42));
         btnActualizar.setText("");
-        toolBar2.add(btnActualizar);
+        toolBar1.add(btnActualizar);
         menuBar = new JMenuBar();
-        menuBar.setLayout(new GridLayoutManager(1, 8, new Insets(0, 0, 0, 0), -1, -1));
+        menuBar.setLayout(new GridLayoutManager(1, 9, new Insets(0, 0, 0, 0), -1, -1));
         panel1.add(menuBar, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final Spacer spacer2 = new Spacer();
-        menuBar.add(spacer2, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        menuBar.add(spacer2, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         btnMenuBox = new JMenu();
         btnMenuBox.setText("Caja");
-        menuBar.add(btnMenuBox, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        menuBar.add(btnMenuBox, new GridConstraints(0, 7, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnMenuManages = new JMenu();
         btnMenuManages.setText("Gestionar");
-        menuBar.add(btnMenuManages, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        menuBar.add(btnMenuManages, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnMenuTransfers = new JMenu();
         btnMenuTransfers.setText("Traslados");
-        menuBar.add(btnMenuTransfers, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        menuBar.add(btnMenuTransfers, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnMenuReserves = new JMenu();
         btnMenuReserves.setText("Reservas");
         menuBar.add(btnMenuReserves, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
@@ -868,6 +884,9 @@ public class FPrincipal extends JFrame {
         btnMenuStart = new JMenu();
         btnMenuStart.setText("Inicio");
         menuBar.add(btnMenuStart, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        btnMenuQuotations = new JMenu();
+        btnMenuQuotations.setText("Cotizaciones");
+        menuBar.add(btnMenuQuotations, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 3, new Insets(0, 10, 0, 10), -1, -1));
         panel4.setBackground(new java.awt.Color(-16777216));

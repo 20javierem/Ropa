@@ -53,8 +53,6 @@ public class JButtonEditorBox extends AbstractCellEditor implements TableCellEdi
                         box.refresh();
                         box.setDeleted(true);
                         box.save();
-                    }else{
-                        box.delete();
                     }
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Caja eliminada");
                 }
