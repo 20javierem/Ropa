@@ -90,7 +90,7 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <placeholderText value="DNI..."/>
+                      <placeholderText value="DNI/RUC..."/>
                       <text value=""/>
                     </properties>
                   </component>
