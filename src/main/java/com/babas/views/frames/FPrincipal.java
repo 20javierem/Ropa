@@ -723,6 +723,8 @@ public class FPrincipal extends JFrame {
         products.forEach(product -> product.getIconsx400(true));
         styles = Styles.getTodos();
         groupPermnitions = Permissions.getGroups();
+        rentalsActives = new ArrayList<>();
+        reservesActives = new ArrayList<>();
         Babas.user.getBranchs().forEach(branch -> rentalsActives.addAll(Rentals.getActives(branch)));
         Babas.user.getBranchs().forEach(branch -> reservesActives.addAll(Reserves.getActives(branch)));
     }
