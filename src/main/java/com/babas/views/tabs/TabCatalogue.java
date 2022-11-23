@@ -59,13 +59,6 @@ public class TabCatalogue {
 
     public TabCatalogue() {
         init();
-        txtSearch.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                filter();
-            }
-        });
-
         cbbBrand.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,6 +86,12 @@ public class TabCatalogue {
         cbbColor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                filter();
+            }
+        });
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
                 filter();
             }
         });
@@ -459,4 +458,5 @@ public class TabCatalogue {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

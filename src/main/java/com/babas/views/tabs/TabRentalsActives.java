@@ -121,7 +121,7 @@ public class TabRentalsActives {
     private void filter() {
         filtros.clear();
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
@@ -130,6 +130,9 @@ public class TabRentalsActives {
         listaFiltros.put(5, busqueda);
         listaFiltros.put(6, busqueda);
         listaFiltros.put(7, busqueda);
+        listaFiltros.put(8, busqueda);
+        listaFiltros.put(9, busqueda);
+        listaFiltros.put(10, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
             filtros.add(RowFilter.regexFilter(branch.getName(), 2));
@@ -194,7 +197,7 @@ public class TabRentalsActives {
         defaultComboBoxModel1.addElement("LIMA");
         defaultComboBoxModel1.addElement("CUSCO");
         cbbBranch.setModel(defaultComboBoxModel1);
-        panel3.add(cbbBranch, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel3.add(cbbBranch, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(90, -1), new Dimension(250, -1), new Dimension(250, -1), 0, false));
         final JLabel label2 = new JLabel();
         Font label2Font = this.$$$getFont$$$(null, Font.BOLD, -1, label2.getFont());
         if (label2Font != null) label2.setFont(label2Font);

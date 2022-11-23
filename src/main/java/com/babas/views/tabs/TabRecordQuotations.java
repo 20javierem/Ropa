@@ -18,6 +18,7 @@ import com.babas.utilitiesTables.tablesModels.QuotationAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
+import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
@@ -31,10 +32,10 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Date;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.*;
 import java.util.List;
-import java.util.Locale;
 
 public class TabRecordQuotations {
     private TabPane tabPane;
@@ -48,13 +49,13 @@ public class TabRecordQuotations {
     private JButton btnSearch;
     private JButton btnClearFilters;
     private JComboBox cbbBranch;
-
+    private FlatTextField txtSearch;
     private List<Quotation> quotations;
     private QuotationAbstractModel model;
     private TableRowSorter<QuotationAbstractModel> modeloOrdenado;
+    private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
     private List<RowFilter<QuotationAbstractModel, String>> filtros = new ArrayList<>();
     private RowFilter filtroand;
-    private Double totalTransfer, totalCash;
     private Date start, end;
 
     public TabRecordQuotations() {
@@ -78,7 +79,19 @@ public class TabRecordQuotations {
                 filter();
             }
         });
-
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filter();
+            }
+        });
+        ((JButton) txtSearch.getComponent(0)).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtSearch.setText(null);
+                filter();
+            }
+        });
         btnClearFilters.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -134,7 +147,7 @@ public class TabRecordQuotations {
         model = new QuotationAbstractModel(quotations);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
-        QuotationCellRendered.setCellRenderer(table, null);
+        QuotationCellRendered.setCellRenderer(table, listaFiltros);
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorQuotation(false));
         table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorQuotation(true));
         modeloOrdenado = new TableRowSorter<>(model);
@@ -143,6 +156,16 @@ public class TabRecordQuotations {
 
     private void filter() {
         filtros.clear();
+        String busqueda = txtSearch.getText().trim();
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7));
+        listaFiltros.put(0, busqueda);
+        listaFiltros.put(1, busqueda);
+        listaFiltros.put(2, busqueda);
+        listaFiltros.put(3, busqueda);
+        listaFiltros.put(4, busqueda);
+        listaFiltros.put(5, busqueda);
+        listaFiltros.put(6, busqueda);
+        listaFiltros.put(7, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
             filtros.add(RowFilter.regexFilter(branch.getName(), 3));
@@ -275,21 +298,24 @@ public class TabRecordQuotations {
         tabPane.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnClearFilters = new JButton();
         btnClearFilters.setText("Limpiar filtros");
-        panel4.add(btnClearFilters, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.add(btnClearFilters, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         Font label2Font = this.$$$getFont$$$(null, Font.BOLD, -1, label2.getFont());
         if (label2Font != null) label2.setFont(label2Font);
         label2.setText("Sucursal:");
-        panel4.add(label2, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel4.add(label2, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbbBranch = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
         defaultComboBoxModel2.addElement("TODAS");
         defaultComboBoxModel2.addElement("LIMA");
         defaultComboBoxModel2.addElement("CUSCO");
         cbbBranch.setModel(defaultComboBoxModel2);
-        panel4.add(cbbBranch, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final Spacer spacer2 = new Spacer();
-        panel4.add(spacer2, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel4.add(cbbBranch, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(90, -1), new Dimension(250, -1), new Dimension(250, -1), 0, false));
+        txtSearch = new FlatTextField();
+        txtSearch.setPlaceholderText("Busqueda...");
+        txtSearch.setShowClearButton(true);
+        txtSearch.setText("");
+        panel4.add(txtSearch, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**
@@ -313,4 +339,5 @@ public class TabRecordQuotations {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }
