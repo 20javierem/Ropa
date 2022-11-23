@@ -68,7 +68,7 @@ public class FLogin extends JFrame {
         pack();
         lbl.setCursor(new Cursor(Cursor.HAND_CURSOR));
         ckRememberUser.setCursor(new Cursor(Cursor.HAND_CURSOR));
-
+        btnInitSession.setCursor(new Cursor(Cursor.HAND_CURSOR));
         setLocationRelativeTo(null);
         Babas.company.refresh();
         if (Utilities.iconCompanyx255x220 != null) {
