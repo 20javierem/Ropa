@@ -546,7 +546,6 @@ public class Excel {
         hssfCell=header.createCell(0);
         hssfCell.setCellStyle(headerStyle);
         hssfCell.setCellValue("NOMBRE");
-        System.out.println(stades.size());
         stades.forEach(stade -> {
             HSSFRow row = estados.createRow(estados.getLastRowNum()+1);
             row.createCell(0).setCellValue(stade.getName());
