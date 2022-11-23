@@ -115,7 +115,7 @@ public class DCompany extends JDialog {
                     Babas.company.setLogo(nameImage);
                     Image logo = Utilities.getImage(nameImage, true);
                     if (logo != null) {
-                        Utilities.iconCompanyx255x220 = new ImageIcon(DCrop.getImage(bufferedImage, 255.00, 220.00));
+                        Utilities.iconCompanyx255x220 = new ImageIcon(DCrop.getImage(bufferedImage, 255.00, 200.00));
                         Utilities.iconCompanyx420x420 = new ImageIcon(DCrop.getImage(bufferedImage, 420.00, 420.00));
                         lblLogo.setIcon(Utilities.iconCompanyx420x420);
 

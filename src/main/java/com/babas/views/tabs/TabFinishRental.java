@@ -1,5 +1,6 @@
 package com.babas.views.tabs;
 
+import com.babas.controllers.Rentals;
 import com.babas.custom.TabPane;
 import com.babas.models.Movement;
 import com.babas.models.Rental;

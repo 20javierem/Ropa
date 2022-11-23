@@ -251,10 +251,8 @@ public class Rental extends Babas {
         super.save();
         numberRental=1000+id;
         super.save();
-        if(reserve!=null){
+        if(active&&reserve!=null){
             reserve.setActive(false);
-            reserve.save();
-            reserve.setRental(Rental.this);
             reserve.save();
             FPrincipal.reservesActives.remove(reserve);
         }

@@ -12,7 +12,7 @@ import java.util.Properties;
 
 public class Propiedades {
     private Properties properties;
-    private final File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
+    private final File carpeta = new File(System.getProperty("user.home") + "/.clothes");
     private File archivo;
 
     public Propiedades(){
@@ -27,7 +27,6 @@ public class Propiedades {
         archivo= new File(carpeta.getAbsolutePath()+"/config.properties");
         FileInputStream inputStream;
         if (!carpeta.exists()) {
-            System.out.println("Primera ves");
             carpeta.mkdir();
         }
         if(!archivo.exists()){

@@ -118,9 +118,9 @@ public class Utilities {
     public static boolean newImage(InputStream imageImput,String imageName,boolean logo){
         if(propiedades.getLocalImages().equals("local")){
             String home = System.getProperty("user.home");
-            String directoryName = home + "/.Tienda-Ropa/products/";
+            String directoryName = home + "/.clothes/products/";
             if(logo){
-                directoryName = home + "/.Tienda-Ropa/";
+                directoryName = home + "/.clothes/";
             }
             File directory = new File(directoryName);
             if (!directory.exists()) {
@@ -139,7 +139,12 @@ public class Utilities {
         }else if(consult){
             if(openConection()){
                 try {
-                    SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                    SmbDirectory dirProducts;
+                    if(logo){
+                        dirProducts  = new SmbDirectory(smbConnection);
+                    }else{
+                        dirProducts  = new SmbDirectory(smbConnection, "products/");
+                    }
                     SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
                     OutputStream out = file.getOutputStream();
                     IOUtils.copy(imageImput, out);
@@ -159,15 +164,20 @@ public class Utilities {
     public static Image getImage(String imageName,boolean logo){
         if(propiedades.getLocalImages().equals("local")){
             String home = System.getProperty("user.home");
-            String directoryName = home + "/.Tienda-Ropa/products/";
+            String directoryName = home + "/.clothes/products/";
             if(logo){
-                directoryName = home + "/.Tienda-Ropa/";
+                directoryName = home + "/.clothes/";
             }
             return new ImageIcon(directoryName+imageName).getImage();
         }else if(consult){
             if(openConection()){
                 try {
-                    SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                    SmbDirectory dirProducts;
+                    if(logo){
+                        dirProducts  = new SmbDirectory(smbConnection);
+                    }else{
+                        dirProducts  = new SmbDirectory(smbConnection, "products/");
+                    }
                     SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
                     return ImageIO.read(file.getInputStream());
                 }catch (IOException e) {
@@ -184,8 +194,8 @@ public class Utilities {
             if(consult){
                 if(openConection()){
                     try {
-                        File carpeta = new File(System.getProperty("user.home") + "/.Tienda-Ropa");
-                        SmbDirectory dirProducts = new SmbDirectory(smbConnection, "products/");
+                        File carpeta = new File(System.getProperty("user.home") + "/.clothes");
+                        SmbDirectory dirProducts = new SmbDirectory(smbConnection);
                         SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
                         OutputStream out = new FileOutputStream(carpeta.getAbsolutePath()+"/"+imageName);
                         IOUtils.copy(file.getInputStream(), out);

@@ -27,7 +27,7 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-sale.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -86,7 +86,7 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-quotation.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -145,7 +145,7 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-reserve.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -204,7 +204,7 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -268,7 +268,7 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental-finish.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -332,7 +332,7 @@ public class UtilitiesReports {
 
     public static void generateReportSales(List<Sale> sales,Date dateStart,Date dateEnd,Double totalSaleCash,Double totalSaleTransfer) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportSales.jasper");
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -369,7 +369,7 @@ public class UtilitiesReports {
     }
     public static void generateReportRentals(List<Rental> sales,Date dateStart,Date dateEnd,Double totalSaleCash,Double totalSaleTransfer) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportRentals.jasper");
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -406,7 +406,7 @@ public class UtilitiesReports {
     }
     public static void generateReportReserves(List<Reserve> sales,Date dateStart,Date dateEnd,Double totalSaleCash,Double totalSaleTransfer) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportReserves.jasper");
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -444,7 +444,7 @@ public class UtilitiesReports {
 
     public static void generateReportTransfer(Transfer transfer) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportTransfer.jasper");
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -481,7 +481,7 @@ public class UtilitiesReports {
     }
     public static void generateReportTransfers(List<Transfer> transfers,Date dateStart,Date dateEnd) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportTransfers.jasper");
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
@@ -516,7 +516,7 @@ public class UtilitiesReports {
     }
     public static void generateReportBoxSesssion(BoxSession boxSession) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportBoxSession.jasper");
-        File file= new File(System.getProperty("user.home") + "/.Tienda-Ropa" + "/" + Babas.company.getLogo());
+        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
         try {
             if(pathReport!=null){
