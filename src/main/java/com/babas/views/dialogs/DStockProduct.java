@@ -79,9 +79,6 @@ public class DStockProduct extends JDialog {
         boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?, esta acción no se puede deshacer", "Actualizar datos de Stock", JOptionPane.YES_NO_OPTION) == 0;
         if (si) {
             stock.save();
-            stock.getProduct().refresh();
-            stock.getProduct().calculateStockTotal();
-            stock.getProduct().save();
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Cambios guardados");
             onHecho();
         }

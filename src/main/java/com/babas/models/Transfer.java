@@ -152,10 +152,6 @@ public class Transfer extends Babas {
             case 1:
                 acept=true;
                 getDetailTransfers().forEach(detailTransfer -> {
-                    if(Objects.equals(getSource().getId(), getDestiny().getId())){
-                        detailTransfer.getProduct().setStockTotal(detailTransfer.getProduct().getStockTotal()+detailTransfer.getQuantity());
-                        detailTransfer.getProduct().save();
-                    }
                     Stock stock= Stocks.getStock(getDestiny(),detailTransfer.getProduct());
                     if(stock==null){
                         stock=new Stock();
@@ -171,10 +167,6 @@ public class Transfer extends Babas {
                 break;
             case 2:
                 if(Objects.equals(getSource().getId(), getDestiny().getId())){
-                    getDetailTransfers().forEach(detailTransfer -> {
-                        detailTransfer.getProduct().setStockTotal(detailTransfer.getProduct().getStockTotal()-detailTransfer.getQuantity());
-                        detailTransfer.getProduct().save();
-                    });
                     getDetailTransfers().forEach(detailTransfer -> {
                         Stock stock= Stocks.getStock(getSource(),detailTransfer.getProduct());
                         stock.refresh();

@@ -265,8 +265,6 @@ public class Excel {
                                     stock.setTimesRented((int)row.getCell(5).getNumericCellValue());
                                     stock.setOnReserve((int)row.getCell(6).getNumericCellValue());
                                     stock.save();
-                                    product.calculateStockTotal();
-                                    product.save();
                                 }
                         }
                     }

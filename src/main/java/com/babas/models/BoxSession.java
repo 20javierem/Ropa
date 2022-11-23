@@ -92,10 +92,6 @@ public class BoxSession extends Babas {
         return amountToDelivered;
     }
 
-    public void setAmountToDelivered(Double amountToDelivered) {
-        this.amountToDelivered = amountToDelivered;
-    }
-
     public Double getAmountDelivered() {
         return amountDelivered;
     }
@@ -114,10 +110,6 @@ public class BoxSession extends Babas {
 
     public List<Rental> getRentals() {
         return rentals;
-    }
-
-    public void setRentals(List<Rental> rentals) {
-        this.rentals = rentals;
     }
 
     public List<Reserve> getReserves() {

@@ -100,7 +100,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 movement.setBoxSesion(Babas.boxSession);
                                 movement.setDescription("Alquiler cancelado NRO: "+rental.getNumberRental());
                                 movement.save();
-                                movement.getBoxSesion().getMovements().add(movement);
+                                movement.getBoxSesion().getMovements().add(0,movement);
                                 movement.getBoxSesion().calculateTotals();
                                 FPrincipal.rentalsActives.remove(rental);
                                 Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getNumberRental() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));

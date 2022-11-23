@@ -90,7 +90,7 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
                                     movement.setBoxSesion(Babas.boxSession);
                                     movement.setDescription("Reserva cancelada NRO: "+reserve.getNumberReserve());
                                     movement.save();
-                                    movement.getBoxSesion().getMovements().add(movement);
+                                    movement.getBoxSesion().getMovements().add(0,movement);
                                     movement.getBoxSesion().calculateTotals();
                                     FPrincipal.reservesActives.remove(reserve);
                                     Utilities.getLblIzquierda().setText("Reserva cancelada Nro. " + reserve.getNumberReserve() + " : " + Utilities.formatoFechaHora.format(reserve.getUpdated()));

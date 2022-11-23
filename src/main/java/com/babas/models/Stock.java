@@ -115,5 +115,8 @@ public class Stock extends Babas {
         }
         updated=new Date();
         super.save();
+        product.refresh();
+        product.calculateStockTotal();
+        product.save();
     }
 }

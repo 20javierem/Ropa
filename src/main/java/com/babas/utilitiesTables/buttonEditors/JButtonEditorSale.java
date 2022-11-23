@@ -61,7 +61,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                             movement.setBoxSesion(Babas.boxSession);
                             movement.setDescription("Venta cancelada NRO: "+sale.getNumberSale());
                             movement.save();
-                            movement.getBoxSesion().getMovements().add(movement);
+                            movement.getBoxSesion().getMovements().add(0,movement);
                             movement.getBoxSesion().calculateTotals();
                             Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getNumberSale() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));

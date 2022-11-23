@@ -63,6 +63,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                             comboBox.removeItem(branch);
                             int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), comboBox, "Transferencia de productos", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Transferir", "Cancelar"}, "Transferir");
                             if (option == JOptionPane.OK_OPTION) {
+                                table.setCursor(new Cursor(Cursor.WAIT_CURSOR));
                                 Transfer transfer=new Transfer();
                                 transfer.setState(1);
                                 transfer.setSource(branch);
@@ -87,6 +88,9 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                     stock1.setOnReserve(stock1.getOnReserve()+stock.getOnReserve());
                                     stock1.setOnRental(stock1.getOnRental()+stock.getOnRental());
                                     stock1.save();
+                                    stock.getProduct().getStocks().remove(stock);
+                                    stock.setActive(false);
+                                    stock.save();
                                 });
                                 branch.getTransfers().forEach(transfer1 -> {
                                     transfer1.setState(2);
@@ -96,16 +100,12 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                     user.getBranchs().remove(branch);
                                     user.save();
                                 });
-                                branch.getStocks().forEach(stock -> {
-                                    stock.getProduct().getStocks().remove(stock);
-                                    stock.setActive(false);
-                                    stock.save();
-                                });
                                 FPrincipal.branchs.remove(branch);
                                 FPrincipal.branchesWithAll.remove(branch);
                                 branch.setActive(false);
                                 branch.save();
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Sucursal eliminada");
+                                table.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                             }
                         }else{
                             FPrincipal.branchs.remove(branch);
