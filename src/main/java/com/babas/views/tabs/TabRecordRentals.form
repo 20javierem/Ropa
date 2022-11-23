@@ -199,7 +199,8 @@
                   <model>
                     <item value="TODAS"/>
                     <item value="EN ALQUILER"/>
-                    <item value="FINALIZADA"/>
+                    <item value="COMPLETADA"/>
+                    <item value="CANCELADA"/>
                   </model>
                 </properties>
               </component>

@@ -37,7 +37,7 @@ public class Rental extends Babas {
     private Long numberRental;
     @ManyToOne
     private Branch branch;
-    private boolean active=true;
+    private Integer active=0;
     private boolean cash;
     private Double total=0.0;
     private Double discount=0.0;
@@ -111,11 +111,11 @@ public class Rental extends Babas {
         this.branch = branch;
     }
 
-    public boolean isActive() {
+    public Integer isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 
@@ -225,7 +225,7 @@ public class Rental extends Babas {
         return client==null?"--":client.getNames();
     }
     public String getStringStade(){
-        return active?"En alquiler":"Finalizada";
+        return active==0?"EN ALQUILER":active==1?"COMPLETADA":"CANCELADA";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);
@@ -237,7 +237,7 @@ public class Rental extends Babas {
         return Utilities.moneda.format(totalCurrent);
     }
     public String getStringType(){
-        return cash?"Efectivo":"Transferencia";
+        return cash?"EFECTIVO":"TRANSFERENCIA";
     }
     public String getStringMulta(){
         return Utilities.moneda.format(getPenalty());
@@ -251,8 +251,8 @@ public class Rental extends Babas {
         super.save();
         numberRental=1000+id;
         super.save();
-        if(active&&reserve!=null){
-            reserve.setActive(false);
+        if(active==0&&reserve!=null){
+            reserve.setActive(1);
             reserve.save();
             FPrincipal.reservesActives.remove(reserve);
         }

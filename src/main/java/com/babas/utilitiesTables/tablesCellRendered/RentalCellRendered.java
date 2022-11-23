@@ -28,9 +28,9 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component component=super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         if(table.getColumnClass(column).equals(JButton.class)){
-            table.getColumnModel().getColumn(column).setMaxWidth(85);
-            table.getColumnModel().getColumn(column).setMinWidth(85);
-            table.getColumnModel().getColumn(column).setPreferredWidth(85);
+            table.getColumnModel().getColumn(column).setMaxWidth(25);
+            table.getColumnModel().getColumn(column).setMinWidth(25);
+            table.getColumnModel().getColumn(column).setPreferredWidth(25);
             JButton button=(JButton) value;
             button.setBackground(component.getBackground());
             button.setForeground(component.getForeground());

@@ -115,7 +115,7 @@ public class DetailReserve extends Babas {
     public void save() {
         Stock stock= Stocks.getStock(getReserve().getBranch(),getProduct());
         stock.refresh();
-        if(getReserve().isActive()){
+        if(getReserve().isActive()==0){
             stock.setOnReserve(stock.getOnReserve()+getQuantity()*getQuantityPresentation());
         }else{
             stock.setOnReserve(stock.getOnReserve()-getQuantity()*getQuantityPresentation());

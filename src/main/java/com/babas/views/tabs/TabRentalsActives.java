@@ -103,8 +103,9 @@ public class TabRentalsActives {
         UtilitiesTables.headerNegrita(table);
         RentalCellRendered.setCellRenderer(table, listaFiltros);
         table.removeColumn(table.getColumn("TOTAL"));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental(true));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental("cancel"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorRental("detail"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -207,7 +208,7 @@ public class TabRentalsActives {
         cbbType.setModel(defaultComboBoxModel2);
         panel3.add(cbbType, new GridConstraints(0, 4, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtSearch = new FlatTextField();
-        txtSearch.setPlaceholderText("Producto...");
+        txtSearch.setPlaceholderText("Busqueda...");
         txtSearch.setShowClearButton(true);
         txtSearch.setText("");
         panel3.add(txtSearch, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -234,4 +235,5 @@ public class TabRentalsActives {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

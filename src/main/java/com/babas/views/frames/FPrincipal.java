@@ -272,7 +272,7 @@ public class FPrincipal extends JFrame {
                 case "ALQUILER":
                     Rental rental = Rentals.getByNumber(number);
                     if (rental != null) {
-                        if (rental.isActive()) {
+                        if (rental.isActive() == 0) {
                             int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                             if (index == 0) {
                                 UtilitiesReports.generateTicketRental(true, rental, false);

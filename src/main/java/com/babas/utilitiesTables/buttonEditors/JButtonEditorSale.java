@@ -49,30 +49,26 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                 }
             }else{
                 if(Babas.boxSession.getId()!=null){
-                    if(sale.isActive()){
-                        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
-                        if(si){
-                            sale.refresh();
-                            if(sale.isActive()){
-                                sale.setActive(false);
-                                sale.save();
-                                Movement movement=new Movement();
-                                movement.setAmount(-sale.getTotalCurrent());
-                                movement.setEntrance(false);
-                                movement.setBoxSesion(Babas.boxSession);
-                                movement.setDescription("VENTA CANCELADA NRO: "+sale.getNumberSale());
-                                movement.save();
-                                movement.getBoxSesion().getMovements().add(movement);
-                                movement.getBoxSesion().calculateTotals();
-                                Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getNumberSale() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
-                                Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
-                            }else{
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"MENSAJE","La venta ya fué cancelada por otro usuario");
-                            }
+                    boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
+                    if(si){
+                        sale.refresh();
+                        if(sale.isActive()){
+                            sale.setActive(false);
+                            sale.save();
+                            Movement movement=new Movement();
+                            movement.setAmount(-sale.getTotalCurrent());
+                            movement.setEntrance(false);
+                            movement.setBoxSesion(Babas.boxSession);
+                            movement.setDescription("Venta cancelada NRO: "+sale.getNumberSale());
+                            movement.save();
+                            movement.getBoxSesion().getMovements().add(movement);
+                            movement.getBoxSesion().calculateTotals();
+                            Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getNumberSale() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
+                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                         }
-                    }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                     }
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");

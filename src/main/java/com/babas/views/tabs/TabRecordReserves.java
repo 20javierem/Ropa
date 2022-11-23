@@ -179,7 +179,8 @@ public class TabRecordReserves {
         UtilitiesTables.headerNegrita(table);
         ReserveCellRendered.setCellRenderer(table, null);
         table.removeColumn(table.getColumn(""));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve(false));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve("cancel"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorReserve("ticket"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -188,13 +189,13 @@ public class TabRecordReserves {
         filtros.clear();
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(branch.getName(), 3));
+            filtros.add(RowFilter.regexFilter(branch.getName(), 2));
         }
         if (cbbType.getSelectedIndex() != 0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 5));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));
         }
         if (cbbState.getSelectedIndex() != 0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 6));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 5));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
@@ -368,7 +369,8 @@ public class TabRecordReserves {
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("TODAS");
         defaultComboBoxModel3.addElement("REALIZADA");
-        defaultComboBoxModel3.addElement("FINALIZADA");
+        defaultComboBoxModel3.addElement("COMPLETADA");
+        defaultComboBoxModel3.addElement("CANCELADA");
         cbbState.setModel(defaultComboBoxModel3);
         panel4.add(cbbState, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
@@ -412,4 +414,5 @@ public class TabRecordReserves {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }

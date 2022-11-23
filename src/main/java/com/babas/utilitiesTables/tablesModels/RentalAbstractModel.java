@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL","",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","TOTAL","MULTA","TOTAL","","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class,JButton.class,JButton.class};
     private final List<Rental> list;
 
     public RentalAbstractModel(List<Rental> list){
@@ -53,9 +53,9 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 3:
                 return rental.getClient().getNames();
             case 4:
-                return rental.isCash() ? "EFECTIVO" : "TRANSFERENCIA";
+                return rental.getStringType();
             case 5:
-                return rental.isActive() ? "EN ALQUILER" : "FINALIZADA";
+                return rental.getStringStade();
             case 6:
                 return Utilities.moneda.format(rental.getTotal());
             case 7:
@@ -69,9 +69,11 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 11:
                 return Utilities.moneda.format(rental.getTotalWithDiscount());
             case 12:
-                return new JButtonAction("x16/mostrarContraseña.png","Finalizar");
+                return new JButtonAction("x16/checkbox.png");
+            case 13:
+                return new JButtonAction("x16/mostrarContraseña.png");
             default:
-                return new JButtonAction("x16/mostrarContraseña.png","Ticket");
+                return new JButtonAction("x16/remove.png");
         }
     }
 

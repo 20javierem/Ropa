@@ -134,8 +134,9 @@ public class TabBoxSesion {
         tableSales.setModel(saleAbstractModel);
         UtilitiesTables.headerNegrita(tableSales);
         SaleCellRendered.setCellRenderer(tableSales,null);
+        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
         tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-1));
-        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(true));
+
 
         movementAbstractModel=new MovementAbstractModel(boxSession.getMovements());
         tableMovements.setModel(movementAbstractModel);
@@ -146,17 +147,19 @@ public class TabBoxSesion {
         tableRentals.setModel(rentalAbstractModel);
         UtilitiesTables.headerNegrita(tableRentals);
         RentalCellRendered.setCellRenderer(tableRentals,null);
+        tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
+        tableRentals.removeColumn(tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount()-1));
         tableRentals.removeColumn(tableRentals.getColumn(""));
         tableRentals.removeColumn(tableRentals.getColumn("MULTA"));
-        tableRentals.removeColumn(tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount()-2));
-        tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
 
         reserveAbstractModel=new ReserveAbstractModel(boxSession.getReserves());
         tableReserves.setModel(reserveAbstractModel);
         UtilitiesTables.headerNegrita(tableReserves);
         ReserveCellRendered.setCellRenderer(tableReserves,null);
+        tableReserves.getColumnModel().getColumn(tableReserves.getColumnCount() - 2).setCellEditor(new JButtonEditorReserve("ticket"));
+        tableReserves.removeColumn(tableReserves.getColumnModel().getColumn(tableReserves.getColumnCount()-1));
         tableReserves.removeColumn(tableReserves.getColumn(""));
-        tableReserves.getColumnModel().getColumn(tableReserves.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve(false));
+
     }
     private void init(){
         if(boxSession.getId().equals(Babas.boxSession.getId())){

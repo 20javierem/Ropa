@@ -294,7 +294,7 @@ public class UtilitiesReports {
 
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
-                parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()+rental.getWarranty()));
+                parameters.put("subtotal",Utilities.moneda.format(rental.getTotalWithDiscount()));
                 parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
                 parameters.put("subtotal2",Utilities.moneda.format(rental.getTotalCurrent() - rental.getWarranty()));
                 parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));

@@ -69,7 +69,7 @@ public class Rentals extends Babas {
         root=criteria.from(Rental.class);
         criteria.select(root).where(builder.and(
                 builder.equal(root.get("branch"),branch),
-                builder.isTrue(root.get("active"))
+                builder.equal(root.get("active"),0)
         )).orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }

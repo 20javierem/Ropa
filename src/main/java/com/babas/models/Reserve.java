@@ -39,7 +39,7 @@ public class Reserve extends Babas {
     private Double advance=0.0;
     private Double toCancel=0.0;
     private Long numberReserve;
-    private boolean active=true;
+    private Integer active=0;
     private boolean cash;
     private String observation;
     public String getObservation() {
@@ -136,11 +136,11 @@ public class Reserve extends Babas {
         this.started = started;
     }
 
-    public boolean isActive() {
+    public Integer isActive() {
         return active;
     }
 
-    public void setActive(boolean active) {
+    public void setActive(Integer active) {
         this.active = active;
     }
 
@@ -158,13 +158,13 @@ public class Reserve extends Babas {
         return client==null?"--":client.getNames();
     }
     public String getStringStade(){
-        return active?"Realizado":"Cancelado";
+        return active==0?"REALIZADA":active==1?"COMPLETADA":"CANCELADA";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);
     }
     public String getStringType(){
-        return cash?"Efectivo":"Transferencia";
+        return cash?"EFECTIVO":"TRANSFERENCIA";
     }
     public String getStringAdvance(){return Utilities.moneda.format(advance);}
     public String getStringToCancel(){return Utilities.moneda.format(toCancel);}

@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 public class ReserveAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","TOTAL","ADELANTO","POR PAGAR","",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, String.class,String.class,String.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","TOTAL","ADELANTO","POR PAGAR","","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, String.class,String.class,String.class,JButton.class,JButton.class,JButton.class};
     private final List<Reserve> list;
 
     public ReserveAbstractModel(List<Reserve> list){
@@ -53,9 +53,9 @@ public class ReserveAbstractModel extends AbstractTableModel {
             case 3:
                 return reserve.getClient().getNames();
             case 4:
-                return reserve.isCash()?"EFECTIVO":"TRANSFERENCIA";
+                return reserve.getStringType();
             case 5:
-                return reserve.isActive()?"REALIZADA":"FINALIZADA";
+                return reserve.getStringStade();
             case 6:
                 return Utilities.moneda.format(reserve.getTotal());
             case 7:
@@ -63,9 +63,11 @@ public class ReserveAbstractModel extends AbstractTableModel {
             case 8:
                 return Utilities.moneda.format(reserve.getToCancel());
             case 9:
-                return new JButtonAction("x16/mostrarContraseña.png","Completar");
+                return new JButtonAction("x16/checkbox.png");
+            case 10:
+                return new JButtonAction("x16/mostrarContraseña.png");
             default:
-                return new JButtonAction("x16/mostrarContraseña.png","Ticket");
+                return new JButtonAction("x16/remove.png");
         }
     }
 

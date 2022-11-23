@@ -11,6 +11,7 @@ import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
+import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
 import com.babas.utilitiesTables.tablesCellRendered.RentalCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
@@ -182,7 +183,8 @@ public class TabRecordRentals {
         UtilitiesTables.headerNegrita(table);
         RentalCellRendered.setCellRenderer(table, null);
         table.removeColumn(table.getColumn(""));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental(false));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental("cancel"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
         table.removeColumn(table.getColumn("TOTAL"));
@@ -372,7 +374,8 @@ public class TabRecordRentals {
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("TODAS");
         defaultComboBoxModel3.addElement("EN ALQUILER");
-        defaultComboBoxModel3.addElement("FINALIZADA");
+        defaultComboBoxModel3.addElement("COMPLETADA");
+        defaultComboBoxModel3.addElement("CANCELADA");
         cbbState.setModel(defaultComboBoxModel3);
         panel4.add(cbbState, new GridConstraints(0, 5, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
@@ -416,5 +419,6 @@ public class TabRecordRentals {
         Font fontWithFallback = isMac ? new Font(font.getFamily(), font.getStyle(), font.getSize()) : new StyleContext().getFont(font.getFamily(), font.getStyle(), font.getSize());
         return fontWithFallback instanceof FontUIResource ? fontWithFallback : new FontUIResource(fontWithFallback);
     }
+
 }
 

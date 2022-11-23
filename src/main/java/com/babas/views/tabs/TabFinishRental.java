@@ -107,11 +107,11 @@ public class TabFinishRental {
                 boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Alquiler", JOptionPane.YES_NO_OPTION) == 0;
                 if (si) {
                     rental.refresh();
-                    if (rental.isActive()) {
+                    if (rental.isActive() == 0) {
                         rental.setPenalty((Double) spinnerPenalty.getValue());
                         rental.calculateTotals();
                         rental.setDelivery(jDateFinish.getDate());
-                        rental.setActive(false);
+                        rental.setActive(1);
                         rental.setObservation(txtObservation.getText().trim());
                         rental.save();
                         Movement movement = new Movement();
@@ -130,8 +130,10 @@ public class TabFinishRental {
                         Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getNumberRental() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
+                    } else if (rental.isActive() == 1) {
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El alquiler ya está finalizado");
                     } else {
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "MENSAJE", "El alquiler ya fue finalizado por otro usuario");
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El alquiler está cancelado");
                     }
                     FPrincipal.rentalsActives.remove(rental);
                     btnFinishRental.setVisible(false);
@@ -157,7 +159,7 @@ public class TabFinishRental {
         txtMail.setText(rental.getClient().getMail());
         txtObservation.setText(rental.getObservation());
         table.removeColumn(table.getColumn(""));
-        if (!rental.isActive()) {
+        if (rental.isActive() != 0) {
             spinnerPenalty.setValue(rental.getPenalty());
             jDateFinish.setDate(rental.getDelivery());
             btnFinishRental.setVisible(false);
