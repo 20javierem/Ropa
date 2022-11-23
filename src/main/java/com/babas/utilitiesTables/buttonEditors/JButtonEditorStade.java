@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.StadeAbstractModel;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.dialogs.DStade;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -51,6 +52,8 @@ public class JButtonEditorStade extends AbstractCellEditor implements TableCellE
                     FPrincipal.stadesWithAll.remove(stade);
                     stade.setActive(false);
                     stade.save();
+                    Utilities.getLblIzquierda().setText("Estado eliminado : "+Utilities.formatoFechaHora.format(stade.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Estado eliminado");
                 }
             }
             Utilities.updateDialog();

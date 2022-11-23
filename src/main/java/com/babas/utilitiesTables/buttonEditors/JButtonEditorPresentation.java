@@ -64,6 +64,7 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
                             presentation.setActive(false);
                             presentation.save();
                         }
+                        Utilities.getLblIzquierda().setText("Presentación eliminada : "+Utilities.formatoFechaHora.format(presentation.getUpdated()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Presentación eliminada");
                     }
                 }else{

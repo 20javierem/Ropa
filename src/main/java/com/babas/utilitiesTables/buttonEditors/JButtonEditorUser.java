@@ -61,6 +61,8 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
                                 user.setActive(false);
                                 user.save();
                                 FPrincipal.users.remove(user);
+                                Utilities.getLblIzquierda().setText("Usuario: "+user.getUserName()+" eliminado : "+Utilities.formatoFechaHora.format(user.getUpdated()));
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Usuario eliminado");
                             }
                         }else{
                             Notify.sendNotify(Utilities.getJFrame(),Notify.Type.WARNING,Notify.Location.TOP_CENTER,"ERROR","No puede eliminar a todos los usuarios");

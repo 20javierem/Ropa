@@ -104,6 +104,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 FPrincipal.branchesWithAll.remove(branch);
                                 branch.setActive(false);
                                 branch.save();
+                                Utilities.getLblIzquierda().setText("Sucursal: "+branch.getName()+" eliminada : "+Utilities.formatoFechaHora.format(branch.getUpdated()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Sucursal eliminada");
                                 table.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                             }

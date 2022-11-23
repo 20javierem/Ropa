@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.DimentionAbstractModel;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.dialogs.DDimention;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -51,6 +52,8 @@ public class JButtonEditorDimention extends AbstractCellEditor implements TableC
                     FPrincipal.dimentionsWithAll.remove(dimention);
                     dimention.setActive(false);
                     dimention.save();
+                    Utilities.getLblIzquierda().setText("Dimensión eliminada : "+Utilities.formatoFechaHora.format(dimention.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Dimensión eliminada");
                 }
             }
             Utilities.updateDialog();

@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.SexAbstractModel;
 import com.babas.views.dialogs.DBrand;
 import com.babas.views.dialogs.DSex;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -51,6 +52,8 @@ public class JButtonEditorBrand extends AbstractCellEditor implements TableCellE
                     FPrincipal.brandsWithAll.remove(brand);
                     brand.setActive(false);
                     brand.save();
+                    Utilities.getLblIzquierda().setText("Marca eliminada : "+Utilities.formatoFechaHora.format(brand.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Marca eliminada");
                 }
             }
             Utilities.updateDialog();

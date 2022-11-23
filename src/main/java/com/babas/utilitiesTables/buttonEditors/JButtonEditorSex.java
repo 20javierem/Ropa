@@ -9,6 +9,7 @@ import com.babas.views.dialogs.DAllSexs;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.dialogs.DSex;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -52,6 +53,8 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
                     FPrincipal.sexsWithAll.remove(sex);
                     sex.setActive(false);
                     sex.save();
+                    Utilities.getLblIzquierda().setText("Género eliminado : "+Utilities.formatoFechaHora.format(sex.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Género eliminado");
                 }
             }
             Utilities.updateDialog();

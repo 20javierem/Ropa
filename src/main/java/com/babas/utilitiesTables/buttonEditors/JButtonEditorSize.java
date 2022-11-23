@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.SizeAbstractModel;
 import com.babas.views.dialogs.DCategory;
 import com.babas.views.dialogs.DSize;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -51,6 +52,8 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
                     FPrincipal.sizesWithAll.remove(size);
                     size.setActive(false);
                     size.save();
+                    Utilities.getLblIzquierda().setText("Talla eliminada : "+Utilities.formatoFechaHora.format(size.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Talla eliminada");
                 }
             }
             Utilities.updateDialog();

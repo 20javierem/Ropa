@@ -8,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
 import com.babas.views.dialogs.DCategory;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -51,6 +52,8 @@ public class JButtonEditorCategory extends AbstractCellEditor implements TableCe
                     FPrincipal.categoriesWithAll.remove(category);
                     category.setActive(false);
                     category.save();
+                    Utilities.getLblIzquierda().setText("Categoría eliminada : "+Utilities.formatoFechaHora.format(category.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Categoría eliminada");
                 }
             }
             Utilities.updateDialog();

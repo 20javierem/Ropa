@@ -61,6 +61,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                         product.getStyle().getProducts().remove(product);
                         Utilities.updateDialog();
                         Utilities.getTabbedPane().updateTab();
+                        Utilities.getLblIzquierda().setText("Producto: "+product.getBarcode()+" eliminado : "+Utilities.formatoFechaHora.format(product.getUpdated()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Producto eliminado");
                     }
                     break;

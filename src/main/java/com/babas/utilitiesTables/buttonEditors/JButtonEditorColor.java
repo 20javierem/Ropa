@@ -5,6 +5,7 @@ import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.frames.FPrincipal;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -48,6 +49,8 @@ public class JButtonEditorColor extends AbstractCellEditor implements TableCellE
                     FPrincipal.colorsWithAll.remove(color);
                     color.setActive(false);
                     color.save();
+                    Utilities.getLblIzquierda().setText("Color eliminado : "+Utilities.formatoFechaHora.format(color.getUpdated()));
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Color eliminado");
                 }
             }
             Utilities.updateDialog();

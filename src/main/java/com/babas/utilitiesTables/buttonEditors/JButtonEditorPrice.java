@@ -59,6 +59,7 @@ public class JButtonEditorPrice extends AbstractCellEditor implements TableCellE
                             price.setActive(false);
                             price.save();
                         }
+                        Utilities.getLblIzquierda().setText("Precio eliminado : "+Utilities.formatoFechaHora.format(price.getUpdated()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Precio eliminado");
                     }
                 }else{
