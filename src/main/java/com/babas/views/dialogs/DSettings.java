@@ -488,7 +488,7 @@ public class DSettings extends JDialog {
         final JLabel label7 = new JLabel();
         Font label7Font = this.$$$getFont$$$(null, Font.BOLD, -1, label7.getFont());
         if (label7Font != null) label7.setFont(label7Font);
-        label7.setText("Imagenes:");
+        label7.setText("Imágenes:");
         panel4.add(label7, new GridConstraints(5, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel8 = new JPanel();
         panel8.setLayout(new GridLayoutManager(4, 4, new Insets(0, 0, 0, 0), -1, -1));
