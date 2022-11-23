@@ -48,9 +48,13 @@ public class JButtonEditorDetailReserve extends DefaultCellEditor {
             });
         }else{
             comboBox.setEditable(true);
-            detailReserve.getPresentation().getPrices().forEach(price -> {
-                comboBox.addItem(price.getPrice());
-            });
+            if(detailReserve.getPresentation()!=null){
+                detailReserve.getPresentation().getPrices().forEach(price -> {
+                    comboBox.addItem(price.getPrice());
+                });
+            }else{
+                comboBox.addItem(detailReserve.getPrice());
+            }
             comboBox.setSelectedItem(detailReserve.getPrice());
             comboBox.addActionListener(e -> {
                 try{
