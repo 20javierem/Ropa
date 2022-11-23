@@ -186,9 +186,7 @@ public class TabRecordSales {
 
     private void loadTable() {
         sales = new ArrayList<>();
-        for (Branch branch : Babas.user.getBranchs()) {
-            sales.addAll(Sales.getAfter(branch, new Date()));
-        }
+        sales.addAll(Sales.getAfter(new Date()));
         model = new SaleAbstractModel(sales);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -252,27 +250,14 @@ public class TabRecordSales {
         }
         if (start != null && end != null) {
             sales.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(Sales.getByRangeOfDate(branch, start, end));
-            }
+            sales.addAll(Sales.getByRangeOfDate(start, end));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
             }
             model.fireTableDataChanged();
         } else if (start != null) {
             sales.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(Sales.getAfter(branch, start));
-            }
-            if (show) {
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
-            }
-            model.fireTableDataChanged();
-        } else if (end != null) {
-            sales.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                sales.addAll(Sales.getBefore(branch, end));
-            }
+            sales.addAll(Sales.getAfter(start));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
             }

@@ -6,6 +6,7 @@ import com.babas.models.Movement;
 import com.babas.models.Rental;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.DetailRentalCellRendered;
 import com.babas.utilitiesTables.tablesModels.DetailRentalAbstractModel;
@@ -130,6 +131,24 @@ public class TabFinishRental {
                         Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getNumberRental() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
+                        if (Utilities.propiedades.getPrintTicketRentalFinish().equals("always")) {
+                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketRentalFinish(true, rental, true);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketRentalFinish(false, rental, true);
+                            }
+                        } else if (Utilities.propiedades.getPrintTicketRentalFinish().equals("question")) {
+                            si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de alquiler", JOptionPane.YES_NO_OPTION) == 0;
+                            if (si) {
+                                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                                if (index == 0) {
+                                    UtilitiesReports.generateTicketRentalFinish(true, rental, true);
+                                } else if (index == 1) {
+                                    UtilitiesReports.generateTicketRentalFinish(false, rental, true);
+                                }
+                            }
+                        }
                     } else if (rental.isActive() == 1) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El alquiler ya está finalizado");
                     } else {
@@ -139,6 +158,7 @@ public class TabFinishRental {
                     btnFinishRental.setVisible(false);
                     jDateFinish.setEnabled(false);
                     spinnerPenalty.setEnabled(false);
+                    txtObservation.setEnabled(false);
                 }
             } else {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Debe introducir fecha de entrega");

@@ -161,7 +161,7 @@ public class Sale extends Babas {
         return client==null?"--":client.getNames();
     }
     public String getStringStade(){
-        return active?"Realizado":"Cancelado";
+        return active?"REALIZADA":"CANCELADA";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);
@@ -173,7 +173,7 @@ public class Sale extends Babas {
         return Utilities.moneda.format(totalCurrent);
     }
     public String getStringType(){
-        return cash?"Efectivo":"Transferencia";
+        return cash?"EFECTIVO":"TRANSFERENCIA";
     }
     @Override
     public void save() {

@@ -48,6 +48,7 @@ public class Propiedades {
             setPrintTicketSale("always");
             setPrintTicketRental("always");
             setPrintTicketReserve("always");
+            setPrintTicketRentalFinish("always");
             save();
         }else{
             inputStream = new FileInputStream(archivo.getAbsolutePath());
@@ -133,6 +134,12 @@ public class Propiedades {
     }
     public void setPrintTicketReserve(String printTicketReserve){
         properties.put("printTicketReserve",printTicketReserve);
+    }
+    public String getPrintTicketRentalFinish(){
+        return properties.getProperty("printTicketRentalFinish");
+    }
+    public void setPrintTicketRentalFinish(String printTicketRentalFinish){
+        properties.put("printTicketRentalFinish",printTicketRentalFinish);
     }
     public String getPrintTicketReserve(){
         return properties.getProperty("printTicketReserve");

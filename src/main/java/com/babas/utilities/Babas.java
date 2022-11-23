@@ -18,7 +18,7 @@ public class Babas {
     private static SessionFactory sessionFactory;
     public static User user;
     public static BoxSession boxSession =new BoxSession();
-    public static Company company;
+    public static Company company=new Company();
     
     public static void initialize() {
         buildSessionFactory();

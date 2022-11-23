@@ -54,11 +54,11 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 3:
                 return sale.getBranch().getName();
             case 4:
-                return sale.getClient()!=null?sale.getClient().getNames():"-- Sin cliente --";
+                return sale.getStringClient();
             case 5:
-                return sale.isCash()?"EFECTIVO":"TRANSFERENCIA";
+                return sale.getStringType();
             case 6:
-                return sale.isActive()?"REALIZADA":"CANCELADA";
+                return sale.getStringStade();
             case 7:
                 return Utilities.moneda.format(sale.getTotal());
             case 8:

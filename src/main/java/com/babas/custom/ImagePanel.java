@@ -103,13 +103,6 @@ public class ImagePanel extends JPanel {
                 shape = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 graphics2D.draw(shape);
             }
-            if(isRelesed&&shape!=null){
-                Rectangle2D rectangle2D=new Rectangle((int) shape.getBounds().getMinX()-8, (int) shape.getBounds().getMinY()-8,8,8);
-                Rectangle2D rectangle2D2=new Rectangle((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY(),8,8);
-                graphics2D.setPaint(Color.red);
-                graphics2D.fill(rectangle2D);
-                graphics2D.fill(rectangle2D2);
-            }
         }
         setBackground(new Color(87, 236, 38));
     }

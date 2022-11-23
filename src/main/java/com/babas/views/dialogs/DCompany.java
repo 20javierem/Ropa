@@ -71,9 +71,6 @@ public class DCompany extends JDialog {
     }
 
     private void onSave() {
-        if (Babas.company == null) {
-            Babas.company = new Company();
-        }
         Babas.company.setBusinessName(txtBusinessName.getText().trim());
         Babas.company.setDirectionPrincipal(txtFiscalAdress.getText().trim());
         Babas.company.setRuc(txtRuc.getText().trim());
@@ -93,7 +90,6 @@ public class DCompany extends JDialog {
             }
             onHecho();
         } else {
-            Babas.company = null;
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }
     }
@@ -160,10 +156,8 @@ public class DCompany extends JDialog {
     }
 
     private void onHecho() {
-        if (Babas.company != null) {
-            if (Babas.company.getId() != null) {
-                Babas.company.refresh();
-            }
+        if (Babas.company.getId() != null) {
+            Babas.company.refresh();
         }
         dispose();
     }

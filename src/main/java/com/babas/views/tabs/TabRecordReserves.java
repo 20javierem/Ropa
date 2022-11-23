@@ -187,9 +187,7 @@ public class TabRecordReserves {
 
     private void loadTable() {
         reserves = new ArrayList<>();
-        for (Branch branch : Babas.user.getBranchs()) {
-            reserves.addAll(Reserves.getAfter(branch, new Date()));
-        }
+        reserves.addAll(Reserves.getAfter(new Date()));
         model = new ReserveAbstractModel(reserves);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -268,18 +266,14 @@ public class TabRecordReserves {
         }
         if (start != null && end != null) {
             reserves.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                reserves.addAll(Reserves.getByRangeOfDate(branch, start, end));
-            }
+            reserves.addAll(Reserves.getByRangeOfDate(start, end));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Reservas cargadas");
             }
             model.fireTableDataChanged();
         } else if (start != null) {
             reserves.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                reserves.addAll(Reserves.getAfter(branch, start));
-            }
+            reserves.addAll(Reserves.getAfter(start));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Reservas cargadas");
             }

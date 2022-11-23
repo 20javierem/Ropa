@@ -22,6 +22,7 @@ public class App
         if(Babas.state){
             Babas.company=Companys.get(1);
             if(Babas.company==null){
+                Babas.company=new Company();
                 DCompany dCompany=new DCompany();
                 dCompany.setVisible(true);
             }else{
@@ -29,13 +30,13 @@ public class App
                     Utilities.downloadLogo(Babas.company.getLogo());
                 }
             }
-            if(Babas.company!=null){
+            if(Babas.company.getId()!=null){
                 if(Branchs.getTodos().isEmpty()){
                     DBranch dBranch=new DBranch(new Branch(),true);
                     dBranch.setVisible(true);
                 }
             }
-            if(Babas.company!=null&&!Branchs.getTodos().isEmpty()){
+            if(Babas.company.getId()!=null&&!Branchs.getTodos().isEmpty()){
                 if(Users.getTodos().isEmpty()){
                     User user=new User();
                     user.getBranchs().add(Branchs.get(1));

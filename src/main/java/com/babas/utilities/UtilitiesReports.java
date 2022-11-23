@@ -45,6 +45,7 @@ public class UtilitiesReports {
                 parameters.put("nameTicket","Ticket de venta");
                 parameters.put("numberTicket",sale.getNumberSale());
                 parameters.put("detalles",sp);
+                parameters.put("stade",sale.getStringStade());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
                 parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(sale.getCreated()));
@@ -163,6 +164,7 @@ public class UtilitiesReports {
                 parameters.put("nameTicket","TICKET DE RESERVA");
                 parameters.put("numberTicket",reserve.getNumberReserve());
                 parameters.put("detalles",sp);
+                parameters.put("stade",reserve.getStringStade());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
                 parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(reserve.getCreated()));
@@ -232,6 +234,7 @@ public class UtilitiesReports {
                 parameters.put("subtotal2",Utilities.moneda.format(rental.getTotalCurrent() - rental.getWarranty()));
                 parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
+                parameters.put("stade",rental.getStringStade());
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
                 parameters.put("formaDePago",rental.isCash()?"EFECTIVO":"TRANSFERENCIA");
@@ -260,7 +263,6 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
     public static void generateTicketRentalFinish(boolean a4,Rental rental, boolean print) {
         InputStream pathReport;
         if(a4){
@@ -291,7 +293,7 @@ public class UtilitiesReports {
                 parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
                 parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
                 parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
-
+                parameters.put("stade",rental.getStringStade());
                 parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotalWithDiscount()));
@@ -329,7 +331,6 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
     public static void generateReportSales(List<Sale> sales,Date dateStart,Date dateEnd,Double totalSaleCash,Double totalSaleTransfer) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportSales.jasper");
         File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
@@ -441,7 +442,6 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
     public static void generateReportTransfer(Transfer transfer) {
         InputStream pathReport = App.class.getResourceAsStream("jasperReports/reportTransfer.jasper");
         File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());

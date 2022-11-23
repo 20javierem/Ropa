@@ -193,9 +193,7 @@ public class TabRecordRentals {
 
     private void loadTable() {
         rentals = new ArrayList<>();
-        for (Branch branch : Babas.user.getBranchs()) {
-            rentals.addAll(Rentals.getAfter(branch, new Date()));
-        }
+        rentals.addAll(Rentals.getAfter(new Date()));
         model = new RentalAbstractModel(rentals);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -277,18 +275,14 @@ public class TabRecordRentals {
         }
         if (start != null && end != null) {
             rentals.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                rentals.addAll(Rentals.getByRangeOfDate(branch, start, end));
-            }
+            rentals.addAll(Rentals.getByRangeOfDate(start, end));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Alquileres cargados");
             }
             model.fireTableDataChanged();
         } else if (start != null) {
             rentals.clear();
-            for (Branch branch : Babas.user.getBranchs()) {
-                rentals.addAll(Rentals.getAfter(branch, start));
-            }
+            rentals.addAll(Rentals.getAfter(start));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Alquileres cargados");
             }

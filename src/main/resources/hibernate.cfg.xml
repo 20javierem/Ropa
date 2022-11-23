@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.mariadb.jdbc.Driver</property>
-        <property name="connection.url">jdbc:mariadb://localhost:3306/DBclothes</property>
+        <property name="connection.url">jdbc:mariadb://localhost:3306/clothes_db</property>
         <property name="connection.user">root</property>
         <property name="connection.password"></property>
         <property name="connection.pool_size">5</property>
