@@ -6,6 +6,7 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
+import com.babas.utilitiesTables.tablesModels.ProductAbstractModel2;
 import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
@@ -41,10 +42,10 @@ public class DaddProductsToQuotation extends JDialog {
     private JComboBox cbbPrice;
     private Quotation quotation;
     private int pX, pY;
-    private ProductAbstractModel model;
+    private ProductAbstractModel2 model;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
-    private TableRowSorter<ProductAbstractModel> modeloOrdenado1;
-    private List<RowFilter<ProductAbstractModel, String>> filtros1 = new ArrayList<>();
+    private TableRowSorter<ProductAbstractModel2> modeloOrdenado1;
+    private List<RowFilter<ProductAbstractModel2, String>> filtros1 = new ArrayList<>();
     private RowFilter filtroand;
     private Product product;
 
@@ -178,12 +179,9 @@ public class DaddProductsToQuotation extends JDialog {
         String busqueda;
         busqueda = txtSearchProduct.getText().trim();
         filtros1.clear();
-        filtros1.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 6, 7));
+        filtros1.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
-        listaFiltros.put(2, busqueda);
-        listaFiltros.put(3, busqueda);
-        listaFiltros.put(4, busqueda);
         filtroand = RowFilter.andFilter(filtros1);
         modeloOrdenado1.setRowFilter(filtroand);
     }
@@ -198,17 +196,10 @@ public class DaddProductsToQuotation extends JDialog {
     }
 
     private void loadTable1() {
-        model = new ProductAbstractModel(FPrincipal.products);
+        model = new ProductAbstractModel2(FPrincipal.products);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ProductCellRendered.setCellRenderer(table, listaFiltros);
-        table.removeColumn(table.getColumn("PRECIO"));
-        table.removeColumn(table.getColumn("TOTAL-STOCK"));
-        table.removeColumn(table.getColumn("CATEGORÍA"));
-        table.removeColumn(table.getColumn("MARCA"));
-        table.removeColumn(table.getColumn(""));
-        table.removeColumn(table.getColumn(""));
-        table.removeColumn(table.getColumn(""));
         modeloOrdenado1 = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado1);
     }

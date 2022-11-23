@@ -6,6 +6,7 @@ import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesCellRendered.StockCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
+import com.babas.utilitiesTables.tablesModels.ProductAbstractModel2;
 import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.frames.FPrincipal;
@@ -39,13 +40,13 @@ public class DAddProductToTransfer extends JDialog {
     private FlatTextField txtSearchProduct;
     private JLabel lblProduct;
     private Branch branchSource;
-    private ProductAbstractModel productAbstractModel;
+    private ProductAbstractModel2 productAbstractModel2;
     private StockProductAbstractModel stockProductAbstractModel;
     private Transfer transfer;
     private int pX, pY;
     private Map<Integer, String> listaFiltros = new HashMap<Integer, String>();
-    private TableRowSorter<ProductAbstractModel> modeloOrdenado1;
-    private List<RowFilter<ProductAbstractModel, String>> filtros1 = new ArrayList<>();
+    private TableRowSorter<ProductAbstractModel2> modeloOrdenado1;
+    private List<RowFilter<ProductAbstractModel2, String>> filtros1 = new ArrayList<>();
     private TableRowSorter<StockProductAbstractModel> modeloOrdenado2;
     private List<RowFilter<StockProductAbstractModel, String>> filtros2 = new ArrayList<>();
     private RowFilter filtroand;
@@ -146,7 +147,7 @@ public class DAddProductToTransfer extends JDialog {
     private void loadProduct() {
         if (branchSource == null) {
             if (table.getSelectedRow() != -1) {
-                product = productAbstractModel.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+                product = productAbstractModel2.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             }
         } else {
             if (table.getSelectedRow() != -1) {
@@ -165,12 +166,9 @@ public class DAddProductToTransfer extends JDialog {
         busqueda = txtSearchProduct.getText().trim();
         if (branchSource == null) {
             filtros1.clear();
-            filtros1.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 6, 7));
+            filtros1.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1));
             listaFiltros.put(0, busqueda);
             listaFiltros.put(1, busqueda);
-            listaFiltros.put(2, busqueda);
-            listaFiltros.put(3, busqueda);
-            listaFiltros.put(4, busqueda);
             filtroand = RowFilter.andFilter(filtros1);
             modeloOrdenado1.setRowFilter(filtroand);
         } else {
@@ -201,18 +199,11 @@ public class DAddProductToTransfer extends JDialog {
     }
 
     private void loadTable1() {
-        productAbstractModel = new ProductAbstractModel(FPrincipal.products);
-        table.setModel(productAbstractModel);
+        productAbstractModel2 = new ProductAbstractModel2(FPrincipal.products);
+        table.setModel(productAbstractModel2);
         UtilitiesTables.headerNegrita(table);
         ProductCellRendered.setCellRenderer(table, listaFiltros);
-        table.removeColumn(table.getColumn("PRECIO"));
-        table.removeColumn(table.getColumn("TOTAL-STOCK"));
-        table.removeColumn(table.getColumn("CATEGORÍA"));
-        table.removeColumn(table.getColumn("MARCA"));
-        table.removeColumn(table.getColumn(""));
-        table.removeColumn(table.getColumn(""));
-        table.removeColumn(table.getColumn(""));
-        modeloOrdenado1 = new TableRowSorter<>(productAbstractModel);
+        modeloOrdenado1 = new TableRowSorter<>(productAbstractModel2);
         table.setRowSorter(modeloOrdenado1);
     }
 
@@ -222,6 +213,11 @@ public class DAddProductToTransfer extends JDialog {
         UtilitiesTables.headerNegrita(table);
         StockCellRendered.setCellRenderer(table, listaFiltros);
         modeloOrdenado2 = new TableRowSorter<>(stockProductAbstractModel);
+        table.removeColumn(table.getColumn("RESERVADOS"));
+        table.removeColumn(table.getColumn("SUCURSAL"));
+        table.removeColumn(table.getColumn("EN ALQUILER"));
+        table.removeColumn(table.getColumn("ALQUILERES"));
+        table.removeColumn(table.getColumn(""));
         table.setRowSorter(modeloOrdenado2);
     }
 

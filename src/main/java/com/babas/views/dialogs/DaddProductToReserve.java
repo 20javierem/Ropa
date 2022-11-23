@@ -143,8 +143,8 @@ public class DaddProductToReserve extends JDialog {
         table.setModel(model);
         StockCellRendered.setCellRenderer(table, listaFiltros);
         UtilitiesTables.headerNegrita(table);
+        table.removeColumn(table.getColumn("TOTAL"));
         table.removeColumn(table.getColumn("SUCURSAL"));
-        table.removeColumn(table.getColumn("ALQUILERES"));
         table.removeColumn(table.getColumn(""));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
