@@ -44,6 +44,7 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
                     table.getColumn(table.getColumnName(column)).setMinWidth(90);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(90);
                     break;
+                case "RESUMEN":
                 case "SUBTOTAL":
                 case "MULTA":
                 case "TOTAL":

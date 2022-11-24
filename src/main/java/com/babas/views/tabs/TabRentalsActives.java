@@ -102,7 +102,7 @@ public class TabRentalsActives {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         RentalCellRendered.setCellRenderer(table, listaFiltros);
-        table.removeColumn(table.getColumn("TOTAL"));
+        table.removeColumn(table.getColumn("RESUMEN"));
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental("cancel"));
         table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
         table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorRental("detail"));

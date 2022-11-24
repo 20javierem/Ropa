@@ -203,7 +203,7 @@ public class TabRecordRentals {
         table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
-        table.removeColumn(table.getColumn("TOTAL"));
+        table.removeColumn(table.getColumn("RESUMEN"));
     }
 
     private void filter() {

@@ -440,7 +440,7 @@ public class TabNewRental {
         final JLabel label8 = new JLabel();
         Font label8Font = this.$$$getFont$$$(null, Font.BOLD, 14, label8.getFont());
         if (label8Font != null) label8.setFont(label8Font);
-        label8.setText("Subtotal 2");
+        label8.setText("Resumen:");
         panel8.add(label8, new GridConstraints(6, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         lblSubtotal2 = new JLabel();
         Font lblSubtotal2Font = this.$$$getFont$$$(null, Font.BOLD, 14, lblSubtotal2.getFont());
