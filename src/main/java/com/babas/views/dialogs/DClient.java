@@ -79,6 +79,7 @@ public class DClient extends JDialog {
             txtPhone.setEnabled(false);
             btnSave.setVisible(false);
             btnHecho.setText("Hecho");
+            getRootPane().setDefaultButton(btnHecho);
         }
         pack();
         setResizable(false);

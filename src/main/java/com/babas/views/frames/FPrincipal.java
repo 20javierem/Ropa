@@ -248,8 +248,9 @@ public class FPrincipal extends JFrame {
         comboBox.addItem("ALQUILER");
         comboBox.addItem("RESERVA");
         comboBox.addItem("COTIZACIÓN");
-        SpinnerNumberModel sModel = new SpinnerNumberModel(0, 0, 99999, 1);
-        JSpinner spinner = new JSpinner(sModel);
+        FlatSpinner spinner = new FlatSpinner();
+        spinner.setModel(new SpinnerNumberModel(1, 1, 100000, 1));
+        spinner.setEditor(Utilities.getEditorPrice(spinner));
         jPanel.add(comboBox);
         jPanel.add(spinner);
         int option = JOptionPane.showOptionDialog(this, jPanel, "Buscar comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");

@@ -84,15 +84,12 @@ public class Utilities {
     public static Boolean consult=true;
     private static AuthenticationContext auth;
     private static SmbConnection smbConnection;
+
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         spinner.remove(spinner.getComponent(0));
         spinner.remove(spinner.getComponent(0));
         spinner.remove(spinner.getComponent(0));
         return new JSpinner.NumberEditor(spinner, "###,###,###.##");
-    }
-
-    public static JSpinner.NumberEditor getEditorPrice2(FlatSpinner spinner) {
-        return new JSpinner.NumberEditor(spinner, "S/###,###,###.##");
     }
 
     public static boolean openConection(){

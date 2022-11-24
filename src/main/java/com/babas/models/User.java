@@ -7,6 +7,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,7 @@ public class User extends Babas {
     private boolean active=true;
     private boolean staff=true;
     private Date birthday;
+    private Long idFact;
     @ManyToMany
     @JoinTable(
             name = "user_branch_tbl",
@@ -49,6 +52,15 @@ public class User extends Babas {
     private Permission permissionGroup;
 
     private boolean groupDefault=false;
+
+    public Long getIdFact() {
+        return idFact;
+    }
+
+    public void setIdFact(Long idFact) {
+        this.idFact = idFact;
+    }
+
 
     public boolean isGroupDefault() {
         return groupDefault;
@@ -173,6 +185,18 @@ public class User extends Babas {
 
     public Permission getPermitions() {
         return permission;
+    }
+
+    public static class ListCellRenderer extends DefaultListCellRenderer {
+        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            if (value instanceof User) {
+                value = ((User) value).getFirstName()+", "+((User) value).getLastName();
+            }else{
+                value="--SELECCIONE--";
+            }
+            super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+            return this;
+        }
     }
 
     @Override

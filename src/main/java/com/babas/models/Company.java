@@ -23,6 +23,33 @@ public class Company extends Babas {
     private String directionPrincipal;
     private String logo;
     private String slogan;
+    private Long idFact;
+    private Long idProduct;
+    private String token;
+
+    public Long getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(Long idProduct) {
+        this.idProduct = idProduct;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Long getIdFact() {
+        return idFact;
+    }
+
+    public void setIdFact(Long idFact) {
+        this.idFact = idFact;
+    }
 
     public Long getId() {
         return id;

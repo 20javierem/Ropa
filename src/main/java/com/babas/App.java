@@ -16,12 +16,12 @@ import javax.swing.*;
 public class App
 {
     public static void main( String[] args ) {
-//        Utilities.propiedades=new Propiedades();
-//        Utilities.propiedades.save();
-//        Utilities.loadTheme();
+        Utilities.propiedades=new Propiedades();
+        Utilities.propiedades.save();
+        Utilities.loadTheme();
+//        Babas.initialize();
         DCrop dCrop=new DCrop();
         dCrop.setVisible(true);
-//        Babas.initialize();
 //        if(Babas.state){
 //            Babas.company=Companys.get(1);
 //            if(Babas.company==null){
