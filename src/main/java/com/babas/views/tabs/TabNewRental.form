@@ -299,7 +299,7 @@
                         </constraints>
                         <properties>
                           <font size="14" style="1"/>
-                          <text value="Subtotal 2"/>
+                          <text value="Resumen:"/>
                         </properties>
                       </component>
                       <component id="ab3b2" class="javax.swing.JLabel" binding="lblSubtotal2">
