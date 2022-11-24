@@ -28,24 +28,35 @@ public class ImagePanel extends JPanel {
     private Shape rectangule4;
     private boolean isRelesed=false;
     private int width,height;
+    private boolean isStart=false;
 
     public ImagePanel() throws IOException {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if(isInside(e.getPoint(),shapeImage)){
-                    if(isRelesed&&isInside(e.getPoint(),shape)){
-                        diferenceX=e.getX()-shape.getBounds().x;
-                        diferenceY=e.getY()-shape.getBounds().y;
-                    }else if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule3)||isInside(e.getPoint(),rectangule4)){
+                    if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule3)){
+                        isStart=true;
                         isRelesed=false;
                         startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
                         endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+                    }else if(isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule4)) {
+                        isStart=false;
+                        isRelesed=false;
+                        startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
+                        endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+                    } else if(isRelesed&&isInside(e.getPoint(),shape)){
+                        diferenceX=e.getX()-shape.getBounds().x;
+                        diferenceY=e.getY()-shape.getBounds().y;
                     }else{
+                        isStart=false;
                         isRelesed=false;
                         startDrag = new Point(e.getX(), e.getY());
                         endDrag = startDrag;
                         repaint();
                     }
+                }else{
+                    shape=null;
+                    repaint();
                 }
             }
             public void mouseReleased(MouseEvent e) {
@@ -53,7 +64,6 @@ public class ImagePanel extends JPanel {
                 if (isInside(e.getPoint(), shapeImage)) {
                     if(endDrag!=null && startDrag!=null) {
                         try {
-                            shape = makeRectangle(startDrag.x, startDrag.y, e.getX(), e.getY());
                             startDrag = null;
                             endDrag = null;
                             repaint();
@@ -70,14 +80,17 @@ public class ImagePanel extends JPanel {
 
         this.addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
-                if(endDrag==null){
-                    if(isRelesed&&isInside(e.getPoint(),shape)){
+                if(isRelesed&&endDrag==null){
+                    if(isInside(e.getPoint(),shape)){
                         moveRectangle(e.getPoint());
                         repaint();
                     }
                 }else{
-                    endDrag=e.getPoint();
-                    endDrag = endDrag(e.getPoint());
+                    if(isStart){
+                        startDrag = getEndDrag(e.getPoint());
+                    }else{
+                        endDrag = getEndDrag(e.getPoint());
+                    }
                     repaint();
                 }
             }
@@ -120,10 +133,10 @@ public class ImagePanel extends JPanel {
                 graphics2D.draw(shape);
             }
             if(shape!=null){
-                rectangule1=new Rectangle((int) shape.getBounds().getMinX()-8, (int) shape.getBounds().getMinY()-8,8,8);
-                rectangule2=new Rectangle((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY()-8,8,8);
-                rectangule3=new Rectangle((int) shape.getBounds().getMinX()-8, (int) shape.getBounds().getMaxY(),8,8);
-                rectangule4=new Rectangle((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY(),8,8);
+                rectangule1=new Rectangle((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY(),8,8);
+                rectangule2=new Rectangle((int) shape.getBounds().getMaxX()-8, (int) shape.getBounds().getMinY(),8,8);
+                rectangule3=new Rectangle((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY()-8,8,8);
+                rectangule4=new Rectangle((int) shape.getBounds().getMaxX()-8, (int) shape.getBounds().getMaxY()-8,8,8);
                 graphics2D.setPaint(Color.black);
                 graphics2D.draw(rectangule1);
                 graphics2D.draw(rectangule2);
@@ -147,7 +160,7 @@ public class ImagePanel extends JPanel {
         shape=new Rectangle2D.Double(startX,startY,shape.getBounds().width,shape.getBounds().height);
     }
 
-    private Point endDrag(Point point){
+    private Point getEndDrag(Point point){
         if(shapeImage!=null&&shape!=null){
             if(point.x<shapeImage.getBounds().getMinX()) {
                 point.setLocation(shape.getBounds().getMinX(),point.getY());
