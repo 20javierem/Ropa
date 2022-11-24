@@ -28,19 +28,44 @@ public class ImagePanel extends JPanel {
     private Shape rectangule4;
     private boolean isRelesed=false;
     private int width,height;
-    private boolean isStart=false;
+    private boolean nw=false;
+    private boolean ne=false;
+    private boolean sw=false;
+    private boolean se=true;
 
     public ImagePanel() throws IOException {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if(isInside(e.getPoint(),shapeImage)){
-                    if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule3)){
-                        isStart=true;
+                    if(isInside(e.getPoint(),rectangule1)){
+                        nw=true;
+                        ne=false;
+                        sw=false;
+                        se=false;
                         isRelesed=false;
                         startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
                         endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
-                    }else if(isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule4)) {
-                        isStart=false;
+                    }else if(isInside(e.getPoint(),rectangule2)){
+                        nw=false;
+                        ne=true;
+                        sw=false;
+                        se=false;
+                        isRelesed=false;
+                        startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
+                        endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+                    }else if(isInside(e.getPoint(),rectangule3)){
+                        nw=false;
+                        ne=false;
+                        sw=true;
+                        se=false;
+                        isRelesed=false;
+                        startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
+                        endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+                    } else if(isInside(e.getPoint(),rectangule4)) {
+                        nw=false;
+                        ne=false;
+                        sw=false;
+                        se=true;
                         isRelesed=false;
                         startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
                         endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
@@ -48,7 +73,10 @@ public class ImagePanel extends JPanel {
                         diferenceX=e.getX()-shape.getBounds().x;
                         diferenceY=e.getY()-shape.getBounds().y;
                     }else{
-                        isStart=false;
+                        nw=false;
+                        ne=false;
+                        sw=false;
+                        se=true;
                         isRelesed=false;
                         startDrag = new Point(e.getX(), e.getY());
                         endDrag = startDrag;
@@ -86,9 +114,12 @@ public class ImagePanel extends JPanel {
                         repaint();
                     }
                 }else{
-                    if(isStart){
+                    if(nw){
                         startDrag = getEndDrag(e.getPoint());
-                    }else{
+                    }else if(ne||sw){
+                        startDrag =getEndDrag(e.getPoint());
+                        endDrag =getEndDrag(e.getPoint());
+                    }else if(se){
                         endDrag = getEndDrag(e.getPoint());
                     }
                     repaint();
@@ -217,8 +248,8 @@ public class ImagePanel extends JPanel {
             Image image = ImageIO.read(new File(inputImage));
             width=image.getWidth(this);
             height=image.getHeight(this);
-            if(width>550||height>550){
-                double percen= Math.min(550.00/width,550.00/height);
+            if(width>542||height>542){
+                double percen= Math.min(542.00/width,542.00/height);
                 width= (int) (percen*width);
                 height=(int) (percen*height);
             }
