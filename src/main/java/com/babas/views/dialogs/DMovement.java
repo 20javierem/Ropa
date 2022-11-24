@@ -28,7 +28,6 @@ public class DMovement extends JDialog {
     private JRadioButton ckExit;
     private Movement movement;
     private boolean updated;
-    private int pX, pY;
 
     public DMovement(Movement movement) {
         super(Utilities.getJFrame(), "Nuevo movimiento", true);
@@ -36,17 +35,6 @@ public class DMovement extends JDialog {
         $$$setupUI$$$();
         updated = movement.getId() != null;
         init();
-        contentPane.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent me) {
-                pX = me.getX();
-                pY = me.getY();
-            }
-        });
-        contentPane.addMouseMotionListener(new MouseAdapter() {
-            public void mouseDragged(MouseEvent me) {
-                setLocation(getLocation().x + me.getX() - pX, getLocation().y + me.getY() - pY);
-            }
-        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -73,7 +61,6 @@ public class DMovement extends JDialog {
     }
 
     private void init() {
-        setUndecorated(true);
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         setResizable(false);
@@ -114,6 +101,7 @@ public class DMovement extends JDialog {
                 Utilities.getTabbedPane().updateTab();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Movimiento registrado");
                 Utilities.getLblIzquierda().setText("ÉXITO: movimiento registrado a las: " + Utilities.formatoHora.format(movement.getCreated()));
+                Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                 clear();
             } else {
                 ProgramValidator.mostrarErrores(constraintViolationSet);
@@ -154,7 +142,6 @@ public class DMovement extends JDialog {
         createUIComponents();
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), 10, 10));
-        contentPane.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(4, 4, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -204,4 +191,5 @@ public class DMovement extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

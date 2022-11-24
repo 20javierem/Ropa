@@ -27,24 +27,12 @@ public class DBox extends JDialog {
     private JCheckBox ckActive;
     private Box box;
     private boolean update;
-    private int pX, pY;
 
     public DBox(Box box) {
         super(Utilities.getJFrame(), true);
         this.box = box;
         update = box.getId() != null;
         init();
-        contentPane.addMouseListener(new MouseAdapter() {
-            public void mousePressed(MouseEvent me) {
-                pX = me.getX();
-                pY = me.getY();
-            }
-        });
-        contentPane.addMouseMotionListener(new MouseAdapter() {
-            public void mouseDragged(MouseEvent me) {
-                setLocation(getLocation().x + me.getX() - pX, getLocation().y + me.getY() - pY);
-            }
-        });
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -71,7 +59,6 @@ public class DBox extends JDialog {
     }
 
     private void init() {
-        setUndecorated(true);
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
         if (box.getBranch().getBoxs().contains(box)) {
@@ -142,7 +129,6 @@ public class DBox extends JDialog {
     private void $$$setupUI$$$() {
         contentPane = new JPanel();
         contentPane.setLayout(new GridLayoutManager(2, 1, new Insets(10, 10, 10, 10), 10, 10));
-        contentPane.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayoutManager(3, 2, new Insets(0, 0, 0, 0), -1, -1));
         contentPane.add(panel1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
@@ -180,4 +166,5 @@ public class DBox extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

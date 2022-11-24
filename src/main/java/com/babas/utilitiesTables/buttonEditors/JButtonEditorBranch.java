@@ -49,6 +49,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                 dBranch.setVisible(true);
             }else{
                 if(FPrincipal.branchs.size()>1){
+                    Utilities.getTabbedPane().getComponentAt(Utilities.getTabbedPane().getSelectedIndex()).setCursor(new Cursor(Cursor.WAIT_CURSOR));
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Eliminar Sucursal",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         branch.refresh();
@@ -63,7 +64,6 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                             comboBox.removeItem(branch);
                             int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), comboBox, "Transferencia de productos", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Transferir", "Cancelar"}, "Transferir");
                             if (option == JOptionPane.OK_OPTION) {
-                                table.setCursor(new Cursor(Cursor.WAIT_CURSOR));
                                 Transfer transfer=new Transfer();
                                 transfer.setState(1);
                                 transfer.setSource(branch);
@@ -106,7 +106,6 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                                 branch.save();
                                 Utilities.getLblIzquierda().setText("Sucursal: "+branch.getName()+" eliminada : "+Utilities.formatoFechaHora.format(branch.getUpdated()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Sucursal eliminada");
-                                table.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                             }
                         }else{
                             FPrincipal.branchs.remove(branch);
@@ -116,6 +115,7 @@ public class JButtonEditorBranch extends AbstractCellEditor implements TableCell
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Sucursal eliminada");
                         }
                     }
+                    Utilities.getTabbedPane().getComponentAt(Utilities.getTabbedPane().getSelectedIndex()).setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 }else{
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No puede eliminar todas las sucursales");
                 }
