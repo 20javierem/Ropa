@@ -33,14 +33,15 @@ public class ImagePanel extends JPanel {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if(isInside(e.getPoint(),shapeImage)){
-                    if(isInside(e.getPoint(),shape)){
-                        diferenceX = e.getX()-shape.getBounds().x;
-                        diferenceY = e.getY()-shape.getBounds().y;
-                    }else if(isInside(e.getPoint(),rectangule1)|isInside(e.getPoint(),rectangule2)|isInside(e.getPoint(),rectangule3)|isInside(e.getPoint(),rectangule4)){
-                        isRelesed = false;
-                        endDrag = getEndDrag(e.getPoint());
+                    if(isRelesed&&isInside(e.getPoint(),shape)){
+                        diferenceX=e.getX()-shape.getBounds().x;
+                        diferenceY=e.getY()-shape.getBounds().y;
+                    }else if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule3)||isInside(e.getPoint(),rectangule4)){
+                        isRelesed=false;
+                        startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
+                        endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
                     }else{
-                        isRelesed = false;
+                        isRelesed=false;
                         startDrag = new Point(e.getX(), e.getY());
                         endDrag = startDrag;
                         repaint();
@@ -75,8 +76,8 @@ public class ImagePanel extends JPanel {
                         repaint();
                     }
                 }else{
-                    System.out.println("entró");
-                    endDrag = getEndDrag(e.getPoint());
+                    endDrag=e.getPoint();
+                    endDrag = endDrag(e.getPoint());
                     repaint();
                 }
             }
@@ -146,36 +147,16 @@ public class ImagePanel extends JPanel {
         shape=new Rectangle2D.Double(startX,startY,shape.getBounds().width,shape.getBounds().height);
     }
 
-    private Point getEndDrag(Point point){
+    private Point endDrag(Point point){
         if(shapeImage!=null&&shape!=null){
             if(point.x<shapeImage.getBounds().getMinX()) {
                 point.setLocation(shape.getBounds().getMinX(),point.getY());
             }else if(point.x>shapeImage.getBounds().getMaxX()){
                 point.setLocation(shape.getBounds().getMaxX(),point.getY());
             }
-
             if(point.y<shapeImage.getBounds().getMinY()) {
                 point.setLocation(point.getX(),shape.getBounds().getMinY());
             }else if(point.y>shapeImage.getBounds().getMaxY()) {
-                point.setLocation(point.getX(),shape.getBounds().getMaxY());
-            }
-        }
-        return point;
-    }
-    private Point getStartDrag(Point point){
-        if(shapeImage!=null&&shape!=null){
-            //shape minx=8
-            //shpae maxx=14
-            //point x=9
-            if(point.x>shapeImage.getBounds().getMinX()) {
-                point.setLocation(shape.getBounds().getMinX(),point.getY());
-            }else if(point.x<shapeImage.getBounds().getMaxX()){
-                point.setLocation(shape.getBounds().getMaxX(),point.getY());
-            }
-
-            if(point.y>shapeImage.getBounds().getMinY()) {
-                point.setLocation(point.getX(),shape.getBounds().getMinY());
-            }else if(point.y<shapeImage.getBounds().getMaxY()) {
                 point.setLocation(point.getX(),shape.getBounds().getMaxY());
             }
         }
