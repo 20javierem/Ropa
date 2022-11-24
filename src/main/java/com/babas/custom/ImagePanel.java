@@ -19,6 +19,14 @@ public class ImagePanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private BufferedImage bufferedImage;
     private Shape shape = null;
+    private Shape rectangule1 = null;
+    private Shape rectangule2 = null;
+    private Shape rectangule3 = null;
+    private Shape rectangule4 = null;
+    private Shape rectangule5 = null;
+    private Shape rectangule6 = null;
+    private Shape rectangule7 = null;
+    private Shape rectangule8 = null;
     private Shape shapeImage;
     private Point startDrag, endDrag;
     private int diferenceX,diferenceY;
@@ -26,12 +34,37 @@ public class ImagePanel extends JPanel {
     private int width,height;
 
     public ImagePanel() throws IOException {
-        this.addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
                 if(isInside(e.getPoint(),shapeImage)){
+                    if(isInside(e.getPoint(),shape)){
+                        if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule3)||isInside(e.getPoint(),rectangule4)||isInside(e.getPoint(),rectangule5)||isInside(e.getPoint(),rectangule6)||isInside(e.getPoint(),rectangule7)||isInside(e.getPoint(),rectangule8)){
+                            endDrag=e.getPoint();
+                            endDrag=endDrag(e.getPoint());
+                            repaint();
+                        }else{
+                            //mover el rectangulo
+                            diferenceX=e.getX()-shape.getBounds().x;
+                            diferenceY=e.getY()-shape.getBounds().y;
+                        }
+                    }else{
+                        //crear el rectangulo
+                        startDrag = new Point(e.getX(), e.getY());
+                        endDrag = startDrag;
+                        repaint();
+                    }
                     if(isRelesed&&isInside(e.getPoint(),shape)){
-                        diferenceX=e.getX()-shape.getBounds().x;
-                        diferenceY=e.getY()-shape.getBounds().y;
+                        if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule3)||isInside(e.getPoint(),rectangule4)||isInside(e.getPoint(),rectangule5)||isInside(e.getPoint(),rectangule6)||isInside(e.getPoint(),rectangule7)||isInside(e.getPoint(),rectangule8)){
+                            endDrag=e.getPoint();
+                            endDrag=endDrag(e.getPoint());
+                            repaint();
+                            System.out.println("entró");
+                        }else{
+                            System.out.println("no entró");
+                            diferenceX=e.getX()-shape.getBounds().x;
+                            diferenceY=e.getY()-shape.getBounds().y;
+                        }
+                        isRelesed=false;
                     }else{
                         isRelesed=false;
                         startDrag = new Point(e.getX(), e.getY());
@@ -60,24 +93,52 @@ public class ImagePanel extends JPanel {
             }
         });
 
-        this.addMouseMotionListener(new MouseMotionAdapter() {
+        addMouseMotionListener(new MouseMotionAdapter() {
             public void mouseDragged(MouseEvent e) {
+                System.out.println("end drag: "+endDrag);
                 if(endDrag==null){
-                    if(isRelesed&&isInside(e.getPoint(),shape)){
-                        moveRectangle(e.getPoint());
-                        repaint();
+                    System.out.println(isRelesed);
+                    if(endDrag!=null){
+                        if(isInside(e.getPoint(),shape)){
+                            moveRectangle(e.getPoint());
+                            repaint();
+                        }
+                    }else{
+                        if(isInside(e.getPoint(),rectangule1)||isInside(e.getPoint(),rectangule2)||isInside(e.getPoint(),rectangule3)||isInside(e.getPoint(),rectangule4)||isInside(e.getPoint(),rectangule5)||isInside(e.getPoint(),rectangule6)||isInside(e.getPoint(),rectangule7)||isInside(e.getPoint(),rectangule8)){
+                            endDrag=e.getPoint();
+                            endDrag=endDrag(e.getPoint());
+                            repaint();
+                        }
                     }
                 }else{
                     endDrag=e.getPoint();
-                    endDrag = endDrag(e.getPoint());
+                    endDrag=endDrag(e.getPoint());
                     repaint();
                 }
             }
             public void mouseMoved(MouseEvent e) {
-                if(isRelesed&&isInside(e.getPoint(),shape)){
-                    setCursor(new Cursor(Cursor.MOVE_CURSOR));
-                }else{
-                    setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                if(isRelesed){
+                    if(isInside(e.getPoint(),rectangule1)){
+                        setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule2)){
+                        setCursor(new Cursor(Cursor.N_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule3)){
+                        setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule4)){
+                        setCursor(new Cursor(Cursor.W_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule5)){
+                        setCursor(new Cursor(Cursor.E_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule6)){
+                        setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule7)){
+                        setCursor(new Cursor(Cursor.S_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),rectangule8)){
+                        setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+                    }else if(isInside(e.getPoint(),shape)){
+                        setCursor(new Cursor(Cursor.MOVE_CURSOR));
+                    }else{
+                        setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    }
                 }
             }
         });
@@ -102,6 +163,25 @@ public class ImagePanel extends JPanel {
                 graphics2D.setPaint(Color.LIGHT_GRAY);
                 shape = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 graphics2D.draw(shape);
+            }
+            if(shape!=null){
+                rectangule1=new Rectangle((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY(),8,8);
+                rectangule2=new Rectangle((int) (shape.getBounds().getCenterX())-4, (int) shape.getBounds().getMinY(),8,8);
+                rectangule3=new Rectangle((int) shape.getBounds().getMaxX()-8, (int) shape.getBounds().getMinY(),8,8);
+                rectangule4=new Rectangle((int) shape.getBounds().getMinX(), (int) shape.getBounds().getCenterY()-4,8,8);
+                rectangule5=new Rectangle((int) shape.getBounds().getMaxX()-8, (int) shape.getBounds().getCenterY()-4,8,8);
+                rectangule6=new Rectangle((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY()-8,8,8);
+                rectangule7=new Rectangle((int) (shape.getBounds().getCenterX())-4, (int) shape.getBounds().getMaxY()-8,8,8);
+                rectangule8=new Rectangle((int) shape.getBounds().getMaxX()-8, (int) shape.getBounds().getMaxY()-8,8,8);
+                graphics2D.setPaint(Color.black);
+                graphics2D.draw(rectangule1);
+                graphics2D.draw(rectangule2);
+                graphics2D.draw(rectangule3);
+                graphics2D.draw(rectangule4);
+                graphics2D.draw(rectangule5);
+                graphics2D.draw(rectangule6);
+                graphics2D.draw(rectangule7);
+                graphics2D.draw(rectangule8);
             }
         }
         setBackground(new Color(87, 236, 38));
