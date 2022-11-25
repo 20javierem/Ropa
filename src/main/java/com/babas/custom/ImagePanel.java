@@ -257,8 +257,6 @@ public class ImagePanel extends JPanel {
                     width = (int) ((int) (percen*width));
                     height = (int) ((int) (percen*height));
                 }
-                System.out.println("width: "+width);
-                System.out.println("heigt: "+height);
                 image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
                 bufferedImage = new BufferedImage(image.getWidth(this), image.getHeight(this), BufferedImage.TYPE_INT_ARGB);
                 Graphics2D bGr = bufferedImage.createGraphics();
