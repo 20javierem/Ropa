@@ -212,20 +212,23 @@ public class ImagePanel extends JPanel {
     private Shape makeRectangle(int x1, int y1, int x2, int y2) {
         int startX = 0;
         int startY = 0;
+
         if(shape!=null){
-            startX=shape.getBounds().x;
-            startY=shape.getBounds().y;
+            startX= (int) shape.getBounds().getMinX();
+            startY= (int) shape.getBounds().getMinY();
         }
+
         int width1=Math.abs(x1 - x2);
         int height1=Math.abs(y1 - y2);
 
         if(width1>width&&shape!=null){
-            width1=shape.getBounds().width;
+            width1= width;
         }else{
             startX=Math.min(x1,x2);
         }
+
         if(height1>height&&shape!=null){
-            height1=shape.getBounds().height;
+            height1= height;
         }else{
             startY=Math.min(y1,y2);
         }
