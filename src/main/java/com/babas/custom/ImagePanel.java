@@ -159,10 +159,10 @@ public class ImagePanel extends JPanel {
         }
     }
     private void loadRectanglesFalses(){
-        rectfalse1=makeRectangle((int)shapeImage.getBounds().getMinX(),(int)shapeImage.getBounds().getMinY(), (int)shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
-        rectfalse4=makeRectangle((int)shapeImage.getBounds().getMinX(), (int) shapeImage.getBounds().getMaxY(), (int) shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
-        rectfalse2=makeRectangle((int)shapeImage.getBounds().getMinX(), (int) shape.getBounds().getMinY(), (int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
-        rectfalse3=makeRectangle((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY(), (int) shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+        rectfalse1=makeRectangle2((int)shapeImage.getBounds().getMinX(),(int)shapeImage.getBounds().getMinY(), (int)shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
+        rectfalse4=makeRectangle2((int)shapeImage.getBounds().getMinX(), (int) shape.getBounds().getMaxY(), (int) shapeImage.getBounds().getMaxX(), (int) shapeImage.getBounds().getMaxY());
+        rectfalse2=makeRectangle2((int)shapeImage.getBounds().getMinX(), (int) shape.getBounds().getMinY(), (int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
+        rectfalse3=makeRectangle2((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY(), (int) shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
     }
     private void moveRectangle(Point point) {
         int startX= (int) (point.getX()-diferenceX);
@@ -206,6 +206,9 @@ public class ImagePanel extends JPanel {
         }
         return null;
     }
+    private Shape makeRectangle2(int x1, int y1, int x2, int y2){
+        return new Rectangle2D.Float(x1,y1,x2-x1,y2-y1);
+    }
     private Shape makeRectangle(int x1, int y1, int x2, int y2) {
         int startX = 0;
         int startY = 0;
@@ -232,20 +235,22 @@ public class ImagePanel extends JPanel {
     public void loadImage(String inputImage){
         try {
             Image image = ImageIO.read(new File(inputImage));
-            width=image.getWidth(this);
-            height=image.getHeight(this);
-            if(width>532||height>532){
-                double percen= Math.min(532.00/width,532.00/height);
-                width= (int) (percen*width);
-                height=(int) (percen*height);
+            if(image!=null){
+                width=image.getWidth(this);
+                height=image.getHeight(this);
+                if(width>532||height>532){
+                    double percen= Math.min(532.00/width,532.00/height);
+                    width= (int) (percen*width);
+                    height=(int) (percen*height);
+                }
+                image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
+                bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                Graphics2D bGr = bufferedImage.createGraphics();
+                bGr.drawImage(image, 0, 0, null);
+                bGr.dispose();
+                repaint();
+                shapeImage=new Rectangle2D.Double(((double) getWidth()-bufferedImage.getWidth())/2,((double)getHeight()-bufferedImage.getHeight())/2,bufferedImage.getWidth(),bufferedImage.getHeight());
             }
-            image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
-            bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D bGr = bufferedImage.createGraphics();
-            bGr.drawImage(image, 0, 0, null);
-            bGr.dispose();
-            repaint();
-            shapeImage=new Rectangle2D.Double(((double) getWidth()-bufferedImage.getWidth())/2,((double)getHeight()-bufferedImage.getHeight())/2,bufferedImage.getWidth(),bufferedImage.getHeight());
         } catch (IOException e) {
             e.printStackTrace();
         }
