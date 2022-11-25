@@ -28,35 +28,37 @@ public class ImagePanel extends JPanel {
     private Shape rectangule4;
     private boolean isRelesed=false;
     private int width,height;
+    private Shape rectfalse1;
+    private Shape rectfalse2;
+    private Shape rectfalse3;
+    private Shape rectfalse4;
     public ImagePanel() throws IOException {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                if(isInside(e.getPoint(),shapeImage)){
-                    if(isInside(e.getPoint(),rectangule1)){
-                        isRelesed=false;
-                        startDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
-                        endDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
-                    }else if(isInside(e.getPoint(),rectangule2)){
-                        isRelesed=false;
-                        startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
-                        endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
-                    }else if(isInside(e.getPoint(),rectangule3)){
-                        isRelesed=false;
-                        startDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
-                        endDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
-                    } else if(isInside(e.getPoint(),rectangule4)) {
-                        isRelesed=false;
-                        startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
-                        endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
-                    } else if(isRelesed&&isInside(e.getPoint(),shape)){
-                        diferenceX=e.getX()-shape.getBounds().x;
-                        diferenceY=e.getY()-shape.getBounds().y;
-                    }else{
-                        isRelesed=false;
-                        startDrag = new Point(e.getX(), e.getY());
-                        endDrag = startDrag;
-                        repaint();
-                    }
+                if(isInside(e.getPoint(),rectangule1)){
+                    isRelesed=false;
+                    startDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+                    endDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
+                }else if(isInside(e.getPoint(),rectangule2)){
+                    isRelesed=false;
+                    startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
+                    endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
+                }else if(isInside(e.getPoint(),rectangule3)){
+                    isRelesed=false;
+                    startDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
+                    endDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
+                } else if(isInside(e.getPoint(),rectangule4)) {
+                    isRelesed=false;
+                    startDrag=new Point((int) shape.getBounds().getMinX(), (int) shape.getBounds().getMinY());
+                    endDrag=new Point((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+                } else if(isRelesed&&isInside(e.getPoint(),shape)){
+                    diferenceX=e.getX()-shape.getBounds().x;
+                    diferenceY=e.getY()-shape.getBounds().y;
+                }else  if(isInside(e.getPoint(),shapeImage)){
+                    isRelesed=false;
+                    startDrag = new Point(e.getX(), e.getY());
+                    endDrag = startDrag;
+                    repaint();
                 }else{
                     shape=null;
                     repaint();
@@ -123,15 +125,12 @@ public class ImagePanel extends JPanel {
             graphics2D.draw(shapeImage);
             graphics2D.setPaint(Color.LIGHT_GRAY);
             if (startDrag != null && endDrag != null) {
-                graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f));
+                graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 graphics2D.setPaint(new Color(0x1B87F8));
                 shape = makeRectangle(startDrag.x, startDrag.y, endDrag.x, endDrag.y);
                 graphics2D.draw(shape);
             }
             if(shape!=null){
-                graphics2D.setPaint(new Color(0xBCCCDC));
-                graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-                graphics2D.fill(shapeImage);
                 graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
                 graphics2D.setPaint(new Color(0x1B87F8));
                 graphics2D.draw(shape);
@@ -144,16 +143,27 @@ public class ImagePanel extends JPanel {
                 graphics2D.draw(rectangule2);
                 graphics2D.draw(rectangule3);
                 graphics2D.draw(rectangule4);
-
                 graphics2D.fill(rectangule1);
                 graphics2D.fill(rectangule2);
                 graphics2D.fill(rectangule3);
                 graphics2D.fill(rectangule4);
 
+                loadRectanglesFalses();
+                graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.25f));
+                graphics2D.setPaint(new Color(0x000000));
+                graphics2D.fill(rectfalse1);
+                graphics2D.fill(rectfalse2);
+                graphics2D.fill(rectfalse3);
+                graphics2D.fill(rectfalse4);
             }
         }
     }
-
+    private void loadRectanglesFalses(){
+        rectfalse1=makeRectangle((int)shapeImage.getBounds().getMinX(),(int)shapeImage.getBounds().getMinY(), (int)shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMinY());
+        rectfalse4=makeRectangle((int)shapeImage.getBounds().getMinX(), (int) shapeImage.getBounds().getMaxY(), (int) shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+        rectfalse2=makeRectangle((int)shapeImage.getBounds().getMinX(), (int) shape.getBounds().getMinY(), (int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
+        rectfalse3=makeRectangle((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY(), (int) shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
+    }
     private void moveRectangle(Point point) {
         int startX= (int) (point.getX()-diferenceX);
         int startY= (int) (point.getY()-diferenceY);
@@ -224,8 +234,8 @@ public class ImagePanel extends JPanel {
             Image image = ImageIO.read(new File(inputImage));
             width=image.getWidth(this);
             height=image.getHeight(this);
-            if(width>542||height>542){
-                double percen= Math.min(542.00/width,542.00/height);
+            if(width>532||height>532){
+                double percen= Math.min(532.00/width,532.00/height);
                 width= (int) (percen*width);
                 height=(int) (percen*height);
             }
