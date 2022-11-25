@@ -168,25 +168,30 @@ public class ImagePanel extends JPanel {
         int startX= (int) (point.getX()-diferenceX);
         int startY= (int) (point.getY()-diferenceY);
         Shape shape1 = new Rectangle2D.Double(startX, startY, shape.getBounds().width, shape.getBounds().height);
-        if(shape1.getBounds().getMinX()<shapeImage.getBounds().getMinX()||shape1.getBounds().getMaxX()>shapeImage.getBounds().getMaxX()) {
-            startX=shape.getBounds().x;
+        if(shape1.getBounds().getMinX()<shapeImage.getBounds().getMinX()) {
+            startX=shapeImage.getBounds().x;
+        }
+        if(shape1.getBounds().getMaxX()>shapeImage.getBounds().getMaxX()){
+            startX= (int) shape.getBounds().getMinX();
         }
         if(shape1.getBounds().getMinY()<shapeImage.getBounds().getMinY()||shape1.getBounds().getMaxY()>shapeImage.getBounds().getMaxY()) {
-            startY=shape.getBounds().y;
+            startY=shapeImage.getBounds().y;
         }
         shape=new Rectangle2D.Double(startX,startY,shape.getBounds().width,shape.getBounds().height);
     }
 
     private Point getEndDrag(Point point){
-        if(shapeImage!=null&&shape!=null){
-            if(point.x<shapeImage.getBounds().getMinX()) {
+        if(shapeImage!=null){
+            if(point.x<(int)shapeImage.getBounds().getMinX()) {
                 point.setLocation(shapeImage.getBounds().getMinX(),point.getY());
-            }else if(point.x>shapeImage.getBounds().getMaxX()){
+            }
+            if(point.x>(int) shapeImage.getBounds().getMaxX()){
                 point.setLocation(shapeImage.getBounds().getMaxX(),point.getY());
             }
-            if(point.y<shapeImage.getBounds().getMinY()) {
+            if(point.y<(int)shapeImage.getBounds().getMinY()) {
                 point.setLocation(point.getX(),shapeImage.getBounds().getMinY());
-            }else if(point.y>shapeImage.getBounds().getMaxY()) {
+            }
+            if(point.y>(int)shapeImage.getBounds().getMaxY()) {
                 point.setLocation(point.getX(),shapeImage.getBounds().getMaxY());
             }
         }
