@@ -32,6 +32,7 @@ public class ImagePanel extends JPanel {
     private Shape rectfalse2;
     private Shape rectfalse3;
     private Shape rectfalse4;
+
     public ImagePanel() throws IOException {
         this.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
@@ -172,10 +173,14 @@ public class ImagePanel extends JPanel {
             startX=shapeImage.getBounds().x;
         }
         if(shape1.getBounds().getMaxX()>shapeImage.getBounds().getMaxX()){
-            startX= (int) shape.getBounds().getMinX();
+            startX=(int) shape.getBounds().getMinX();
         }
-        if(shape1.getBounds().getMinY()<shapeImage.getBounds().getMinY()||shape1.getBounds().getMaxY()>shapeImage.getBounds().getMaxY()) {
+
+        if(shape1.getBounds().getMinY()<shapeImage.getBounds().getMinY()) {
             startY=shapeImage.getBounds().y;
+        }
+        if(shape1.getBounds().getMaxY()>shapeImage.getBounds().getMaxY()){
+            startY= (int) shape.getBounds().getMinY();
         }
         shape=new Rectangle2D.Double(startX,startY,shape.getBounds().width,shape.getBounds().height);
     }
@@ -214,6 +219,7 @@ public class ImagePanel extends JPanel {
     private Shape makeRectangle2(int x1, int y1, int x2, int y2){
         return new Rectangle2D.Float(x1,y1,x2-x1,y2-y1);
     }
+
     private Shape makeRectangle(int x1, int y1, int x2, int y2) {
         int startX = 0;
         int startY = 0;
@@ -246,15 +252,17 @@ public class ImagePanel extends JPanel {
             if(image!=null){
                 width=image.getWidth(this);
                 height=image.getHeight(this);
-                if(width>532||height>532){
-                    double percen= Math.min(532.00/width,532.00/height);
-                    width= (int) (percen*width);
-                    height=(int) (percen*height);
+                if(width>534.00||height>534.00){
+                    double percen= Math.min(534.00/width,534.00/height);
+                    width = (int) ((int) (percen*width));
+                    height = (int) ((int) (percen*height));
                 }
+                System.out.println("width: "+width);
+                System.out.println("heigt: "+height);
                 image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
-                bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                bufferedImage = new BufferedImage(image.getWidth(this), image.getHeight(this), BufferedImage.TYPE_INT_ARGB);
                 Graphics2D bGr = bufferedImage.createGraphics();
-                bGr.drawImage(image, 0, 0, null);
+                bGr.drawImage(image, 0, 0, this);
                 bGr.dispose();
                 repaint();
                 shapeImage=new Rectangle2D.Double(((double) getWidth()-bufferedImage.getWidth())/2,((double)getHeight()-bufferedImage.getHeight())/2,bufferedImage.getWidth(),bufferedImage.getHeight());
