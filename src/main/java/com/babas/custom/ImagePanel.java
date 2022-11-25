@@ -180,14 +180,14 @@ public class ImagePanel extends JPanel {
     private Point getEndDrag(Point point){
         if(shapeImage!=null&&shape!=null){
             if(point.x<shapeImage.getBounds().getMinX()) {
-                point.setLocation(shape.getBounds().getMinX(),point.getY());
+                point.setLocation(shapeImage.getBounds().getMinX(),point.getY());
             }else if(point.x>shapeImage.getBounds().getMaxX()){
-                point.setLocation(shape.getBounds().getMaxX(),point.getY());
+                point.setLocation(shapeImage.getBounds().getMaxX(),point.getY());
             }
             if(point.y<shapeImage.getBounds().getMinY()) {
-                point.setLocation(point.getX(),shape.getBounds().getMinY());
+                point.setLocation(point.getX(),shapeImage.getBounds().getMinY());
             }else if(point.y>shapeImage.getBounds().getMaxY()) {
-                point.setLocation(point.getX(),shape.getBounds().getMaxY());
+                point.setLocation(point.getX(),shapeImage.getBounds().getMaxY());
             }
         }
         return point;
