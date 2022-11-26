@@ -165,10 +165,12 @@ public class ImagePanel extends JPanel {
         rectfalse2=makeRectangle2((int)shapeImage.getBounds().getMinX(), (int) shape.getBounds().getMinY(), (int) shape.getBounds().getMinX(), (int) shape.getBounds().getMaxY());
         rectfalse3=makeRectangle2((int) shape.getBounds().getMaxX(), (int) shape.getBounds().getMinY(), (int) shapeImage.getBounds().getMaxX(), (int) shape.getBounds().getMaxY());
     }
+
     private void moveRectangle(Point point) {
         int startX= (int) (point.getX()-diferenceX);
         int startY= (int) (point.getY()-diferenceY);
         Shape shape1 = new Rectangle2D.Double(startX, startY, shape.getBounds().width, shape.getBounds().height);
+
         if(shape1.getBounds().getMinX()<shapeImage.getBounds().getMinX()) {
             startX=shapeImage.getBounds().x;
         }
@@ -223,23 +225,22 @@ public class ImagePanel extends JPanel {
     private Shape makeRectangle(int x1, int y1, int x2, int y2) {
         int startX = 0;
         int startY = 0;
+        int width1 = Math.abs(x1 - x2);
+        int height1 = Math.abs(y1 - y2);
 
         if(shape!=null){
             startX= (int) shape.getBounds().getMinX();
             startY= (int) shape.getBounds().getMinY();
         }
 
-        int width1=Math.abs(x1 - x2);
-        int height1=Math.abs(y1 - y2);
-
         if(width1>width&&shape!=null){
-            width1= width;
+            width1= (int) shape.getBounds().getWidth();
         }else{
             startX=Math.min(x1,x2);
         }
 
         if(height1>height&&shape!=null){
-            height1= height;
+            height1= (int) shape.getBounds().getHeight();
         }else{
             startY=Math.min(y1,y2);
         }
@@ -252,10 +253,18 @@ public class ImagePanel extends JPanel {
             if(image!=null){
                 width=image.getWidth(this);
                 height=image.getHeight(this);
+
                 if(width>534.00||height>534.00){
                     double percen= Math.min(534.00/width,534.00/height);
                     width = (int) ((int) (percen*width));
                     height = (int) ((int) (percen*height));
+                }
+
+                if(width%2!=0){
+                    width++;
+                }
+                if(height%2!=0){
+                    height++;
                 }
                 image=image.getScaledInstance(width, height,  Image.SCALE_SMOOTH);
                 bufferedImage = new BufferedImage(image.getWidth(this), image.getHeight(this), BufferedImage.TYPE_INT_ARGB);
