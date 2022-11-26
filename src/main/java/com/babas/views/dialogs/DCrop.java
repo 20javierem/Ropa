@@ -59,9 +59,9 @@ public class DCrop extends JDialog {
     @Override
     public void setVisible(boolean b) {
         if (show) {
+            show = false;
             if (loadImage()) {
                 super.setVisible(b);
-                show = false;
             } else {
                 dispose();
             }

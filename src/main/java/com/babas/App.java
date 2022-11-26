@@ -19,61 +19,59 @@ public class App
         Utilities.propiedades=new Propiedades();
         Utilities.propiedades.save();
         Utilities.loadTheme();
-//        Babas.initialize();
-        DCrop dCrop=new DCrop();
-        dCrop.setVisible(true);
-//        if(Babas.state){
-//            Babas.company=Companys.get(1);
-//            if(Babas.company==null){
-//                Babas.company=new Company();
-//                DCompany dCompany=new DCompany();
-//                dCompany.setVisible(true);
-//            }else{
-//                if(Babas.company.getLogo()!=null){
-//                    Utilities.downloadLogo(Babas.company.getLogo());
-//                }
-//            }
-//            if(Babas.company.getId()!=null){
-//                if(Branchs.getTodos().isEmpty()){
-//                    DBranch dBranch=new DBranch(new Branch(),true);
-//                    dBranch.setVisible(true);
-//                }
-//            }
-//            if(Babas.company.getId()!=null&&!Branchs.getTodos().isEmpty()){
-//                if(Users.getTodos().isEmpty()){
-//                    User user=new User();
-//                    user.getBranchs().add(Branchs.get(1));
-//                    user.getPermitions().setNewSale(true);
-//                    user.getPermitions().setShowCatalogue(true);
-//                    user.getPermitions().setRecordSales(true);
-//                    user.getPermitions().setNewRental(true);
-//                    user.getPermitions().setRentalsActives(true);
-//                    user.getPermitions().setRecordRentals(true);
-//                    user.getPermitions().setNewReserve(true);
-//                    user.getPermitions().setReservesActives(true);
-//                    user.getPermitions().setRecordReserves(true);
-//                    user.getPermitions().setNewTransfer(true);
-//                    user.getPermitions().setRecordTransfers(true);
-//                    user.getPermitions().setRecordBoxes(true);
-//                    user.getPermitions().setManageProducts(true);
-//                    user.getPermitions().setManageUsers(true);
-//                    user.getPermitions().setManageBranchs(true);
-//                    user.getPermitions().setManageCompany(true);
-//                    user.getPermitions().setAceptTransfer(true);
-//                    user.getPermitions().setManageClients(true);
-//                    user.getPermitions().setNewQuotation(true);
-//                    user.getPermitions().setRecordQuotations(true);
-//                    DUser dUser=new DUser(true,user);
-//                    dUser.setVisible(true);
-//                }
-//            }
-//            if(!Users.getTodos().isEmpty()){
-//                FLogin fLogin=new FLogin();
-//                fLogin.setVisible(true);
-//            }
-//        }else{
-//            System.exit(0);
-//        }
+        Babas.initialize();
+        if(Babas.state){
+            Babas.company=Companys.get(1);
+            if(Babas.company==null){
+                Babas.company=new Company();
+                DCompany dCompany=new DCompany();
+                dCompany.setVisible(true);
+            }else{
+                if(Babas.company.getLogo()!=null){
+                    Utilities.downloadLogo(Babas.company.getLogo());
+                }
+            }
+            if(Babas.company.getId()!=null){
+                if(Branchs.getTodos().isEmpty()){
+                    DBranch dBranch=new DBranch(new Branch(),true);
+                    dBranch.setVisible(true);
+                }
+            }
+            if(Babas.company.getId()!=null&&!Branchs.getTodos().isEmpty()){
+                if(Users.getTodos().isEmpty()){
+                    User user=new User();
+                    user.getBranchs().add(Branchs.get(1));
+                    user.getPermitions().setNewSale(true);
+                    user.getPermitions().setShowCatalogue(true);
+                    user.getPermitions().setRecordSales(true);
+                    user.getPermitions().setNewRental(true);
+                    user.getPermitions().setRentalsActives(true);
+                    user.getPermitions().setRecordRentals(true);
+                    user.getPermitions().setNewReserve(true);
+                    user.getPermitions().setReservesActives(true);
+                    user.getPermitions().setRecordReserves(true);
+                    user.getPermitions().setNewTransfer(true);
+                    user.getPermitions().setRecordTransfers(true);
+                    user.getPermitions().setRecordBoxes(true);
+                    user.getPermitions().setManageProducts(true);
+                    user.getPermitions().setManageUsers(true);
+                    user.getPermitions().setManageBranchs(true);
+                    user.getPermitions().setManageCompany(true);
+                    user.getPermitions().setAceptTransfer(true);
+                    user.getPermitions().setManageClients(true);
+                    user.getPermitions().setNewQuotation(true);
+                    user.getPermitions().setRecordQuotations(true);
+                    DUser dUser=new DUser(true,user);
+                    dUser.setVisible(true);
+                }
+            }
+            if(!Users.getTodos().isEmpty()){
+                FLogin fLogin=new FLogin();
+                fLogin.setVisible(true);
+            }
+        }else{
+            System.exit(0);
+        }
 
     }
 }

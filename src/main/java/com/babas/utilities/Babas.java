@@ -8,6 +8,7 @@ import org.hibernate.*;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.exception.JDBCConnectionException;
 import org.hibernate.service.spi.ServiceException;
 
 
