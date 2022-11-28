@@ -15,11 +15,10 @@ import org.hibernate.service.spi.ServiceException;
 public class Babas {
     public static Session session;
     protected static CriteriaBuilder builder;
-    public static boolean state=false;
     private static SessionFactory sessionFactory;
     public static User user;
     public static BoxSession boxSession =new BoxSession();
-    public static Company company=new Company();
+    public static Company company=null;
     
     public static void initialize() {
         buildSessionFactory();
@@ -31,7 +30,6 @@ public class Babas {
             sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
             session = sessionFactory.openSession();
             builder = session.getCriteriaBuilder();
-            state=true;
         }catch (ServiceException e){
             System.out.println("error de conexion");
         }
@@ -50,8 +48,9 @@ public class Babas {
         session.getTransaction().commit();
     }
     public static void close(){
-        session.close();
-        state=false;
+        if(Babas.session!=null&&session.isConnected()){
+            session.close();
+        }
     }
 
 }

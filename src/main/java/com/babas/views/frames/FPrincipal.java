@@ -367,7 +367,6 @@ public class FPrincipal extends JFrame {
         if (si) {
             FLogin fLogin = new FLogin();
             this.dispose();
-            fLogin.setVisible(true);
         }
     }
 
