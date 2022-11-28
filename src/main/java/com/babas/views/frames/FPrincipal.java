@@ -367,6 +367,8 @@ public class FPrincipal extends JFrame {
         if (si) {
             FLogin fLogin = new FLogin();
             this.dispose();
+            fLogin.setVisible(true);
+            fLogin.tryConnection();
         }
     }
 
@@ -374,6 +376,7 @@ public class FPrincipal extends JFrame {
         setVisible(false);
         FLogin fLogin = new FLogin(this);
         fLogin.setVisible(true);
+        fLogin.tryConnection();
     }
 
     private void loadMenuItems() {

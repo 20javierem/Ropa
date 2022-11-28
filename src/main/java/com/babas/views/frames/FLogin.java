@@ -205,8 +205,6 @@ public class FLogin extends JFrame {
         lblError.setVisible(false);
         btnTryConection.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/buildLoadChanges.svg")));
         setLocationRelativeTo(null);
-        setVisible(true);
-        tryConnection();
     }
 
     private void loadUserSaved() {
