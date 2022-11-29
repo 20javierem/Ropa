@@ -183,8 +183,15 @@ public class TabNewSale {
                 sale.setObservation(txtObservation.getText().trim());
                 Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(sale);
                 if (constraintViolationSet.isEmpty()) {
-                    boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Venta", JOptionPane.YES_NO_OPTION) == 0;
-                    if (si) {
+                    JPanel jPanel = new JPanel();
+                    jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
+                    JComboBox comboBox = new JComboBox();
+                    comboBox.addItem("NOTA DE VENTA");
+                    comboBox.addItem("BOLETA");
+                    comboBox.addItem("FACTURA");
+                    jPanel.add(comboBox);
+                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Comfirmar Venta", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                    if (option == JOptionPane.OK_OPTION) {
                         sale.save();
                         Babas.boxSession.getSales().add(0, sale);
                         Babas.boxSession.calculateTotals();
@@ -199,8 +206,8 @@ public class TabNewSale {
                                 UtilitiesReports.generateTicketSale(false, sale, true);
                             }
                         } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
-                            si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION) == 0;
-                            if (si) {
+                            option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
+                            if (option == JOptionPane.OK_OPTION) {
                                 int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                                 if (index == 0) {
                                     UtilitiesReports.generateTicketSale(true, sale, true);
