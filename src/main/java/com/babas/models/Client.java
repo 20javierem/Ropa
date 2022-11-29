@@ -23,7 +23,6 @@ public class Client extends Babas {
     private String names;
     private String mail;
     private String phone;
-
     @OneToMany(mappedBy = "client")
     private List<Sale> sales=new ArrayList<>();
 

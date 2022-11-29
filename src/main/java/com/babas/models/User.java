@@ -36,7 +36,6 @@ public class User extends Babas {
     private boolean active=true;
     private boolean staff=true;
     private Date birthday;
-    private Long idFact;
     @ManyToMany
     @JoinTable(
             name = "user_branch_tbl",
@@ -50,8 +49,8 @@ public class User extends Babas {
     private Permission permission=new Permission();
     @ManyToOne
     private Permission permissionGroup;
-
     private boolean groupDefault=false;
+    private Long idFact;
 
     public Long getIdFact() {
         return idFact;

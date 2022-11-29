@@ -50,11 +50,28 @@ public class Branch extends Babas {
     private List<Sale> sales=new ArrayList<>();
     @OneToMany(mappedBy = "branch")
     private List<Box> boxs=new ArrayList<>();
-
     private Long idFact;
+    private String serie;
+    private Integer correlativo;
 
     public Branch(){
 
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public Integer getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(Integer correlativo) {
+        this.correlativo = correlativo;
     }
 
     public Long getIdFact() {

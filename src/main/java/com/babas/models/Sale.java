@@ -41,6 +41,10 @@ public class Sale extends Babas {
     @OneToOne
     private Reserve reserve;
     private String observation;
+    private String urlTicket;
+    private String urlA4;
+    private String cdr;
+
     public String getObservation() {
         return observation;
     }
@@ -139,6 +143,30 @@ public class Sale extends Babas {
 
     public void setReserve(Reserve reserve) {
         this.reserve = reserve;
+    }
+
+    public String getCdr() {
+        return cdr;
+    }
+
+    public void setCdr(String cdr) {
+        this.cdr = cdr;
+    }
+
+    public String getUrlTicket() {
+        return urlTicket;
+    }
+
+    public void setUrlTicket(String urlTicket) {
+        this.urlTicket = urlTicket;
+    }
+
+    public String getUrlA4() {
+        return urlA4;
+    }
+
+    public void setUrlA4(String urlA4) {
+        this.urlA4 = urlA4;
     }
 
     public void calculateTotal(){

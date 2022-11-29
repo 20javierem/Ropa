@@ -86,10 +86,10 @@ public class DetailSale extends Babas {
         return product.getStyle().getName();
     }
     public String getSub_totalString(){
-        return Utilities.moneda.format(getSubtotal());
+        return getSubtotal().toString();
     }
     public String getPriceString(){
-        return Utilities.moneda.format(getPrice());
+        return getPrice().toString();
     }
     public Double getSubtotal() {
         return subtotal;
