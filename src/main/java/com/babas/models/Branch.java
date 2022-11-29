@@ -50,35 +50,71 @@ public class Branch extends Babas {
     private List<Sale> sales=new ArrayList<>();
     @OneToMany(mappedBy = "branch")
     private List<Box> boxs=new ArrayList<>();
-    private Long idFact;
-    private String serie;
-    private Integer correlativo;
+    private Integer idFact;
+    private String serieNotaVenta;
+    private Integer correlativoNotaVenta;
+    private String serieBoleta;
+    private Integer correlativoBoleta;
+    private String serieFactura;
+    private Integer correlativoFactura;
 
     public Branch(){
 
     }
 
-    public String getSerie() {
-        return serie;
+    public String getSerieNotaVenta() {
+        return serieNotaVenta;
     }
 
-    public void setSerie(String serie) {
-        this.serie = serie;
+    public void setSerieNotaVenta(String serieNotaVenta) {
+        this.serieNotaVenta = serieNotaVenta;
     }
 
-    public Integer getCorrelativo() {
-        return correlativo;
+    public Integer getCorrelativoNotaVenta() {
+        return correlativoNotaVenta;
     }
 
-    public void setCorrelativo(Integer correlativo) {
-        this.correlativo = correlativo;
+    public void setCorrelativoNotaVenta(Integer correlativoNotaVenta) {
+        this.correlativoNotaVenta = correlativoNotaVenta;
     }
 
-    public Long getIdFact() {
+    public String getSerieBoleta() {
+        return serieBoleta;
+    }
+
+    public void setSerieBoleta(String serieBoleta) {
+        this.serieBoleta = serieBoleta;
+    }
+
+    public Integer getCorrelativoBoleta() {
+        return correlativoBoleta;
+    }
+
+    public void setCorrelativoBoleta(Integer correlativoBoleta) {
+        this.correlativoBoleta = correlativoBoleta;
+    }
+
+    public String getSerieFactura() {
+        return serieFactura;
+    }
+
+    public void setSerieFactura(String serieFactura) {
+        this.serieFactura = serieFactura;
+    }
+
+    public Integer getCorrelativoFactura() {
+        return correlativoFactura;
+    }
+
+    public void setCorrelativoFactura(Integer correlativoFactura) {
+        this.correlativoFactura = correlativoFactura;
+    }
+
+    public Integer getIdFact() {
         return idFact;
     }
 
-    public void setIdFact(Long idFact) {
+    public void setIdFact(Integer idFact) {
         this.idFact = idFact;
     }
 

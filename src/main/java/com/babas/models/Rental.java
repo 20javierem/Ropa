@@ -51,9 +51,9 @@ public class Rental extends Babas {
     @NotNull(message ="Usuario")
     private User user;
     private String observation;
-    private String urlTicket;
-    private String urlA4;
-    private String cdr;
+    private boolean activeSunat=false;
+    private String serie;
+    private String typeDocument="77";
 
     public String getObservation() {
         return observation;
@@ -175,6 +175,29 @@ public class Rental extends Babas {
         }
     }
 
+    public boolean isActiveSunat() {
+        return activeSunat;
+    }
+
+    public void setActiveSunat(boolean activeSunat) {
+        this.activeSunat = activeSunat;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public String getTypeDocument() {
+        return typeDocument;
+    }
+
+    public void setTypeDocument(String typeDocument) {
+        this.typeDocument = typeDocument;
+    }
     public Double getTotalWithDiscount() {
         return totalWithDiscount;
     }
@@ -219,30 +242,6 @@ public class Rental extends Babas {
         this.reserve = reserve;
     }
 
-    public String getUrlTicket() {
-        return urlTicket;
-    }
-
-    public void setUrlTicket(String urlTicket) {
-        this.urlTicket = urlTicket;
-    }
-
-    public String getUrlA4() {
-        return urlA4;
-    }
-
-    public void setUrlA4(String urlA4) {
-        this.urlA4 = urlA4;
-    }
-
-    public String getCdr() {
-        return cdr;
-    }
-
-    public void setCdr(String cdr) {
-        this.cdr = cdr;
-    }
-
     public String getStringUpdated(){
         return Utilities.formatoFechaHora.format(updated);
     }
@@ -277,7 +276,17 @@ public class Rental extends Babas {
         }
         updated=new Date();
         super.save();
-        numberRental=1000+id;
+        switch (typeDocument){
+            case "01":
+                numberRental=branch.getCorrelativoFactura()+id;
+                break;
+            case "03":
+                numberRental=branch.getCorrelativoBoleta()+id;
+                break;
+            default:
+                numberRental=branch.getCorrelativoNotaVenta()+id;
+                break;
+        }
         super.save();
         if(active==0&&reserve!=null){
             reserve.setActive(1);

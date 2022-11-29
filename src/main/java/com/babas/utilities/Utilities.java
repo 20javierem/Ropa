@@ -61,6 +61,7 @@ public class Utilities {
     public static DateFormat año=new SimpleDateFormat("yyyy");
     public static NumberFormat moneda = NumberFormat.getCurrencyInstance();
     public static NumberFormat numberFormat=new DecimalFormat("###,###,###.##");
+    public static DecimalFormat decimalFormat = new DecimalFormat("#.##");
     public static String getFormatoFecha(){
         return "dd/MM/yyyy";
     }

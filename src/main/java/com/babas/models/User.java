@@ -50,13 +50,13 @@ public class User extends Babas {
     @ManyToOne
     private Permission permissionGroup;
     private boolean groupDefault=false;
-    private Long idFact;
+    private Integer idFact;
 
-    public Long getIdFact() {
+    public Integer getIdFact() {
         return idFact;
     }
 
-    public void setIdFact(Long idFact) {
+    public void setIdFact(Integer idFact) {
         this.idFact = idFact;
     }
 

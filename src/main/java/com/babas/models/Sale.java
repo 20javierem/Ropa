@@ -41,9 +41,9 @@ public class Sale extends Babas {
     @OneToOne
     private Reserve reserve;
     private String observation;
-    private String urlTicket;
-    private String urlA4;
-    private String cdr;
+    private boolean activeSunat=false;
+    private String serie;
+    private String typeDocument="77";
 
     public String getObservation() {
         return observation;
@@ -71,6 +71,30 @@ public class Sale extends Babas {
     public void setDiscount(Double discount) {
         this.discount = discount;
         calculateTotal();
+    }
+
+    public boolean isActiveSunat() {
+        return activeSunat;
+    }
+
+    public void setActiveSunat(boolean activeSunat) {
+        this.activeSunat = activeSunat;
+    }
+
+    public String getSerie() {
+        return serie;
+    }
+
+    public void setSerie(String serie) {
+        this.serie = serie;
+    }
+
+    public String getTypeDocument() {
+        return typeDocument;
+    }
+
+    public void setTypeDocument(String typeDocument) {
+        this.typeDocument = typeDocument;
     }
 
     public Double getTotalCurrent() {
@@ -145,30 +169,6 @@ public class Sale extends Babas {
         this.reserve = reserve;
     }
 
-    public String getCdr() {
-        return cdr;
-    }
-
-    public void setCdr(String cdr) {
-        this.cdr = cdr;
-    }
-
-    public String getUrlTicket() {
-        return urlTicket;
-    }
-
-    public void setUrlTicket(String urlTicket) {
-        this.urlTicket = urlTicket;
-    }
-
-    public String getUrlA4() {
-        return urlA4;
-    }
-
-    public void setUrlA4(String urlA4) {
-        this.urlA4 = urlA4;
-    }
-
     public void calculateTotal(){
         total=0.0;
         detailSales.forEach(detailSale -> {
@@ -210,7 +210,17 @@ public class Sale extends Babas {
         }
         updated=new Date();
         super.save();
-        numberSale=1000+id;
+        switch (typeDocument){
+            case "01":
+                numberSale=branch.getCorrelativoFactura()+id;
+                break;
+            case "03":
+                numberSale=branch.getCorrelativoBoleta()+id;
+                break;
+            default:
+                numberSale=branch.getCorrelativoNotaVenta()+id;
+                break;
+        }
         super.save();
         getDetailSales().forEach(Babas::save);
     }

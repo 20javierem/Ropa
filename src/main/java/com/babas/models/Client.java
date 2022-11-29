@@ -23,8 +23,6 @@ public class Client extends Babas {
     private String names;
     private String mail;
     private String phone;
-    @OneToMany(mappedBy = "client")
-    private List<Sale> sales=new ArrayList<>();
 
     public Date getCreated() {
         return created;
@@ -52,10 +50,6 @@ public class Client extends Babas {
 
     public void setNames(String names) {
         this.names = names.toUpperCase();
-    }
-
-    public List<Sale> getSales() {
-        return sales;
     }
 
     public String getMail() {

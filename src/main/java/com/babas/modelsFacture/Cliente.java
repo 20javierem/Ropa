@@ -40,10 +40,6 @@ public class Cliente {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getDireccion() {
         return direccion;
     }
@@ -56,24 +52,12 @@ public class Cliente {
         return ubigeo;
     }
 
-    public void setUbigeo(String ubigeo) {
-        this.ubigeo = ubigeo;
-    }
-
     public String getSexo() {
         return sexo;
     }
 
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
     public String getFecha_nac() {
         return fecha_nac;
-    }
-
-    public void setFecha_nac(String fecha_nac) {
-        this.fecha_nac = fecha_nac;
     }
 
     public String getCelular() {

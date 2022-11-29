@@ -3,7 +3,7 @@ package com.babas.modelsFacture;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotaVenta {
+public class Comprobante {
     private Contribuyente contribuyente;
     private Cliente cliente;
     private Cabecera_comprobante cabecera_comprobante;

@@ -1,17 +1,25 @@
 package com.babas.modelsFacture;
 
 public class Cabecera_comprobante {
-    private String tipo_documento="77";
     private String moneda="PEN";
-    private Integer idsucursal;
-    private String id_condicionpago="";
-    private String fecha_comprobante;
     private String nro_placa="";
     private String nro_orden="";
     private String guia_remision="";
+    private String id_condicionpago="";
+    private String observacion="";
+    private String tipo_documento;
+    private Integer idsucursal;
+    private String fecha_comprobante;
     private Double descuento_monto;
     private Double descuento_porcentaje;
-    private String observacion="";
+
+
+    public Cabecera_comprobante(){
+    }
+
+    public void setTipo_documento(String tipo_documento) {
+        this.tipo_documento = tipo_documento;
+    }
 
     public String getTipo_documento() {
         return tipo_documento;
