@@ -5,6 +5,7 @@ import com.babas.controllers.Clients;
 import com.babas.custom.TabPane;
 import com.babas.models.Client;
 import com.babas.models.Sale;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
@@ -192,27 +193,32 @@ public class TabNewSale {
                     jPanel.add(comboBox);
                     int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Comfirmar Venta", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
                     if (option == JOptionPane.OK_OPTION) {
+                        if (comboBox.getSelectedIndex() != 0) {
+                            sale.setTypeDocument(comboBox.getSelectedIndex() == 1 ? "03" : "01");
+                        }
                         sale.save();
                         Babas.boxSession.getSales().add(0, sale);
                         Babas.boxSession.calculateTotals();
-                        Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getNumberSale() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
+                        Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
-                        if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
-                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                            if (index == 0) {
-                                UtilitiesReports.generateTicketSale(true, sale, true);
-                            } else if (index == 1) {
-                                UtilitiesReports.generateTicketSale(false, sale, true);
-                            }
-                        } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
-                            option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
-                            if (option == JOptionPane.OK_OPTION) {
+                        if (ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale))) {
+                            if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
                                 int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                                 if (index == 0) {
-                                    UtilitiesReports.generateTicketSale(true, sale, true);
+                                    UtilitiesReports.generateComprobanteOfSale(true, sale, true);
                                 } else if (index == 1) {
-                                    UtilitiesReports.generateTicketSale(false, sale, true);
+                                    UtilitiesReports.generateComprobanteOfSale(false, sale, true);
+                                }
+                            } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
+                                option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
+                                if (option == JOptionPane.OK_OPTION) {
+                                    int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                                    if (index == 0) {
+                                        UtilitiesReports.generateComprobanteOfSale(true, sale, true);
+                                    } else if (index == 1) {
+                                        UtilitiesReports.generateComprobanteOfSale(false, sale, true);
+                                    }
                                 }
                             }
                         }

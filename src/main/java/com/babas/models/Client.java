@@ -23,6 +23,7 @@ public class Client extends Babas {
     private String names;
     private String mail;
     private String phone;
+    private Integer typeDocument=0;
 
     public Date getCreated() {
         return created;
@@ -66,6 +67,14 @@ public class Client extends Babas {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Integer getTypeDocument() {
+        return typeDocument;
+    }
+
+    public void setTypeDocument(Integer typeDocument) {
+        this.typeDocument = typeDocument;
     }
 
     @Override

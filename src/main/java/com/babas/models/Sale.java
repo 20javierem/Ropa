@@ -33,7 +33,6 @@ public class Sale extends Babas {
     private boolean cash;
     private Date created;
     private Date updated;
-    private Long numberSale;
     private boolean active=true;
     @ManyToOne
     @NotNull
@@ -43,6 +42,7 @@ public class Sale extends Babas {
     private String observation;
     private boolean activeSunat=false;
     private String serie;
+    private Long correlativo;
     private String typeDocument="77";
 
     public String getObservation() {
@@ -157,8 +157,8 @@ public class Sale extends Babas {
         this.cash = cash;
     }
 
-    public Long getNumberSale() {
-        return numberSale;
+    public Long getCorrelativo() {
+        return correlativo;
     }
 
     public Reserve getReserve() {
@@ -176,8 +176,10 @@ public class Sale extends Babas {
         });
         totalCurrent=total-discount;
         if(reserve!=null){
-            total=totalCurrent- reserve.getAdvance();
+            total=totalCurrent-reserve.getAdvance();
         }
+        total=Math.round(total*100.0)/100.0;
+        totalCurrent=Math.round(totalCurrent*100.0)/100.0;
     }
     public String getStringUpdated(){
         return Utilities.formatoFechaHora.format(updated);
@@ -205,22 +207,26 @@ public class Sale extends Babas {
     }
     @Override
     public void save() {
+        updated=new Date();
         if(created==null){
             created=new Date();
         }
-        updated=new Date();
-        super.save();
+        branch.refresh();
         switch (typeDocument){
             case "01":
-                numberSale=branch.getCorrelativoFactura()+id;
+                branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
+                correlativo=branch.getCorrelativoFactura();
                 break;
             case "03":
-                numberSale=branch.getCorrelativoBoleta()+id;
+                branch.setCorrelativoBoleta(branch.getCorrelativoBoleta()+1);
+                correlativo=branch.getCorrelativoBoleta();
                 break;
             default:
-                numberSale=branch.getCorrelativoNotaVenta()+id;
+                branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
+                correlativo=branch.getCorrelativoNotaVenta();
                 break;
         }
+        branch.save();
         super.save();
         getDetailSales().forEach(Babas::save);
     }

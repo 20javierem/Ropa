@@ -34,7 +34,7 @@ public class Rental extends Babas {
     private Date delivery;
     @NotNull(message = "Fecha fin")
     private Date ended;
-    private Long numberRental;
+    private Long correlativo;
     @ManyToOne
     private Branch branch;
     private Integer active=0;
@@ -131,8 +131,8 @@ public class Rental extends Babas {
         this.cash = cash;
     }
 
-    public Long getNumberRental() {
-        return numberRental;
+    public Long getCorrelativo() {
+        return correlativo;
     }
 
     public Double getTotal() {
@@ -168,10 +168,11 @@ public class Rental extends Babas {
         detailRentals.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        totalWithDiscount=total-discount;
-        totalCurrent=totalWithDiscount+warranty;
+        total=Math.round(total*100.0)/100.0;
+        totalWithDiscount=Math.round((total-discount)*100.0)/100.0;
+        totalCurrent=Math.round((totalWithDiscount+warranty)*100.0)/100.0;
         if(reserve!=null){
-            totalCurrent=totalCurrent-reserve.getAdvance();
+            totalCurrent=Math.round((totalCurrent-reserve.getAdvance())*100.0)/100.0;
         }
     }
 
@@ -271,22 +272,26 @@ public class Rental extends Babas {
     }
     @Override
     public void save() {
+        updated=new Date();
         if(created==null){
             created=new Date();
         }
-        updated=new Date();
-        super.save();
+        branch.refresh();
         switch (typeDocument){
             case "01":
-                numberRental=branch.getCorrelativoFactura()+id;
+                branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
+                correlativo=branch.getCorrelativoFactura();
                 break;
             case "03":
-                numberRental=branch.getCorrelativoBoleta()+id;
+                branch.setCorrelativoBoleta(branch.getCorrelativoBoleta()+1);
+                correlativo=branch.getCorrelativoBoleta();
                 break;
             default:
-                numberRental=branch.getCorrelativoNotaVenta()+id;
+                branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
+                correlativo=branch.getCorrelativoNotaVenta();
                 break;
         }
+        branch.save();
         super.save();
         if(active==0&&reserve!=null){
             reserve.setActive(1);

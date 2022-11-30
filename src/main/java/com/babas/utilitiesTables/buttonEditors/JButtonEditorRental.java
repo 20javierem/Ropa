@@ -98,12 +98,12 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 movement.setAmount(-rental.getTotalCurrent());
                                 movement.setEntrance(false);
                                 movement.setBoxSesion(Babas.boxSession);
-                                movement.setDescription("Alquiler cancelado NRO: "+rental.getNumberRental());
+                                movement.setDescription("Alquiler cancelado NRO: "+rental.getCorrelativo());
                                 movement.save();
                                 movement.getBoxSesion().getMovements().add(0,movement);
                                 movement.getBoxSesion().calculateTotals();
                                 FPrincipal.rentalsActives.remove(rental);
-                                Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getNumberRental() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
                             }else{

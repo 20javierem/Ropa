@@ -85,7 +85,7 @@ public class TabFinishRental {
     }
 
     private void init() {
-        tabPane.setTitle("Finalización alquiler Nro. " + rental.getNumberRental());
+        tabPane.setTitle("Finalización alquiler Nro. " + rental.getId());
         if (Babas.company.getLogo() != null) {
             if (Utilities.iconCompanyx255x220 != null) {
                 lblLogo.setIcon(Utilities.iconCompanyx255x220);
@@ -124,11 +124,11 @@ public class TabFinishRental {
                             movement.setAmount(-(rental.getWarranty() - rental.getPenalty()));
                         }
                         movement.setBoxSesion(Babas.boxSession);
-                        movement.setDescription("ALQUILER FINALIZADO NRO: " + rental.getNumberRental());
+                        movement.setDescription("ALQUILER FINALIZADO NRO: " + rental.getId());
                         movement.save();
                         movement.getBoxSesion().getMovements().add(0, movement);
                         movement.getBoxSesion().calculateTotals();
-                        Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getNumberRental() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                        Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getId() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
                         if (Utilities.propiedades.getPrintTicketRentalFinish().equals("always")) {

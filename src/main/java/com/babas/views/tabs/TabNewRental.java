@@ -229,7 +229,7 @@ public class TabNewRental {
                     FPrincipal.rentalsActives.add(0, rental);
                     Babas.boxSession.getRentals().add(0, rental);
                     Babas.boxSession.calculateTotals();
-                    Utilities.getLblIzquierda().setText("Alquiler registrado Nro. " + rental.getNumberRental() + " : " + Utilities.formatoFechaHora.format(rental.getCreated()));
+                    Utilities.getLblIzquierda().setText("Alquiler registrado Nro. " + rental.getId() + " : " + Utilities.formatoFechaHora.format(rental.getCreated()));
                     Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler registrado");
                     if (Utilities.propiedades.getPrintTicketRental().equals("always")) {

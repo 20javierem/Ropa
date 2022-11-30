@@ -26,6 +26,7 @@ public class Company extends Babas {
     private Integer idFact;
     private Integer idProduct;
     private String token;
+    private String detailCompany;
 
     public Integer getIdProduct() {
         return idProduct;
@@ -103,4 +104,11 @@ public class Company extends Babas {
         this.slogan = slogan;
     }
 
+    public String getDetailCompany() {
+        return detailCompany;
+    }
+
+    public void setDetailCompany(String detailCompany) {
+        this.detailCompany = detailCompany;
+    }
 }

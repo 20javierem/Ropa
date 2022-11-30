@@ -46,7 +46,7 @@ public class SaleAbstractModel extends AbstractTableModel {
         Sale sale= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return sale.getNumberSale();
+                return sale.getId();
             case 1:
                 return sale.getCreated();
             case 2:

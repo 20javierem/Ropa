@@ -51,12 +51,16 @@ public class Branch extends Babas {
     @OneToMany(mappedBy = "branch")
     private List<Box> boxs=new ArrayList<>();
     private Integer idFact;
-    private String serieNotaVenta;
-    private Integer correlativoNotaVenta;
-    private String serieBoleta;
-    private Integer correlativoBoleta;
-    private String serieFactura;
-    private Integer correlativoFactura;
+
+    private String ubigeo;
+    private String serieNotaVenta="N001";
+    private String serieBoleta="B001";
+    private String serieFactura="F001";
+    private Long correlativoNotaVenta=0L;
+    private Long correlativoBoleta=0L;
+    private Long correlativoFactura=0L;
+
+
 
     public Branch(){
 
@@ -70,11 +74,11 @@ public class Branch extends Babas {
         this.serieNotaVenta = serieNotaVenta;
     }
 
-    public Integer getCorrelativoNotaVenta() {
+    public Long getCorrelativoNotaVenta() {
         return correlativoNotaVenta;
     }
 
-    public void setCorrelativoNotaVenta(Integer correlativoNotaVenta) {
+    public void setCorrelativoNotaVenta(Long correlativoNotaVenta) {
         this.correlativoNotaVenta = correlativoNotaVenta;
     }
 
@@ -86,11 +90,11 @@ public class Branch extends Babas {
         this.serieBoleta = serieBoleta;
     }
 
-    public Integer getCorrelativoBoleta() {
+    public Long getCorrelativoBoleta() {
         return correlativoBoleta;
     }
 
-    public void setCorrelativoBoleta(Integer correlativoBoleta) {
+    public void setCorrelativoBoleta(Long correlativoBoleta) {
         this.correlativoBoleta = correlativoBoleta;
     }
 
@@ -102,11 +106,11 @@ public class Branch extends Babas {
         this.serieFactura = serieFactura;
     }
 
-    public Integer getCorrelativoFactura() {
+    public Long getCorrelativoFactura() {
         return correlativoFactura;
     }
 
-    public void setCorrelativoFactura(Integer correlativoFactura) {
+    public void setCorrelativoFactura(Long correlativoFactura) {
         this.correlativoFactura = correlativoFactura;
     }
 
@@ -207,6 +211,14 @@ public class Branch extends Babas {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getUbigeo() {
+        return ubigeo;
+    }
+
+    public void setUbigeo(String ubigeo) {
+        this.ubigeo = ubigeo;
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

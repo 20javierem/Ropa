@@ -73,7 +73,7 @@ public class DetailRental extends Babas {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
-        this.subtotal= quantity*price;
+        this.subtotal=Math.round(quantity*price*100.0)/100.0;
     }
 
     public Double getSubtotal() {
@@ -94,7 +94,7 @@ public class DetailRental extends Babas {
 
     public void setPrice(Double price) {
         this.price = price;
-        this.subtotal= quantity*price ;
+        this.subtotal=Math.round(quantity*price*100.0)/100.0;
     }
     public String getNameUnity(){
         return namePresentation;

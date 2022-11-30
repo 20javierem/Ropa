@@ -42,6 +42,7 @@ public class Reserve extends Babas {
     private Integer active=0;
     private boolean cash;
     private String observation;
+
     public String getObservation() {
         return observation;
     }
@@ -125,7 +126,8 @@ public class Reserve extends Babas {
         detailReserves.forEach(detailSale -> {
             total+=detailSale.getSubtotal();
         });
-        toCancel=total-advance;
+        total=Math.round(total*100.0)/100.0;
+        toCancel=Math.round((total-advance)*100.0)/100.0;
     }
 
     public Date getStarted() {

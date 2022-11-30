@@ -1,8 +1,8 @@
 package com.babas.modelsFacture;
 
 public class Cliente {
-    private int tipo_docidentidad;
-    private String numerodocumento="";
+    private int tipo_docidentidad=1;
+    private String numerodocumento="00000000";
     private String nombre="";
     private String email="";
     private String direccion="";

@@ -5,6 +5,7 @@ import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.google.gson.Gson;
+import com.moreno.Notify;
 import com.squareup.okhttp.*;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ public class ApiClient {
     private static Request request;
     private static Response response;
 
-    public static void sendComprobante(Comprobante comprobante) {
+    public static boolean sendComprobante(Comprobante comprobante) {
         String url;
         if ("77".equals(comprobante.getCabecera_comprobante().getTipo_documento())) {
             url = "https://facturadorbabas.com/facturacion/api/procesar_nota_venta";
@@ -33,13 +34,21 @@ public class ApiClient {
                     addHeader("Content-Type", "application/json").
                     build();
             response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+            if(response.code()!=200){
+                System.out.println(response.body().string());
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Se encontraron errores");
+                return false;
+            }else{
+                return true;
+            }
         } catch (IOException e) {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
             e.printStackTrace();
         }
+        return false;
     }
 
-    public static void cancelComprobante(CancelComprobante cancelComprobante) {
+    public static boolean cancelComprobante(CancelComprobante cancelComprobante) {
         String url="https://facturadorbabas.com/facturacion/api/comunicacion_baja";
         try {
             body = RequestBody.create(mediaType,new Gson().toJson(cancelComprobante));
@@ -50,20 +59,21 @@ public class ApiClient {
                     addHeader("Content-Type", "application/json").
                     build();
             response = client.newCall(request).execute();
-            System.out.println(response.body().string());
+            return response.code()==202;
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
-    public static Comprobante getComprobanteOfSale(Sale sale,String typeDocument){
+    public static Comprobante getComprobanteOfSale(Sale sale){
         Comprobante comprobante=new Comprobante();
         Contribuyente contribuyente=new Contribuyente();
         contribuyente.setToken_contribuyente(Babas.company.getToken());
         contribuyente.setId_usuario_vendedor(sale.getUser().getIdFact());
         comprobante.setContribuyente(contribuyente);
         Cabecera_comprobante cabecera_comprobante=new Cabecera_comprobante();
-        cabecera_comprobante.setTipo_documento(typeDocument);
+        cabecera_comprobante.setTipo_documento(sale.getTypeDocument());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(sale.getDiscount());
         cabecera_comprobante.setIdsucursal(sale.getBranch().getIdFact());
@@ -71,11 +81,13 @@ public class ApiClient {
         cabecera_comprobante.setObservacion(sale.getObservation());
         comprobante.setCabecera_comprobante(cabecera_comprobante);
         Cliente cliente=new Cliente();
-        cliente.setCelular(sale.getClient().getPhone());
-        cliente.setDireccion(sale.getClient().getMail());
-        cliente.setNombre(sale.getClient().getNames());
-        cliente.setNumerodocumento(sale.getClient().getDni());
-        cliente.setTipo_docidentidad(sale.getClient().getDni().length()==8?1:sale.getClient().getDni().length()==11?6:0);
+        if(sale.getClient()!=null){
+            cliente.setCelular(sale.getClient().getPhone());
+            cliente.setDireccion(sale.getClient().getMail());
+            cliente.setNombre(sale.getClient().getNames());
+            cliente.setNumerodocumento(sale.getClient().getDni());
+            cliente.setTipo_docidentidad(sale.getClient().getDni().length()==8?1:sale.getClient().getDni().length()==11?6:0);
+        }
         comprobante.setCliente(cliente);
         sale.getDetailSales().forEach(detailSale -> {
             Detalle detalle=new Detalle();
@@ -89,14 +101,14 @@ public class ApiClient {
         return comprobante;
     }
 
-    public static Comprobante getComprobanteOfRentalFinish(Rental rental,String typeDocument){
+    public static Comprobante getComprobanteOfRentalFinish(Rental rental){
         Comprobante comprobante=new Comprobante();
         Contribuyente contribuyente=new Contribuyente();
         contribuyente.setToken_contribuyente(Babas.company.getToken());
         contribuyente.setId_usuario_vendedor(rental.getUser().getIdFact());
         comprobante.setContribuyente(contribuyente);
         Cabecera_comprobante cabecera_comprobante=new Cabecera_comprobante();
-        cabecera_comprobante.setTipo_documento(typeDocument);
+        cabecera_comprobante.setTipo_documento(rental.getTypeDocument());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(rental.getDiscount());
         cabecera_comprobante.setIdsucursal(rental.getBranch().getIdFact());
@@ -104,11 +116,13 @@ public class ApiClient {
         cabecera_comprobante.setObservacion(rental.getObservation());
         comprobante.setCabecera_comprobante(cabecera_comprobante);
         Cliente cliente=new Cliente();
-        cliente.setCelular(rental.getClient().getPhone());
-        cliente.setDireccion(rental.getClient().getMail());
-        cliente.setNombre(rental.getClient().getNames());
-        cliente.setNumerodocumento(rental.getClient().getDni());
-        cliente.setTipo_docidentidad(rental.getClient().getDni().length()==8?1:rental.getClient().getDni().length()==11?6:0);
+        if(rental.getClient()!=null){
+            cliente.setCelular(rental.getClient().getPhone());
+            cliente.setDireccion(rental.getClient().getMail());
+            cliente.setNombre(rental.getClient().getNames());
+            cliente.setNumerodocumento(rental.getClient().getDni());
+            cliente.setTipo_docidentidad(rental.getClient().getTypeDocument());
+        }
         comprobante.setCliente(cliente);
         rental.getDetailRentals().forEach(detailSale -> {
             Detalle detalle=new Detalle();
@@ -129,7 +143,7 @@ public class ApiClient {
         contribuyente.setId_usuario_vendedor(sale.getUser().getIdFact());
         cancelComprobante.setContribuyente(contribuyente);
         CancelCabecera_comprobante cabecera_comprobante=new CancelCabecera_comprobante();
-        cabecera_comprobante.setNumero_comprobante(sale.getNumberSale());
+        cabecera_comprobante.setNumero_comprobante(sale.getCorrelativo());
         cabecera_comprobante.setSerie_comprobante(sale.getSerie());
         cabecera_comprobante.setTipo_documento(sale.getTypeDocument());
         cancelComprobante.setCabecera_comprobante(cabecera_comprobante);
@@ -143,7 +157,7 @@ public class ApiClient {
         contribuyente.setId_usuario_vendedor(rental.getUser().getIdFact());
         cancelComprobante.setContribuyente(contribuyente);
         CancelCabecera_comprobante cabecera_comprobante=new CancelCabecera_comprobante();
-        cabecera_comprobante.setNumero_comprobante(rental.getNumberRental());
+        cabecera_comprobante.setNumero_comprobante(rental.getCorrelativo());
         cabecera_comprobante.setSerie_comprobante(rental.getSerie());
         cabecera_comprobante.setTipo_documento(rental.getTypeDocument());
         cancelComprobante.setCabecera_comprobante(cabecera_comprobante);
