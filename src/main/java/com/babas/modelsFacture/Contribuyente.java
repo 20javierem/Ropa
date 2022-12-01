@@ -1,12 +1,10 @@
 package com.babas.modelsFacture;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Contribuyente {
     private String token_contribuyente;
     private Integer id_usuario_vendedor;
-    private String tipo_proceso="prueba";
+    private String tipo_proceso="produccion";
     private String tipo_envio="inmediato";
 
     public String getToken_contribuyente() {

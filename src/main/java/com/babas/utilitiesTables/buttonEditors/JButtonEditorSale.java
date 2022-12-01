@@ -43,17 +43,17 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
             if(show){
                 int index=JOptionPane.showOptionDialog(Utilities.getJFrame(),"Seleccione el formato a ver","Ver ticket",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"A4", "Ticket","Cancelar"}, "A4");
                 if(index==0){
-                    UtilitiesReports.generateTicketSale(true,sale,false);
+                    UtilitiesReports.generateComprobanteOfSale(true,sale,false);
                 }else if(index==1){
-                    UtilitiesReports.generateTicketSale(false,sale,false);
+                    UtilitiesReports.generateComprobanteOfSale(false,sale,false);
                 }
             }else{
                 if(Babas.boxSession.getId()!=null){
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         sale.refresh();
-                        if(sale.isActive()){
-                            sale.setActive(false);
+                        if(sale.getStatusComprobante()==-1||sale.getStatusComprobante()==0){
+                            sale.setStatusComprobante(1);
                             sale.save();
                             Movement movement=new Movement();
                             movement.setAmount(-sale.getTotalCurrent());

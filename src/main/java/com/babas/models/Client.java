@@ -1,6 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -50,7 +51,7 @@ public class Client extends Babas {
     }
 
     public void setNames(String names) {
-        this.names = names.toUpperCase();
+        this.names = Utilities.nameOwn(names.toLowerCase());
     }
 
     public String getMail() {
@@ -58,7 +59,9 @@ public class Client extends Babas {
     }
 
     public void setMail(String mail) {
-        this.mail = mail;
+        char[] arr = mail.toCharArray();
+        arr[0] = Character.toUpperCase(arr[0]);
+        this.mail = new String(arr);;
     }
 
     public String getPhone() {

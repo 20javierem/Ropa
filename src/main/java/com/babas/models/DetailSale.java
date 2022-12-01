@@ -121,7 +121,7 @@ public class DetailSale extends Babas {
         Stock stock= Stocks.getStock(getSale().getBranch(),getProduct());
         stock.refresh();
         stock.getProduct().refresh();
-        if (getSale().isActive()){
+        if (getSale().getStatusComprobante()==-1||getSale().getStatusComprobante()==0){
             stock.getProduct().setStockTotal(stock.getProduct().getStockTotal()-getQuantity()*getQuantityPresentation());
             stock.getProduct().save();
             stock.setQuantity(stock.getQuantity()-getQuantity()*getQuantityPresentation());

@@ -22,11 +22,11 @@ public class Company extends Babas {
     @NotBlank(message = "DIRECCIÓN PRINCIPAL")
     private String directionPrincipal;
     private String logo;
-    private String slogan;
-    private Integer idFact;
-    private Integer idProduct;
+    private String details="";
+    private Integer idFact=0;
+    private Integer idProduct=0;
     private String token;
-    private String detailCompany;
+    private String webSite;
 
     public Integer getIdProduct() {
         return idProduct;
@@ -96,19 +96,19 @@ public class Company extends Babas {
         this.logo = logo;
     }
 
-    public String getSlogan() {
-        return slogan;
+    public String getDetails() {
+        return details;
     }
 
-    public void setSlogan(String slogan) {
-        this.slogan = slogan;
+    public void setDetails(String details) {
+        this.details = details;
     }
 
-    public String getDetailCompany() {
-        return detailCompany;
+    public String getWebSite() {
+        return webSite;
     }
 
-    public void setDetailCompany(String detailCompany) {
-        this.detailCompany = detailCompany;
+    public void setWebSite(String webSite) {
+        this.webSite = webSite;
     }
 }

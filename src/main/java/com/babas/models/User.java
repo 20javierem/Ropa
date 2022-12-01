@@ -86,7 +86,7 @@ public class User extends Babas {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName.toUpperCase();
+        this.firstName = Utilities.nameOwn(firstName);
     }
 
     public String getLastName() {
@@ -94,7 +94,7 @@ public class User extends Babas {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName.toUpperCase();
+        this.lastName = Utilities.nameOwn(lastName);
     }
 
     public String getPhone() {

@@ -1,6 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
@@ -42,7 +43,7 @@ public class Style extends Babas {
     }
 
     public void setName(String name) {
-        this.name = name.toUpperCase();
+        this.name = Utilities.nameOwn(name);
     }
 
     public Date getCreated() {

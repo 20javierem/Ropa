@@ -43,7 +43,7 @@ public class UtilitiesReports {
                 parameters.put("telefono",sale.getBranch().getPhone());
                 parameters.put("email",sale.getBranch().getEmail());
                 parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameTicket","Ticket de venta");
                 parameters.put("numberTicket",sale.getId());
                 parameters.put("detalles",sp);
@@ -103,7 +103,7 @@ public class UtilitiesReports {
                 parameters.put("telefono",quotation.getBranch().getPhone());
                 parameters.put("email",quotation.getBranch().getEmail());
                 parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameTicket","TICKET DE COTIZACIÓN");
                 parameters.put("numberTicket",quotation.getNumberQuotation());
                 parameters.put("detalles",sp);
@@ -162,7 +162,7 @@ public class UtilitiesReports {
                 parameters.put("telefono",reserve.getBranch().getPhone());
                 parameters.put("email",reserve.getBranch().getEmail());
                 parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameTicket","TICKET DE RESERVA");
                 parameters.put("numberTicket",reserve.getNumberReserve());
                 parameters.put("detalles",sp);
@@ -222,7 +222,7 @@ public class UtilitiesReports {
                 parameters.put("telefono",rental.getBranch().getPhone());
                 parameters.put("email",rental.getBranch().getEmail());
                 parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameTicket","TICKET DE ALQUILER");
                 parameters.put("numberTicket",rental.getCorrelativo());
                 parameters.put("detalles",sp);
@@ -286,7 +286,7 @@ public class UtilitiesReports {
                 parameters.put("telefono",rental.getBranch().getPhone());
                 parameters.put("email",rental.getBranch().getEmail());
                 parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameTicket","TICKET DE ALQUILER");
                 parameters.put("numberTicket",rental.getCorrelativo());
                 parameters.put("detalles",sp);
@@ -333,6 +333,7 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
+
     public static void generateComprobanteOfSale(boolean a4,Sale sale,boolean print){
         InputStream pathReport;
         if(a4){
@@ -359,20 +360,20 @@ public class UtilitiesReports {
                 parameters.put("email",sale.getBranch().getEmail());
                 parameters.put("numberTicket",sale.getSerie()+" - "+sale.getCorrelativo());
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
-                parameters.put("total",Utilities.moneda.format(sale.getTotal()));
-                parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotal()));
+                parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
+                parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(new Date()));
-                parameters.put("nombreCliente",sale.getClient()!=null?sale.getClient().getNames():"");
+                parameters.put("nombreCliente",clienteNombres);
                 parameters.put("vendedor",sale.getUser().getUserName());
                 parameters.put("clienteDni",sale.getClient()!=null?sale.getClient().getDni():"");
                 parameters.put("detalles",sp);
-                parameters.put("tipoDocumentoCliente",sale.getClient()!=null?sale.getClient().getDni().length()==8?"D.N.I. :":sale.getClient().getDni().length()==11?"R.U.C.: ":0:"D.N.I.: ");
-                parameters.put("message",Babas.company.getSlogan().isBlank()?"Gracias por su compra":Babas.company.getSlogan());
+                parameters.put("tipoDocumentoCliente",sale.getClient()!=null?sale.getClient().getDni().length()==8?"D.N.I.":sale.getClient().getDni().length()==11?"R.U.C.: ":0:"D.N.I.: ");
+                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("descuento",Utilities.moneda.format(sale.getDiscount()));
                 parameters.put("observacion",sale.getObservation());
                 parameters.put("ubigeo",sale.getBranch().getUbigeo());
-                parameters.put("detailCompany",Babas.company.getDetailCompany());
+                parameters.put("webSite",Babas.company.getWebSite());
                 parameters.put("contentQR",Babas.company.getRuc()+"|"+sale.getTypeDocument()+"|"+sale.getSerie()+"|"+sale.getCorrelativo()+"|0.0|"+sale.getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+clienteTipo+"|"+clienteDni);
                 parameters.put("montoEnLetras", "letras");
                 parameters.put("clienteDireccion",sale.getClient()!=null?sale.getClient().getMail():"");
@@ -386,7 +387,7 @@ public class UtilitiesReports {
                 }else{
                     JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                     if(viewer!=null){
-                        viewer.setTitle("Reserva Nro. "+sale.getId());
+                        viewer.setTitle("Venta Nro. "+sale.getId());
                         if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                             Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                         }

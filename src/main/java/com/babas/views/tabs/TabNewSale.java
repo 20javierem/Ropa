@@ -177,6 +177,7 @@ public class TabNewSale {
     private void onSave(boolean isCash) {
         if (Babas.boxSession.getId() != null) {
             if (getClient()) {
+                sale.setTypeDocument("77");
                 sale.setBranch(Babas.boxSession.getBox().getBranch());
                 sale.setCash(isCash);
                 sale.setBoxSession(Babas.boxSession);
@@ -196,35 +197,39 @@ public class TabNewSale {
                         if (comboBox.getSelectedIndex() != 0) {
                             sale.setTypeDocument(comboBox.getSelectedIndex() == 1 ? "03" : "01");
                         }
-                        sale.save();
-                        Babas.boxSession.getSales().add(0, sale);
-                        Babas.boxSession.calculateTotals();
-                        Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
-                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
-                        if (ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale))) {
-                            if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
-                                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                                if (index == 0) {
-                                    UtilitiesReports.generateComprobanteOfSale(true, sale, true);
-                                } else if (index == 1) {
-                                    UtilitiesReports.generateComprobanteOfSale(false, sale, true);
-                                }
-                            } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
-                                option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
-                                if (option == JOptionPane.OK_OPTION) {
+                        if (sale.isValidClient(sale.getTypeDocument())) {
+                            sale.save();
+                            Babas.boxSession.getSales().add(0, sale);
+                            Babas.boxSession.calculateTotals();
+                            Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
+                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
+                            if (ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale))) {
+                                if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
                                     int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                                     if (index == 0) {
                                         UtilitiesReports.generateComprobanteOfSale(true, sale, true);
                                     } else if (index == 1) {
                                         UtilitiesReports.generateComprobanteOfSale(false, sale, true);
                                     }
+                                } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
+                                    option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
+                                    if (option == JOptionPane.OK_OPTION) {
+                                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                                        if (index == 0) {
+                                            UtilitiesReports.generateComprobanteOfSale(true, sale, true);
+                                        } else if (index == 1) {
+                                            UtilitiesReports.generateComprobanteOfSale(false, sale, true);
+                                        }
+                                    }
                                 }
                             }
+                            sale = new Sale();
+                            clear();
+                            Utilities.getTabbedPane().updateTab();
+                        } else {
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido");
                         }
-                        sale = new Sale();
-                        clear();
-                        Utilities.getTabbedPane().updateTab();
                     }
                 } else {
                     ProgramValidator.mostrarErrores(constraintViolationSet);
@@ -257,6 +262,11 @@ public class TabNewSale {
             client.setNames(txtNameClient.getText().trim());
             client.setMail(txtMail.getText().trim());
             client.setPhone(txtPhone.getText().trim());
+            if (client.getDni().length() == 8) {
+                client.setTypeDocument(1);
+            } else if (client.getDni().length() == 11) {
+                client.setTypeDocument(6);
+            }
             client.save();
             sale.setClient(client);
             return true;

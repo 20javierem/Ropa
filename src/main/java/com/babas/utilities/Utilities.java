@@ -86,6 +86,20 @@ public class Utilities {
     private static AuthenticationContext auth;
     private static SmbConnection smbConnection;
 
+    public static String nameOwn(String val) {
+        StringBuilder nombrePropio= new StringBuilder();
+        nombrePropio.append(val.substring(0,1).toUpperCase());
+        char[] arr = val.toCharArray();
+        for(int i=1;i<val.length();i++){
+            if(val.charAt(i - 1) == ' '){
+                nombrePropio.append(String.valueOf(val.charAt(i)).toUpperCase());
+            }else{
+                nombrePropio.append(val.charAt(i));
+            }
+        }
+        return nombrePropio.toString();
+    }
+
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         spinner.remove(spinner.getComponent(0));
         spinner.remove(spinner.getComponent(0));

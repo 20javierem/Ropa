@@ -34,12 +34,15 @@ public class ApiClient {
                     addHeader("Content-Type", "application/json").
                     build();
             response = client.newCall(request).execute();
-            if(response.code()!=200){
-                System.out.println(response.body().string());
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Se encontraron errores");
+            if(response.code()==200){
+                ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
+                if(responseJson.getRespuesta().equals("ok")){
+                    return true;
+                }
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
                 return false;
             }else{
-                return true;
+                return false;
             }
         } catch (IOException e) {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
@@ -86,7 +89,7 @@ public class ApiClient {
             cliente.setDireccion(sale.getClient().getMail());
             cliente.setNombre(sale.getClient().getNames());
             cliente.setNumerodocumento(sale.getClient().getDni());
-            cliente.setTipo_docidentidad(sale.getClient().getDni().length()==8?1:sale.getClient().getDni().length()==11?6:0);
+            cliente.setTipo_docidentidad(sale.getClient().getTypeDocument());
         }
         comprobante.setCliente(cliente);
         sale.getDetailSales().forEach(detailSale -> {

@@ -1,6 +1,7 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -51,7 +52,7 @@ public class Branch extends Babas {
     @OneToMany(mappedBy = "branch")
     private List<Box> boxs=new ArrayList<>();
     private Integer idFact;
-
+    @NotBlank(message = "Ubigeo")
     private String ubigeo;
     private String serieNotaVenta="N001";
     private String serieBoleta="B001";
@@ -218,7 +219,7 @@ public class Branch extends Babas {
     }
 
     public void setUbigeo(String ubigeo) {
-        this.ubigeo = ubigeo;
+        this.ubigeo = Utilities.nameOwn(ubigeo);
     }
 
     public static class ListCellRenderer extends DefaultListCellRenderer {

@@ -51,6 +51,7 @@ public class DBranch extends JDialog {
     private FlatTextField txtSerieNotaVenta;
     private FlatTextField txtSerieBoleta;
     private FlatTextField txtSerieFactura;
+    private FlatTextField txtUbigeo;
     private Branch branch;
     private boolean update;
     private UserAbstractModel modelUsersBranchs;
@@ -148,6 +149,7 @@ public class DBranch extends JDialog {
         if (fprincipal) {
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Usuarios"));
             tabbedPane.removeTabAt(tabbedPane.indexOfTab("Cajas"));
+            tabbedPane.removeTabAt(tabbedPane.indexOfTab("Facturador"));
         }
         if (update) {
             setTitle("Actualizar Sucursal");
@@ -171,6 +173,7 @@ public class DBranch extends JDialog {
         txtDirection.setText(branch.getDirection());
         txtEmail.setText(branch.getEmail());
         txtPhone.setText(branch.getPhone());
+        txtUbigeo.setText(branch.getUbigeo());
         modelUsersBranchs = new UserAbstractModel(branch.getUsers());
         tableUserBranch.setModel(modelUsersBranchs);
         UserCellRendered.setCellRenderer(tableUserBranch, null);
@@ -208,9 +211,9 @@ public class DBranch extends JDialog {
     }
 
     private void onSave() {
-        branch.setCorrelativoNotaVenta(Long.valueOf((Integer) spinnerNotaVenta.getValue()));
-        branch.setCorrelativoBoleta(Long.valueOf((Integer) spinnerBoleta.getValue()));
-        branch.setCorrelativoFactura(Long.valueOf((Integer) spinnerFactura.getValue()));
+        branch.setCorrelativoNotaVenta(Long.valueOf(String.valueOf(spinnerNotaVenta.getValue())));
+        branch.setCorrelativoBoleta(Long.valueOf(String.valueOf(spinnerBoleta.getValue())));
+        branch.setCorrelativoFactura(Long.valueOf(String.valueOf(spinnerFactura.getValue())));
         branch.setSerieBoleta(txtSerieBoleta.getText().trim());
         branch.setSerieNotaVenta(txtSerieNotaVenta.getText().trim());
         branch.setSerieFactura(txtSerieFactura.getText().trim());
@@ -218,6 +221,7 @@ public class DBranch extends JDialog {
         branch.setDirection(txtDirection.getText().trim());
         branch.setEmail(txtEmail.getText().trim());
         branch.setName(txtName.getText().trim());
+        branch.setUbigeo(txtUbigeo.getText().trim());
         branch.setCompany(Babas.company);
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(branch);
         if (constraintViolationSet.isEmpty()) {
@@ -273,36 +277,41 @@ public class DBranch extends JDialog {
         tabbedPane = new JTabbedPane();
         panel1.add(tabbedPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(200, 200), null, 0, false));
         final JPanel panel2 = new JPanel();
-        panel2.setLayout(new GridLayoutManager(6, 4, new Insets(10, 10, 10, 10), 5, 5));
+        panel2.setLayout(new GridLayoutManager(7, 4, new Insets(10, 10, 10, 10), 5, 5));
         tabbedPane.addTab("Sucursal", panel2);
         final JLabel label1 = new JLabel();
         label1.setText("Nombre:");
-        panel2.add(label1, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(label1, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final Spacer spacer1 = new Spacer();
-        panel2.add(spacer1, new GridConstraints(5, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        panel2.add(spacer1, new GridConstraints(6, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
         label2.setText("Dirección:");
-        panel2.add(label2, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(label2, new GridConstraints(5, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtName = new FlatTextField();
-        panel2.add(txtName, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        panel2.add(txtName, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         txtDirection = new FlatTextField();
-        panel2.add(txtDirection, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        panel2.add(txtDirection, new GridConstraints(5, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         txtEmail = new FlatTextField();
-        panel2.add(txtEmail, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        panel2.add(txtEmail, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         final JLabel label3 = new JLabel();
         label3.setText("Email:");
-        panel2.add(label3, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(label3, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
         label4.setText("Celular:");
-        panel2.add(label4, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel2.add(label4, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtPhone = new FlatTextField();
-        panel2.add(txtPhone, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        panel2.add(txtPhone, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         final Spacer spacer2 = new Spacer();
         panel2.add(spacer2, new GridConstraints(0, 1, 1, 2, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final Spacer spacer3 = new Spacer();
-        panel2.add(spacer3, new GridConstraints(0, 0, 6, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel2.add(spacer3, new GridConstraints(0, 0, 7, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final Spacer spacer4 = new Spacer();
-        panel2.add(spacer4, new GridConstraints(0, 3, 6, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        panel2.add(spacer4, new GridConstraints(0, 3, 7, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
+        final JLabel label5 = new JLabel();
+        label5.setText("Ubigeo:");
+        panel2.add(label5, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        txtUbigeo = new FlatTextField();
+        panel2.add(txtUbigeo, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridLayoutManager(2, 3, new Insets(5, 5, 5, 5), 0, 10));
         tabbedPane.addTab("Usuarios", panel3);
@@ -339,7 +348,7 @@ public class DBranch extends JDialog {
         panel5.add(spacer5, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel6 = new JPanel();
         panel6.setLayout(new GridLayoutManager(5, 4, new Insets(10, 10, 10, 10), 5, 5));
-        tabbedPane.addTab("Facturación", panel6);
+        tabbedPane.addTab("Facturador", panel6);
         final Spacer spacer6 = new Spacer();
         panel6.add(spacer6, new GridConstraints(4, 0, 1, 4, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_VERTICAL, 1, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         final JComboBox comboBox1 = new JComboBox();

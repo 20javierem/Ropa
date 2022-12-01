@@ -33,17 +33,16 @@ public class Sale extends Babas {
     private boolean cash;
     private Date created;
     private Date updated;
-    private boolean active=true;
     @ManyToOne
     @NotNull
     private Branch branch;
     @OneToOne
     private Reserve reserve;
     private String observation;
-    private boolean activeSunat=false;
     private String serie;
     private Long correlativo;
-    private String typeDocument="77";
+    private String typeDocument;
+    private Integer statusComprobante=-1;
 
     public String getObservation() {
         return observation;
@@ -73,12 +72,12 @@ public class Sale extends Babas {
         calculateTotal();
     }
 
-    public boolean isActiveSunat() {
-        return activeSunat;
+    public Integer getStatusComprobante() {
+        return statusComprobante;
     }
 
-    public void setActiveSunat(boolean activeSunat) {
-        this.activeSunat = activeSunat;
+    public void setStatusComprobante(Integer statusComprobante) {
+        this.statusComprobante = statusComprobante;
     }
 
     public String getSerie() {
@@ -133,14 +132,6 @@ public class Sale extends Babas {
         this.branch = branch;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public BoxSession getBoxSession() {
         return boxSession;
     }
@@ -181,6 +172,16 @@ public class Sale extends Babas {
         total=Math.round(total*100.0)/100.0;
         totalCurrent=Math.round(totalCurrent*100.0)/100.0;
     }
+    public boolean isValidClient(String typeDocument){
+        if(client!=null){
+            if ("01".equals(typeDocument)) {
+                return client.getDni().length() == 11;
+            }
+            return true;
+        }else{
+            return typeDocument.equals("77")||typeDocument.equals("03");
+        }
+    }
     public String getStringUpdated(){
         return Utilities.formatoFechaHora.format(updated);
     }
@@ -191,7 +192,7 @@ public class Sale extends Babas {
         return client==null?"--":client.getNames();
     }
     public String getStringStade(){
-        return active?"REALIZADA":"CANCELADA";
+        return statusComprobante==-1?"NO ENVIADO":statusComprobante==0?"ENVIADO":"CANCELADO";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);
@@ -216,14 +217,17 @@ public class Sale extends Babas {
             case "01":
                 branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
                 correlativo=branch.getCorrelativoFactura();
+                serie=branch.getSerieFactura();
                 break;
             case "03":
                 branch.setCorrelativoBoleta(branch.getCorrelativoBoleta()+1);
                 correlativo=branch.getCorrelativoBoleta();
+                serie=branch.getSerieBoleta();
                 break;
             default:
                 branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
                 correlativo=branch.getCorrelativoNotaVenta();
+                serie=branch.getSerieNotaVenta();
                 break;
         }
         branch.save();
