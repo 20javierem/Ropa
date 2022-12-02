@@ -42,7 +42,8 @@ public class Sale extends Babas {
     private String serie;
     private Long correlativo;
     private String typeDocument;
-    private Integer statusComprobante=-1;
+    private boolean statusSunat=false;
+    private boolean active=true;
 
     public String getObservation() {
         return observation;
@@ -72,12 +73,12 @@ public class Sale extends Babas {
         calculateTotal();
     }
 
-    public Integer getStatusComprobante() {
-        return statusComprobante;
+    public boolean isStatusSunat() {
+        return statusSunat;
     }
 
-    public void setStatusComprobante(Integer statusComprobante) {
-        this.statusComprobante = statusComprobante;
+    public void setStatusSunat(boolean statusSunat) {
+        this.statusSunat = statusSunat;
     }
 
     public String getSerie() {
@@ -98,6 +99,14 @@ public class Sale extends Babas {
 
     public Double getTotalCurrent() {
         return totalCurrent;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public Client getClient() {
@@ -192,7 +201,10 @@ public class Sale extends Babas {
         return client==null?"--":client.getNames();
     }
     public String getStringStade(){
-        return statusComprobante==-1?"NO ENVIADO":statusComprobante==0?"ENVIADO":"CANCELADO";
+        return active?"REALIZADO":"CANCELADO";
+    }
+    public String getStringSunat(){
+        return statusSunat?"NO ENVIADO":"CONFIRMADO";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);

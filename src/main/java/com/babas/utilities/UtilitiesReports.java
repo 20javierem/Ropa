@@ -82,6 +82,7 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
+
     public static void generateTicketQuotation(boolean a4,Quotation quotation,boolean print) {
         InputStream pathReport;
         if(a4){
@@ -375,7 +376,7 @@ public class UtilitiesReports {
                 parameters.put("ubigeo",sale.getBranch().getUbigeo());
                 parameters.put("webSite",Babas.company.getWebSite());
                 parameters.put("contentQR",Babas.company.getRuc()+"|"+sale.getTypeDocument()+"|"+sale.getSerie()+"|"+sale.getCorrelativo()+"|0.0|"+sale.getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+clienteTipo+"|"+clienteDni);
-                parameters.put("montoEnLetras", "letras");
+                parameters.put("montoEnLetras", new NumberToText().toText(sale.getTotalCurrent()));
                 parameters.put("clienteDireccion",sale.getClient()!=null?sale.getClient().getMail():"");
                 parameters.put("igv",Utilities.moneda.format(0));
                 parameters.put("detailTicket", Objects.equals(sale.getTypeDocument(), "77") ?"Representacion Impresa de la Nota de Venta Electrónica":Objects.equals(sale.getTypeDocument(), "03") ?"Representacion Impresa de la Boleta de Venta Electrónica":"Representacion Impresa de la Factura de Venta Electrónica");

@@ -2,6 +2,7 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.models.Movement;
 import com.babas.models.Sale;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
@@ -52,9 +53,8 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         sale.refresh();
-                        if(sale.getStatusComprobante()==-1||sale.getStatusComprobante()==0){
-                            sale.setStatusComprobante(1);
-                            sale.save();
+                        if(sale.isStatusSunat()){
+                            sale.setActive(false);
                             Movement movement=new Movement();
                             movement.setAmount(-sale.getTotalCurrent());
                             movement.setEntrance(false);
@@ -63,6 +63,8 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                             movement.save();
                             movement.getBoxSesion().getMovements().add(0,movement);
                             movement.getBoxSesion().calculateTotals();
+                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            sale.save();
                             Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");

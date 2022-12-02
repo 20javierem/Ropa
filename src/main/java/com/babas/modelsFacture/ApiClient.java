@@ -62,8 +62,18 @@ public class ApiClient {
                     addHeader("Content-Type", "application/json").
                     build();
             response = client.newCall(request).execute();
-            return response.code()==202;
+            if(response.code()==200){
+                ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
+                if(responseJson.getRespuesta().equals("ok")){
+                    return true;
+                }
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
+                return false;
+            }else{
+                return false;
+            }
         } catch (IOException e) {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
             e.printStackTrace();
         }
         return false;
