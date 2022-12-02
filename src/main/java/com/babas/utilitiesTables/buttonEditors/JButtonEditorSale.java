@@ -53,21 +53,22 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
                     if(si){
                         sale.refresh();
-                        if(sale.isStatusSunat()){
+                        if(sale.isActive()){
                             sale.setActive(false);
+                            sale.updateStocks();
                             Movement movement=new Movement();
                             movement.setAmount(-sale.getTotalCurrent());
                             movement.setEntrance(false);
                             movement.setBoxSesion(Babas.boxSession);
                             movement.setDescription("Venta cancelada NRO: "+sale.getId());
-                            movement.save();
                             movement.getBoxSesion().getMovements().add(0,movement);
                             movement.getBoxSesion().calculateTotals();
-                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
-                            sale.save();
+                            movement.save();
                             Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            sale.save();
                         }else{
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                         }

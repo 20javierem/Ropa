@@ -198,7 +198,9 @@ public class TabNewSale {
                             sale.setTypeDocument(comboBox.getSelectedIndex() == 1 ? "03" : "01");
                         }
                         if (sale.isValidClient(sale.getTypeDocument())) {
+                            sale.create();
                             sale.save();
+                            sale.updateStocks();
                             Babas.boxSession.getSales().add(0, sale);
                             Babas.boxSession.calculateTotals();
                             Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));

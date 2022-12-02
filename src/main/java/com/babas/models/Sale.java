@@ -45,6 +45,9 @@ public class Sale extends Babas {
     private boolean statusSunat=false;
     private boolean active=true;
 
+    public Sale(){
+
+    }
     public String getObservation() {
         return observation;
     }
@@ -218,12 +221,9 @@ public class Sale extends Babas {
     public String getStringType(){
         return cash?"EFECTIVO":"TRANSFERENCIA";
     }
-    @Override
-    public void save() {
-        updated=new Date();
-        if(created==null){
-            created=new Date();
-        }
+
+    public void create(){
+        created=new Date();
         branch.refresh();
         switch (typeDocument){
             case "01":
@@ -243,7 +243,18 @@ public class Sale extends Babas {
                 break;
         }
         branch.save();
-        super.save();
+        save();
         getDetailSales().forEach(Babas::save);
     }
+
+    public void updateStocks(){
+        getDetailSales().forEach(Babas::save);
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
+    }
+
 }

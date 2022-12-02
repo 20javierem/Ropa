@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class SaleAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","DESCUENTO","TOTAL","",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","DESCUENTO","TOTAL","ESTADO","SUNAT","",""};
+    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,JButton.class,JButton.class,JButton.class};
     private final List<Sale> list;
 
     public SaleAbstractModel(List<Sale> list){
@@ -58,14 +58,16 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 5:
                 return sale.getStringType();
             case 6:
-                return sale.getStringStade();
-            case 7:
                 return Utilities.moneda.format(sale.getTotal());
-            case 8:
+            case 7:
                 return Utilities.moneda.format(sale.getDiscount());
-            case 9:
+            case 8:
                 return Utilities.moneda.format(sale.getTotalCurrent());
+            case 9:
+                return sale.getStringStade();
             case 10:
+                return sale;
+            case 11:
                 return new JButtonAction("x16/mostrarContraseña.png");
             default:
                 return new JButtonAction("x16/remove.png");
