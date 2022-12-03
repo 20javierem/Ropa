@@ -27,6 +27,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.*;
 import java.util.List;
 
@@ -100,6 +102,19 @@ public class TabRecordSales {
             @Override
             public void actionPerformed(ActionEvent e) {
                 clearFilters();
+            }
+        });
+        txtSearch.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                filter();
+            }
+        });
+        ((JButton) txtSearch.getComponent(0)).addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtSearch.setText(null);
+                filter();
             }
         });
     }
@@ -191,8 +206,9 @@ public class TabRecordSales {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         SaleCellRendered.setCellRenderer(table, listaFiltros);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale("cancel"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale("show"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorSale("sunat"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -219,7 +235,7 @@ public class TabRecordSales {
             filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 5));
         }
         if (cbbState.getSelectedIndex() != 0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 6));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 9));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);

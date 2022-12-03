@@ -175,6 +175,7 @@ public class TabNewSale {
     }
 
     private void onSave(boolean isCash) {
+        btnSaleWithCash.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         if (Babas.boxSession.getId() != null) {
             if (getClient()) {
                 sale.setTypeDocument("77");
@@ -242,6 +243,7 @@ public class TabNewSale {
         } else {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Debe aperturar caja");
         }
+        btnSaleWithCash.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void clear() {

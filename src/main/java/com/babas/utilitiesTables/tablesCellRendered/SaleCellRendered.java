@@ -1,6 +1,10 @@
 package com.babas.utilitiesTables.tablesCellRendered;
 
+import com.babas.App;
+import com.babas.models.Sale;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.views.dialogs.DesingTxtTable;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -38,6 +42,17 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
         }else{
             DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
+                case "SUNAT":
+                    Sale sale=(Sale) value;
+                    JButtonAction jButtonAction;
+                    if(sale.isStatusSunat()){
+                        jButtonAction=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/chek.svg")),"CONFIRMADO");
+                    }else{
+                        jButtonAction=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")),"REENVIAR");
+                    }
+                    jButtonAction.setBackground(component.getBackground());
+                    jButtonAction.setForeground(component.getForeground());
+                    return jButtonAction;
                 case "NRO.":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(90);

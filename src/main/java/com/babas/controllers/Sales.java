@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 public class Sales extends Babas {
@@ -20,6 +21,10 @@ public class Sales extends Babas {
     public static Sale get(Integer id) {
         return session.find(Sale.class, id);
     }
+
+//    public static List<Sale> getSalesOnWait(){
+//
+//    }
 
     public static Sale getByNumber(Long numberSale){
         criteria = builder.createQuery(Sale.class);

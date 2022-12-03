@@ -134,7 +134,7 @@ public class TabBoxSesion {
         tableSales.setModel(saleAbstractModel);
         UtilitiesTables.headerNegrita(tableSales);
         SaleCellRendered.setCellRenderer(tableSales,null);
-        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 2).setCellEditor(new JButtonEditorSale("show"));
         tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-1));
 
 

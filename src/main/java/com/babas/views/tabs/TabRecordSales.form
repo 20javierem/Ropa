@@ -213,7 +213,7 @@
                 <properties>
                   <model>
                     <item value="TODAS"/>
-                    <item value="REALIZADA"/>
+                    <item value="REALIZADO"/>
                     <item value="CANCELADA"/>
                   </model>
                 </properties>

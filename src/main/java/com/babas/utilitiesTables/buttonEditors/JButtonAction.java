@@ -11,10 +11,9 @@ import java.awt.event.MouseEvent;
 
 public class JButtonAction extends JButton {
 
-    public JButtonAction(String icon, String texto) {
+    public JButtonAction(String icon, String text) {
         setIcon(new ImageIcon(App.class.getResource("icons/"+icon)));
-        setText(texto);
-        setHorizontalTextPosition(2);
+        setText(text);
         initialize();
     }
 
@@ -23,7 +22,18 @@ public class JButtonAction extends JButton {
         initialize();
     }
 
+    public JButtonAction(Icon icon){
+        setIcon(icon);
+        initialize();
+    }
+    public JButtonAction(Icon icon,String text){
+        setIcon(icon);
+        setText(text);
+        initialize();
+    }
+
     private void initialize() {
+        setHorizontalTextPosition(2);
         setBorder(null);
         setOpaque(false);
         setBorderPainted(false);

@@ -9,6 +9,7 @@ import com.moreno.Notify;
 import com.squareup.okhttp.*;
 
 import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.Date;
 
 public class ApiClient {
@@ -37,6 +38,7 @@ public class ApiClient {
             if(response.code()==200){
                 ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
                 if(responseJson.getRespuesta().equals("ok")){
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante enviado a sunat");
                     return true;
                 }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
@@ -44,7 +46,9 @@ public class ApiClient {
             }else{
                 return false;
             }
-        } catch (IOException e) {
+        } catch (UnknownHostException exception){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión a internet");
+        } catch (IOException  e ) {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
             e.printStackTrace();
         }
@@ -65,6 +69,7 @@ public class ApiClient {
             if(response.code()==200){
                 ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
                 if(responseJson.getRespuesta().equals("ok")){
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante cancelado ante sunat");
                     return true;
                 }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
