@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Brand;
 import com.babas.models.Sex;
 import com.babas.utilities.Utilities;
@@ -8,6 +9,7 @@ import com.babas.utilitiesTables.tablesModels.SexAbstractModel;
 import com.babas.views.dialogs.DBrand;
 import com.babas.views.dialogs.DSex;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class JButtonEditorBrand extends AbstractCellEditor implements TableCellE
         if(edit){
             button=new JButtonAction("x16/editar.png");
         }else{
-            button=new JButtonAction("x16/remove.png");
+            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }
         iniciarComponentes();
     }

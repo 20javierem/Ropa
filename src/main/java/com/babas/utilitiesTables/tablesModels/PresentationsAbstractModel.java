@@ -1,8 +1,10 @@
 package com.babas.utilitiesTables.tablesModels;
 
+import com.babas.App;
 import com.babas.models.Presentation;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -53,7 +55,7 @@ public class PresentationsAbstractModel extends AbstractTableModel {
             case 4:
                 return new JButtonAction("x16/editar.png");
             default:
-                return new JButtonAction("x16/remove.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }
     }
 

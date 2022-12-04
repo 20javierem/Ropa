@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Presentation;
 import com.babas.models.Price;
 import com.babas.utilities.Babas;
@@ -8,6 +9,7 @@ import com.babas.utilitiesTables.tablesModels.PresentationsAbstractModel;
 import com.babas.utilitiesTables.tablesModels.PriceAbstractModel;
 import com.babas.views.dialogs.DPresentation;
 import com.babas.views.dialogs.DPrice;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class JButtonEditorPrice extends AbstractCellEditor implements TableCellE
         if(edit){
             button=new JButtonAction("x16/editar.png");
         }else{
-            button=new JButtonAction("x16/remove.png");
+            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }
         iniciarComponentes();
     }

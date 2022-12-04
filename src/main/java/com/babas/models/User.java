@@ -50,7 +50,7 @@ public class User extends Babas {
     @ManyToOne
     private Permission permissionGroup;
     private boolean groupDefault=false;
-    private Integer idFact;
+    private Integer idFact=0;
 
     public Integer getIdFact() {
         return idFact;

@@ -207,7 +207,7 @@ public class Sale extends Babas {
         return active?"REALIZADO":"CANCELADO";
     }
     public String getStringSunat(){
-        return statusSunat?"NO ENVIADO":"CONFIRMADO";
+        return statusSunat?"PENDIENTE":"CONFIRMADO";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);

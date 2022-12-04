@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Color;
 import com.babas.models.DetailSale;
 import com.babas.utilities.Utilities;
@@ -7,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.ColorAbstractModel;
 import com.babas.utilitiesTables.tablesModels.DetailSaleAbstractModel;
 import com.babas.views.dialogs.DColor;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -18,7 +20,7 @@ public class JButtonEditorDetailSale2 extends AbstractCellEditor implements Tabl
     private JButtonAction button;
 
     public JButtonEditorDetailSale2() {
-        button=new JButtonAction("x16/remove.png");
+        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         iniciarComponentes();
     }
 

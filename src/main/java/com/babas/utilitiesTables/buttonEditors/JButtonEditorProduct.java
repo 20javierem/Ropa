@@ -1,11 +1,13 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Product;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.dialogs.DProduct;
 import com.babas.views.dialogs.DProductCatalogue;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
                 button=new JButtonAction("x16/editar.png");
                 break;
             case "delete":
-                button=new JButtonAction("x16/remove.png");
+                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
                 break;
             case "images":
                 button=new JButtonAction("x16/mostrarContraseña.png");

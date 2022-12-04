@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.controllers.Stocks;
 import com.babas.models.Category;
 import com.babas.models.Stock;
@@ -11,6 +12,7 @@ import com.babas.utilitiesTables.tablesModels.TransferAbstractModel;
 import com.babas.views.dialogs.DCategory;
 import com.babas.views.frames.FPrincipal;
 import com.babas.views.tabs.TabNewTraslade;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -29,7 +31,7 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
         if(show){
             button=new JButtonAction("x16/mostrarContraseña.png");
         }else{
-            button=new JButtonAction("x16/remove.png");
+            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }
 
         iniciarComponentes();

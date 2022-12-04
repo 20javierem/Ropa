@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Movement;
 import com.babas.models.Rental;
 import com.babas.models.Reserve;
@@ -12,6 +13,7 @@ import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
 import com.babas.views.tabs.TabFinishRental;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -34,7 +36,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                 button=new JButtonAction("x16/mostrarContraseña.png");
                 break;
             default:
-                button=new JButtonAction("x16/remove.png");
+                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
                 break;
         }
         iniciarComponentes();

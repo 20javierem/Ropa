@@ -228,7 +228,6 @@ public class DBranch extends JDialog {
             branch.save();
             if (!update) {
                 FPrincipal.branchs.add(branch);
-                Utilities.updateDialog();
                 if (Utilities.getTabbedPane() != null) {
                     Utilities.getTabbedPane().updateTab();
                 } else {
@@ -236,6 +235,7 @@ public class DBranch extends JDialog {
                 }
                 branch = new Branch();
                 load();
+                Utilities.updateDialog();
                 if (Utilities.getJFrame() != null) {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Sucursal registrada");
                 }
@@ -245,7 +245,6 @@ public class DBranch extends JDialog {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Sucursal actualizada");
                 onHecho();
             }
-
         } else {
             ProgramValidator.mostrarErrores(constraintViolationSet);
         }

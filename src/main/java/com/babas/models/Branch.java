@@ -51,7 +51,7 @@ public class Branch extends Babas {
     private List<Sale> sales=new ArrayList<>();
     @OneToMany(mappedBy = "branch")
     private List<Box> boxs=new ArrayList<>();
-    private Integer idFact;
+    private Integer idFact=0;
     @NotBlank(message = "Ubigeo")
     private String ubigeo;
     private String serieNotaVenta="N001";

@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Category;
 import com.babas.models.Size;
 import com.babas.utilities.Utilities;
@@ -8,6 +9,7 @@ import com.babas.utilitiesTables.tablesModels.SizeAbstractModel;
 import com.babas.views.dialogs.DCategory;
 import com.babas.views.dialogs.DSize;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class JButtonEditorSize extends AbstractCellEditor implements TableCellEd
         if(edit){
             button=new JButtonAction("x16/editar.png");
         }else{
-            button=new JButtonAction("x16/remove.png");
+            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }
         iniciarComponentes();
     }

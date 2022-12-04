@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Brand;
 import com.babas.models.DetailTransfer;
 import com.babas.utilities.Utilities;
@@ -7,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.BrandAbstractModel;
 import com.babas.utilitiesTables.tablesModels.DetailTransferAbstractModel;
 import com.babas.views.dialogs.DBrand;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -18,7 +20,7 @@ public class JButtonEditorDetailTransfer extends AbstractCellEditor implements T
     private JButtonAction button;
 
     public JButtonEditorDetailTransfer() {
-        button=new JButtonAction("x16/remove.png");
+        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         iniciarComponentes();
     }
 
