@@ -13,7 +13,7 @@ import java.util.Objects;
 
 public class SaleAbstractModel extends AbstractTableModel {
     private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","DESCUENTO","TOTAL","ESTADO","SUNAT","",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,Sale.class,JButton.class,JButton.class};
+    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,String.class,JButton.class,JButton.class};
     private final List<Sale> list;
 
     public SaleAbstractModel(List<Sale> list){
@@ -38,7 +38,7 @@ public class SaleAbstractModel extends AbstractTableModel {
     }
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
-        return typeColumns[columnIndex].equals(JButton.class)||typeColumns[columnIndex].equals(Sale.class);
+        return typeColumns[columnIndex].equals(JButton.class);
     }
 
     @Override
@@ -66,7 +66,7 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 9:
                 return sale.getStringStade();
             case 10:
-                return sale;
+                return sale.getStringSunat();
             case 11:
                 return new JButtonAction("x16/mostrarContraseña.png");
             default:

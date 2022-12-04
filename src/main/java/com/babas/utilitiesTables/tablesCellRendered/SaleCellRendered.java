@@ -42,17 +42,6 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
         }else{
             DesingTxtTable componente=buscarTexto2(listaFiltros,value,column,component);
             switch(table.getColumnName(column)){
-                case "SUNAT":
-                    Sale sale=(Sale) value;
-                    JButtonAction jButtonAction;
-                    if(sale.isStatusSunat()){
-                        jButtonAction=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/chek.svg")),"CONFIRMADO");
-                    }else{
-                        jButtonAction=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")),"REENVIAR");
-                    }
-                    jButtonAction.setBackground(component.getBackground());
-                    jButtonAction.setForeground(component.getForeground());
-                    return jButtonAction;
                 case "NRO.":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
                     table.getColumn(table.getColumnName(column)).setMaxWidth(90);
@@ -71,6 +60,7 @@ public class SaleCellRendered extends DefaultTableCellRenderer {
 //                    table.getColumn(table.getColumnName(column)).setMinWidth(95);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(95);
                     break;
+                case "SUNAT":
                 case "FECHA":
                 case "ACTUALIZADO":
                 case "ESTADO":

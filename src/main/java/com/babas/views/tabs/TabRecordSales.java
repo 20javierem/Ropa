@@ -206,9 +206,8 @@ public class TabRecordSales {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         SaleCellRendered.setCellRenderer(table, listaFiltros);
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale("cancel"));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale("show"));
-        table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorSale("sunat"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorSale(false));
+        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -394,7 +393,7 @@ public class TabRecordSales {
         cbbState = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("TODAS");
-        defaultComboBoxModel3.addElement("REALIZADA");
+        defaultComboBoxModel3.addElement("REALIZADO");
         defaultComboBoxModel3.addElement("CANCELADA");
         cbbState.setModel(defaultComboBoxModel3);
         panel4.add(cbbState, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
