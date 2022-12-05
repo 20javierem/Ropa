@@ -73,7 +73,7 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 12:
                 return rental.getStringSunat();
             case 13:
-                return new JButtonAction("x16/checkbox.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
             case 14:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
             default:

@@ -63,7 +63,7 @@ public class QuotationAbstractModel extends AbstractTableModel {
             case 7:
                 return Utilities.moneda.format(quotation.getTotalCurrent());
             case 8:
-                return new JButtonAction("x16/checkbox.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
         }
