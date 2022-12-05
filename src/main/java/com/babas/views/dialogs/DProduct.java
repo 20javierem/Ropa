@@ -180,6 +180,8 @@ public class DProduct extends JDialog {
         if (!product.getImagesx200().isEmpty()) {
             boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Eliminar imagen", JOptionPane.YES_NO_OPTION) == 0;
             if (si) {
+                Utilities.deleteImage(product.getImagesx200().get(imageSlide.getIndexPosition()));
+                Utilities.deleteImage(product.getImagesx400().get(imageSlide.getIndexPosition()));
                 product.getImagesx200().remove(imageSlide.getIndexPosition());
                 product.getImagesx400().remove(imageSlide.getIndexPosition());
                 loadImages();

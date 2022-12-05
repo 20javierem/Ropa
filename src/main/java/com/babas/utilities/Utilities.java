@@ -172,6 +172,25 @@ public class Utilities {
         return false;
     }
 
+    public static void deleteImage(String imageName){
+        if(propiedades.getLocalImages().equals("local")){
+            String home = System.getProperty("user.home");
+            String directoryName = home + "/.clothes/products/";
+            File file=new File(directoryName+imageName);
+            if(!file.delete()){
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error inesperado");
+            }
+        }else if(consult){
+            if(openConection()){
+                SmbDirectory dirProducts;
+                dirProducts  = new SmbDirectory(smbConnection, "products/");
+                SmbFile file = new SmbFile(smbConnection,dirProducts.getPath()+imageName);
+                file.deleteFile();
+            }
+
+        }
+    }
+
     public static Image getImage(String imageName,boolean logo){
         if(propiedades.getLocalImages().equals("local")){
             String home = System.getProperty("user.home");

@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "sale_tbl")
 public class Sale extends Babas {
@@ -18,7 +19,7 @@ public class Sale extends Babas {
     private Long id;
     @OneToMany(mappedBy = "sale")
     @NotEmpty(message = "Productos")
-    private List<DetailSale> detailSales=new ArrayList<>();
+    private List<DetailSale> detailSales = new ArrayList<>();
     @ManyToOne
     @NotNull(message = "Usuario")
     private User user;
@@ -27,9 +28,9 @@ public class Sale extends Babas {
     @ManyToOne
     @NotNull(message = "Caja")
     private BoxSession boxSession;
-    private Double total=0.0;
-    private Double discount=0.0;
-    private Double totalCurrent=0.0;
+    private Double total = 0.0;
+    private Double discount = 0.0;
+    private Double totalCurrent = 0.0;
     private boolean cash;
     private Date created;
     private Date updated;
@@ -42,12 +43,13 @@ public class Sale extends Babas {
     private String serie;
     private Long correlativo;
     private String typeDocument;
-    private boolean statusSunat=false;
-    private boolean active=true;
+    private boolean statusSunat = false;
+    private boolean active = true;
 
-    public Sale(){
+    public Sale() {
 
     }
+
     public String getObservation() {
         return observation;
     }
@@ -55,6 +57,7 @@ public class Sale extends Babas {
     public void setObservation(String observation) {
         this.observation = observation;
     }
+
     public Long getId() {
         return id;
     }
@@ -200,9 +203,6 @@ public class Sale extends Babas {
     public String getStringBranch(){
         return branch.getName();
     }
-    public String getStringClient(){
-        return client==null?"--":client.getNames();
-    }
     public String getStringStade(){
         return active?"REALIZADO":"CANCELADO";
     }
@@ -221,7 +221,41 @@ public class Sale extends Babas {
     public String getStringType(){
         return cash?"EFECTIVO":"TRANSFERENCIA";
     }
-
+    public String getStringClient(){
+        return client!=null?client.getNames():"";
+    }
+    public String getClientDni( ){
+        return client!=null?client.getDni():"00000000";
+    }
+    public int getClientType(){
+        return client!=null?client.getTypeDocument():1;
+    }
+    public String getClientAdress(){
+        return client!=null?client.getMail():"";
+    }
+    public String getStringTypeDocument() {
+        switch (getTypeDocument()) {
+            case "77":
+                return "NOTA DE VENTA ELECTRÓNICA";
+            case "03":
+                return "BOLETA DE VENTA ELECTRÓNICA";
+            default:
+                return "FACTURA DE VENTA ELECTRÓNICA";
+        }
+    }
+    public String getDetailTicket(){
+        switch (getTypeDocument()) {
+            case "77":
+                return "Representacion Impresa de la Nota de Venta Electrónica";
+            case "03":
+                return "Representacion Impresa de la Boleta de Venta Electrónica";
+            default:
+                return "Representacion Impresa de la Factura de Venta Electrónica";
+        }
+    }
+    public String getContentQR(){
+        return Babas.company.getRuc()+"|"+getTypeDocument()+"|"+getSerie()+"|"+getCorrelativo()+"|0.0|"+getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+getClientType()+"|"+getClientDni();
+    }
     public void create(){
         created=new Date();
         branch.refresh();

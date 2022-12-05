@@ -344,9 +344,6 @@ public class UtilitiesReports {
         }
         File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
         String logo=file.getAbsolutePath();
-        String clienteNombres=sale.getClient()!=null?sale.getClient().getNames():"";
-        String clienteDni=sale.getClient()!=null?sale.getClient().getDni():"00000000";
-        Integer clienteTipo=sale.getClient()!=null?sale.getClient().getTypeDocument():1;
         try {
             if(pathReport!=null){
                 List<DetailSale> list=new ArrayList<>(new Vector<>(sale.getDetailSales()));
@@ -364,24 +361,24 @@ public class UtilitiesReports {
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("fechaEmision", Utilities.formatoFechaHora.format(new Date()));
-                parameters.put("nombreCliente",clienteNombres);
+                parameters.put("nombreCliente",sale.getStringClient());
                 parameters.put("vendedor",sale.getUser().getUserName());
-                parameters.put("clienteDni",sale.getClient()!=null?sale.getClient().getDni():"");
+                parameters.put("clienteDni",sale.getClientDni());
                 parameters.put("detalles",sp);
-                parameters.put("tipoDocumentoCliente",sale.getClient()!=null?sale.getClient().getDni().length()==11?"R.U.C.":"D.N.I.":"D.N.I.");
+                parameters.put("tipoDocumentoCliente",sale.getClientType()==6?"R.U.C.":"D.N.I.");
                 parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("descuento",Utilities.moneda.format(sale.getDiscount()));
                 parameters.put("observacion",sale.getObservation());
                 parameters.put("ubigeo",sale.getBranch().getUbigeo());
                 parameters.put("webSite",Babas.company.getWebSite());
-                parameters.put("contentQR",Babas.company.getRuc()+"|"+sale.getTypeDocument()+"|"+sale.getSerie()+"|"+sale.getCorrelativo()+"|0.0|"+sale.getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+clienteTipo+"|"+clienteDni);
-                parameters.put("montoEnLetras", new NumberToText().toText(sale.getTotalCurrent()));
-                parameters.put("clienteDireccion",sale.getClient()!=null?sale.getClient().getMail():"");
+                parameters.put("contentQR",sale.getContentQR());
+                parameters.put("montoEnLetras", NumberToText.toText(sale.getTotalCurrent()));
+                parameters.put("clienteDireccion",sale.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
-                parameters.put("detailTicket", Objects.equals(sale.getTypeDocument(), "77") ?"Representacion Impresa de la Nota de Venta Electrónica":Objects.equals(sale.getTypeDocument(), "03") ?"Representacion Impresa de la Boleta de Venta Electrónica":"Representacion Impresa de la Factura de Venta Electrónica");
+                parameters.put("detailTicket",sale.getDetailTicket());
                 parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(new Date()));
-                parameters.put("typeTicket",Objects.equals(sale.getTypeDocument(), "77") ?"NOTA DE VENTA ELECTRÓNICA":Objects.equals(sale.getTypeDocument(), "03") ?"BOLETA DE VENTA ELECTRÓNICA":"FACTURA DE VENTA ELECTRÓNICA");
+                parameters.put("typeTicket",sale.getStringTypeDocument());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
                     JasperPrintManager.printReport(jasperPrint,true);

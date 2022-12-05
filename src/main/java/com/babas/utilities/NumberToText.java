@@ -4,8 +4,8 @@ import java.text.DecimalFormat;
 import java.util.regex.Pattern;
 
 public class NumberToText {
-    private final DecimalFormat format;
-    private final String[] UNITS = {
+    private static final DecimalFormat format = new DecimalFormat("##############.##");;
+    private static final String[] UNITS = {
             "",
             "uno ",
             "dos ",
@@ -16,7 +16,7 @@ public class NumberToText {
             "siete ",
             "ocho ",
             "nueve "};
-    private final String[] TENS = {
+    private static final String[] TENS = {
             "diez ",
             "once ",
             "doce ",
@@ -35,7 +35,7 @@ public class NumberToText {
             "setenta ",
             "ochenta ",
             "noventa "};
-    private final String[] HUNDREDS = {
+    private static final String[] HUNDREDS = {
             "",
             "ciento ",
             "doscientos ",
@@ -46,10 +46,8 @@ public class NumberToText {
             "setecientos ",
             "ochocientos ",
             "novecientos "};
-    public NumberToText() {
-        format = new DecimalFormat("##############.##");
-    }
-    public String toText(Double number) {
+
+    public static String toText(Double number) {
         number = Double.valueOf(format.format(number));
         String literal;
         String parte_decimal;
@@ -76,12 +74,12 @@ public class NumberToText {
             return null;
         }
     }
-    private String getUnits(String numero) {
+    private static String getUnits(String numero) {
         String num = numero.substring(numero.length() - 1);
         int n = Integer.parseInt(num);
         return n==1 && numero.length()==1?"un ":UNITS[Integer.parseInt(num)];
     }
-    private String getTens(String number) {
+    private static String getTens(String number) {
         int n = Integer.parseInt(number);
         if (n > 19) {
             String u = getUnits(number);
@@ -95,7 +93,7 @@ public class NumberToText {
             return n<=9?n==1?"uno ":getUnits(number):TENS[n - 10];
         }
     }
-    private String getHundreds(String num) {
+    private static String getHundreds(String num) {
         if (Integer.parseInt(num) > 99) {
             if (Integer.parseInt(num) == 100) {
                 return "cien ";
@@ -106,7 +104,7 @@ public class NumberToText {
             return getTens(Integer.parseInt(num) + "");
         }
     }
-    private String getMiles(String number) {
+    private static String getMiles(String number) {
         String c = number.substring(number.length() - 3);
         String m = number.substring(0, number.length() - 3);
         String n;
@@ -117,7 +115,7 @@ public class NumberToText {
             return getHundreds(c);
         }
     }
-    private String getMillions(String number) {
+    private static String getMillions(String number) {
         String miles = number.substring(number.length() - 6);
         String millions = number.substring(0, number.length() - 6);
         return (millions.length()>1?getHundreds(millions) + "millones ":getUnits(millions) + "millón ") + getMiles(miles);

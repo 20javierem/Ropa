@@ -235,6 +235,7 @@ public class Product extends Babas {
         if(clear){
             iconsx200.clear();
         }
+
         if(iconsx200.size()==imagesx200.size()){
             return  iconsx200;
         }else{
@@ -255,6 +256,7 @@ public class Product extends Babas {
         if(clear){
             iconsx400.clear();
         }
+
         if(iconsx400.size()==imagesx400.size()){
             return  iconsx400;
         }else{
