@@ -52,7 +52,7 @@ public class BoxAbstractModel extends AbstractTableModel {
             case 2:
                 return box.isActive()?"ACTIVA":"DESACTIVADA";
             case 3:
-                return new JButtonAction("x16/editar.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }

@@ -56,7 +56,8 @@ public class NumberToText {
 
         if (Pattern.matches("\\d{1,9}.\\d{1,2}", number.toString())) {
             String[] Num = number.toString().split("\\.");
-            parte_decimal = "con " + Num[1] + "/100 Soles.";
+            int dec= Integer.parseInt(Num[1])*10;
+            parte_decimal = "con " + dec + "/100 Soles.";
             if (Integer.parseInt(Num[0]) == 0) {
                 literal = "cero ";
             } else if (Integer.parseInt(Num[0]) > 999999) {

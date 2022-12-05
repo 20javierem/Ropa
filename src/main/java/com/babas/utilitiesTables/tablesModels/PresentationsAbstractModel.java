@@ -53,7 +53,7 @@ public class PresentationsAbstractModel extends AbstractTableModel {
             case 3:
                 return presentation.isDefault()?"SI":"NO";
             case 4:
-                return new JButtonAction("x16/editar.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }

@@ -54,7 +54,7 @@ public class BranchAbstractModel extends AbstractTableModel {
             case 4:
                 return branch.getUsers().size();
             case 5:
-                return new JButtonAction("x16/editar.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }

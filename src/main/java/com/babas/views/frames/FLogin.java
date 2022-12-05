@@ -96,15 +96,46 @@ public class FLogin extends JFrame {
                 lblConection.setText("Sin conexión");
             }
         } else {
+            loadLogo();
             lblConection.setText("Conexión establecida");
         }
         btnTryConection.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         check();
     }
 
+    private void loadLogo() {
+        if (Babas.company != null) {
+            Babas.company.refresh();
+            if (Utilities.iconCompanyx255x220 != null) {
+                lblLogo.setIcon(Utilities.iconCompanyx255x220);
+            } else if (Babas.company.getLogo() != null) {
+                Image logo = Utilities.getImage(Babas.company.getLogo(), true);
+                if (logo != null) {
+                    int width = logo.getWidth(this);
+                    int height = logo.getHeight(this);
+                    if (width > 255 || height > 200) {
+                        double percen = Math.min(255.00 / width, 200.00 / height);
+                        width = (int) (percen * width);
+                        height = (int) (percen * height);
+                    }
+                    Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+
+                    width = logo.getWidth(this);
+                    height = logo.getHeight(this);
+                    if (width > 420 || height > 420) {
+                        double percen = Math.min(420.00 / width, 420.00 / height);
+                        width = (int) (percen * width);
+                        height = (int) (percen * height);
+                    }
+                    Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(width, height, Image.SCALE_SMOOTH));
+                    lblLogo.setIcon(Utilities.iconCompanyx255x220);
+                }
+            }
+        }
+    }
+
     private void check() {
         if (Babas.session != null && Babas.session.isConnected()) {
-            Babas.company = Companys.get(1);
             if (Babas.company == null) {
                 Babas.company = new Company();
                 DCompany dCompany = new DCompany();
@@ -157,32 +188,9 @@ public class FLogin extends JFrame {
     public void tryConnect() {
         lblConection.setText("Conectando...");
         if (Babas.session != null && Babas.session.isConnected()) {
+            Babas.company = Companys.get(1);
+            loadLogo();
             lblConection.setText("Conexión establecida");
-            if (Babas.company != null) {
-                Babas.company.refresh();
-                if (Utilities.iconCompanyx255x220 != null) {
-                    lblLogo.setIcon(Utilities.iconCompanyx255x220);
-                } else if (Babas.company.getLogo() != null) {
-                    Image logo = Utilities.getImage(Babas.company.getLogo(), true);
-                    if (logo != null) {
-                        int width = logo.getWidth(this);
-                        int height = logo.getHeight(this);
-                        if (width > 255 || height > 200) {
-                            double percen = Math.min(255.00 / width, 200.00 / height);
-                            width = (int) (percen * width);
-                            height = (int) (percen * height);
-                        }
-                        Utilities.iconCompanyx255x220 = new ImageIcon(logo.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-                        if (width > 420 || height > 420) {
-                            double percen = Math.min(420.00 / width, 420.00 / height);
-                            width = (int) (percen * width);
-                            height = (int) (percen * height);
-                        }
-                        Utilities.iconCompanyx420x420 = new ImageIcon(logo.getScaledInstance(width, height, Image.SCALE_SMOOTH));
-                        lblLogo.setIcon(Utilities.iconCompanyx255x220);
-                    }
-                }
-            }
         }
         fieldUser.setEnabled(Babas.session != null && Babas.session.isConnected());
         fieldPasword.setEnabled(Babas.session != null && Babas.session.isConnected());

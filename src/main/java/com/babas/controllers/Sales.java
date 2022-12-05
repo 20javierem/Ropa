@@ -22,9 +22,14 @@ public class Sales extends Babas {
         return session.find(Sale.class, id);
     }
 
-//    public static List<Sale> getSalesOnWait(){
-//
-//    }
+    public static List<Sale> getSalesOnWait(){
+        criteria = builder.createQuery(Sale.class);
+        root=criteria.from(Sale.class);
+        criteria.select(root).where(
+                        builder.isFalse(root.get("statusSunat")))
+                .orderBy(builder.asc(root.get("id")));
+        return new Vector<>(session.createQuery(criteria).getResultList());
+    }
 
     public static Sale getByNumber(Long numberSale){
         criteria = builder.createQuery(Sale.class);

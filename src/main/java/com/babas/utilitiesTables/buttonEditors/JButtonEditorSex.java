@@ -26,7 +26,7 @@ public class JButtonEditorSex extends AbstractCellEditor implements TableCellEdi
     public JButtonEditorSex(boolean edit) {
         this.edit=edit;
         if(edit){
-            button=new JButtonAction("x16/editar.png");
+            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
         }else{
             button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }

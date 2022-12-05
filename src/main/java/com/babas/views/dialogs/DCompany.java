@@ -377,7 +377,6 @@ public class DCompany extends JDialog {
         label5.setText("Página Web:");
         panel3.add(label5, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtWebSite = new FlatTextField();
-        txtWebSite.setPlaceholderText("Obligatorio");
         panel3.add(txtWebSite, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         final JLabel label6 = new JLabel();
         label6.setText("Detalles");

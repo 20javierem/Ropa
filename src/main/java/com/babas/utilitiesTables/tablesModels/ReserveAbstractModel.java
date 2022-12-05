@@ -67,7 +67,7 @@ public class ReserveAbstractModel extends AbstractTableModel {
             case 9:
                 return new JButtonAction("x16/checkbox.png");
             case 10:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }

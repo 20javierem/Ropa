@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.controllers.Stocks;
 import com.babas.models.*;
 import com.babas.utilities.Babas;
@@ -8,6 +9,7 @@ import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.tablesModels.QuotationAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -25,7 +27,7 @@ public class JButtonEditorQuotation extends AbstractCellEditor implements TableC
         if(complete){
             button=new JButtonAction("x16/checkbox.png");
         }else{
-            button=new JButtonAction("x16/mostrarContraseña.png");
+            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
         }
         iniciarComponentes();
     }

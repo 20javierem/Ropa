@@ -1,9 +1,11 @@
 package com.babas.views.tabs;
 
+import com.babas.App;
 import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
 import com.babas.models.Sale;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
@@ -12,6 +14,7 @@ import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -50,6 +53,7 @@ public class TabRecordSales {
     private JButton btnGenerateReport;
     private JButton btnClearFilters;
     private FlatTextField txtSearch;
+    private JButton btnSendPedings;
     private List<Sale> sales;
     private SaleAbstractModel model;
     private TableRowSorter<SaleAbstractModel> modeloOrdenado;
@@ -117,6 +121,25 @@ public class TabRecordSales {
                 filter();
             }
         });
+        btnSendPedings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendOnWaitSunat();
+            }
+        });
+    }
+
+    private void sendOnWaitSunat() {
+        btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        List<Sale> salesOnWait = Sales.getSalesOnWait();
+        System.out.println(salesOnWait.get(0).getId());
+        for (Sale sale : salesOnWait) {
+            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+            if (!sale.isStatusSunat()) {
+                break;
+            }
+        }
+        btnSendPedings.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void clearFilters() {
@@ -138,6 +161,7 @@ public class TabRecordSales {
         loadTable();
         loadCombos();
         filter();
+        btnSendPedings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/upload.svg")));
     }
 
     private void generateReport() {
@@ -414,9 +438,9 @@ public class TabRecordSales {
         txtSearch.setShowClearButton(true);
         txtSearch.setText("");
         panel4.add(txtSearch, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JButton button1 = new JButton();
-        button1.setText("Enviar pendientes");
-        panel4.add(button1, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnSendPedings = new JButton();
+        btnSendPedings.setText("Enviar pendientes");
+        panel4.add(btnSendPedings, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

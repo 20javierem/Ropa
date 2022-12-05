@@ -31,7 +31,7 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
                 button=new JButtonAction("x16/checkbox.png");
                 break;
             case "ticket":
-                button=new JButtonAction("x16/mostrarContraseña.png");
+                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
                 break;
             default:
                 button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));

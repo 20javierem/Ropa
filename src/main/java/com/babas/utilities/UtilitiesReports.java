@@ -50,7 +50,7 @@ public class UtilitiesReports {
                 parameters.put("stade",sale.getStringStade());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(sale.getCreated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("nombreCliente",sale.getClient()!=null?sale.getClient().getNames():"");
                 parameters.put("clienteDni",sale.getClient()!=null?sale.getClient().getDni():"");
@@ -110,7 +110,7 @@ public class UtilitiesReports {
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(quotation.getCreated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(quotation.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(quotation.getTotal()));
                 parameters.put("nombreCliente",quotation.getClient()!=null?quotation.getClient().getNames():"");
                 parameters.put("clienteDni",quotation.getClient()!=null?quotation.getClient().getDni():"");
@@ -170,7 +170,7 @@ public class UtilitiesReports {
                 parameters.put("stade",reserve.getStringStade());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(reserve.getCreated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(reserve.getCreated()));
                 parameters.put("subtotal",Utilities.moneda.format(reserve.getTotal()));
                 parameters.put("nombreCliente",reserve.getClient()!=null?reserve.getClient().getNames():"");
                 parameters.put("clienteDni",reserve.getClient()!=null?reserve.getClient().getDni():"");
@@ -229,7 +229,7 @@ public class UtilitiesReports {
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getCreated()));
                 parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
                 parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotalWithDiscount()));
@@ -293,7 +293,7 @@ public class UtilitiesReports {
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(rental.getCreated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getCreated()));
                 parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
                 parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
                 parameters.put("stade",rental.getStringStade());
@@ -363,12 +363,12 @@ public class UtilitiesReports {
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotalCurrent()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora2.format(new Date()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(new Date()));
                 parameters.put("nombreCliente",clienteNombres);
                 parameters.put("vendedor",sale.getUser().getUserName());
                 parameters.put("clienteDni",sale.getClient()!=null?sale.getClient().getDni():"");
                 parameters.put("detalles",sp);
-                parameters.put("tipoDocumentoCliente",sale.getClient()!=null?sale.getClient().getDni().length()==8?"D.N.I.":sale.getClient().getDni().length()==11?"R.U.C.: ":0:"D.N.I.: ");
+                parameters.put("tipoDocumentoCliente",sale.getClient()!=null?sale.getClient().getDni().length()==11?"R.U.C.":"D.N.I.":"D.N.I.");
                 parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("descuento",Utilities.moneda.format(sale.getDiscount()));
@@ -380,7 +380,7 @@ public class UtilitiesReports {
                 parameters.put("clienteDireccion",sale.getClient()!=null?sale.getClient().getMail():"");
                 parameters.put("igv",Utilities.moneda.format(0));
                 parameters.put("detailTicket", Objects.equals(sale.getTypeDocument(), "77") ?"Representacion Impresa de la Nota de Venta Electrónica":Objects.equals(sale.getTypeDocument(), "03") ?"Representacion Impresa de la Boleta de Venta Electrónica":"Representacion Impresa de la Factura de Venta Electrónica");
-                parameters.put("fechaVencimiento", Utilities.formatoFechaHora2.format(new Date()));
+                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(new Date()));
                 parameters.put("typeTicket",Objects.equals(sale.getTypeDocument(), "77") ?"NOTA DE VENTA ELECTRÓNICA":Objects.equals(sale.getTypeDocument(), "03") ?"BOLETA DE VENTA ELECTRÓNICA":"FACTURA DE VENTA ELECTRÓNICA");
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
@@ -635,6 +635,7 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
+
     public static JasperViewer getjasperViewer(JasperReport report, Map<String, Object> parameters, JRBeanArrayDataSource sp, boolean isExitOnClose){
         try {
             JasperPrint jasperPrint=JasperFillManager.fillReport(report,parameters,sp);

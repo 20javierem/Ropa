@@ -1,6 +1,8 @@
 package com.babas.utilitiesTables.tablesModels;
+import com.babas.App;
 import com.babas.models.Stock;
 import com.babas.utilitiesTables.buttonEditors.JButtonAction;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -56,7 +58,7 @@ public class StockProductAbstractModel extends AbstractTableModel {
             case 7:
                 return stock.getTimesRented();
             default:
-                return new JButtonAction("x16/editar.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
         }
     }
 

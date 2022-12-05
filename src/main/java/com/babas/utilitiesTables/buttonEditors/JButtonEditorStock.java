@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Price;
 import com.babas.models.Stock;
 import com.babas.utilities.Utilities;
@@ -7,6 +8,7 @@ import com.babas.utilitiesTables.tablesModels.PriceAbstractModel;
 import com.babas.utilitiesTables.tablesModels.StockProductAbstractModel;
 import com.babas.views.dialogs.DPrice;
 import com.babas.views.dialogs.DStockProduct;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
 import javax.swing.*;
@@ -19,7 +21,7 @@ public class JButtonEditorStock extends AbstractCellEditor implements TableCellE
     private JButtonAction button;
 
     public JButtonEditorStock() {
-        button=new JButtonAction("x16/editar.png");
+        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
         iniciarComponentes();
     }
 

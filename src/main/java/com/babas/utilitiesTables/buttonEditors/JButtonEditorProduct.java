@@ -24,13 +24,13 @@ public class JButtonEditorProduct extends AbstractCellEditor implements TableCel
         this.type=type;
         switch (type){
             case "edit":
-                button=new JButtonAction("x16/editar.png");
+                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
                 break;
             case "delete":
                 button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
                 break;
             case "images":
-                button=new JButtonAction("x16/mostrarContraseña.png");
+                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
                 break;
         }
         iniciarComponentes();

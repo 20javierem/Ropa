@@ -73,7 +73,7 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 12:
                 return new JButtonAction("x16/checkbox.png");
             case 13:
-                return new JButtonAction("x16/mostrarContraseña.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }

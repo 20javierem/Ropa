@@ -1,5 +1,6 @@
 package com.babas.utilitiesTables.buttonEditors;
 
+import com.babas.App;
 import com.babas.models.Brand;
 import com.babas.models.Permission;
 import com.babas.utilities.Utilities;
@@ -8,6 +9,7 @@ import com.babas.utilitiesTables.tablesModels.PermissionAbstractModel;
 import com.babas.views.dialogs.DBrand;
 import com.babas.views.dialogs.DGroupPermition;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -19,7 +21,7 @@ public class JButtonEditorPermission extends AbstractCellEditor implements Table
     private JButtonAction button;
 
     public JButtonEditorPermission() {
-        button=new JButtonAction("x16/editar.png");
+        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
         iniciarComponentes();
     }
 

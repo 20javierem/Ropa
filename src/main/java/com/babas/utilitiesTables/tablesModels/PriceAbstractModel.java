@@ -50,7 +50,7 @@ public class PriceAbstractModel extends AbstractTableModel {
             case 1:
                 return price.isDefault()?"SI":"NO";
             case 2:
-                return new JButtonAction("x16/editar.png");
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
         }
