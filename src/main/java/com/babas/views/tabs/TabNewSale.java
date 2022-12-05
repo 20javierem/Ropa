@@ -179,7 +179,7 @@ public class TabNewSale {
         btnSaleWithCash.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         if (Babas.boxSession.getId() != null) {
             if (getClient()) {
-                sale.setTypeDocument("77");
+                sale.setTypeVoucher("77");
                 sale.setBranch(Babas.boxSession.getBox().getBranch());
                 sale.setCash(isCash);
                 sale.setBoxSession(Babas.boxSession);
@@ -190,16 +190,16 @@ public class TabNewSale {
                     JPanel jPanel = new JPanel();
                     jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
                     JComboBox comboBox = new JComboBox();
-                    comboBox.addItem("NOTA DE VENTA");
+                    comboBox.addItem("NOTA");
                     comboBox.addItem("BOLETA");
                     comboBox.addItem("FACTURA");
                     jPanel.add(comboBox);
                     int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Comfirmar Venta", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
                     if (option == JOptionPane.OK_OPTION) {
                         if (comboBox.getSelectedIndex() != 0) {
-                            sale.setTypeDocument(comboBox.getSelectedIndex() == 1 ? "03" : "01");
+                            sale.setTypeVoucher(comboBox.getSelectedIndex() == 1 ? "03" : "01");
                         }
-                        if (sale.isValidClient(sale.getTypeDocument())) {
+                        if (sale.isValidClient(sale.getTypeVoucher())) {
                             sale.create();
                             sale.save();
                             sale.updateStocks();

@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class SaleAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","ACTUALIZADO","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","DESCUENTO","TOTAL","ESTADO","SUNAT","",""};
-    private final Class[] typeColumns={Long.class,Date.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,String.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","DESCUENTO","TOTAL","TIPO","ESTADO","SUNAT","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,String.class,String.class,JButton.class,JButton.class};
     private final List<Sale> list;
 
     public SaleAbstractModel(List<Sale> list){
@@ -50,21 +50,21 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 0:
                 return sale.getId();
             case 1:
-                return sale.getCreated();
-            case 2:
                 return sale.getUpdated();
-            case 3:
+            case 2:
                 return sale.getBranch().getName();
-            case 4:
+            case 3:
                 return sale.getStringClient();
-            case 5:
+            case 4:
                 return sale.getStringType();
-            case 6:
+            case 5:
                 return Utilities.moneda.format(sale.getTotal());
-            case 7:
+            case 6:
                 return Utilities.moneda.format(sale.getDiscount());
-            case 8:
+            case 7:
                 return Utilities.moneda.format(sale.getTotalCurrent());
+            case 8:
+                return sale.getTypeStringVoucher();
             case 9:
                 return sale.getStringStade();
             case 10:

@@ -42,7 +42,7 @@ public class Sale extends Babas {
     private String observation;
     private String serie;
     private Long correlativo;
-    private String typeDocument;
+    private String typeVoucher;
     private boolean statusSunat = false;
     private boolean active = true;
 
@@ -95,12 +95,22 @@ public class Sale extends Babas {
         this.serie = serie;
     }
 
-    public String getTypeDocument() {
-        return typeDocument;
+    public String getTypeVoucher() {
+        return typeVoucher;
     }
 
-    public void setTypeDocument(String typeDocument) {
-        this.typeDocument = typeDocument;
+    public String getTypeStringVoucher(){
+        switch (getTypeVoucher()) {
+            case "77":
+                return "NOTA";
+            case "03":
+                return "BOLETA";
+            default:
+                return "FACTURA";
+        }
+    }
+    public void setTypeVoucher(String typeVoucher) {
+        this.typeVoucher = typeVoucher;
     }
 
     public Double getTotalCurrent() {
@@ -234,7 +244,7 @@ public class Sale extends Babas {
         return client!=null?client.getMail():"";
     }
     public String getStringTypeDocument() {
-        switch (getTypeDocument()) {
+        switch (getTypeVoucher()) {
             case "77":
                 return "NOTA DE VENTA ELECTRÓNICA";
             case "03":
@@ -244,7 +254,7 @@ public class Sale extends Babas {
         }
     }
     public String getDetailTicket(){
-        switch (getTypeDocument()) {
+        switch (getTypeVoucher()) {
             case "77":
                 return "Representacion Impresa de la Nota de Venta Electrónica";
             case "03":
@@ -254,12 +264,12 @@ public class Sale extends Babas {
         }
     }
     public String getContentQR(){
-        return Babas.company.getRuc()+"|"+getTypeDocument()+"|"+getSerie()+"|"+getCorrelativo()+"|0.0|"+getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+getClientType()+"|"+getClientDni();
+        return Babas.company.getRuc()+"|"+typeVoucher+"|"+getSerie()+"|"+getCorrelativo()+"|0.0|"+getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+getClientType()+"|"+getClientDni();
     }
     public void create(){
         created=new Date();
         branch.refresh();
-        switch (typeDocument){
+        switch (typeVoucher){
             case "01":
                 branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
                 correlativo=branch.getCorrelativoFactura();

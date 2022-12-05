@@ -91,7 +91,7 @@ public class ApiClient {
         contribuyente.setId_usuario_vendedor(sale.getUser().getIdFact());
         comprobante.setContribuyente(contribuyente);
         Cabecera_comprobante cabecera_comprobante=new Cabecera_comprobante();
-        cabecera_comprobante.setTipo_documento(sale.getTypeDocument());
+        cabecera_comprobante.setTipo_documento(sale.getTypeVoucher());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(sale.getDiscount());
         cabecera_comprobante.setIdsucursal(sale.getBranch().getIdFact());
@@ -163,7 +163,7 @@ public class ApiClient {
         CancelCabecera_comprobante cabecera_comprobante=new CancelCabecera_comprobante();
         cabecera_comprobante.setNumero_comprobante(sale.getCorrelativo());
         cabecera_comprobante.setSerie_comprobante(sale.getSerie());
-        cabecera_comprobante.setTipo_documento(sale.getTypeDocument());
+        cabecera_comprobante.setTipo_documento(sale.getTypeVoucher());
         cancelComprobante.setCabecera_comprobante(cabecera_comprobante);
         return cancelComprobante;
     }
