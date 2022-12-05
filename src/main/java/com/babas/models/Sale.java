@@ -288,7 +288,6 @@ public class Sale extends Babas {
         }
         branch.save();
         save();
-        getDetailSales().forEach(Babas::save);
     }
 
     public void updateStocks(){

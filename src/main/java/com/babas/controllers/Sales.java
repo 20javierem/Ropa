@@ -22,7 +22,7 @@ public class Sales extends Babas {
         return session.find(Sale.class, id);
     }
 
-    public static List<Sale> getSalesOnWait(){
+    public static List<Sale> getOnWait(){
         criteria = builder.createQuery(Sale.class);
         root=criteria.from(Sale.class);
         criteria.select(root).where(

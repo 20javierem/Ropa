@@ -214,6 +214,7 @@ public class TabNewRental {
 
     private void onSave(boolean isCash) {
         if (Babas.boxSession.getId() != null) {
+            rental.setTypeVoucher("77");
             rental.setBranch(Babas.boxSession.getBox().getBranch());
             rental.setCash(isCash);
             rental.setClient(getClient());
@@ -225,7 +226,9 @@ public class TabNewRental {
             if (constraintViolationSet.isEmpty()) {
                 boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Alquiler", JOptionPane.YES_NO_OPTION) == 0;
                 if (si) {
+                    rental.create();
                     rental.save();
+                    rental.updateStocks();
                     FPrincipal.rentalsActives.add(0, rental);
                     Babas.boxSession.getRentals().add(0, rental);
                     Babas.boxSession.calculateTotals();

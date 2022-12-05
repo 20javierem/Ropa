@@ -57,6 +57,7 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
 //                    table.getColumn(table.getColumnName(column)).setMinWidth(95);
                     table.getColumn(table.getColumnName(column)).setPreferredWidth(95);
                     break;
+                case "SUNAT":
                 case "FECHA":
                 case "ACTUALIZADO":
                 case "ESTADO":
@@ -64,7 +65,7 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
 //                    table.getColumn(table.getColumnName(column)).setMaxWidth(150);
 //                    table.getColumn(table.getColumnName(column)).setMinWidth(150);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(150);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(120);
                     break;
                 case "TIPO/PAGO":
                     componente.setHorizontalAlignment(SwingConstants.LEFT);

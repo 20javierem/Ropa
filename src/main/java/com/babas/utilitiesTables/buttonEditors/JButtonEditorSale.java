@@ -1,6 +1,7 @@
 package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.App;
+import com.babas.controllers.Sales;
 import com.babas.models.Movement;
 import com.babas.models.Sale;
 import com.babas.modelsFacture.ApiClient;
@@ -68,7 +69,11 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                             Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
-                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            if(Sales.getOnWait().isEmpty()){
+                                sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            }else{
+                                sale.setStatusSunat(false);
+                            }
                             sale.save();
                         }else{
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");

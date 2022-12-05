@@ -1,10 +1,12 @@
 package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.App;
+import com.babas.controllers.Rentals;
 import com.babas.models.Movement;
 import com.babas.models.Rental;
 import com.babas.models.Reserve;
 import com.babas.models.Sale;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
@@ -95,7 +97,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                             rental.refresh();
                             if(rental.isActive()!=2){
                                 rental.setActive(2);
-                                rental.save();
+                                rental.updateStocks();
                                 Movement movement=new Movement();
                                 movement.setAmount(-rental.getTotalCurrent());
                                 movement.setEntrance(false);
@@ -107,7 +109,13 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 FPrincipal.rentalsActives.remove(rental);
                                 Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
+                                if(Rentals.getOnWait().isEmpty()){
+                                    rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                }else{
+                                    rental.setStatusSunat(false);
+                                }
+                                rental.save();
                             }else{
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler ya está cancelado");
                             }

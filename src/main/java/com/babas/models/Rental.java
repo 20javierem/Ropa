@@ -34,7 +34,6 @@ public class Rental extends Babas {
     private Date delivery;
     @NotNull(message = "Fecha fin")
     private Date ended;
-    private Long correlativo;
     @ManyToOne
     private Branch branch;
     private Integer active=0;
@@ -51,9 +50,10 @@ public class Rental extends Babas {
     @NotNull(message ="Usuario")
     private User user;
     private String observation;
-    private boolean activeSunat=false;
     private String serie;
-    private String typeDocument="77";
+    private Long correlativo;
+    private String typeVoucher;
+    private boolean statusSunat = false;
 
     public String getObservation() {
         return observation;
@@ -175,13 +175,34 @@ public class Rental extends Babas {
             totalCurrent=Math.round((totalCurrent-reserve.getAdvance())*100.0)/100.0;
         }
     }
-
-    public boolean isActiveSunat() {
-        return activeSunat;
+    public boolean isValidClient(String typeDocument){
+        if(client!=null){
+            if ("01".equals(typeDocument)) {
+                return client.getDni().length() == 11;
+            }
+            return true;
+        }else{
+            return typeDocument.equals("77")||typeDocument.equals("03");
+        }
+    }
+    public void setCorrelativo(Long correlativo) {
+        this.correlativo = correlativo;
     }
 
-    public void setActiveSunat(boolean activeSunat) {
-        this.activeSunat = activeSunat;
+    public String getTypeVoucher() {
+        return typeVoucher;
+    }
+
+    public void setTypeVoucher(String typeVoucher) {
+        this.typeVoucher = typeVoucher;
+    }
+
+    public boolean isStatusSunat() {
+        return statusSunat;
+    }
+
+    public void setStatusSunat(boolean statusSunat) {
+        this.statusSunat = statusSunat;
     }
 
     public String getSerie() {
@@ -192,13 +213,6 @@ public class Rental extends Babas {
         this.serie = serie;
     }
 
-    public String getTypeDocument() {
-        return typeDocument;
-    }
-
-    public void setTypeDocument(String typeDocument) {
-        this.typeDocument = typeDocument;
-    }
     public Double getTotalWithDiscount() {
         return totalWithDiscount;
     }
@@ -249,11 +263,11 @@ public class Rental extends Babas {
     public String getStringBranch(){
         return branch.getName();
     }
-    public String getStringClient(){
-        return client==null?"--":client.getNames();
-    }
     public String getStringStade(){
         return active==0?"EN ALQUILER":active==1?"COMPLETADA":"CANCELADA";
+    }
+    public String getStringSunat(){
+        return statusSunat?"CONFIRMADO":"PENDIENTE";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);
@@ -270,34 +284,77 @@ public class Rental extends Babas {
     public String getStringMulta(){
         return Utilities.moneda.format(getPenalty());
     }
-    @Override
-    public void save() {
-        updated=new Date();
-        if(created==null){
-            created=new Date();
+    public String getStringClient(){
+        return client!=null?client.getNames():"";
+    }
+    public String getClientDni( ){
+        return client!=null?client.getDni():"00000000";
+    }
+    public int getClientType(){
+        return client!=null?client.getTypeDocument():1;
+    }
+    public String getClientAdress(){
+        return client!=null?client.getMail():"";
+    }
+    public String getStringTypeDocument() {
+        switch (getTypeVoucher()) {
+            case "77":
+                return "NOTA DE VENTA ELECTRÓNICA";
+            case "03":
+                return "BOLETA DE VENTA ELECTRÓNICA";
+            default:
+                return "FACTURA DE VENTA ELECTRÓNICA";
         }
+    }
+    public String getDetailTicket(){
+        switch (getTypeVoucher()) {
+            case "77":
+                return "Representacion Impresa de la Nota de Venta Electrónica";
+            case "03":
+                return "Representacion Impresa de la Boleta de Venta Electrónica";
+            default:
+                return "Representacion Impresa de la Factura de Venta Electrónica";
+        }
+    }
+    public String getContentQR(){
+        return Babas.company.getRuc()+"|"+typeVoucher+"|"+getSerie()+"|"+getCorrelativo()+"|0.0|"+getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+getClientType()+"|"+getClientDni();
+    }
+    public void create(){
+        created=new Date();
         branch.refresh();
-        switch (typeDocument){
+        switch (typeVoucher){
             case "01":
                 branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
                 correlativo=branch.getCorrelativoFactura();
+                serie=branch.getSerieFactura();
                 break;
             case "03":
                 branch.setCorrelativoBoleta(branch.getCorrelativoBoleta()+1);
                 correlativo=branch.getCorrelativoBoleta();
+                serie=branch.getSerieBoleta();
                 break;
             default:
                 branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
                 correlativo=branch.getCorrelativoNotaVenta();
+                serie=branch.getSerieNotaVenta();
                 break;
         }
         branch.save();
-        super.save();
+        save();
         if(active==0&&reserve!=null){
             reserve.setActive(1);
             reserve.save();
             FPrincipal.reservesActives.remove(reserve);
         }
+    }
+
+    public void updateStocks(){
         getDetailRentals().forEach(Babas::save);
+    }
+
+    @Override
+    public void save() {
+        updated=new Date();
+        super.save();
     }
 }

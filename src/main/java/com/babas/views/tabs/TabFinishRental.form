@@ -69,7 +69,6 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <enabled value="false"/>
                       <placeholderText value="DNI..."/>
                       <text value=""/>
                     </properties>
@@ -81,7 +80,6 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <enabled value="false"/>
                       <placeholderText value="Cliente..."/>
                     </properties>
                   </component>
@@ -92,7 +90,6 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <enabled value="false"/>
                       <placeholderText value="Celular..."/>
                     </properties>
                   </component>
@@ -103,7 +100,6 @@
                       </grid>
                     </constraints>
                     <properties>
-                      <enabled value="false"/>
                       <placeholderText value="Dirección..."/>
                     </properties>
                   </component>

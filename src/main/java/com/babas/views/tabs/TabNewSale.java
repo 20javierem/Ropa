@@ -208,7 +208,7 @@ public class TabNewSale {
                             Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
-                            if (Sales.getSalesOnWait().isEmpty()) {
+                            if (Sales.getOnWait().isEmpty()) {
                                 ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale));
                             }
                             if (Utilities.propiedades.getPrintTicketSale().equals("always")) {

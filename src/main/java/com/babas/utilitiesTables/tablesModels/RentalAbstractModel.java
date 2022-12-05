@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","ESTADO","SUBTOTAL","GARANTÍA","DESCUENTO","RESUMEN","MULTA","TOTAL","","",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,JButton.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","GARANTÍA","DESCUENTO","RESUMEN","MULTA","TOTAL","ESTADO","SUNAT","","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,String.class,String.class,JButton.class,JButton.class,JButton.class};
     private final List<Rental> list;
 
     public RentalAbstractModel(List<Rental> list){
@@ -57,22 +57,24 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 4:
                 return rental.getStringType();
             case 5:
-                return rental.getStringStade();
-            case 6:
                 return Utilities.moneda.format(rental.getTotal());
-            case 7:
+            case 6:
                 return Utilities.moneda.format(rental.getWarranty());
-            case 8:
+            case 7:
                 return Utilities.moneda.format(rental.getDiscount());
-            case 9:
+            case 8:
                 return Utilities.moneda.format(rental.getTotalCurrent());
-            case 10:
+            case 9:
                 return Utilities.moneda.format(rental.getPenalty());
-            case 11:
+            case 10:
                 return Utilities.moneda.format(rental.getTotalWithDiscount());
+            case 11:
+                return rental.getStringStade();
             case 12:
-                return new JButtonAction("x16/checkbox.png");
+                return rental.getStringSunat();
             case 13:
+                return new JButtonAction("x16/checkbox.png");
+            case 14:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));

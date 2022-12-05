@@ -131,7 +131,7 @@ public class TabRecordSales {
 
     private void sendOnWaitSunat() {
         btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        List<Sale> salesOnWait = Sales.getSalesOnWait();
+        List<Sale> salesOnWait = Sales.getOnWait();
         System.out.println(salesOnWait.get(0).getId());
         for (Sale sale : salesOnWait) {
             sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));

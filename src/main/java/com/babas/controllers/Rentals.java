@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 public class Rentals extends Babas {
@@ -27,7 +28,14 @@ public class Rentals extends Babas {
                 builder.equal(root.get("numberRental"),numberSale));
         return session.createQuery(criteria).getSingleResultOrNull();
     }
-
+    public static List<Rental> getOnWait(){
+        criteria = builder.createQuery(Rental.class);
+        root=criteria.from(Rental.class);
+        criteria.select(root).where(
+                        builder.isFalse(root.get("statusSunat")))
+                .orderBy(builder.asc(root.get("id")));
+        return new Vector<>(session.createQuery(criteria).getResultList());
+    }
     public static Vector<Rental> getTodos(){
         criteria = builder.createQuery(Rental.class);
         criteria.select(criteria.from(Rental.class));

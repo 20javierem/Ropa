@@ -1,9 +1,13 @@
 package com.babas.views.tabs;
 
+import com.babas.controllers.Clients;
 import com.babas.controllers.Rentals;
+import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
+import com.babas.models.Client;
 import com.babas.models.Movement;
 import com.babas.models.Rental;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
@@ -103,49 +107,69 @@ public class TabFinishRental {
     }
 
     private void onSave() {
+        rental.setClient(getClient());
         if (Babas.boxSession.getId() != null) {
             if (jDateFinish.getDate() != null) {
-                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Alquiler", JOptionPane.YES_NO_OPTION) == 0;
+                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Entrega", JOptionPane.YES_NO_OPTION) == 0;
                 if (si) {
                     rental.refresh();
                     if (rental.isActive() == 0) {
-                        rental.setPenalty((Double) spinnerPenalty.getValue());
-                        rental.calculateTotals();
-                        rental.setDelivery(jDateFinish.getDate());
-                        rental.setActive(1);
-                        rental.setObservation(txtObservation.getText().trim());
-                        rental.save();
-                        Movement movement = new Movement();
-                        if (rental.getPenalty() > rental.getWarranty()) {
-                            movement.setEntrance(true);
-                            movement.setAmount(rental.getPenalty() - rental.getWarranty());
-                        } else {
-                            movement.setEntrance(false);
-                            movement.setAmount(-(rental.getWarranty() - rental.getPenalty()));
-                        }
-                        movement.setBoxSesion(Babas.boxSession);
-                        movement.setDescription("ALQUILER FINALIZADO NRO: " + rental.getId());
-                        movement.save();
-                        movement.getBoxSesion().getMovements().add(0, movement);
-                        movement.getBoxSesion().calculateTotals();
-                        Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getId() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
-                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
-                        if (Utilities.propiedades.getPrintTicketRentalFinish().equals("always")) {
-                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                            if (index == 0) {
-                                UtilitiesReports.generateTicketRentalFinish(true, rental, true);
-                            } else if (index == 1) {
-                                UtilitiesReports.generateTicketRentalFinish(false, rental, true);
+                        rental.setTypeVoucher("77");
+                        JPanel jPanel = new JPanel();
+                        jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
+                        JComboBox comboBox = new JComboBox();
+                        comboBox.addItem("NOTA");
+                        comboBox.addItem("BOLETA");
+                        comboBox.addItem("FACTURA");
+                        jPanel.add(comboBox);
+                        int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Comfirmar Entrega", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                        if (option == JOptionPane.OK_OPTION) {
+                            if (comboBox.getSelectedIndex() != 0) {
+                                rental.setTypeVoucher(comboBox.getSelectedIndex() == 1 ? "03" : "01");
                             }
-                        } else if (Utilities.propiedades.getPrintTicketRentalFinish().equals("question")) {
-                            si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de alquiler", JOptionPane.YES_NO_OPTION) == 0;
-                            if (si) {
-                                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                                if (index == 0) {
-                                    UtilitiesReports.generateTicketRentalFinish(true, rental, true);
-                                } else if (index == 1) {
-                                    UtilitiesReports.generateTicketRentalFinish(false, rental, true);
+                            if (rental.isValidClient(rental.getTypeVoucher())) {
+                                rental.setPenalty((Double) spinnerPenalty.getValue());
+                                rental.calculateTotals();
+                                rental.setDelivery(jDateFinish.getDate());
+                                rental.setActive(1);
+                                rental.setObservation(txtObservation.getText().trim());
+                                rental.save();
+                                Movement movement = new Movement();
+                                if (rental.getPenalty() > rental.getWarranty()) {
+                                    movement.setEntrance(true);
+                                    movement.setAmount(rental.getPenalty() - rental.getWarranty());
+                                } else {
+                                    movement.setEntrance(false);
+                                    movement.setAmount(-(rental.getWarranty() - rental.getPenalty()));
+                                }
+                                movement.setBoxSesion(Babas.boxSession);
+                                movement.setDescription("ALQUILER FINALIZADO NRO: " + rental.getId());
+                                movement.save();
+                                movement.getBoxSesion().getMovements().add(0, movement);
+                                movement.getBoxSesion().calculateTotals();
+                                Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getId() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
+                                if (Rentals.getOnWait().isEmpty()) {
+                                    ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental));
+                                }
+                                if (Utilities.propiedades.getPrintTicketRentalFinish().equals("always")) {
+                                    int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                                    if (index == 0) {
+                                        UtilitiesReports.generateComprobanteOfRental(true, rental, true);
+                                    } else if (index == 1) {
+                                        UtilitiesReports.generateComprobanteOfRental(false, rental, true);
+                                    }
+                                } else if (Utilities.propiedades.getPrintTicketRentalFinish().equals("question")) {
+                                    si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de alquiler", JOptionPane.YES_NO_OPTION) == 0;
+                                    if (si) {
+                                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                                        if (index == 0) {
+                                            UtilitiesReports.generateComprobanteOfRental(true, rental, true);
+                                        } else if (index == 1) {
+                                            UtilitiesReports.generateComprobanteOfRental(false, rental, true);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -166,6 +190,23 @@ public class TabFinishRental {
         } else {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Debe aperturar caja");
         }
+    }
+
+    private Client getClient() {
+        Client client = null;
+        if (!txtDocument.getText().isBlank() && !txtNameClient.getText().isBlank()) {
+            client = Clients.getByDNI(txtDocument.getText().trim());
+            if (client == null) {
+                client = new Client();
+                client.setDni(txtDocument.getText().trim());
+                FPrincipal.clients.add(client);
+            }
+            client.setNames(txtNameClient.getText().trim());
+            client.setMail(txtMail.getText().trim());
+            client.setPhone(txtPhone.getText().trim());
+            client.save();
+        }
+        return client;
     }
 
     private void load() {
@@ -255,20 +296,16 @@ public class TabFinishRental {
         final Spacer spacer1 = new Spacer();
         panel4.add(spacer1, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         txtDocument = new FlatTextField();
-        txtDocument.setEnabled(false);
         txtDocument.setPlaceholderText("DNI...");
         txtDocument.setText("");
         panel4.add(txtDocument, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(95, -1), null, 0, false));
         txtNameClient = new FlatTextField();
-        txtNameClient.setEnabled(false);
         txtNameClient.setPlaceholderText("Cliente...");
         panel4.add(txtNameClient, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(300, -1), null, 0, false));
         txtPhone = new FlatTextField();
-        txtPhone.setEnabled(false);
         txtPhone.setPlaceholderText("Celular...");
         panel4.add(txtPhone, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(120, -1), null, 0, false));
         txtMail = new FlatTextField();
-        txtMail.setEnabled(false);
         txtMail.setPlaceholderText("Dirección...");
         panel4.add(txtMail, new GridConstraints(0, 3, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         final JLabel label1 = new JLabel();
