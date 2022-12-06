@@ -104,12 +104,11 @@ public class TabClients {
     private void filter() {
         String busqueda = txtSearch.getText().trim();
         filtros.clear();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
         listaFiltros.put(3, busqueda);
-        listaFiltros.put(4, busqueda);
         RowFilter filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
         if (model.getList().size() == table.getRowCount()) {
