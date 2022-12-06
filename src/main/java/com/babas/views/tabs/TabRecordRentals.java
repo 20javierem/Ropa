@@ -268,6 +268,7 @@ public class TabRecordRentals {
         lblTotalTransferencias.setText("Total transferencias: " + Utilities.moneda.format(totalTransfer));
     }
 
+
     private void sendOnWaitSunat() {
         btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
         if (!Sales.getOnWait().isEmpty()) {
@@ -374,6 +375,7 @@ public class TabRecordRentals {
             }
             if (correlativeFactura != null) {
                 boolean flag = true;
+
                 while (flag) {
                     Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "01");
                     Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "01");

@@ -150,6 +150,11 @@ public class TabFinishRental {
                                 Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getId() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
+                                FPrincipal.rentalsActives.remove(rental);
+                                btnFinishRental.setVisible(false);
+                                jDateFinish.setEnabled(false);
+                                spinnerPenalty.setEnabled(false);
+                                txtObservation.setEnabled(false);
                                 if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
                                     ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental));
                                 }
@@ -171,18 +176,25 @@ public class TabFinishRental {
                                         }
                                     }
                                 }
+                            } else {
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido");
                             }
                         }
                     } else if (rental.isActive() == 1) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El alquiler ya está finalizado");
+                        FPrincipal.rentalsActives.remove(rental);
+                        btnFinishRental.setVisible(false);
+                        jDateFinish.setEnabled(false);
+                        spinnerPenalty.setEnabled(false);
+                        txtObservation.setEnabled(false);
                     } else {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El alquiler está cancelado");
+                        FPrincipal.rentalsActives.remove(rental);
+                        btnFinishRental.setVisible(false);
+                        jDateFinish.setEnabled(false);
+                        spinnerPenalty.setEnabled(false);
+                        txtObservation.setEnabled(false);
                     }
-                    FPrincipal.rentalsActives.remove(rental);
-                    btnFinishRental.setVisible(false);
-                    jDateFinish.setEnabled(false);
-                    spinnerPenalty.setEnabled(false);
-                    txtObservation.setEnabled(false);
                 }
             } else {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Debe introducir fecha de entrega");
