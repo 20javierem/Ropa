@@ -244,9 +244,9 @@ public class FPrincipal extends JFrame {
     private void getComprobante() {
         JPanel jPanel = new JPanel();
         JComboBox comboBox = new JComboBox();
-        comboBox.addItem("VENTA");
-        comboBox.addItem("ALQUILER");
-        comboBox.addItem("RESERVA");
+        comboBox.addItem("NOTA");
+        comboBox.addItem("BOLETA");
+        comboBox.addItem("FACTURA");
         comboBox.addItem("COTIZACIÓN");
         FlatSpinner spinner = new FlatSpinner();
         spinner.setModel(new SpinnerNumberModel(1, 1, 100000, 1));
@@ -258,8 +258,9 @@ public class FPrincipal extends JFrame {
             Long number = Long.valueOf((Integer) spinner.getValue());
             boolean find = false;
             switch (comboBox.getSelectedItem().toString()) {
-                case "VENTA":
-                    Sale sale = Sales.getByNumber(number);
+                case "NOTA":
+                    Rental rental = Rentals.getByCorrelativoAndType(number, "77");
+                    Sale sale = Sales.getByCorrelativoAndType(number, "77");
                     if (sale != null) {
                         int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                         if (index == 0) {
@@ -268,37 +269,54 @@ public class FPrincipal extends JFrame {
                             UtilitiesReports.generateComprobanteOfSale(false, sale, false);
                         }
                         find = true;
-                    }
-                    break;
-                case "ALQUILER":
-                    Rental rental = Rentals.getByNumber(number);
-                    if (rental != null) {
-                        if (rental.isActive() == 0) {
-                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                            if (index == 0) {
-                                UtilitiesReports.generateTicketRental(true, rental, false);
-                            } else if (index == 1) {
-                                UtilitiesReports.generateTicketRental(false, rental, false);
-                            }
-                        } else {
-                            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                            if (index == 0) {
-                                UtilitiesReports.generateTicketRentalFinish(true, rental, false);
-                            } else if (index == 1) {
-                                UtilitiesReports.generateTicketRentalFinish(false, rental, false);
-                            }
+                    } else if (rental != null) {
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateComprobanteOfRental(true, rental, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateComprobanteOfRental(false, rental, false);
                         }
                         find = true;
                     }
                     break;
-                case "RESERVA":
-                    Reserve reserve = Reserves.getByNumber(number);
-                    if (reserve != null) {
+                case "BOLETA":
+                    sale = Sales.getByCorrelativoAndType(number, "03");
+                    rental = Rentals.getByCorrelativoAndType(number, "03");
+                    if (sale != null) {
                         int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                         if (index == 0) {
-                            UtilitiesReports.generateTicketReserve(true, reserve, false);
+                            UtilitiesReports.generateComprobanteOfSale(true, sale, false);
                         } else if (index == 1) {
-                            UtilitiesReports.generateTicketReserve(false, reserve, false);
+                            UtilitiesReports.generateComprobanteOfSale(false, sale, false);
+                        }
+                        find = true;
+                    } else if (rental != null) {
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateComprobanteOfRental(true, rental, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                        }
+                        find = true;
+                    }
+                    break;
+                case "FACTURA":
+                    sale = Sales.getByCorrelativoAndType(number, "01");
+                    rental = Rentals.getByCorrelativoAndType(number, "01");
+                    if (sale != null) {
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateComprobanteOfSale(true, sale, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateComprobanteOfSale(false, sale, false);
+                        }
+                        find = true;
+                    } else if (rental != null) {
+                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                        if (index == 0) {
+                            UtilitiesReports.generateComprobanteOfRental(true, rental, false);
+                        } else if (index == 1) {
+                            UtilitiesReports.generateComprobanteOfRental(false, rental, false);
                         }
                         find = true;
                     }

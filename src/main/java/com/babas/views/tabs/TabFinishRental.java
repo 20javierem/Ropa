@@ -122,7 +122,7 @@ public class TabFinishRental {
                         comboBox.addItem("BOLETA");
                         comboBox.addItem("FACTURA");
                         jPanel.add(comboBox);
-                        int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Comfirmar Entrega", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                        int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Confirmar Entrega", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
                         if (option == JOptionPane.OK_OPTION) {
                             if (comboBox.getSelectedIndex() != 0) {
                                 rental.setTypeVoucher(comboBox.getSelectedIndex() == 1 ? "03" : "01");
@@ -150,7 +150,7 @@ public class TabFinishRental {
                                 Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getId() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
-                                if (Rentals.getOnWait().isEmpty()) {
+                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
                                     ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental));
                                 }
                                 if (Utilities.propiedades.getPrintTicketRentalFinish().equals("always")) {

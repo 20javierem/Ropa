@@ -10,6 +10,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -30,13 +31,44 @@ public class Sales extends Babas {
                 .orderBy(builder.asc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
-
-    public static Sale getByNumber(Long numberSale){
+    public static Sale getFirstNotaOnWait(){
         criteria = builder.createQuery(Sale.class);
         root=criteria.from(Sale.class);
-        criteria.select(root).where(
-                builder.equal(root.get("numberSale"),numberSale));
-        return session.createQuery(criteria).getSingleResultOrNull();
+        criteria.select(root).where(builder.and(
+                builder.isFalse(root.get("statusSunat")),
+                        builder.equal(root.get("typeVoucher"),"77")))
+                .orderBy(builder.asc(root.get("id")));
+        List<Sale> sales=session.createQuery(criteria).getResultList();
+        return sales.isEmpty()?null:sales.get(0);
+    }
+    public static Sale getFirstBoletaOnWait(){
+        criteria = builder.createQuery(Sale.class);
+        root=criteria.from(Sale.class);
+        criteria.select(root).where(builder.and(
+                        builder.isFalse(root.get("statusSunat")),
+                        builder.equal(root.get("typeVoucher"),"03")))
+                .orderBy(builder.asc(root.get("id")));
+        return session.createQuery(criteria).getResultList().get(0);
+    }
+    public static Sale getFirstFacturaOnWait(){
+        criteria = builder.createQuery(Sale.class);
+        root=criteria.from(Sale.class);
+        criteria.select(root).where(builder.and(
+                        builder.isFalse(root.get("statusSunat")),
+                        builder.equal(root.get("typeVoucher"),"01")))
+                .orderBy(builder.asc(root.get("id")));
+        List<Sale> sales=session.createQuery(criteria).getResultList();
+        return sales.isEmpty()?null:sales.get(0);
+    }
+
+    public static Sale getByCorrelativoAndType(Long correlativo,String type){
+        criteria = builder.createQuery(Sale.class);
+        root=criteria.from(Sale.class);
+        criteria.select(root).where(builder.and(
+                builder.equal(root.get("correlativo"),correlativo),
+                builder.equal(root.get("typeVoucher"),type)));
+        List<Sale> sales=session.createQuery(criteria).getResultList();
+        return sales.isEmpty()?null:sales.get(0);
     }
 
     public static Vector<Sale> getTodos(){

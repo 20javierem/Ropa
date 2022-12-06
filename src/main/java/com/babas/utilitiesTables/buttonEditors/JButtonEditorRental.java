@@ -2,6 +2,7 @@ package com.babas.utilitiesTables.buttonEditors;
 
 import com.babas.App;
 import com.babas.controllers.Rentals;
+import com.babas.controllers.Sales;
 import com.babas.models.Movement;
 import com.babas.models.Rental;
 import com.babas.models.Reserve;
@@ -74,20 +75,11 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     }
                     break;
                 case "ticket":
-                    if(rental.isActive()==0){
-                        int index=JOptionPane.showOptionDialog(Utilities.getJFrame(),"Seleccione el formato a ver","Ver ticket",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"A4", "Ticket","Cancelar"}, "A4");
-                        if(index==0){
-                            UtilitiesReports.generateTicketRental(true,rental,false);
-                        }else if(index==1){
-                            UtilitiesReports.generateTicketRental(false,rental,false);
-                        }
-                    }else{
-                        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                        if (index == 0) {
-                            UtilitiesReports.generateTicketRentalFinish(true,rental,false);
-                        } else if (index == 1) {
-                            UtilitiesReports.generateTicketRentalFinish(false,rental,false);
-                        }
+                    int index=JOptionPane.showOptionDialog(Utilities.getJFrame(),"Seleccione el formato a ver","Ver ticket",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"A4", "Ticket","Cancelar"}, "A4");
+                    if(index==0){
+                        UtilitiesReports.generateComprobanteOfRental(true,rental,false);
+                    }else if(index==1){
+                        UtilitiesReports.generateComprobanteOfRental(false,rental,false);
                     }
                     break;
                 default:
@@ -110,7 +102,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
-                                if(Rentals.getOnWait().isEmpty()){
+                                if(Rentals.getOnWait().isEmpty()&& Sales.getOnWait().isEmpty()){
                                     rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                                 }else{
                                     rental.setStatusSunat(false);

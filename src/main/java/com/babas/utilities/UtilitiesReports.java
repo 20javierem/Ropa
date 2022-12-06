@@ -337,7 +337,7 @@ public class UtilitiesReports {
     public static void generateComprobanteOfRental(boolean a4,Rental rental,boolean print){
         InputStream pathReport;
         if(a4){
-            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-reserve.jasper");
+            pathReport = App.class.getResourceAsStream("jasperReports/a4-comprobante.jasper");
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-comprobante.jasper");
         }
@@ -404,7 +404,7 @@ public class UtilitiesReports {
     public static void generateComprobanteOfSale(boolean a4,Sale sale,boolean print){
         InputStream pathReport;
         if(a4){
-            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-reserve.jasper");
+            pathReport = App.class.getResourceAsStream("jasperReports/a4-comprobante.jasper");
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-comprobante.jasper");
         }

@@ -1,11 +1,13 @@
 package com.babas.views.tabs;
 
+import com.babas.App;
 import com.babas.controllers.Rentals;
 import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
 import com.babas.models.Rental;
 import com.babas.models.Sale;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
@@ -18,6 +20,7 @@ import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.RentalAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -56,6 +59,7 @@ public class TabRecordRentals {
     private JButton btnClearFilters;
     private JButton btnGenerateReport;
     private FlatTextField txtSearch;
+    private JButton btnSendPedings;
     private List<Rental> rentals;
     private RentalAbstractModel model;
     private TableRowSorter<RentalAbstractModel> modeloOrdenado;
@@ -123,6 +127,12 @@ public class TabRecordRentals {
                 clearFilters();
             }
         });
+        btnSendPedings.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sendOnWaitSunat();
+            }
+        });
     }
 
     private void generateReport() {
@@ -159,6 +169,7 @@ public class TabRecordRentals {
         loadTable();
         loadCombos();
         filter();
+        btnSendPedings.setIcon(new FlatSVGIcon(App.class.getResource("icons/svg/upload.svg")));
     }
 
     private void clearFilters() {
@@ -209,7 +220,7 @@ public class TabRecordRentals {
     private void filter() {
         filtros.clear();
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
@@ -221,6 +232,7 @@ public class TabRecordRentals {
         listaFiltros.put(8, busqueda);
         listaFiltros.put(9, busqueda);
         listaFiltros.put(10, busqueda);
+        listaFiltros.put(11, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
             filtros.add(RowFilter.regexFilter(branch.getName(), 2));
@@ -229,7 +241,7 @@ public class TabRecordRentals {
             filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));
         }
         if (cbbState.getSelectedIndex() != 0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 5));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 11));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);
@@ -254,6 +266,149 @@ public class TabRecordRentals {
         }
         lblTotalEfectivo.setText("Total efectivo: " + Utilities.moneda.format(totalCash));
         lblTotalTransferencias.setText("Total transferencias: " + Utilities.moneda.format(totalTransfer));
+    }
+
+    private void sendOnWaitSunat() {
+        btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        if (!Sales.getOnWait().isEmpty()) {
+            Long correlativeNota = null;
+            Long correlativeBoleta = null;
+            Long correlativeFactura = null;
+            Sale firstNota = Sales.getFirstNotaOnWait();
+            Sale firstBoleta = Sales.getFirstBoletaOnWait();
+            Sale fisrtFactura = Sales.getFirstFacturaOnWait();
+            if (firstNota != null) {
+                correlativeNota = firstNota.getCorrelativo();
+            }
+            if (firstBoleta != null) {
+                correlativeBoleta = firstBoleta.getCorrelativo();
+            }
+            if (fisrtFactura != null) {
+                correlativeFactura = fisrtFactura.getCorrelativo();
+            }
+
+            if (correlativeNota == null) {
+                Rental rental = Rentals.getFirstNotaOnWait();
+                if (rental != null) {
+                    correlativeNota = rental.getCorrelativo();
+                }
+            } else {
+                Rental rental = Rentals.getFirstNotaOnWait();
+                if (rental != null && rental.getCorrelativo() < correlativeNota) {
+                    correlativeNota = rental.getCorrelativo();
+                }
+            }
+
+            if (correlativeBoleta == null) {
+                Rental rental = Rentals.getFirstBoletaOnWait();
+                if (rental != null) {
+                    correlativeBoleta = rental.getCorrelativo();
+                }
+            } else {
+                Rental rental = Rentals.getFirstBoletaOnWait();
+                if (rental != null && rental.getCorrelativo() < correlativeBoleta) {
+                    correlativeBoleta = rental.getCorrelativo();
+                }
+            }
+
+            if (correlativeFactura == null) {
+                Rental rental = Rentals.getFirstFacturaOnWait();
+                if (rental != null) {
+                    correlativeFactura = rental.getCorrelativo();
+                }
+            } else {
+                Rental rental = Rentals.getFirstFacturaOnWait();
+                if (rental != null && rental.getCorrelativo() < correlativeFactura) {
+                    correlativeFactura = rental.getCorrelativo();
+                }
+            }
+            if (correlativeNota != null) {
+                boolean flag = true;
+                while (flag) {
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "77");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "77");
+                    if (sale != null) {
+                        if (sale.isActive()) {
+                            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                        } else {
+                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                        }
+                        flag = sale.isStatusSunat();
+                    } else if (rental != null) {
+                        if (rental.isActive() == 0 || rental.isActive() == 1) {
+                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                        } else {
+                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                        }
+                        flag = rental.isStatusSunat();
+                    } else {
+                        flag = false;
+                    }
+                    correlativeNota++;
+                }
+            }
+            if (correlativeBoleta != null) {
+                boolean flag = true;
+                while (flag) {
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "03");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "03");
+                    if (sale != null) {
+                        if (sale.isActive()) {
+                            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                        } else {
+                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                        }
+                        flag = sale.isStatusSunat();
+                    } else if (rental != null) {
+                        if (rental.isActive() == 0 || rental.isActive() == 1) {
+                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                        } else {
+                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                        }
+                        flag = rental.isStatusSunat();
+                    } else {
+                        flag = false;
+                    }
+                    correlativeBoleta++;
+                }
+            }
+            if (correlativeFactura != null) {
+                boolean flag = true;
+                while (flag) {
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "01");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "01");
+                    if (sale != null) {
+                        if (sale.isActive()) {
+                            if (sale.isValidClient("01")) {
+                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                            } else {
+                                correlativeFactura++;
+                                continue;
+                            }
+                        } else {
+                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                        }
+                        flag = sale.isStatusSunat();
+                    } else if (rental != null) {
+                        if (rental.isActive() == 0 || rental.isActive() == 1) {
+                            if (rental.isValidClient("01")) {
+                                rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                            } else {
+                                correlativeFactura++;
+                                continue;
+                            }
+                        } else {
+                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                        }
+                        flag = rental.isStatusSunat();
+                    } else {
+                        flag = false;
+                    }
+                    correlativeFactura++;
+                }
+            }
+        }
+        btnSendPedings.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
     private void getRentals(boolean show) {
@@ -377,7 +532,7 @@ public class TabRecordRentals {
         btnGenerateReport.setText("Generar reporte");
         panel3.add(btnGenerateReport, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 8, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setLayout(new GridLayoutManager(1, 9, new Insets(0, 0, 0, 0), -1, -1));
         tabPane.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         btnClearFilters = new JButton();
         btnClearFilters.setText("Limpiar filtros");
@@ -424,6 +579,9 @@ public class TabRecordRentals {
         txtSearch.setShowClearButton(true);
         txtSearch.setText("");
         panel4.add(txtSearch, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        btnSendPedings = new JButton();
+        btnSendPedings.setText("Enviar pendientes");
+        panel4.add(btnSendPedings, new GridConstraints(0, 8, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
     }
 
     /**

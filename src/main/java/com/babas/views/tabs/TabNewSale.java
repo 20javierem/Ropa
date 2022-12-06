@@ -2,6 +2,7 @@ package com.babas.views.tabs;
 
 import com.babas.App;
 import com.babas.controllers.Clients;
+import com.babas.controllers.Rentals;
 import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
 import com.babas.models.Client;
@@ -208,7 +209,7 @@ public class TabNewSale {
                             Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
-                            if (Sales.getOnWait().isEmpty()) {
+                            if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
                                 ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale));
                             }
                             if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
