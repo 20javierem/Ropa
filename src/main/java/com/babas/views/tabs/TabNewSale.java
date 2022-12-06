@@ -210,8 +210,11 @@ public class TabNewSale {
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
                             if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale));
+                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                            } else {
+                                sale.setStatusSunat(false);
                             }
+                            sale.save();
                             if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
                                 int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                                 if (index == 0) {

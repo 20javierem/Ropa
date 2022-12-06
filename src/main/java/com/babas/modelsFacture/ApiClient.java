@@ -67,6 +67,7 @@ public class ApiClient {
                     build();
             response = client.newCall(request).execute();
             if(response.code()==200){
+                System.out.println(response.body().string());
                 ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
                 if(responseJson.getRespuesta().equals("ok")){
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante cancelado ante sunat");

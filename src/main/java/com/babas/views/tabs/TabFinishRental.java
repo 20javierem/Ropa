@@ -156,8 +156,11 @@ public class TabFinishRental {
                                 spinnerPenalty.setEnabled(false);
                                 txtObservation.setEnabled(false);
                                 if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                    ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental));
+                                    rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                                } else {
+                                    rental.setStatusSunat(false);
                                 }
+                                rental.save();
                                 if (Utilities.propiedades.getPrintTicketRentalFinish().equals("always")) {
                                     int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                                     if (index == 0) {

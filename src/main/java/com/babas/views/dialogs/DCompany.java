@@ -261,7 +261,7 @@ public class DCompany extends JDialog {
     private void init() {
         setContentPane(contentPane);
         getRootPane().setDefaultButton(btnSave);
-        if (Babas.company != null) {
+        if (Babas.company.getId() != null) {
             load();
         } else {
             tabPane.removeTabAt(tabPane.indexOfTab("Facturador"));

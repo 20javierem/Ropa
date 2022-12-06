@@ -43,7 +43,7 @@ public class Sale extends Babas {
     private String serie;
     private Long correlativo;
     private String typeVoucher;
-    private boolean statusSunat = false;
+    private boolean statusSunat = true;
     private boolean active = true;
 
     public Sale() {

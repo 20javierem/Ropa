@@ -1,6 +1,7 @@
 package com.babas.controllers;
 
 import com.babas.models.Branch;
+import com.babas.models.Rental;
 import com.babas.models.Sale;
 import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
@@ -48,7 +49,8 @@ public class Sales extends Babas {
                         builder.isFalse(root.get("statusSunat")),
                         builder.equal(root.get("typeVoucher"),"03")))
                 .orderBy(builder.asc(root.get("id")));
-        return session.createQuery(criteria).getResultList().get(0);
+        List<Sale> sales=session.createQuery(criteria).getResultList();
+        return sales.isEmpty()?null:sales.get(0);
     }
     public static Sale getFirstFacturaOnWait(){
         criteria = builder.createQuery(Sale.class);
@@ -66,9 +68,9 @@ public class Sales extends Babas {
         root=criteria.from(Sale.class);
         criteria.select(root).where(builder.and(
                 builder.equal(root.get("correlativo"),correlativo),
-                builder.equal(root.get("typeVoucher"),type)));
-        List<Sale> sales=session.createQuery(criteria).getResultList();
-        return sales.isEmpty()?null:sales.get(0);
+                builder.equal(root.get("typeVoucher"),type))
+        );
+        return session.createQuery(criteria).getSingleResultOrNull();
     }
 
     public static Vector<Sale> getTodos(){

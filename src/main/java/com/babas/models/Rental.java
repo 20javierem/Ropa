@@ -53,7 +53,7 @@ public class Rental extends Babas {
     private String serie;
     private Long correlativo;
     private String typeVoucher;
-    private boolean statusSunat = false;
+    private boolean statusSunat = true;
 
     public String getObservation() {
         return observation;

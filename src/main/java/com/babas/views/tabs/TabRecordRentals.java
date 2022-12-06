@@ -271,7 +271,7 @@ public class TabRecordRentals {
 
     private void sendOnWaitSunat() {
         btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        if (!Sales.getOnWait().isEmpty()) {
+        if (!Sales.getOnWait().isEmpty() || !Rentals.getOnWait().isEmpty()) {
             Long correlativeNota = null;
             Long correlativeBoleta = null;
             Long correlativeFactura = null;

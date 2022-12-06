@@ -133,7 +133,7 @@ public class TabRecordSales {
 
     private void sendOnWaitSunat() {
         btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
-        if (!Sales.getOnWait().isEmpty()) {
+        if (!Sales.getOnWait().isEmpty() || !Rentals.getOnWait().isEmpty()) {
             Long correlativeNota = null;
             Long correlativeBoleta = null;
             Long correlativeFactura = null;
@@ -185,6 +185,7 @@ public class TabRecordSales {
                     correlativeFactura = rental.getCorrelativo();
                 }
             }
+
             if (correlativeNota != null) {
                 boolean flag = true;
                 while (flag) {
@@ -197,6 +198,7 @@ public class TabRecordSales {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
                         flag = sale.isStatusSunat();
+                        sale.save();
                     } else if (rental != null) {
                         if (rental.isActive() == 0 || rental.isActive() == 1) {
                             rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
@@ -204,17 +206,19 @@ public class TabRecordSales {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
                         flag = rental.isStatusSunat();
+                        rental.save();
                     } else {
                         flag = false;
                     }
                     correlativeNota++;
                 }
             }
+
             if (correlativeBoleta != null) {
                 boolean flag = true;
                 while (flag) {
-                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "03");
-                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "03");
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeBoleta, "03");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeBoleta, "03");
                     if (sale != null) {
                         if (sale.isActive()) {
                             sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
@@ -222,46 +226,51 @@ public class TabRecordSales {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
                         flag = sale.isStatusSunat();
+                        sale.save();
                     } else if (rental != null) {
-                        if (rental.isActive() == 0 || rental.isActive() == 1) {
+                        if (rental.isActive() == 1) {
                             rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
                         flag = rental.isStatusSunat();
+                        rental.save();
                     } else {
                         flag = false;
                     }
                     correlativeBoleta++;
                 }
             }
+
             if (correlativeFactura != null) {
                 boolean flag = true;
                 while (flag) {
-                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "01");
-                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "01");
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeFactura, "01");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeFactura, "01");
                     if (sale != null) {
-                        if (sale.isActive()) {
-                            if (sale.isValidClient("01")) {
+                        if (sale.isValidClient("01")) {
+                            if (sale.isActive()) {
                                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
                             } else {
-                                correlativeFactura++;
-                                continue;
+                                sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                             }
+                            sale.save();
                         } else {
-                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            flag = false;
+                            continue;
                         }
                         flag = sale.isStatusSunat();
                     } else if (rental != null) {
-                        if (rental.isActive() == 0 || rental.isActive() == 1) {
-                            if (rental.isValidClient("01")) {
+                        if (rental.isValidClient("01")) {
+                            if (rental.isActive() == 1) {
                                 rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
                             } else {
-                                correlativeFactura++;
-                                continue;
+                                rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                             }
+                            rental.save();
                         } else {
-                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                            flag = false;
+                            continue;
                         }
                         flag = rental.isStatusSunat();
                     } else {
@@ -425,19 +434,18 @@ public class TabRecordSales {
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
             }
-            model.fireTableDataChanged();
         } else if (start != null) {
             sales.clear();
             sales.addAll(Sales.getAfter(start));
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "Ventas cargadas");
             }
-            model.fireTableDataChanged();
         } else {
             if (show) {
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "Debe seleccionar un rango de fechas");
             }
         }
+        model.fireTableDataChanged();
         btnSearch.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         filter();
     }
