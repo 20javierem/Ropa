@@ -264,7 +264,7 @@ public class Rental extends Babas {
         return branch.getName();
     }
     public String getStringStade(){
-        return active==0?"EN ALQUILER":active==1?"COMPLETADA":"CANCELADA";
+        return active==0?"EN ALQUILER":active==1?"COMPLETADO":"CANCELADO";
     }
     public String getStringSunat(){
         return statusSunat?"CONFIRMADO":"PENDIENTE";

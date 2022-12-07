@@ -134,8 +134,9 @@ public class TabBoxSesion {
         tableSales.setModel(saleAbstractModel);
         UtilitiesTables.headerNegrita(tableSales);
         SaleCellRendered.setCellRenderer(tableSales,null);
-        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 2).setCellEditor(new JButtonEditorSale(true));
+        tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 2).setCellEditor(new JButtonEditorSale("show"));
         tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-1));
+        tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-2));
 
 
         movementAbstractModel=new MovementAbstractModel(boxSession.getMovements());
@@ -149,6 +150,7 @@ public class TabBoxSesion {
         RentalCellRendered.setCellRenderer(tableRentals,null);
         tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
         tableRentals.removeColumn(tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount()-1));
+        tableRentals.removeColumn(tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount()-2));
         tableRentals.removeColumn(tableRentals.getColumn(""));
         tableRentals.removeColumn(tableRentals.getColumn("MULTA"));
 

@@ -82,7 +82,6 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
     public static void generateTicketQuotation(boolean a4,Quotation quotation,boolean print) {
         InputStream pathReport;
         if(a4){
@@ -359,7 +358,7 @@ public class UtilitiesReports {
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(rental.getTotalCurrent()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getUpdated()));
                 parameters.put("nombreCliente",rental.getStringClient());
                 parameters.put("vendedor",rental.getUser().getUserName());
                 parameters.put("clienteDni",rental.getClientDni());
@@ -426,7 +425,7 @@ public class UtilitiesReports {
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotalCurrent()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getUpdated()));
                 parameters.put("nombreCliente",sale.getStringClient());
                 parameters.put("vendedor",sale.getUser().getUserName());
                 parameters.put("clienteDni",sale.getClientDni());
@@ -698,7 +697,6 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-
     public static JasperViewer getjasperViewer(JasperReport report, Map<String, Object> parameters, JRBeanArrayDataSource sp, boolean isExitOnClose){
         try {
             JasperPrint jasperPrint=JasperFillManager.fillReport(report,parameters,sp);

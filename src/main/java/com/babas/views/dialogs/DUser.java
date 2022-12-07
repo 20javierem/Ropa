@@ -331,7 +331,7 @@ public class DUser extends JDialog {
                     }
                     user = new User();
                     load();
-                    if (Utilities.getJFrame() != null&&Utilities.getJFrame() instanceof FPrincipal) {
+                    if (Utilities.getJFrame() != null && Utilities.getJFrame() instanceof FPrincipal) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Usuario registrado");
                     }
                 } else {

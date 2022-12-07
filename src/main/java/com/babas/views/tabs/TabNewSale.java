@@ -195,7 +195,7 @@ public class TabNewSale {
                     comboBox.addItem("BOLETA");
                     comboBox.addItem("FACTURA");
                     jPanel.add(comboBox);
-                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Comfirmar Venta", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Confirmar Venta", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
                     if (option == JOptionPane.OK_OPTION) {
                         if (comboBox.getSelectedIndex() != 0) {
                             sale.setTypeVoucher(comboBox.getSelectedIndex() == 1 ? "03" : "01");

@@ -155,6 +155,7 @@ public class FLogin extends JFrame {
                 if (Users.getTodos().isEmpty()) {
                     User user = new User();
                     user.getBranchs().add(Branchs.get(1));
+                    user.getBranchs().get(0).getUsers().add(user);
                     user.getPermitions().setNewSale(true);
                     user.getPermitions().setShowCatalogue(true);
                     user.getPermitions().setRecordSales(true);
@@ -231,32 +232,22 @@ public class FLogin extends JFrame {
         String userPassword = new String(fieldPasword.getPassword());
         if (!userName.isBlank() && !userPassword.isBlank()) {
             User user = Users.getByUserName(userName);
-            if (user != null) {
-                if (user.getUserPassword().equals(userPassword)) {
-                    if (user.isStaff()) {
-                        if (user.isActive()) {
-                            if (fPrincipal == null) {
-                                user.setLastLogin(new Date());
-                                user.save();
-                                saveUser();
-                                Babas.user = user;
-                                Babas.boxSession = new BoxSession();
-                                fPrincipal = new FPrincipal();
-                            } else {
-                                Utilities.setJFrame(fPrincipal);
-                            }
-                            fPrincipal.setVisible(true);
-                            dispose();
-                        } else {
-                            lblError.setText("Usuario desactivado");
-                            lblError.setVisible(true);
-                        }
+            if (user != null && user.isActive() && user.getUserPassword().equals(userPassword)) {
+                if (user.isStaff()) {
+                    if (fPrincipal == null) {
+                        user.setLastLogin(new Date());
+                        user.save();
+                        saveUser();
+                        Babas.user = user;
+                        Babas.boxSession = new BoxSession();
+                        fPrincipal = new FPrincipal();
                     } else {
-                        lblError.setText("Credenciales incorrectas");
-                        lblError.setVisible(true);
+                        Utilities.setJFrame(fPrincipal);
                     }
+                    fPrincipal.setVisible(true);
+                    dispose();
                 } else {
-                    lblError.setText("Credenciales incorrectas");
+                    lblError.setText("Usuario desactivado");
                     lblError.setVisible(true);
                 }
             } else {

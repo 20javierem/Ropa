@@ -224,7 +224,7 @@ public class TabNewRental {
             rental.setObservation(txtObservation.getText().trim());
             Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(rental);
             if (constraintViolationSet.isEmpty()) {
-                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Alquiler", JOptionPane.YES_NO_OPTION) == 0;
+                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Confirmar Alquiler", JOptionPane.YES_NO_OPTION) == 0;
                 if (si) {
                     rental.create();
                     rental.save();

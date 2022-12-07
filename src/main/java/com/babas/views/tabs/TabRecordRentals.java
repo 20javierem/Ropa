@@ -209,9 +209,10 @@ public class TabRecordRentals {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         RentalCellRendered.setCellRenderer(table, listaFiltros);
-        table.removeColumn(table.getColumn(""));
+        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount() - 3));
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental("cancel"));
         table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorRental("ticket"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorRental("change"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
         table.removeColumn(table.getColumn("RESUMEN"));
@@ -351,8 +352,8 @@ public class TabRecordRentals {
             if (correlativeBoleta != null) {
                 boolean flag = true;
                 while (flag) {
-                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "03");
-                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "03");
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeBoleta, "03");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeBoleta, "03");
                     if (sale != null) {
                         if (sale.isActive()) {
                             sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
@@ -375,17 +376,13 @@ public class TabRecordRentals {
             }
             if (correlativeFactura != null) {
                 boolean flag = true;
-
                 while (flag) {
-                    Sale sale = Sales.getByCorrelativoAndType(correlativeNota, "01");
-                    Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "01");
+                    Sale sale = Sales.getByCorrelativoAndType(correlativeFactura, "01");
+                    Rental rental = Rentals.getByCorrelativoAndType(correlativeFactura, "01");
                     if (sale != null) {
                         if (sale.isActive()) {
                             if (sale.isValidClient("01")) {
                                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
-                            } else {
-                                correlativeFactura++;
-                                continue;
                             }
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
@@ -395,9 +392,6 @@ public class TabRecordRentals {
                         if (rental.isActive() == 0 || rental.isActive() == 1) {
                             if (rental.isValidClient("01")) {
                                 rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
-                            } else {
-                                correlativeFactura++;
-                                continue;
                             }
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
@@ -559,9 +553,8 @@ public class TabRecordRentals {
         cbbState = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("TODAS");
-        defaultComboBoxModel3.addElement("EN ALQUILER");
-        defaultComboBoxModel3.addElement("COMPLETADA");
-        defaultComboBoxModel3.addElement("CANCELADA");
+        defaultComboBoxModel3.addElement("COMPLETADO");
+        defaultComboBoxModel3.addElement("CANCELADO");
         cbbState.setModel(defaultComboBoxModel3);
         panel4.add(cbbState, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();
