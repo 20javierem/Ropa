@@ -319,9 +319,23 @@ public class Rental extends Babas {
     public String getContentQR(){
         return Babas.company.getRuc()+"|"+typeVoucher+"|"+getSerie()+"|"+getCorrelativo()+"|0.0|"+getTotalCurrent()+"|"+Utilities.formatoFecha.format(new Date())+"|"+getClientType()+"|"+getClientDni();
     }
+
     public void create(){
         created=new Date();
         branch.refresh();
+        branch.save();
+        save();
+        if(active==0&&reserve!=null){
+            reserve.setActive(1);
+            reserve.save();
+            FPrincipal.reservesActives.remove(reserve);
+        }
+    }
+
+    public void updateStocks(){
+        getDetailRentals().forEach(Babas::save);
+    }
+    public void setNumbersVoucher(){
         switch (typeVoucher){
             case "01":
                 branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
@@ -339,19 +353,7 @@ public class Rental extends Babas {
                 serie=branch.getSerieNotaVenta();
                 break;
         }
-        branch.save();
-        save();
-        if(active==0&&reserve!=null){
-            reserve.setActive(1);
-            reserve.save();
-            FPrincipal.reservesActives.remove(reserve);
-        }
     }
-
-    public void updateStocks(){
-        getDetailRentals().forEach(Babas::save);
-    }
-
     @Override
     public void save() {
         updated=new Date();

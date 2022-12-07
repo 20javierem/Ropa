@@ -1,9 +1,10 @@
 package com.babas.modelsFacture;
 
-public class CancelContribuyente {
+public class NotaCreditoContribuyente {
     private String token_contribuyente;
     private Integer id_usuario_vendedor;
     private String tipo_proceso="produccion";
+    private String tipo_envio="inmediato";
 
 
     public String getToken_contribuyente() {
@@ -26,4 +27,15 @@ public class CancelContribuyente {
         return tipo_proceso;
     }
 
+    public void setTipo_proceso(String tipo_proceso) {
+        this.tipo_proceso = tipo_proceso;
+    }
+
+    public String getTipo_envio() {
+        return tipo_envio;
+    }
+
+    public void setTipo_envio(String tipo_envio) {
+        this.tipo_envio = tipo_envio;
+    }
 }

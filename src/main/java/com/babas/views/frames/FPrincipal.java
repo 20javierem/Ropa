@@ -271,10 +271,18 @@ public class FPrincipal extends JFrame {
                         find = true;
                     } else if (rental != null) {
                         int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                        if (index == 0) {
-                            UtilitiesReports.generateComprobanteOfRental(true, rental, false);
-                        } else if (index == 1) {
-                            UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                        if (rental.getCorrelativo() != null) {
+                            if (index == 0) {
+                                UtilitiesReports.generateComprobanteOfRental(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                            }
+                        } else {
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketRental(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketRental(false, rental, false);
+                            }
                         }
                         find = true;
                     }
@@ -292,10 +300,18 @@ public class FPrincipal extends JFrame {
                         find = true;
                     } else if (rental != null) {
                         int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                        if (index == 0) {
-                            UtilitiesReports.generateComprobanteOfRental(true, rental, false);
-                        } else if (index == 1) {
-                            UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                        if (rental.getCorrelativo() != null) {
+                            if (index == 0) {
+                                UtilitiesReports.generateComprobanteOfRental(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                            }
+                        } else {
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketRental(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketRental(false, rental, false);
+                            }
                         }
                         find = true;
                     }
@@ -313,10 +329,18 @@ public class FPrincipal extends JFrame {
                         find = true;
                     } else if (rental != null) {
                         int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                        if (index == 0) {
-                            UtilitiesReports.generateComprobanteOfRental(true, rental, false);
-                        } else if (index == 1) {
-                            UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                        if (rental.getCorrelativo() != null) {
+                            if (index == 0) {
+                                UtilitiesReports.generateComprobanteOfRental(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateComprobanteOfRental(false, rental, false);
+                            }
+                        } else {
+                            if (index == 0) {
+                                UtilitiesReports.generateTicketRental(true, rental, false);
+                            } else if (index == 1) {
+                                UtilitiesReports.generateTicketRental(false, rental, false);
+                            }
                         }
                         find = true;
                     }

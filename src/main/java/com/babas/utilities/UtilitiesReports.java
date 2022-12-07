@@ -225,7 +225,7 @@ public class UtilitiesReports {
                 parameters.put("logo",logo);
                 parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
                 parameters.put("nameTicket","TICKET DE ALQUILER");
-                parameters.put("numberTicket",rental.getCorrelativo());
+                parameters.put("numberTicket",rental.getId());
                 parameters.put("detalles",sp);
                 parameters.put("nameCompany",Babas.company.getBusinessName());
                 parameters.put("nameComercial",Babas.company.getTradeName());
@@ -249,7 +249,7 @@ public class UtilitiesReports {
                 }else{
                     JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                     if(viewer!=null){
-                        viewer.setTitle("Alquiler Nro. "+rental.getCorrelativo());
+                        viewer.setTitle("Alquiler Nro. "+rental.getId());
                         if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                             Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                         }

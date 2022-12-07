@@ -133,6 +133,7 @@ public class TabFinishRental {
                                 rental.setDelivery(jDateFinish.getDate());
                                 rental.setActive(1);
                                 rental.setObservation(txtObservation.getText().trim());
+                                rental.setNumbersVoucher();
                                 rental.save();
                                 Movement movement = new Movement();
                                 if (rental.getPenalty() > rental.getWarranty()) {
@@ -155,6 +156,10 @@ public class TabFinishRental {
                                 jDateFinish.setEnabled(false);
                                 spinnerPenalty.setEnabled(false);
                                 txtObservation.setEnabled(false);
+                                txtNameClient.setEnabled(false);
+                                txtDocument.setEnabled(false);
+                                txtMail.setEnabled(false);
+                                txtPhone.setEnabled(false);
                                 if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
                                     rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
                                 } else {
@@ -190,6 +195,10 @@ public class TabFinishRental {
                         jDateFinish.setEnabled(false);
                         spinnerPenalty.setEnabled(false);
                         txtObservation.setEnabled(false);
+                        txtNameClient.setEnabled(false);
+                        txtDocument.setEnabled(false);
+                        txtMail.setEnabled(false);
+                        txtPhone.setEnabled(false);
                     } else {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El alquiler está cancelado");
                         FPrincipal.rentalsActives.remove(rental);
@@ -197,6 +206,10 @@ public class TabFinishRental {
                         jDateFinish.setEnabled(false);
                         spinnerPenalty.setEnabled(false);
                         txtObservation.setEnabled(false);
+                        txtNameClient.setEnabled(false);
+                        txtDocument.setEnabled(false);
+                        txtMail.setEnabled(false);
+                        txtPhone.setEnabled(false);
                     }
                 }
             } else {

@@ -55,10 +55,11 @@ public class ApiClient {
         return false;
     }
 
-    public static boolean cancelComprobante(CancelComprobante cancelComprobante) {
-        String url="https://facturadorbabas.com/facturacion/api/comunicacion_baja";
+    public static boolean cancelComprobante(NotaCreditoComprobante cancelComprobante) {
+        String url="https://facturadorbabas.com/facturacion/api/procesar_notacredito";
         try {
             body = RequestBody.create(mediaType,new Gson().toJson(cancelComprobante));
+            System.out.println(new Gson().toJson(cancelComprobante));
             request = new Request.Builder().
                     url(url).
                     method("POST", body).
@@ -73,6 +74,7 @@ public class ApiClient {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante cancelado ante sunat");
                     return true;
                 }
+                System.out.println(responseJson.getRespuesta());
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
                 return false;
             }else{
@@ -92,6 +94,7 @@ public class ApiClient {
         contribuyente.setId_usuario_vendedor(sale.getUser().getIdFact());
         comprobante.setContribuyente(contribuyente);
         Cabecera_comprobante cabecera_comprobante=new Cabecera_comprobante();
+        cabecera_comprobante.setIdsucursal(sale.getBranch().getIdFact());
         cabecera_comprobante.setTipo_documento(sale.getTypeVoucher());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(sale.getDiscount());
@@ -127,6 +130,7 @@ public class ApiClient {
         contribuyente.setId_usuario_vendedor(rental.getUser().getIdFact());
         comprobante.setContribuyente(contribuyente);
         Cabecera_comprobante cabecera_comprobante=new Cabecera_comprobante();
+        cabecera_comprobante.setIdsucursal(rental.getBranch().getIdFact());
         cabecera_comprobante.setTipo_documento(rental.getTypeVoucher());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(rental.getDiscount());
@@ -155,31 +159,57 @@ public class ApiClient {
         return comprobante;
     }
 
-    public static CancelComprobante getCancelComprobanteOfSale(Sale sale){
-        CancelComprobante cancelComprobante=new CancelComprobante();
-        CancelContribuyente contribuyente=new CancelContribuyente();
+    public static NotaCreditoComprobante getCancelComprobanteOfSale(Sale sale){
+        NotaCreditoComprobante cancelComprobante=new NotaCreditoComprobante();
+        NotaCreditoContribuyente contribuyente=new NotaCreditoContribuyente();
         contribuyente.setToken_contribuyente(Babas.company.getToken());
         contribuyente.setId_usuario_vendedor(sale.getUser().getIdFact());
         cancelComprobante.setContribuyente(contribuyente);
-        CancelCabecera_comprobante cabecera_comprobante=new CancelCabecera_comprobante();
-        cabecera_comprobante.setNumero_comprobante(sale.getCorrelativo());
-        cabecera_comprobante.setSerie_comprobante(sale.getSerie());
-        cabecera_comprobante.setTipo_documento(sale.getTypeVoucher());
+        NotaCreditoCabecera_comprobante cabecera_comprobante=new NotaCreditoCabecera_comprobante();
+        cabecera_comprobante.setIdsucursal(sale.getBranch().getIdFact());
+        cabecera_comprobante.setObservacion(sale.getObservation());
+        cabecera_comprobante.setDescuento_monto(sale.getDiscount());
+        cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(sale.getCreated()));
+        cabecera_comprobante.setDoc_modifica_id_tipodoc_electronico(sale.getTypeVoucher());
+        cabecera_comprobante.setDoc_modifica_serie_comprobante(sale.getSerie());
+        cabecera_comprobante.setDoc_modifica_numero_comprobante(sale.getCorrelativo());
         cancelComprobante.setCabecera_comprobante(cabecera_comprobante);
+        sale.getDetailSales().forEach(detailSale -> {
+            Detalle detalle=new Detalle();
+            detalle.setCantidad(detailSale.getQuantity());
+            detalle.setCodigo(detailSale.getCodeProduct());
+            detalle.setDescripcion(detailSale.getProductString()+" "+detailSale.getNamePresentation());
+            detalle.setPrecio_venta(detailSale.getPrice());
+            detalle.setIdproducto(Babas.company.getIdProduct());
+            cancelComprobante.getDetalle().add(detalle);
+        });
         return cancelComprobante;
     }
 
-    public static CancelComprobante getCancelComprobanteOfRental(Rental rental){
-        CancelComprobante cancelComprobante=new CancelComprobante();
-        CancelContribuyente contribuyente=new CancelContribuyente();
+    public static NotaCreditoComprobante getCancelComprobanteOfRental(Rental rental){
+        NotaCreditoComprobante cancelComprobante=new NotaCreditoComprobante();
+        NotaCreditoContribuyente contribuyente=new NotaCreditoContribuyente();
         contribuyente.setToken_contribuyente(Babas.company.getToken());
         contribuyente.setId_usuario_vendedor(rental.getUser().getIdFact());
         cancelComprobante.setContribuyente(contribuyente);
-        CancelCabecera_comprobante cabecera_comprobante=new CancelCabecera_comprobante();
-        cabecera_comprobante.setNumero_comprobante(rental.getCorrelativo());
-        cabecera_comprobante.setSerie_comprobante(rental.getSerie());
-        cabecera_comprobante.setTipo_documento(rental.getTypeVoucher());
+        NotaCreditoCabecera_comprobante cabecera_comprobante=new NotaCreditoCabecera_comprobante();
+        cabecera_comprobante.setIdsucursal(rental.getBranch().getIdFact());
+        cabecera_comprobante.setObservacion(rental.getObservation());
+        cabecera_comprobante.setDescuento_monto(rental.getDiscount());
+        cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(rental.getCreated()));
+        cabecera_comprobante.setDoc_modifica_id_tipodoc_electronico(rental.getTypeVoucher());
+        cabecera_comprobante.setDoc_modifica_serie_comprobante(rental.getSerie());
+        cabecera_comprobante.setDoc_modifica_numero_comprobante(rental.getCorrelativo());
         cancelComprobante.setCabecera_comprobante(cabecera_comprobante);
+        rental.getDetailRentals().forEach(detailSale -> {
+            Detalle detalle=new Detalle();
+            detalle.setCantidad(detailSale.getQuantity());
+            detalle.setCodigo(detailSale.getCodeProduct());
+            detalle.setDescripcion(detailSale.getProductString()+" "+detailSale.getNamePresentation());
+            detalle.setPrecio_venta(detailSale.getPrice());
+            detalle.setIdproducto(Babas.company.getIdProduct());
+            cancelComprobante.getDetalle().add(detalle);
+        });
         return cancelComprobante;
     }
 

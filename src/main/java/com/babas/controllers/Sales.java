@@ -10,6 +10,7 @@ import jakarta.persistence.LockModeType;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Root;
+import org.hibernate.jpa.QueryHints;
 
 import java.util.ArrayList;
 import java.util.Date;
