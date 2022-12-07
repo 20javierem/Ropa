@@ -207,11 +207,11 @@ public class DCompany extends JDialog {
         if (constraintViolationSet.isEmpty()) {
             Babas.company.save();
             if (Babas.company.getId() == null) {
-                if (Utilities.getJFrame() != null) {
+                if (Utilities.getJFrame() != null&&Utilities.getJFrame() instanceof FPrincipal) {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos registrados");
                 }
             } else {
-                if (Utilities.getJFrame() != null) {
+                if (Utilities.getJFrame() != null&&Utilities.getJFrame() instanceof FPrincipal) {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Datos actualizados");
                 }
             }
@@ -232,7 +232,7 @@ public class DCompany extends JDialog {
                 String nameImage = "logoCompany.png";
                 InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
                 if (Utilities.newImage(inputStream, nameImage, true)) {
-                    if (Utilities.getJFrame() != null) {
+                    if (Utilities.getJFrame() != null&&Utilities.getJFrame() instanceof FPrincipal) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
                     }
                     Babas.company.setLogo(nameImage);
@@ -243,12 +243,12 @@ public class DCompany extends JDialog {
                         lblLogo.setIcon(Utilities.iconCompanyx420x420);
 
                     } else {
-                        if (Utilities.getJFrame() != null) {
+                        if (Utilities.getJFrame() != null&&Utilities.getJFrame() instanceof FPrincipal) {
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
                         }
                     }
                 } else {
-                    if (Utilities.getJFrame() != null) {
+                    if (Utilities.getJFrame() != null&&Utilities.getJFrame() instanceof FPrincipal) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "Ocurrió un error");
                     }
                 }

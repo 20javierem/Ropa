@@ -236,7 +236,7 @@ public class DBranch extends JDialog {
                 branch = new Branch();
                 load();
                 Utilities.updateDialog();
-                if (Utilities.getJFrame() != null) {
+                if (Utilities.getJFrame() != null && Utilities.getJFrame() instanceof FPrincipal) {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Sucursal registrada");
                 }
             } else {
