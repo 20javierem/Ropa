@@ -37,7 +37,7 @@ public class Propiedades {
             inputStream.close();
             setKey("2QXDJJUCSSUW2GC");
             save();
-            setTema("Claro");
+            setTema("Ligth");
             setFont(String.valueOf(new JTextField().getFont().getSize()));
             setLocalImages("local");
             setUserPassword("");

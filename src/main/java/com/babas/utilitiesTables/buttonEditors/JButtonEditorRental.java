@@ -61,35 +61,37 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
             Rental rental=((RentalAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             switch (type){
                 case "change":
-                    JPanel jPanel = new JPanel();
-                    jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
-                    JComboBox comboBox = new JComboBox();
-                    comboBox.addItem("BOLETA");
-                    comboBox.addItem("FACTURA");
-                    jPanel.add(comboBox);
-                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
-                    if (option == JOptionPane.OK_OPTION) {
-                        rental.refresh();
-                        if(rental.isActive()==1){
-                            if(rental.getTypeVoucher().equals("77")){
-                                rental.setTypeVoucher(comboBox.getSelectedIndex() == 0 ? "03" : "01");
-                                if (rental.isValidClient(rental.getTypeVoucher())) {
-                                    rental.create();
-                                    rental.save();
-                                    if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                        rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
-                                    } else {
-                                        rental.setStatusSunat(false);
+                    if(Babas.company.isValidToken()){
+                        JPanel jPanel = new JPanel();
+                        jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
+                        JComboBox comboBox = new JComboBox();
+                        comboBox.addItem("BOLETA");
+                        comboBox.addItem("FACTURA");
+                        jPanel.add(comboBox);
+                        int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                        if (option == JOptionPane.OK_OPTION) {
+                            rental.refresh();
+                            if(rental.isActive()==1){
+                                if(rental.getTypeVoucher().equals("77")){
+                                    rental.setTypeVoucher(comboBox.getSelectedIndex() == 0 ? "03" : "01");
+                                    if (rental.isValidClient(rental.getTypeVoucher())) {
+                                        rental.create();
+                                        rental.save();
+                                        if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
+                                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental),true));
+                                        } else {
+                                            rental.setStatusSunat(false);
+                                        }
+                                    }else{
+                                        rental.setTypeVoucher("77");
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
                                     }
                                 }else{
-                                    rental.setTypeVoucher("77");
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                                 }
                             }else{
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler debe estar en estado completado");
                             }
-                        }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler debe estar en estado completado");
                         }
                     }
                     break;
@@ -149,10 +151,12 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
                                 if(toSunat){
-                                    if(Rentals.getOnWait().isEmpty()&& Sales.getOnWait().isEmpty()){
-                                        rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
-                                    }else{
-                                        rental.setStatusSunat(false);
+                                    if(Babas.company.isValidToken()){
+                                        if(Rentals.getOnWait().isEmpty()&& Sales.getOnWait().isEmpty()){
+                                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                        }else{
+                                            rental.setStatusSunat(false);
+                                        }
                                     }
                                 }
                                 rental.save();

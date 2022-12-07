@@ -29,7 +29,7 @@ public class DBox extends JDialog {
     private boolean update;
 
     public DBox(Box box) {
-        super(Utilities.getJFrame(), true);
+        super(Utilities.getJFrame(), "Nueva caja", true);
         this.box = box;
         update = box.getId() != null;
         init();

@@ -119,8 +119,10 @@ public class TabFinishRental {
                         jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
                         JComboBox comboBox = new JComboBox();
                         comboBox.addItem("NOTA");
-                        comboBox.addItem("BOLETA");
-                        comboBox.addItem("FACTURA");
+                        if (Babas.company.isValidToken()) {
+                            comboBox.addItem("BOLETA");
+                            comboBox.addItem("FACTURA");
+                        }
                         jPanel.add(comboBox);
                         int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Confirmar Entrega", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
                         if (option == JOptionPane.OK_OPTION) {
@@ -161,7 +163,7 @@ public class TabFinishRental {
                                 txtMail.setEnabled(false);
                                 txtPhone.setEnabled(false);
                                 if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                    rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                                    rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                                 } else {
                                     rental.setStatusSunat(false);
                                 }
@@ -316,7 +318,7 @@ public class TabFinishRental {
         table.setEnabled(false);
         scrollPane1.setViewportView(table);
         final JPanel panel3 = new JPanel();
-        panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 5, 0, 0), 10, -1));
+        panel3.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), 10, -1));
         tabPane.add(panel3, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridLayoutManager(1, 7, new Insets(0, 0, 0, 0), 5, -1));

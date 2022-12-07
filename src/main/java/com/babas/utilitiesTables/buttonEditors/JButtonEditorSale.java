@@ -52,31 +52,33 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
             Sale sale=((SaleAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             switch (type){
                 case "change":
-                    JPanel jPanel = new JPanel();
-                    jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
-                    JComboBox comboBox = new JComboBox();
-                    comboBox.addItem("BOLETA");
-                    comboBox.addItem("FACTURA");
-                    jPanel.add(comboBox);
-                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
-                    if (option == JOptionPane.OK_OPTION) {
-                        sale.refresh();
-                        if(sale.getTypeVoucher().equals("77")){
-                            sale.setTypeVoucher(comboBox.getSelectedIndex() == 0 ? "03" : "01");
-                            if (sale.isValidClient(sale.getTypeVoucher())) {
-                                sale.create();
-                                sale.save();
-                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                    sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
-                                } else {
-                                    sale.setStatusSunat(false);
+                    if(Babas.company.isValidToken()){
+                        JPanel jPanel = new JPanel();
+                        jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
+                        JComboBox comboBox = new JComboBox();
+                        comboBox.addItem("BOLETA");
+                        comboBox.addItem("FACTURA");
+                        jPanel.add(comboBox);
+                        int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                        if (option == JOptionPane.OK_OPTION) {
+                            sale.refresh();
+                            if(sale.getTypeVoucher().equals("77")){
+                                sale.setTypeVoucher(comboBox.getSelectedIndex() == 0 ? "03" : "01");
+                                if (sale.isValidClient(sale.getTypeVoucher())) {
+                                    sale.create();
+                                    sale.save();
+                                    if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
+                                        sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale),true));
+                                    } else {
+                                        sale.setStatusSunat(false);
+                                    }
+                                }else{
+                                    sale.setTypeVoucher("77");
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
                                 }
                             }else{
-                                sale.setTypeVoucher("77");
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                             }
-                        }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                         }
                     }
                     break;
@@ -107,10 +109,12 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                 Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
-                                if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
-                                    sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
-                                }else{
-                                    sale.setStatusSunat(false);
+                                if(Babas.company.isValidToken()){
+                                    if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
+                                        sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                    }else{
+                                        sale.setStatusSunat(false);
+                                    }
                                 }
                                 sale.save();
                             }else{

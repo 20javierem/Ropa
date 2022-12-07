@@ -4,6 +4,7 @@ import com.babas.models.Branch;
 import com.babas.models.Brand;
 import com.babas.models.DetailQuotation;
 import com.babas.models.User;
+import com.babas.modelsFacture.*;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.tablesModels.DetailQuotationAbstractModel;
@@ -28,6 +29,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Set;
 
 public class DCompany extends JDialog {
@@ -150,10 +152,34 @@ public class DCompany extends JDialog {
 
     private void saveTokenFacture() {
         Babas.company.setToken(txtTokenFacture.getText().trim());
-        boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Cambiar id", JOptionPane.YES_NO_OPTION) == 0;
+        boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Cambiar token", JOptionPane.YES_NO_OPTION) == 0;
         if (si) {
+            Comprobante comprobante = new Comprobante();
+            Contribuyente contribuyente = new Contribuyente();
+            contribuyente.setToken_contribuyente(Babas.company.getToken());
+            contribuyente.setId_usuario_vendedor(3);
+            comprobante.setContribuyente(contribuyente);
+            Cabecera_comprobante cabecera_comprobante = new Cabecera_comprobante();
+            cabecera_comprobante.setIdsucursal(2);
+            cabecera_comprobante.setTipo_documento("77");
+            cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
+            cabecera_comprobante.setDescuento_monto(0.0);
+            comprobante.setCabecera_comprobante(cabecera_comprobante);
+            comprobante.setCliente(new Cliente());
+            Detalle detalle = new Detalle();
+            detalle.setCantidad(1);
+            detalle.setCodigo("P001");
+            detalle.setDescripcion("Producto de Ejemplo");
+            detalle.setPrecio_venta(0.1);
+            detalle.setIdproducto(7);
+            comprobante.getDetalle().add(detalle);
+            if (ApiClient.sendComprobante(comprobante, false)) {
+                Babas.company.setValidToken(true);
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "Éxito", "Token Registrado");
+            } else {
+                Babas.company.setValidToken(false);
+            }
             Babas.company.save();
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "Éxito", "Cambios guardados");
         }
     }
 

@@ -193,7 +193,7 @@ public class TabRecordSales {
                     Rental rental = Rentals.getByCorrelativoAndType(correlativeNota, "77");
                     if (sale != null) {
                         if (sale.isActive()) {
-                            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
@@ -201,7 +201,7 @@ public class TabRecordSales {
                         sale.save();
                     } else if (rental != null) {
                         if (rental.isActive() == 0 || rental.isActive() == 1) {
-                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
@@ -221,7 +221,7 @@ public class TabRecordSales {
                     Rental rental = Rentals.getByCorrelativoAndType(correlativeBoleta, "03");
                     if (sale != null) {
                         if (sale.isActive()) {
-                            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                            sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
@@ -229,7 +229,7 @@ public class TabRecordSales {
                         sale.save();
                     } else if (rental != null) {
                         if (rental.isActive() == 1) {
-                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                            rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
@@ -250,7 +250,7 @@ public class TabRecordSales {
                     if (sale != null) {
                         if (sale.isValidClient("01")) {
                             if (sale.isActive()) {
-                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                             } else {
                                 sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                             }
@@ -263,7 +263,7 @@ public class TabRecordSales {
                     } else if (rental != null) {
                         if (rental.isValidClient("01")) {
                             if (rental.isActive() == 1) {
-                                rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental)));
+                                rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                             } else {
                                 rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                             }

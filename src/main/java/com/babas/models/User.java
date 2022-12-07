@@ -25,9 +25,6 @@ public class User extends Babas {
     private String phone;
     @NotBlank(message = "Nombre de usuario")
     private String userName;
-    @ManyToOne
-    @NotNull(message = "Género")
-    private Sex sex;
     @NotNull(message = "Contraseña")
     private String userPassword;
     private Date created;
@@ -35,7 +32,6 @@ public class User extends Babas {
     private Date lastLogin;
     private boolean active=true;
     private boolean staff=true;
-    private Date birthday;
     @ManyToMany
     @JoinTable(
             name = "user_branch_tbl",
@@ -150,24 +146,8 @@ public class User extends Babas {
         this.active = active;
     }
 
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
     public List<Branch> getBranchs() {
         return branchs;
-    }
-
-    public Sex getSex() {
-        return sex;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
     }
 
     public List<Sale> getSales() {

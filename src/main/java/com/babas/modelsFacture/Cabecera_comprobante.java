@@ -11,7 +11,7 @@ public class Cabecera_comprobante {
     private Integer idsucursal;
     private String fecha_comprobante;
     private Double descuento_monto;
-    private Double descuento_porcentaje;
+    private Double descuento_porcentaje=0.0;
 
 
     public Cabecera_comprobante(){
@@ -71,10 +71,6 @@ public class Cabecera_comprobante {
 
     public Double getDescuento_porcentaje() {
         return descuento_porcentaje;
-    }
-
-    public void setDescuento_porcentaje(Double descuento_porcentaje) {
-        this.descuento_porcentaje = descuento_porcentaje;
     }
 
     public String getObservacion() {

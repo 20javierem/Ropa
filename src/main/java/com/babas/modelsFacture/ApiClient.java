@@ -19,7 +19,7 @@ public class ApiClient {
     private static Request request;
     private static Response response;
 
-    public static boolean sendComprobante(Comprobante comprobante) {
+    public static boolean sendComprobante(Comprobante comprobante,boolean showMessage) {
         String url;
         if ("77".equals(comprobante.getCabecera_comprobante().getTipo_documento())) {
             url = "https://facturadorbabas.com/facturacion/api/procesar_nota_venta";
@@ -38,7 +38,9 @@ public class ApiClient {
             if(response.code()==200){
                 ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
                 if(responseJson.getRespuesta().equals("ok")){
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante enviado a sunat");
+                    if(showMessage){
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante enviado a sunat");
+                    }
                     return true;
                 }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
@@ -98,8 +100,6 @@ public class ApiClient {
         cabecera_comprobante.setTipo_documento(sale.getTypeVoucher());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(sale.getDiscount());
-        cabecera_comprobante.setIdsucursal(sale.getBranch().getIdFact());
-        cabecera_comprobante.setDescuento_porcentaje(Double.valueOf(Utilities.decimalFormat.format((sale.getDiscount()*100)/sale.getTotal())));
         cabecera_comprobante.setObservacion(sale.getObservation());
         comprobante.setCabecera_comprobante(cabecera_comprobante);
         Cliente cliente=new Cliente();
@@ -134,8 +134,6 @@ public class ApiClient {
         cabecera_comprobante.setTipo_documento(rental.getTypeVoucher());
         cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
         cabecera_comprobante.setDescuento_monto(rental.getDiscount());
-        cabecera_comprobante.setIdsucursal(rental.getBranch().getIdFact());
-        cabecera_comprobante.setDescuento_porcentaje(Double.valueOf(Utilities.decimalFormat.format((rental.getDiscount()*100)/rental.getTotal())));
         cabecera_comprobante.setObservacion(rental.getObservation());
         comprobante.setCabecera_comprobante(cabecera_comprobante);
         Cliente cliente=new Cliente();

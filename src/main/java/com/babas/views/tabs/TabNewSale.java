@@ -192,8 +192,10 @@ public class TabNewSale {
                     jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
                     JComboBox comboBox = new JComboBox();
                     comboBox.addItem("NOTA");
-                    comboBox.addItem("BOLETA");
-                    comboBox.addItem("FACTURA");
+                    if (Babas.company.isValidToken()) {
+                        comboBox.addItem("BOLETA");
+                        comboBox.addItem("FACTURA");
+                    }
                     jPanel.add(comboBox);
                     int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Confirmar Venta", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
                     if (option == JOptionPane.OK_OPTION) {
@@ -210,7 +212,7 @@ public class TabNewSale {
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
                             if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale)));
+                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                             } else {
                                 sale.setStatusSunat(false);
                             }
@@ -325,7 +327,7 @@ public class TabNewSale {
         table = new FlatTable();
         scrollPane1.setViewportView(table);
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 5, 0, 0), 10, -1));
+        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), 10, -1));
         tabPane.add(panel4, new GridConstraints(0, 0, 1, 2, GridConstraints.ANCHOR_NORTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridLayoutManager(1, 5, new Insets(0, 0, 0, 0), 5, -1));
