@@ -95,6 +95,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                         boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_OPTION)==0;
                         if(si){
                             rental.refresh();
+                            boolean toSunat=rental.isActive()!=0;
                             if(rental.isActive()!=2){
                                 rental.setActive(2);
                                 rental.updateStocks();
@@ -107,13 +108,15 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 movement.getBoxSesion().getMovements().add(0,movement);
                                 movement.getBoxSesion().calculateTotals();
                                 FPrincipal.rentalsActives.remove(rental);
-                                Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getId() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
-                                if(Rentals.getOnWait().isEmpty()&& Sales.getOnWait().isEmpty()){
-                                    rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
-                                }else{
-                                    rental.setStatusSunat(false);
+                                if(toSunat){
+                                    if(Rentals.getOnWait().isEmpty()&& Sales.getOnWait().isEmpty()){
+                                        rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                    }else{
+                                        rental.setStatusSunat(false);
+                                    }
                                 }
                                 rental.save();
                             }else{

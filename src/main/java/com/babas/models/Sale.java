@@ -271,19 +271,19 @@ public class Sale extends Babas {
         branch.refresh();
         switch (typeVoucher){
             case "01":
-                branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
                 correlativo=branch.getCorrelativoFactura();
                 serie=branch.getSerieFactura();
+                branch.setCorrelativoFactura(branch.getCorrelativoFactura()+1);
                 break;
             case "03":
-                branch.setCorrelativoBoleta(branch.getCorrelativoBoleta()+1);
                 correlativo=branch.getCorrelativoBoleta();
                 serie=branch.getSerieBoleta();
+                branch.setCorrelativoBoleta(branch.getCorrelativoBoleta()+1);
                 break;
             default:
-                branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
                 correlativo=branch.getCorrelativoNotaVenta();
                 serie=branch.getSerieNotaVenta();
+                branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
                 break;
         }
         branch.save();

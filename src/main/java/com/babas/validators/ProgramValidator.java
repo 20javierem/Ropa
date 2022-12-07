@@ -1,6 +1,7 @@
 package com.babas.validators;
 
 import com.babas.utilities.Utilities;
+import com.babas.views.frames.FPrincipal;
 import com.moreno.Notify;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -20,7 +21,7 @@ public abstract class ProgramValidator {
     public static void mostrarErrores(Set<ConstraintViolation<Object>> errors){
         Object[] errores=errors.toArray();
         String error = "Verfique el campo: "+((ConstraintViolation<?>) errores[0]).getMessage();
-        if(Utilities.getJFrame()!=null){
+        if(Utilities.getJFrame()!=null&&Utilities.getJFrame() instanceof FPrincipal){
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",error);
         }
     }
