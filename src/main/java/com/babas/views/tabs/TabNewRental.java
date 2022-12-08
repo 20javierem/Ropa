@@ -154,7 +154,7 @@ public class TabNewRental {
             txtDocument.setText(document);
             txtNameClient.setText(client.getNames());
             txtPhone.setText(client.getPhone());
-            txtMail.setText(client.getMail());
+            txtMail.setText(client.getAddres());
         }
     }
 
@@ -280,7 +280,7 @@ public class TabNewRental {
                 FPrincipal.clients.add(client);
             }
             client.setNames(txtNameClient.getText().trim());
-            client.setMail(txtMail.getText().trim());
+            client.setAddres(txtMail.getText().trim());
             client.setPhone(txtPhone.getText().trim());
             client.save();
         }
@@ -355,7 +355,7 @@ public class TabNewRental {
         txtDocument = new FlatTextField();
         txtDocument.setPlaceholderText("DNI/RUC...");
         txtDocument.setText("");
-        panel5.add(txtDocument, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(95, -1), null, 0, false));
+        panel5.add(txtDocument, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(120, -1), null, 0, false));
         txtNameClient = new FlatTextField();
         txtNameClient.setPlaceholderText("Cliente...");
         panel5.add(txtNameClient, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(300, -1), null, 0, false));

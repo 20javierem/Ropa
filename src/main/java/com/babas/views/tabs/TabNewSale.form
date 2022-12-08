@@ -86,7 +86,7 @@
                   <component id="8714a" class="com.formdev.flatlaf.extras.components.FlatTextField" binding="txtDocument">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                        <preferred-size width="95" height="-1"/>
+                        <preferred-size width="120" height="-1"/>
                       </grid>
                     </constraints>
                     <properties>

@@ -221,7 +221,7 @@ public class TabRecordRentals {
     private void filter() {
         filtros.clear();
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
@@ -234,6 +234,7 @@ public class TabRecordRentals {
         listaFiltros.put(9, busqueda);
         listaFiltros.put(10, busqueda);
         listaFiltros.put(11, busqueda);
+        listaFiltros.put(12, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
             filtros.add(RowFilter.regexFilter(branch.getName(), 2));
@@ -242,7 +243,7 @@ public class TabRecordRentals {
             filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));
         }
         if (cbbState.getSelectedIndex() != 0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 11));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbState.getSelectedItem()), 12));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);

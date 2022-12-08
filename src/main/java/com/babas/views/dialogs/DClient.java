@@ -89,7 +89,7 @@ public class DClient extends JDialog {
     private void onSave() {
         client.setDni(txtDocument.getText().trim());
         client.setNames(txtNames.getText().trim());
-        client.setMail(txtAdress.getText().trim());
+        client.setAddres(txtAdress.getText().trim());
         client.setPhone(txtPhone.getText().trim());
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(client);
         if (constraintViolationSet.isEmpty()) {
@@ -138,7 +138,7 @@ public class DClient extends JDialog {
     private void load() {
         txtDocument.setText(client.getDni());
         txtNames.setText(client.getNames());
-        txtAdress.setText(client.getMail());
+        txtAdress.setText(client.getAddres());
         txtPhone.setText(client.getPhone());
     }
 

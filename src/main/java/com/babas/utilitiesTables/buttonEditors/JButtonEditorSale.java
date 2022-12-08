@@ -10,6 +10,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
+import com.babas.views.dialogs.DChangeVoucher;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.moreno.Notify;
 
@@ -53,33 +54,43 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
             switch (type){
                 case "change":
                     if(Babas.company.isValidToken()){
-                        JPanel jPanel = new JPanel();
-                        jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
-                        JComboBox comboBox = new JComboBox();
-                        comboBox.addItem("BOLETA");
-                        comboBox.addItem("FACTURA");
-                        jPanel.add(comboBox);
-                        int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
-                        if (option == JOptionPane.OK_OPTION) {
-                            sale.refresh();
-                            if(sale.getTypeVoucher().equals("77")){
-                                sale.setTypeVoucher(comboBox.getSelectedIndex() == 0 ? "03" : "01");
-                                if (sale.isValidClient(sale.getTypeVoucher())) {
-                                    sale.create();
-                                    sale.save();
-                                    if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                        sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale),true));
-                                    } else {
-                                        sale.setStatusSunat(false);
+                        sale.refresh();
+                        if(sale.getTypeVoucher().equals("77")){
+                            if(sale.isActive()){
+                                DChangeVoucher dChangeVoucher=new DChangeVoucher(sale.getClient());
+                                int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                                if (option == JOptionPane.OK_OPTION) {
+                                    sale.refresh();
+                                    if(sale.getTypeVoucher().equals("77")){
+                                        if(sale.isActive()){
+                                            sale.setClient(dChangeVoucher.getClient());
+                                            sale.setTypeVoucher(dChangeVoucher.getTypeVoucher());
+                                            if (sale.isValidClient(sale.getTypeVoucher())) {
+                                                sale.create();
+                                                sale.save();
+                                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
+                                                    sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale),true));
+                                                } else {
+                                                    sale.setStatusSunat(false);
+                                                }
+                                            }else{
+                                                sale.setTypeVoucher("77");
+                                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
+                                            }
+                                        }else{
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta está cancelada");
+                                        }
+                                    }else{
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                                     }
-                                }else{
-                                    sale.setTypeVoucher("77");
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
                                 }
                             }else{
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta está cancelada");
                             }
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                         }
+
                     }
                     break;
                 case "show":

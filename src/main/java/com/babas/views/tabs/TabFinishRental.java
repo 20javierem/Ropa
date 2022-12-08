@@ -110,7 +110,7 @@ public class TabFinishRental {
         rental.setClient(getClient());
         if (Babas.boxSession.getId() != null) {
             if (jDateFinish.getDate() != null) {
-                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Entrega", JOptionPane.YES_NO_OPTION) == 0;
+                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Confirmar Entrega", JOptionPane.YES_NO_OPTION) == 0;
                 if (si) {
                     rental.refresh();
                     if (rental.isActive() == 0) {
@@ -232,7 +232,7 @@ public class TabFinishRental {
                 FPrincipal.clients.add(client);
             }
             client.setNames(txtNameClient.getText().trim());
-            client.setMail(txtMail.getText().trim());
+            client.setAddres(txtMail.getText().trim());
             client.setPhone(txtPhone.getText().trim());
             client.save();
         }
@@ -247,7 +247,7 @@ public class TabFinishRental {
         txtDocument.setText(rental.getClient().getDni());
         txtNameClient.setText(rental.getClient().getNames());
         txtPhone.setText(rental.getClient().getPhone());
-        txtMail.setText(rental.getClient().getMail());
+        txtMail.setText(rental.getClient().getAddres());
         txtObservation.setText(rental.getObservation());
         table.removeColumn(table.getColumn(""));
         if (rental.isActive() != 0) {
@@ -328,7 +328,7 @@ public class TabFinishRental {
         txtDocument = new FlatTextField();
         txtDocument.setPlaceholderText("DNI...");
         txtDocument.setText("");
-        panel4.add(txtDocument, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(95, -1), null, 0, false));
+        panel4.add(txtDocument, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(120, -1), null, 0, false));
         txtNameClient = new FlatTextField();
         txtNameClient.setPlaceholderText("Cliente...");
         panel4.add(txtNameClient, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(300, -1), null, 0, false));

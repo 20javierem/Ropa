@@ -257,6 +257,17 @@ public class Rental extends Babas {
         this.reserve = reserve;
     }
 
+    public String getTypeStringVoucher(){
+        switch (getTypeVoucher()) {
+            case "77":
+                return "NOTA";
+            case "03":
+                return "BOLETA";
+            default:
+                return "FACTURA";
+        }
+    }
+
     public String getStringUpdated(){
         return Utilities.formatoFechaHora.format(updated);
     }
@@ -288,13 +299,13 @@ public class Rental extends Babas {
         return client!=null?client.getNames():"";
     }
     public String getClientDni( ){
-        return client!=null?client.getDni():"00000000";
+        return client!=null?client.getDni():"";
     }
     public int getClientType(){
         return client!=null?client.getTypeDocument():1;
     }
     public String getClientAdress(){
-        return client!=null?client.getMail():"";
+        return client!=null?client.getAddres():"";
     }
     public String getStringTypeDocument() {
         switch (getTypeVoucher()) {

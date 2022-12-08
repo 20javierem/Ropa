@@ -13,8 +13,8 @@ import java.util.Date;
 import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
-    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","GARANTÍA","DESCUENTO","RESUMEN","MULTA","TOTAL","ESTADO","SUNAT","","","",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,String.class,String.class,JButton.class,JButton.class,JButton.class,JButton.class};
+    private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","GARANTÍA","DESCUENTO","RESUMEN","MULTA","TOTAL","TIPO","ESTADO","SUNAT","","","",""};
+    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,String.class, String.class,String.class,JButton.class,JButton.class,JButton.class,JButton.class};
     private final List<Rental> list;
 
     public RentalAbstractModel(List<Rental> list){
@@ -69,14 +69,16 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 10:
                 return Utilities.moneda.format(rental.getTotalWithDiscount());
             case 11:
-                return rental.getStringStade();
+                return rental.getTypeStringVoucher();
             case 12:
-                return rental.getStringSunat();
+                return rental.getStringStade();
             case 13:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg")));
+                return rental.getStringSunat();
             case 14:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg")));
             case 15:
+                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
+            case 16:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));

@@ -51,7 +51,7 @@ public class ClientAbstractModel extends AbstractTableModel {
             case 2:
                 return client.getPhone();
             case 3:
-                return client.getMail();
+                return client.getAddres();
             default:
                 return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
         }

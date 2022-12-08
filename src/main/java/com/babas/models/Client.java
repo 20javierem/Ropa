@@ -22,7 +22,7 @@ public class Client extends Babas {
     private String dni;
     @NotBlank(message = "Cliente")
     private String names;
-    private String mail;
+    private String addres;
     private String phone;
     private Integer typeDocument=0;
 
@@ -54,14 +54,14 @@ public class Client extends Babas {
         this.names = Utilities.nameOwn(names.toLowerCase());
     }
 
-    public String getMail() {
-        return mail;
+    public String getAddres() {
+        return addres;
     }
 
-    public void setMail(String mail) {
-        char[] arr = mail.toCharArray();
+    public void setAddres(String addres) {
+        char[] arr = addres.toCharArray();
         arr[0] = Character.toUpperCase(arr[0]);
-        this.mail = new String(arr);;
+        this.addres = new String(arr);;
     }
 
     public String getPhone() {
@@ -82,6 +82,11 @@ public class Client extends Babas {
 
     @Override
     public void save() {
+        if (dni.length() == 8) {
+            typeDocument=1;
+        } else if (dni.length() == 11) {
+            typeDocument=6;
+        }
         if(created==null){
             created=new Date();
         }

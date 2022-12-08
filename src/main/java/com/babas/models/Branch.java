@@ -57,9 +57,9 @@ public class Branch extends Babas {
     private String serieNotaVenta="N001";
     private String serieBoleta="B001";
     private String serieFactura="F001";
-    private Long correlativoNotaVenta=0L;
-    private Long correlativoBoleta=0L;
-    private Long correlativoFactura=0L;
+    private Long correlativoNotaVenta=1L;
+    private Long correlativoBoleta=1L;
+    private Long correlativoFactura=1L;
 
 
 

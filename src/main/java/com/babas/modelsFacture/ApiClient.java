@@ -105,7 +105,7 @@ public class ApiClient {
         Cliente cliente=new Cliente();
         if(sale.getClient()!=null){
             cliente.setCelular(sale.getClient().getPhone());
-            cliente.setDireccion(sale.getClient().getMail());
+            cliente.setDireccion(sale.getClient().getAddres());
             cliente.setNombre(sale.getClient().getNames());
             cliente.setNumerodocumento(sale.getClient().getDni());
             cliente.setTipo_docidentidad(sale.getClient().getTypeDocument());
@@ -139,7 +139,7 @@ public class ApiClient {
         Cliente cliente=new Cliente();
         if(rental.getClient()!=null){
             cliente.setCelular(rental.getClient().getPhone());
-            cliente.setDireccion(rental.getClient().getMail());
+            cliente.setDireccion(rental.getClient().getAddres());
             cliente.setNombre(rental.getClient().getNames());
             cliente.setNumerodocumento(rental.getClient().getDni());
             cliente.setTipo_docidentidad(rental.getClient().getTypeDocument());
