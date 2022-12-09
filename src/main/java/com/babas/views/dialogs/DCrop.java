@@ -27,8 +27,8 @@ public class DCrop extends JDialog {
     public static BufferedImage imageSelectedx400;
     private boolean show = true;
 
-    public DCrop() {
-        super(Utilities.getJFrame(), "Editar Logo", true);
+    public DCrop(String title) {
+        super(Utilities.getJFrame(), title, true);
         $$$setupUI$$$();
         initComponents();
         btnSave.addActionListener(new ActionListener() {
@@ -50,7 +50,7 @@ public class DCrop extends JDialog {
     private void loadImagesScaled() {
         BufferedImage bufferedImage = ((ImagePanel) panelImagen).getImageSelected();
         if (bufferedImage != null) {
-            imageSelectedx200 = getImage(bufferedImage, 200.00, 200.00);
+            imageSelectedx200 = getImage(bufferedImage, 245.00, 200.00);
             imageSelectedx400 = getImage(bufferedImage, 400.00, 400.00);
         }
         onDispose();

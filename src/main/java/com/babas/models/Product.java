@@ -48,6 +48,7 @@ public class Product extends Babas {
     @OneToMany(mappedBy = "product")
     @Where(clause = "active=1")
     private List<Presentation> presentations=new ArrayList<>();
+    private Integer numberImage=1;
     @Transient
     private Presentation presentationDefault;
 
@@ -231,46 +232,36 @@ public class Product extends Babas {
         this.uniqueCode = uniqueCode;
     }
 
-    public List<Icon> getIconsx200(boolean clear){
-        if(clear){
-            iconsx200.clear();
-        }
-
-        if(iconsx200.size()==imagesx200.size()){
-            return  iconsx200;
-        }else{
-            iconsx200.clear();
-                imagesx200.forEach(icon->{
-                    Image image=Utilities.getImage(icon,false);
-                    if(image!=null){
-                        iconsx200.add(new ImageIcon(image));
-                    }else{
-                        iconsx200.add(null);
-                    }
-                });
-            return iconsx200;
-        }
+    public List<Icon> getIconsx200(){
+        return iconsx200;
     }
 
-    public List<Icon> getIconsx400(boolean clear){
-        if(clear){
-            iconsx400.clear();
-        }
+    public void loadImages(){
+        iconsx200.clear();
+        iconsx400.clear();
+        imagesx200.forEach(icon->{
+            Image image=Utilities.getImage(icon,false);
+            if(image!=null){
+                iconsx200.add(new ImageIcon(image));
+            }
+        });
+        imagesx400.forEach(icon->{
+            Image image=Utilities.getImage(icon,false);
+            if(image!=null){
+                iconsx400.add(new ImageIcon(image));
+            }
+        });
+    }
+    public List<Icon> getIconsx400(){
+        return iconsx400;
+    }
 
-        if(iconsx400.size()==imagesx400.size()){
-            return  iconsx400;
-        }else{
-            iconsx400.clear();
-            imagesx400.forEach(icon->{
-                Image image=Utilities.getImage(icon,false);
-                if(image!=null){
-                    iconsx400.add(new ImageIcon(image));
-                }else{
-                    iconsx400.add(null);
-                }
-            });
-            return iconsx400;
-        }
+    public Integer getNumberImage() {
+        return numberImage;
+    }
+
+    public void setNumberImage(Integer numberImage) {
+        this.numberImage = numberImage;
     }
 
     @Override

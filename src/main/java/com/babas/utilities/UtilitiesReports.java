@@ -356,8 +356,8 @@ public class UtilitiesReports {
                 parameters.put("email",rental.getBranch().getEmail());
                 parameters.put("numberTicket",rental.getSerie()+" - "+rental.getCorrelativo());
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()));
-                parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
-                parameters.put("importeEnLetras",Utilities.moneda.format(rental.getTotalCurrent()));
+                parameters.put("total",Utilities.moneda.format(rental.getTotalWithDiscount()));
+                parameters.put("importeEnLetras",Utilities.moneda.format(rental.getTotalWithDiscount()));
                 parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getUpdated()));
                 parameters.put("nombreCliente",rental.getStringClient());
                 parameters.put("vendedor",rental.getUser().getUserName());

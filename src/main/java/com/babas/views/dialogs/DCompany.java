@@ -248,7 +248,7 @@ public class DCompany extends JDialog {
     }
 
     private void loadCrop() {
-        DCrop dCrop = new DCrop();
+        DCrop dCrop = new DCrop("Cambiar Logo");
         dCrop.setVisible(true);
         BufferedImage bufferedImage = DCrop.imageSelectedx400;
         if (bufferedImage != null) {

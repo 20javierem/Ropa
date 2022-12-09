@@ -58,9 +58,9 @@ public class ModelProduct {
         lblPrice.setText(Utilities.moneda.format(product.getPresentationDefault().getPriceDefault().getPrice()));
         lblSize.setText(product.getSize().getName());
         lblNamePrice.setText(product.getPresentationDefault().getName() + ":");
-        if (!product.getIconsx200(false).isEmpty()) {
-            if (product.getIconsx200(false).get(0) != null) {
-                lblIcon.setIcon(product.getIconsx200(false).get(0));
+        if (!product.getIconsx200().isEmpty()) {
+            if (product.getIconsx200().get(0) != null) {
+                lblIcon.setIcon(product.getIconsx200().get(0));
             }
         }
         loadCursors();
@@ -166,7 +166,7 @@ public class ModelProduct {
         lblIcon.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/box.png")));
         lblIcon.setIconTextGap(0);
         lblIcon.setText("");
-        contentPane.add(lblIcon, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(200, 200), new Dimension(200, 200), new Dimension(200, 200), 0, false));
+        contentPane.add(lblIcon, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(245, 200), new Dimension(245, 200), new Dimension(245, 200), 0, false));
     }
 
     /**

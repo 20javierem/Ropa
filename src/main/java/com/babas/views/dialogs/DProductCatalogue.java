@@ -219,7 +219,7 @@ public class DProductCatalogue extends JDialog {
 
     private void loadImages() {
         imageSlide.clear();
-        product.getIconsx400(false).forEach(icon -> {
+        product.getIconsx400().forEach(icon -> {
             if (icon != null) {
                 imageSlide.addImage(icon);
             }

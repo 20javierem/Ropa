@@ -184,8 +184,11 @@ public class DProduct extends JDialog {
                 Utilities.deleteImage(product.getImagesx400().get(imageSlide.getIndexPosition()));
                 product.getImagesx200().remove(imageSlide.getIndexPosition());
                 product.getImagesx400().remove(imageSlide.getIndexPosition());
+                product.getIconsx200().remove(imageSlide.getIndexPosition());
+                product.getIconsx400().remove(imageSlide.getIndexPosition());
                 loadImages();
                 imageSlide.toNext();
+                imageSlide.repaint();
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen eliminada");
             }
         }
@@ -202,7 +205,7 @@ public class DProduct extends JDialog {
     }
 
     private void loadAddNewImage() {
-        DCrop dCrop = new DCrop();
+        DCrop dCrop = new DCrop("Añadir imagen");
         dCrop.setVisible(true);
         BufferedImage bufferedImage1 = DCrop.imageSelectedx200;
         BufferedImage bufferedImage2 = DCrop.imageSelectedx400;
@@ -217,24 +220,25 @@ public class DProduct extends JDialog {
                     Product lastProduct = FPrincipal.products.get(FPrincipal.products.size() - 1);
                     id = lastProduct != null ? lastProduct.getId() + 1 : 1;
                 }
-                String nameImage1 = id + "-" + product.getImagesx200().size() + "x200" + "." + "png";
-                String nameImage2 = id + "-" + product.getImagesx200().size() + "x400" + "." + "png";
+                String nameImage1 = id + "-" + product.getNumberImage() + "x200" + "." + "png";
+                String nameImage2 = id + "-" + product.getNumberImage() + "x400" + "." + "png";
+                product.setNumberImage(product.getNumberImage() + 1);
                 InputStream inputStream1 = new ByteArrayInputStream(os1.toByteArray());
                 InputStream inputStream2 = new ByteArrayInputStream(os2.toByteArray());
                 if (Utilities.newImage(inputStream1, nameImage1, false)) {
                     product.getImagesx200().add(nameImage1);
-                    product.getIconsx200(false).add(new ImageIcon(Utilities.getImage(nameImage1, false)));
+                    product.getIconsx200().add(new ImageIcon(bufferedImage1));
                     if (update) {
                         product.save();
                     }
                     if (Utilities.newImage(inputStream2, nameImage2, false)) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
                         product.getImagesx400().add(nameImage2);
-                        product.getIconsx400(false).add(new ImageIcon(Utilities.getImage(nameImage2, false)));
+                        product.getIconsx400().add(new ImageIcon(bufferedImage2));
                         if (update) {
                             product.save();
                         }
-                        imageSlide.addImage(new ImageIcon(Utilities.getImage(nameImage2, false)));
+                        imageSlide.addImage(new ImageIcon(bufferedImage2));
                         loadQuantityImages();
                         imageSlide.toNext();
                     } else {
@@ -357,7 +361,7 @@ public class DProduct extends JDialog {
 
     private void loadImages() {
         imageSlide.clear();
-        product.getIconsx400(false).forEach(icon -> {
+        product.getIconsx400().forEach(icon -> {
             if (icon != null) {
                 imageSlide.addImage(icon);
             }
@@ -366,7 +370,7 @@ public class DProduct extends JDialog {
     }
 
     private void loadQuantityImages() {
-        quantityImages.setText(String.valueOf(product.getIconsx400(false).size()));
+        quantityImages.setText(String.valueOf(product.getIconsx400().size()));
     }
 
     private void loadTable() {
@@ -626,4 +630,5 @@ public class DProduct extends JDialog {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

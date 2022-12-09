@@ -387,8 +387,7 @@ public class FPrincipal extends JFrame {
         tabbedPane.updateTab();
         loadTransferOnWait();
         groupPermnitions.forEach(Babas::refresh);
-        products.forEach(product -> product.getIconsx200(true));
-        products.forEach(product -> product.getIconsx400(true));
+        products.forEach(Product::loadImages);
         loadPermisses();
         Babas.company.refresh();
         if (Babas.company.getLogo() != null) {
@@ -764,8 +763,7 @@ public class FPrincipal extends JFrame {
         sexsWithAll = new Vector<>(sexs);
         sexsWithAll.add(0, new Sex("TODOS"));
         products = Products.getActives();
-        products.forEach(product -> product.getIconsx200(true));
-        products.forEach(product -> product.getIconsx400(true));
+        products.forEach(Product::loadImages);
         styles = Styles.getTodos();
         groupPermnitions = Permissions.getGroups();
         rentalsActives = Rentals.getActives();
