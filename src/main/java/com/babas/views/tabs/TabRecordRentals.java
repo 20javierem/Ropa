@@ -336,6 +336,7 @@ public class TabRecordRentals {
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
+                        sale.save();
                         flag = sale.isStatusSunat();
                     } else if (rental != null) {
                         if (rental.isActive() == 0 || rental.isActive() == 1) {
@@ -343,6 +344,7 @@ public class TabRecordRentals {
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
+                        rental.save();
                         flag = rental.isStatusSunat();
                     } else {
                         flag = false;
@@ -361,13 +363,14 @@ public class TabRecordRentals {
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
-                        flag = sale.isStatusSunat();
+                        sale.save();
                     } else if (rental != null) {
                         if (rental.isActive() == 0 || rental.isActive() == 1) {
                             rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
+                        rental.save();
                         flag = rental.isStatusSunat();
                     } else {
                         flag = false;
@@ -388,6 +391,7 @@ public class TabRecordRentals {
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                         }
+                        sale.save();
                         flag = sale.isStatusSunat();
                     } else if (rental != null) {
                         if (rental.isActive() == 0 || rental.isActive() == 1) {
@@ -397,6 +401,7 @@ public class TabRecordRentals {
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                         }
+                        rental.save();
                         flag = rental.isStatusSunat();
                     } else {
                         flag = false;

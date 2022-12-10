@@ -55,42 +55,47 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                 case "change":
                     if(Babas.company.isValidToken()){
                         sale.refresh();
-                        if(sale.getTypeVoucher().equals("77")){
-                            if(sale.isActive()){
-                                DChangeVoucher dChangeVoucher=new DChangeVoucher(sale.getClient());
-                                int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
-                                if (option == JOptionPane.OK_OPTION) {
-                                    sale.refresh();
-                                    if(sale.getTypeVoucher().equals("77")){
-                                        if(sale.isActive()){
-                                            sale.setClient(dChangeVoucher.getClient());
-                                            sale.setTypeVoucher(dChangeVoucher.getTypeVoucher());
-                                            if (sale.isValidClient(sale.getTypeVoucher())) {
-                                                sale.create();
-                                                sale.save();
-                                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                                    sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale),true));
-                                                } else {
-                                                    sale.setStatusSunat(false);
+                        if(sale.isActive()){
+                            if(sale.getTypeVoucher().equals("77")){
+                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
+                                    DChangeVoucher dChangeVoucher=new DChangeVoucher(sale.getClient());
+                                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                                    if (option == JOptionPane.OK_OPTION) {
+                                        sale.refresh();
+                                        if(sale.getTypeVoucher().equals("77")){
+                                            if(sale.isActive()){
+                                                sale.setClient(dChangeVoucher.getClient());
+                                                sale.setTypeVoucher(dChangeVoucher.getTypeVoucher());
+                                                if (sale.isValidClient(sale.getTypeVoucher())) {
+                                                    sale.setTypeVoucher("77");
+                                                    sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                                    if(sale.isStatusSunat()){
+                                                        sale.setTypeVoucher(dChangeVoucher.getTypeVoucher());
+                                                        sale.create();
+                                                        sale.save();
+                                                        sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale),true));
+                                                        sale.save();
+                                                    }
+                                                }else{
+                                                    sale.setTypeVoucher("77");
+                                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
                                                 }
                                             }else{
-                                                sale.setTypeVoucher("77");
-                                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
+                                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta está cancelada");
                                             }
                                         }else{
-                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta está cancelada");
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                                         }
-                                    }else{
-                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                                     }
+                                } else {
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Primero de enviar todos los comprobantes pendientes");
                                 }
                             }else{
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta está cancelada");
+                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                             }
                         }else{
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta está cancelada");
                         }
-
                     }
                     break;
                 case "show":

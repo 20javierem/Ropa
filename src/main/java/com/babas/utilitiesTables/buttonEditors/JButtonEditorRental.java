@@ -65,32 +65,38 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     if(Babas.company.isValidToken()){
                         if(rental.isActive()==1){
                             if(rental.getTypeVoucher().equals("77")){
-                                DChangeVoucher dChangeVoucher=new DChangeVoucher(rental.getClient());
-                                int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
-                                if (option == JOptionPane.OK_OPTION) {
-                                    rental.refresh();
-                                    if(rental.isActive()==1){
-                                        if(rental.getTypeVoucher().equals("77")){
-                                            rental.setClient(dChangeVoucher.getClient());
-                                            rental.setTypeVoucher(dChangeVoucher.getTypeVoucher());
-                                            if (rental.isValidClient(rental.getTypeVoucher())) {
-                                                rental.create();
-                                                rental.save();
-                                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                                    rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental),true));
-                                                } else {
-                                                    rental.setStatusSunat(false);
+                                if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
+                                    DChangeVoucher dChangeVoucher=new DChangeVoucher(rental.getClient());
+                                    int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                                    if (option == JOptionPane.OK_OPTION) {
+                                        rental.refresh();
+                                        if(rental.isActive()==1){
+                                            if(rental.getTypeVoucher().equals("77")){
+                                                rental.setClient(dChangeVoucher.getClient());
+                                                rental.setTypeVoucher(dChangeVoucher.getTypeVoucher());
+                                                if (rental.isValidClient(rental.getTypeVoucher())) {
+                                                    rental.setTypeVoucher("77");
+                                                    rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                                    if(rental.isStatusSunat()){
+                                                        rental.setTypeVoucher(dChangeVoucher.getTypeVoucher());
+                                                        rental.create();
+                                                        rental.save();
+                                                        rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental),true));
+                                                        rental.save();
+                                                    }
+                                                }else{
+                                                    rental.setTypeVoucher("77");
+                                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
                                                 }
                                             }else{
-                                                rental.setTypeVoucher("77");
-                                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido para el tipo de comprobante");
+                                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
                                             }
                                         }else{
-                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler debe estar en estado completado");
                                         }
-                                    }else{
-                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler debe estar en estado completado");
                                     }
+                                } else {
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Primero de enviar todos los comprobantes pendientes");
                                 }
                             }else{
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El documento no puede cambiarse");
@@ -173,6 +179,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     }else{
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
                     }
+                    break;
             }
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
