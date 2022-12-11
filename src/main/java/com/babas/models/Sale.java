@@ -91,10 +91,6 @@ public class Sale extends Babas {
         return serie;
     }
 
-    public void setSerie(String serie) {
-        this.serie = serie;
-    }
-
     public String getTypeVoucher() {
         return typeVoucher;
     }
