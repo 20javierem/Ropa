@@ -53,7 +53,7 @@ public class Rental extends Babas {
     private String serie;
     private Long correlativo;
     private String typeVoucher;
-    private boolean statusSunat = true;
+    private Boolean statusSunat = true;
 
     public String getObservation() {
         return observation;
@@ -175,14 +175,14 @@ public class Rental extends Babas {
             totalCurrent=Math.round((totalCurrent-reserve.getAdvance())*100.0)/100.0;
         }
     }
-    public boolean isValidClient(String typeDocument){
+    public boolean isValidClient(){
         if(client!=null){
-            if ("01".equals(typeDocument)) {
+            if ("01".equals(typeVoucher)) {
                 return client.getDni().length() == 11;
             }
             return true;
         }else{
-            return typeDocument.equals("77")||typeDocument.equals("03");
+            return typeVoucher.equals("77")||typeVoucher.equals("03");
         }
     }
     public void setCorrelativo(Long correlativo) {
@@ -197,11 +197,11 @@ public class Rental extends Babas {
         this.typeVoucher = typeVoucher;
     }
 
-    public boolean isStatusSunat() {
+    public Boolean isStatusSunat() {
         return statusSunat;
     }
 
-    public void setStatusSunat(boolean statusSunat) {
+    public void setStatusSunat(Boolean statusSunat) {
         this.statusSunat = statusSunat;
     }
 

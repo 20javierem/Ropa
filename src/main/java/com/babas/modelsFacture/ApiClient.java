@@ -57,7 +57,7 @@ public class ApiClient {
         return false;
     }
 
-    public static boolean cancelComprobante(CancelComprobante cancelComprobante) {
+    public static Boolean cancelComprobante(CancelComprobante cancelComprobante) {
         String url="https://facturadorbabas.com/facturacion/api/comunicacion_baja";
         try {
             body = RequestBody.create(mediaType,new Gson().toJson(cancelComprobante));
@@ -74,7 +74,7 @@ public class ApiClient {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante cancelado ante sunat");
                     return true;
                 }else if(responseJson.getMensaje().equals("El documento electrónico no se encuentra o no es válido!")){
-                    return false;
+                    return null;
                 }
                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
                 return false;

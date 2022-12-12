@@ -129,7 +129,7 @@ public class TabFinishRental {
                             if (comboBox.getSelectedIndex() != 0) {
                                 rental.setTypeVoucher(comboBox.getSelectedIndex() == 1 ? "03" : "01");
                             }
-                            if (rental.isValidClient(rental.getTypeVoucher())) {
+                            if (rental.isValidClient()) {
                                 rental.setPenalty((Double) spinnerPenalty.getValue());
                                 rental.calculateTotals();
                                 rental.setDelivery(jDateFinish.getDate());

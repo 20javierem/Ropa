@@ -248,7 +248,7 @@ public class TabRecordSales {
                     Sale sale = Sales.getByCorrelativoAndType(correlativeFactura, "01");
                     Rental rental = Rentals.getByCorrelativoAndType(correlativeFactura, "01");
                     if (sale != null) {
-                        if (sale.isValidClient("01")) {
+                        if (sale.isValidClient()) {
                             if (sale.isActive()) {
                                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                             } else {
@@ -261,7 +261,7 @@ public class TabRecordSales {
                         }
                         flag = sale.isStatusSunat();
                     } else if (rental != null) {
-                        if (rental.isValidClient("01")) {
+                        if (rental.isValidClient()) {
                             if (rental.isActive() == 1) {
                                 rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                             } else {

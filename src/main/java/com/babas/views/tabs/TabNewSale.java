@@ -202,7 +202,7 @@ public class TabNewSale {
                         if (comboBox.getSelectedIndex() != 0) {
                             sale.setTypeVoucher(comboBox.getSelectedIndex() == 1 ? "03" : "01");
                         }
-                        if (sale.isValidClient(sale.getTypeVoucher())) {
+                        if (sale.isValidClient()) {
                             sale.create();
                             sale.save();
                             sale.updateStocks();
