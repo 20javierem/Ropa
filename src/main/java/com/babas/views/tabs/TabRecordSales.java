@@ -133,6 +133,7 @@ public class TabRecordSales {
 
     private void sendOnWaitSunat() {
         btnSendPedings.setCursor(new Cursor(Cursor.WAIT_CURSOR));
+        boolean onWait = false;
         if (!Sales.getOnWait().isEmpty() || !Rentals.getOnWait().isEmpty()) {
             Long correlativeNota = null;
             Long correlativeBoleta = null;
@@ -196,6 +197,18 @@ public class TabRecordSales {
                             sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            if (sale.isStatusSunat() == null) {
+                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
+                                if(sale.isStatusSunat()){
+                                    sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                    if (sale.isStatusSunat() == null) {
+                                        onWait = true;
+                                    }
+                                    sale.setStatusSunat(false);
+                                    correlativeNota++;
+                                    continue;
+                                }
+                            }
                         }
                         flag = sale.isStatusSunat();
                         sale.save();
@@ -204,6 +217,18 @@ public class TabRecordSales {
                             rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                            if (rental.isStatusSunat() == null) {
+                                rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
+                                if(rental.isStatusSunat()){
+                                    rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                    if (rental.isStatusSunat() == null) {
+                                        onWait = true;
+                                    }
+                                    rental.setStatusSunat(false);
+                                    correlativeNota++;
+                                    continue;
+                                }
+                            }
                         }
                         flag = rental.isStatusSunat();
                         rental.save();
@@ -224,6 +249,18 @@ public class TabRecordSales {
                             sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                         } else {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                            if (sale.isStatusSunat() == null) {
+                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
+                                if(sale.isStatusSunat()){
+                                    sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                    if (sale.isStatusSunat() == null) {
+                                        onWait = true;
+                                    }
+                                    sale.setStatusSunat(false);
+                                    correlativeBoleta++;
+                                    continue;
+                                }
+                            }
                         }
                         flag = sale.isStatusSunat();
                         sale.save();
@@ -232,6 +269,18 @@ public class TabRecordSales {
                             rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                         } else {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                            if (rental.isStatusSunat() == null) {
+                                rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
+                                if(rental.isStatusSunat()){
+                                    rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                    if (rental.isStatusSunat() == null) {
+                                        onWait = true;
+                                    }
+                                    rental.setStatusSunat(false);
+                                    correlativeBoleta++;
+                                    continue;
+                                }
+                            }
                         }
                         flag = rental.isStatusSunat();
                         rental.save();
@@ -253,6 +302,18 @@ public class TabRecordSales {
                                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                             } else {
                                 sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                if (sale.isStatusSunat() == null) {
+                                    sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
+                                    if(sale.isStatusSunat()){
+                                        sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                        if (sale.isStatusSunat() == null) {
+                                            onWait = true;
+                                        }
+                                        sale.setStatusSunat(false);
+                                        correlativeFactura++;
+                                        continue;
+                                    }
+                                }
                             }
                             sale.save();
                         } else {
@@ -266,6 +327,18 @@ public class TabRecordSales {
                                 rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
                             } else {
                                 rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                if (rental.isStatusSunat() == null) {
+                                    rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
+                                    if(rental.isStatusSunat()){
+                                        rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
+                                        if (rental.isStatusSunat() == null) {
+                                            onWait = true;
+                                        }
+                                        rental.setStatusSunat(false);
+                                        correlativeFactura++;
+                                        continue;
+                                    }
+                                }
                             }
                             rental.save();
                         } else {
@@ -281,6 +354,12 @@ public class TabRecordSales {
             }
         }
         btnSendPedings.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+        if (onWait) {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Algunos comprobantes cancelados están pendientes a enviar");
+        } else {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Comprobantes enviados");
+        }
+
     }
 
     private void clearFilters() {

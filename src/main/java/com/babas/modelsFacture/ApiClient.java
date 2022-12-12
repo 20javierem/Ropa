@@ -1,20 +1,23 @@
 package com.babas.modelsFacture;
 
+import com.babas.models.Client;
 import com.babas.models.Rental;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.views.frames.FPrincipal;
 import com.google.gson.Gson;
 import com.moreno.Notify;
 import com.squareup.okhttp.*;
+import org.objectweb.asm.commons.Method;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Date;
 
 public class ApiClient {
-    private static OkHttpClient client=new OkHttpClient();
-    private static MediaType mediaType = MediaType.parse("application/json");
+    private static final OkHttpClient client=new OkHttpClient();
+    private static final MediaType mediaType = MediaType.parse("application/json");
     private static RequestBody body;
     private static Request request;
     private static Response response;
@@ -55,6 +58,49 @@ public class ApiClient {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public static Client getClient(String document){
+        String url;
+        int typeDocument=document.length()==8?1:document.length()==11?6:0;
+        if(typeDocument==1){
+            url="https://api.perudevs.com/api/v1/dni/simple?document="+document+"&key="+Babas.company.getTokenConsults();
+        }else if(document.length()==11){
+            url="https://api.perudevs.com/api/v1/ruc?document="+document+"&key="+Babas.company.getTokenConsults();
+        }else{
+            return null;
+        }
+        try {
+            request = new Request.Builder().
+                    url(url).
+                    method("GET", null).
+                    build();
+            response = client.newCall(request).execute();
+            if(response.code()==200){
+                ClientResponse clientResponse=new Gson().fromJson(response.body().string(), ClientResponse.class);
+                if(clientResponse.isEstado()){
+                    Client client=new Client();
+                    client.setDni(document);
+                    client.setNames(clientResponse.getResultado().getNames());
+                    client.setPhone("");
+                    client.setAddres("");
+                    client.setTypeDocument(typeDocument);
+                    client.save();
+                    FPrincipal.clients.add(client);
+                    return client;
+                } else {
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",clientResponse.getMensaje());
+                }
+            }else{
+                System.out.println(response.code());
+                System.out.println(response.body());
+                System.out.println(response.message());
+            }
+        } catch (IOException e) {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static Boolean cancelComprobante(CancelComprobante cancelComprobante) {

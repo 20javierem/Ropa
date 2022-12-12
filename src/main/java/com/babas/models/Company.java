@@ -28,6 +28,7 @@ public class Company extends Babas {
     private String token;
     private String webSite;
     private boolean validToken=false;
+    private String tokenConsults;
 
     public Integer getIdProduct() {
         return idProduct;
@@ -119,5 +120,13 @@ public class Company extends Babas {
 
     public void setValidToken(boolean validToken) {
         this.validToken = validToken;
+    }
+
+    public String getTokenConsults() {
+        return tokenConsults;
+    }
+
+    public void setTokenConsults(String tokenConsults) {
+        this.tokenConsults = tokenConsults;
     }
 }

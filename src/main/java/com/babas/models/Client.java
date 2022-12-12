@@ -18,9 +18,7 @@ public class Client extends Babas {
     private Long id;
     private Date created;
     private Date updated;
-    @NotBlank(message = "Dni")
     private String dni;
-    @NotBlank(message = "Cliente")
     private String names;
     private String addres;
     private String phone;
@@ -59,9 +57,7 @@ public class Client extends Babas {
     }
 
     public void setAddres(String addres) {
-        char[] arr = addres.toCharArray();
-        arr[0] = Character.toUpperCase(arr[0]);
-        this.addres = new String(arr);;
+        this.addres=Utilities.nameAddres(addres);
     }
 
     public String getPhone() {

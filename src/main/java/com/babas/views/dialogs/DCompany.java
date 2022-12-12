@@ -58,6 +58,8 @@ public class DCompany extends JDialog {
     private JTabbedPane tabPane;
     private FlatButton btnSaveToken;
     private FlatTextField txtTokenFacture;
+    private FlatTextField txtTokenDniRuc;
+    private FlatButton btnSaveTokenDniRuc;
 
     public DCompany() {
         super(Utilities.getJFrame(), "Actualizar datos de la empresa", true);
@@ -134,6 +136,12 @@ public class DCompany extends JDialog {
                 loadBranchId();
             }
         });
+        btnSaveTokenDniRuc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                saveTokenDniRuc();
+            }
+        });
     }
 
     private void loadBranchId() {
@@ -202,6 +210,12 @@ public class DCompany extends JDialog {
             branch.save();
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "Éxito", "Cambios guardados");
         }
+    }
+
+    private void saveTokenDniRuc() {
+        Babas.company.setTokenConsults(txtTokenDniRuc.getText().trim());
+        Babas.company.save();
+        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "Éxito", "Cambios guardados");
     }
 
     private void sabeIdProduct() {
@@ -319,6 +333,7 @@ public class DCompany extends JDialog {
         cbbUsers.setModel(new DefaultComboBoxModel(FPrincipal.users));
         cbbUsers.setRenderer(new User.ListCellRenderer());
         cbbProduct.addItem("PRODUCTO");
+        txtTokenDniRuc.setText(Babas.company.getTokenConsults());
     }
 
     private void onHecho() {
@@ -462,17 +477,26 @@ public class DCompany extends JDialog {
         btnSaveIdUser.setText("Guardar");
         panel6.add(btnSaveIdUser, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
-        panel7.setLayout(new GridLayoutManager(1, 3, new Insets(0, 0, 0, 0), -1, -1));
+        panel7.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel6.add(panel7, new GridConstraints(0, 0, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label15 = new JLabel();
         label15.setText("Token facturador:");
-        panel7.add(label15, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel7.add(label15, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtTokenFacture = new FlatTextField();
         txtTokenFacture.setPlaceholderText("Obligatorio");
-        panel7.add(txtTokenFacture, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        panel7.add(txtTokenFacture, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         btnSaveToken = new FlatButton();
         btnSaveToken.setText("Guardar");
-        panel7.add(btnSaveToken, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel7.add(btnSaveToken, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label16 = new JLabel();
+        label16.setText("Token Dni/Ruc");
+        panel7.add(label16, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        txtTokenDniRuc = new FlatTextField();
+        txtTokenDniRuc.setPlaceholderText("Obligatorio");
+        panel7.add(txtTokenDniRuc, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
+        btnSaveTokenDniRuc = new FlatButton();
+        btnSaveTokenDniRuc.setText("Guardar");
+        panel7.add(btnSaveTokenDniRuc, new GridConstraints(0, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
     }
 
     /**

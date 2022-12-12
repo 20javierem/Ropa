@@ -101,6 +101,16 @@ public class Utilities {
         return val;
     }
 
+    public static String nameAddres(String addres) {
+        if(addres.length()>0){
+            char[] arr = addres.toCharArray();
+            arr[0] = Character.toUpperCase(arr[0]);
+            return new String(arr);
+        }else{
+            return addres;
+        }
+    }
+
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         spinner.remove(spinner.getComponent(0));
         spinner.remove(spinner.getComponent(0));

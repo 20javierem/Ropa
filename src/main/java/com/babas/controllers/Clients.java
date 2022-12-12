@@ -3,6 +3,7 @@ package com.babas.controllers;
 import com.babas.models.Client;
 import com.babas.models.Color;
 import com.babas.models.User;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Root;
@@ -22,10 +23,16 @@ public class Clients extends Babas {
         criteria.select(criteria.from(Client.class));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
+
     public static Client getByDNI(String dni){
         criteria = builder.createQuery(Client.class);
         root=criteria.from(Client.class);
         criteria.select(root).where(builder.equal(root.get("dni"), dni));
-        return session.createQuery(criteria).uniqueResult();
+        Client client=session.createQuery(criteria).uniqueResult();
+        if(client!=null){
+            return client;
+        }else {
+            return ApiClient.getClient(dni);
+        }
     }
 }
