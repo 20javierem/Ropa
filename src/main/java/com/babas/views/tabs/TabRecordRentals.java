@@ -281,24 +281,24 @@ public class TabRecordRentals {
             Sale firstSaleNota = Sales.getFirstOnWait("77");
             Sale firstSaleBoleta = Sales.getFirstOnWait("03");
             Sale firstSaleFactura = Sales.getFirstOnWait("01");
-            Rental firstRentalNota=Rentals.getFirstOnWait("77");
-            Rental firstRentalBoleta=Rentals.getFirstOnWait("03");
-            Rental firstRentalFactura=Rentals.getFirstOnWait("01");
+            Rental firstRentalNota = Rentals.getFirstOnWait("77");
+            Rental firstRentalBoleta = Rentals.getFirstOnWait("03");
+            Rental firstRentalFactura = Rentals.getFirstOnWait("01");
             if (firstSaleNota != null) {
                 correlativeNota = firstSaleNota.getCorrelativo();
-                if(firstRentalNota!=null&&firstRentalNota.getCorrelativo()<correlativeNota){
+                if (firstRentalNota != null && firstRentalNota.getCorrelativo() < correlativeNota) {
                     correlativeNota = firstRentalNota.getCorrelativo();
                 }
             }
             if (firstSaleBoleta != null) {
                 correlativeBoleta = firstSaleBoleta.getCorrelativo();
-                if(firstRentalBoleta!=null&&firstRentalBoleta.getCorrelativo()<correlativeBoleta){
+                if (firstRentalBoleta != null && firstRentalBoleta.getCorrelativo() < correlativeBoleta) {
                     correlativeBoleta = firstRentalBoleta.getCorrelativo();
                 }
             }
             if (firstSaleFactura != null) {
                 correlativeFactura = firstSaleFactura.getCorrelativo();
-                if(firstRentalFactura!=null&&firstRentalFactura.getCorrelativo()<correlativeFactura){
+                if (firstRentalFactura != null && firstRentalFactura.getCorrelativo() < correlativeFactura) {
                     correlativeFactura = firstRentalFactura.getCorrelativo();
                 }
             }
@@ -315,7 +315,7 @@ public class TabRecordRentals {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                             if (sale.isStatusSunat() == null) {
                                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
-                                if(sale.isStatusSunat()){
+                                if (sale.isStatusSunat()) {
                                     sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                                     if (sale.isStatusSunat() == null) {
                                         onWait = true;
@@ -335,7 +335,7 @@ public class TabRecordRentals {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                             if (rental.isStatusSunat() == null) {
                                 rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
-                                if(rental.isStatusSunat()){
+                                if (rental.isStatusSunat()) {
                                     rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                                     if (rental.isStatusSunat() == null) {
                                         onWait = true;
@@ -367,7 +367,7 @@ public class TabRecordRentals {
                             sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                             if (sale.isStatusSunat() == null) {
                                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
-                                if(sale.isStatusSunat()){
+                                if (sale.isStatusSunat()) {
                                     sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                                     if (sale.isStatusSunat() == null) {
                                         onWait = true;
@@ -387,7 +387,7 @@ public class TabRecordRentals {
                             rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                             if (rental.isStatusSunat() == null) {
                                 rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
-                                if(rental.isStatusSunat()){
+                                if (rental.isStatusSunat()) {
                                     rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                                     if (rental.isStatusSunat() == null) {
                                         onWait = true;
@@ -420,7 +420,7 @@ public class TabRecordRentals {
                                 sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                                 if (sale.isStatusSunat() == null) {
                                     sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
-                                    if(sale.isStatusSunat()){
+                                    if (sale.isStatusSunat()) {
                                         sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
                                         if (sale.isStatusSunat() == null) {
                                             onWait = true;
@@ -445,7 +445,7 @@ public class TabRecordRentals {
                                 rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                                 if (rental.isStatusSunat() == null) {
                                     rental.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental), true));
-                                    if(rental.isStatusSunat()){
+                                    if (rental.isStatusSunat()) {
                                         rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
                                         if (rental.isStatusSunat() == null) {
                                             onWait = true;
