@@ -94,7 +94,7 @@ public class DClient extends JDialog {
         Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(client);
         if (constraintViolationSet.isEmpty()) {
             if (!update) {
-                if (Clients.getByDNI(client.getDni()) == null) {
+                if (Clients.getByDNI(client.getDni(), true) == null) {
                     client.save();
                     FPrincipal.clients.add(client);
                     Utilities.updateDialog();
@@ -110,7 +110,7 @@ public class DClient extends JDialog {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El documento ya está registrado");
                 }
             } else {
-                Client client1 = Clients.getByDNI(client.getDni());
+                Client client1 = Clients.getByDNI(client.getDni(), true);
                 if (client1 == null || Objects.equals(client1.getId(), client.getId())) {
                     client.save();
                     Utilities.updateDialog();

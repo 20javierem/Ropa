@@ -103,7 +103,7 @@ public class TabNewQuotation {
     }
 
     private void searchClient() {
-        Client client = Clients.getByDNI(txtDocument.getText().trim());
+        Client client = Clients.getByDNI(txtDocument.getText().trim(), true);
         if (client != null) {
             txtNameClient.setText(client.getNames());
             txtPhone.setText(client.getPhone());
@@ -220,7 +220,7 @@ public class TabNewQuotation {
 
     private boolean getClient() {
         if (!txtDocument.getText().isBlank() && !txtNameClient.getText().isBlank()) {
-            Client client = Clients.getByDNI(txtDocument.getText().trim());
+            Client client = Clients.getByDNI(txtDocument.getText().trim(), true);
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());

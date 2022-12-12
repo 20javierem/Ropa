@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="contentPane" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="10">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="931" height="574"/>
+      <xy x="20" y="20" width="931" height="544"/>
     </constraints>
     <properties/>
     <border type="none"/>
@@ -179,7 +179,9 @@
                         </constraints>
                         <properties>
                           <horizontalAlignment value="0"/>
+                          <icon value="com/babas/images/lojoJmoreno (1).png"/>
                           <text value=""/>
+                          <toolTipText value="Cambiar logo de la empresa"/>
                         </properties>
                       </component>
                     </children>

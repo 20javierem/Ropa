@@ -277,4 +277,23 @@ public class TabbedPane extends FlatTabbedPane {
         });
         toolBar.setVisible(false);
     }
+
+
+    @Override
+    public void paint(Graphics g){
+        if(Utilities.iconCompanyx420x420!=null){
+            Image image=ImageSlide.toImage(Utilities.iconCompanyx420x420);
+            int widthImage=image.getWidth(null);
+            int heigthImage=image.getHeight(null);
+            g.drawImage(image,(getWidth()/2)-(widthImage/2),(getHeight()/2)-(heigthImage/2),widthImage,heigthImage,null);
+            setOpaque(false);
+        }else{
+            Image image=new ImageIcon(App.class.getResource("images/lojoJmoreno (1).png")).getImage();
+            int widthImage=image.getWidth(null);
+            int heigthImage=image.getHeight(null);
+            g.drawImage(image,(getWidth()/2)-(widthImage/2),(getHeight()/2)-(heigthImage/2),widthImage,heigthImage,null);
+            setOpaque(false);
+        }
+        super.paint(g);
+    }
 }

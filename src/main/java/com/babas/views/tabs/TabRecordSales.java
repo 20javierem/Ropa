@@ -144,23 +144,32 @@ public class TabRecordSales {
             Rental firstRentalNota = Rentals.getFirstOnWait("77");
             Rental firstRentalBoleta = Rentals.getFirstOnWait("03");
             Rental firstRentalFactura = Rentals.getFirstOnWait("01");
+
             if (firstSaleNota != null) {
                 correlativeNota = firstSaleNota.getCorrelativo();
                 if (firstRentalNota != null && firstRentalNota.getCorrelativo() < correlativeNota) {
                     correlativeNota = firstRentalNota.getCorrelativo();
                 }
+            } else if (firstRentalNota != null) {
+                correlativeNota = firstRentalNota.getCorrelativo();
             }
+
             if (firstSaleBoleta != null) {
                 correlativeBoleta = firstSaleBoleta.getCorrelativo();
                 if (firstRentalBoleta != null && firstRentalBoleta.getCorrelativo() < correlativeBoleta) {
                     correlativeBoleta = firstRentalBoleta.getCorrelativo();
                 }
+            } else if (firstRentalBoleta != null) {
+                correlativeBoleta = firstRentalBoleta.getCorrelativo();
             }
+
             if (firstSaleFactura != null) {
                 correlativeFactura = firstSaleFactura.getCorrelativo();
                 if (firstRentalFactura != null && firstRentalFactura.getCorrelativo() < correlativeFactura) {
                     correlativeFactura = firstRentalFactura.getCorrelativo();
                 }
+            } else if (firstRentalFactura != null) {
+                correlativeFactura = firstRentalFactura.getCorrelativo();
             }
 
             if (correlativeNota != null) {
@@ -186,6 +195,8 @@ public class TabRecordSales {
                                             continue;
                                         }
                                     }
+                                } else if (!sale.isStatusSunat()) {
+                                    onWait = true;
                                 }
                             }
                         }
@@ -209,6 +220,8 @@ public class TabRecordSales {
                                             continue;
                                         }
                                     }
+                                } else if (!rental.isStatusSunat()) {
+                                    onWait = true;
                                 }
                             }
                         }
@@ -244,6 +257,8 @@ public class TabRecordSales {
                                             continue;
                                         }
                                     }
+                                } else if (!sale.isStatusSunat()) {
+                                    onWait = true;
                                 }
                             }
                         }
@@ -268,6 +283,8 @@ public class TabRecordSales {
                                         }
 
                                     }
+                                } else if (!rental.isStatusSunat()) {
+                                    onWait = true;
                                 }
                             }
                         }
@@ -304,6 +321,8 @@ public class TabRecordSales {
                                                 continue;
                                             }
                                         }
+                                    } else if (!sale.isStatusSunat()) {
+                                        onWait = true;
                                     }
                                 }
                             } else {
@@ -333,6 +352,8 @@ public class TabRecordSales {
                                             }
 
                                         }
+                                    } else if (!rental.isStatusSunat()) {
+                                        onWait = true;
                                     }
                                 }
                             } else {
@@ -348,14 +369,15 @@ public class TabRecordSales {
                     correlativeFactura++;
                 }
             }
+            if (onWait) {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Algunos comprobantes cancelados están pendientes a enviar");
+            } else {
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Comprobantes enviados");
+            }
+        } else {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "MENSAJE", "No se encontraron comprobantes pendientes");
         }
         btnSendPedings.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-        if (onWait) {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Algunos comprobantes cancelados están pendientes a enviar");
-        } else {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Comprobantes enviados");
-        }
-
     }
 
     private void clearFilters() {

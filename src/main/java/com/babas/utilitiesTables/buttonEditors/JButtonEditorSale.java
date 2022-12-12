@@ -126,7 +126,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                         movement.setAmount(-sale.getTotalCurrent());
                                         movement.setEntrance(false);
                                         movement.setBoxSesion(Babas.boxSession);
-                                        movement.setDescription("Cambio de comprobante, Venta NRO: "+sale.getId());
+                                        movement.setDescription("Cambio de comprobante, Venta: "+sale.getSerie()+"-"+sale.getCorrelativo());
                                         movement.getBoxSesion().getMovements().add(0,movement);
                                         movement.getBoxSesion().calculateTotals();
                                         movement.save();

@@ -15,7 +15,7 @@ import java.util.Objects;
 
 public class SaleAbstractModel extends AbstractTableModel {
     private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","DESCUENTO","TOTAL","TIPO","ESTADO","SUNAT","","",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,String.class,String.class,JButton.class,JButton.class,JButton.class};
+    private final Class[] typeColumns={String.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,String.class,String.class,String.class,JButton.class,JButton.class,JButton.class};
     private final List<Sale> list;
 
     public SaleAbstractModel(List<Sale> list){
@@ -48,7 +48,7 @@ public class SaleAbstractModel extends AbstractTableModel {
         Sale sale= list.get(rowIndex);
         switch (columnIndex){
             case 0:
-                return sale.getId();
+                return sale.getSerie()+"-"+sale.getCorrelativo();
             case 1:
                 return sale.getUpdated();
             case 2:

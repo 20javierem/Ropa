@@ -40,9 +40,9 @@ public class RentalCellRendered extends DefaultTableCellRenderer {
             switch(table.getColumnName(column)){
                 case "NRO.":
                     componente.setHorizontalAlignment(SwingConstants.CENTER);
-                    table.getColumn(table.getColumnName(column)).setMaxWidth(65);
-                    table.getColumn(table.getColumnName(column)).setMinWidth(65);
-                    table.getColumn(table.getColumnName(column)).setPreferredWidth(65);
+                    table.getColumn(table.getColumnName(column)).setMaxWidth(110);
+                    table.getColumn(table.getColumnName(column)).setMinWidth(110);
+                    table.getColumn(table.getColumnName(column)).setPreferredWidth(110);
                     break;
                 case "RESUMEN":
                 case "SUBTOTAL":

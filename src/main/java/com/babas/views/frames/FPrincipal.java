@@ -228,7 +228,7 @@ public class FPrincipal extends JFrame {
         int option = JOptionPane.showOptionDialog(this, flatTextField, "Buscar cliente", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Buscar", "Cancelar"}, "Buscar");
         if (option == JOptionPane.OK_OPTION) {
             boolean find = false;
-            Client client = Clients.getByDNI(flatTextField.getText().trim());
+            Client client = Clients.getByDNI(flatTextField.getText().trim(), false);
             if (client != null) {
                 DClient dClient = new DClient(true, client);
                 dClient.setVisible(true);
@@ -1109,6 +1109,7 @@ public class FPrincipal extends JFrame {
         contentPane.add(panel10, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         panel10.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         tabbedPane = new TabbedPane();
+        tabbedPane.setOpaque(true);
         tabbedPane.setTabLayoutPolicy(1);
         panel10.add(tabbedPane, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         ButtonGroup buttonGroup;

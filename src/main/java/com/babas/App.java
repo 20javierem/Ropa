@@ -6,10 +6,7 @@ import com.babas.modelsFacture.*;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Propiedades;
 import com.babas.utilities.Utilities;
-import com.babas.views.dialogs.DBranch;
-import com.babas.views.dialogs.DCompany;
-import com.babas.views.dialogs.DCrop;
-import com.babas.views.dialogs.DUser;
+import com.babas.views.dialogs.*;
 import com.babas.views.frames.FLogin;
 import com.google.gson.Gson;
 
@@ -24,7 +21,6 @@ public class App
         FLogin fLogin=new FLogin();
         fLogin.setVisible(true);
         fLogin.tryConnection();
-
     }
 
 }

@@ -383,7 +383,7 @@ public class UtilitiesReports {
                 }else{
                     JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                     if(viewer!=null){
-                        viewer.setTitle("Alquiler Nro. "+rental.getId());
+                        viewer.setTitle("Comprobante "+rental.getSerie()+"-"+rental.getCorrelativo());
                         if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                             Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                         }
@@ -450,7 +450,7 @@ public class UtilitiesReports {
                 }else{
                     JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                     if(viewer!=null){
-                        viewer.setTitle("Venta Nro. "+sale.getId());
+                        viewer.setTitle("Comprobante "+sale.getSerie()+"-"+sale.getCorrelativo());
                         if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                             Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                         }

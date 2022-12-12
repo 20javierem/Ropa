@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RentalAbstractModel extends AbstractTableModel {
     private final String[] nameColumns={"NRO.","FECHA","SUCURSAL","CLIENTE","TIPO/PAGO","SUBTOTAL","GARANTÍA","DESCUENTO","RESUMEN","MULTA","TOTAL","TIPO","ESTADO","SUNAT","","","",""};
-    private final Class[] typeColumns={Long.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,String.class, String.class,String.class,JButton.class,JButton.class,JButton.class,JButton.class};
+    private final Class[] typeColumns={String.class,Date.class,String.class,String.class,String.class, Double.class,Double.class,Double.class,Double.class,Double.class,Double.class,String.class, String.class,String.class,JButton.class,JButton.class,JButton.class,JButton.class};
     private final List<Rental> list;
 
     public RentalAbstractModel(List<Rental> list){
@@ -47,7 +47,7 @@ public class RentalAbstractModel extends AbstractTableModel {
         Rental rental = list.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return rental.getId();
+                return rental.getSerie()+"-"+rental.getCorrelativo();
             case 1:
                 return rental.getUpdated();
             case 2:

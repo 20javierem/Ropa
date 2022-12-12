@@ -21,7 +21,7 @@ public class Company extends Babas {
     private String tradeName;
     @NotBlank(message = "DIRECCIÓN PRINCIPAL")
     private String directionPrincipal;
-    private String logo;
+    private String logo="";
     private String details="";
     private Integer idFact=0;
     private Integer idProduct=0;

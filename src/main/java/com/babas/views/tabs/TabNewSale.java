@@ -105,7 +105,7 @@ public class TabNewSale {
     }
 
     private void searchClient(String document) {
-        Client client = Clients.getByDNI(document);
+        Client client = Clients.getByDNI(document, true);
         if (client != null) {
             txtDocument.setText(document);
             txtNameClient.setText(client.getNames());
@@ -265,7 +265,7 @@ public class TabNewSale {
 
     private boolean getClient() {
         if (!txtDocument.getText().isBlank() && !txtNameClient.getText().isBlank()) {
-            Client client = Clients.getByDNI(txtDocument.getText().trim());
+            Client client = Clients.getByDNI(txtDocument.getText().trim(), true);
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());

@@ -160,7 +160,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                         movement.setAmount(-rental.getTotalCurrent());
                                         movement.setEntrance(false);
                                         movement.setBoxSesion(Babas.boxSession);
-                                        movement.setDescription("Cambio de comprobante, Alquiler cancelado NRO: "+rental.getId());
+                                        movement.setDescription("Cambio de comprobante, Alquiler: "+rental.getSerie()+"-"+rental.getCorrelativo());
                                         movement.getBoxSesion().getMovements().add(0,movement);
                                         movement.getBoxSesion().calculateTotals();
                                         movement.save();

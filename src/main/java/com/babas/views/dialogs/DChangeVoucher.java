@@ -13,6 +13,9 @@ import com.intellij.uiDesigner.core.Spacer;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class DChangeVoucher {
     private JPanel contentPane;
@@ -32,6 +35,25 @@ public class DChangeVoucher {
             txtAdress.setText(client.getAddres());
             txtPhone.setText(client.getPhone());
         }
+        txtDocument.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    searchClient();
+                    e.consume();
+                }
+            }
+        });
+    }
+
+    public void searchClient() {
+        Client client = Clients.getByDNI(txtDocument.getText().trim(), true);
+        if (client != null) {
+            txtDocument.setText(client.getDni());
+            txtNames.setText(client.getNames());
+            txtAdress.setText(client.getAddres());
+            txtPhone.setText(client.getPhone());
+        }
     }
 
     public JPanel getContentPane() {
@@ -41,7 +63,7 @@ public class DChangeVoucher {
     public Client getClient() {
         Client client = null;
         if (!txtDocument.getText().isBlank() && !txtNames.getText().isBlank()) {
-            client = Clients.getByDNI(txtDocument.getText().trim());
+            client = Clients.getByDNI(txtDocument.getText().trim(), true);
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());
@@ -123,4 +145,5 @@ public class DChangeVoucher {
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
     }
+
 }

@@ -24,15 +24,17 @@ public class Clients extends Babas {
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
 
-    public static Client getByDNI(String dni){
+    public static Client getByDNI(String dni,boolean api){
         criteria = builder.createQuery(Client.class);
         root=criteria.from(Client.class);
         criteria.select(root).where(builder.equal(root.get("dni"), dni));
         Client client=session.createQuery(criteria).uniqueResult();
         if(client!=null){
             return client;
-        }else {
+        }else if(api){
             return ApiClient.getClient(dni);
+        }else{
+            return client;
         }
     }
 }

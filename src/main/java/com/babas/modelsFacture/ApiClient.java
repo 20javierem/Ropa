@@ -51,11 +51,10 @@ public class ApiClient {
             }else{
                 return false;
             }
-        } catch (UnknownHostException exception){
+        }catch (UnknownHostException e){
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión a internet");
-        } catch (IOException  e ) {
+        } catch (IOException e) {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
-            e.printStackTrace();
         }
         return false;
     }
@@ -96,9 +95,10 @@ public class ApiClient {
                 System.out.println(response.body());
                 System.out.println(response.message());
             }
+        } catch (UnknownHostException e){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión a internet");
         } catch (IOException e) {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
-            e.printStackTrace();
         }
         return null;
     }
@@ -127,9 +127,10 @@ public class ApiClient {
             }else{
                 return false;
             }
+        } catch (UnknownHostException e){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión a internet");
         } catch (IOException e) {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
-            e.printStackTrace();
         }
         return false;
     }

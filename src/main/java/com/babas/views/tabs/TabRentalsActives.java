@@ -102,6 +102,7 @@ public class TabRentalsActives {
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         RentalCellRendered.setCellRenderer(table, listaFiltros);
+        table.removeColumn(table.getColumn("NRO."));
         table.removeColumn(table.getColumn("RESUMEN"));
         table.removeColumn(table.getColumn("SUNAT"));
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorRental("cancel"));
@@ -123,7 +124,7 @@ public class TabRentalsActives {
     private void filter() {
         filtros.clear();
         String busqueda = txtSearch.getText().trim();
-        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13));
+        filtros.add(RowFilter.regexFilter("(?i)" + busqueda, 1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12));
         listaFiltros.put(0, busqueda);
         listaFiltros.put(1, busqueda);
         listaFiltros.put(2, busqueda);
@@ -135,8 +136,6 @@ public class TabRentalsActives {
         listaFiltros.put(8, busqueda);
         listaFiltros.put(9, busqueda);
         listaFiltros.put(10, busqueda);
-        listaFiltros.put(11, busqueda);
-        listaFiltros.put(12, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
             filtros.add(RowFilter.regexFilter(branch.getName(), 2));

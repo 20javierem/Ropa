@@ -225,7 +225,7 @@ public class TabFinishRental {
     private Client getClient() {
         Client client = null;
         if (!txtDocument.getText().isBlank() && !txtNameClient.getText().isBlank()) {
-            client = Clients.getByDNI(txtDocument.getText().trim());
+            client = Clients.getByDNI(txtDocument.getText().trim(), true);
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());

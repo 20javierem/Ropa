@@ -308,6 +308,7 @@ public class DCompany extends JDialog {
             btnSave.setText("Registrar");
             btnHecho.setText("Cancelar");
         }
+        lblLogo.setCursor(new Cursor(Cursor.HAND_CURSOR));
         loadBranchId();
         loadUserId();
         pack();
@@ -412,7 +413,9 @@ public class DCompany extends JDialog {
         panel4.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         lblLogo = new JLabel();
         lblLogo.setHorizontalAlignment(0);
+        lblLogo.setIcon(new ImageIcon(getClass().getResource("/com/babas/images/lojoJmoreno (1).png")));
         lblLogo.setText("");
+        lblLogo.setToolTipText("Cambiar logo de la empresa");
         panel4.add(lblLogo, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, new Dimension(420, 420), new Dimension(420, 420), new Dimension(420, 420), 0, false));
         final JLabel label5 = new JLabel();
         label5.setText("Página Web:");
