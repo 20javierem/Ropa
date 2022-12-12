@@ -278,52 +278,28 @@ public class TabRecordRentals {
             Long correlativeNota = null;
             Long correlativeBoleta = null;
             Long correlativeFactura = null;
-            Sale firstNota = Sales.getFirstNotaOnWait();
-            Sale firstBoleta = Sales.getFirstBoletaOnWait();
-            Sale fisrtFactura = Sales.getFirstFacturaOnWait();
-            if (firstNota != null) {
-                correlativeNota = firstNota.getCorrelativo();
-            }
-            if (firstBoleta != null) {
-                correlativeBoleta = firstBoleta.getCorrelativo();
-            }
-            if (fisrtFactura != null) {
-                correlativeFactura = fisrtFactura.getCorrelativo();
-            }
-
-            if (correlativeNota == null) {
-                Rental rental = Rentals.getFirstNotaOnWait();
-                if (rental != null) {
-                    correlativeNota = rental.getCorrelativo();
-                }
-            } else {
-                Rental rental = Rentals.getFirstNotaOnWait();
-                if (rental != null && rental.getCorrelativo() < correlativeNota) {
-                    correlativeNota = rental.getCorrelativo();
+            Sale firstSaleNota = Sales.getFirstOnWait("77");
+            Sale firstSaleBoleta = Sales.getFirstOnWait("03");
+            Sale firstSaleFactura = Sales.getFirstOnWait("01");
+            Rental firstRentalNota=Rentals.getFirstOnWait("77");
+            Rental firstRentalBoleta=Rentals.getFirstOnWait("03");
+            Rental firstRentalFactura=Rentals.getFirstOnWait("01");
+            if (firstSaleNota != null) {
+                correlativeNota = firstSaleNota.getCorrelativo();
+                if(firstRentalNota!=null&&firstRentalNota.getCorrelativo()<correlativeNota){
+                    correlativeNota = firstRentalNota.getCorrelativo();
                 }
             }
-
-            if (correlativeBoleta == null) {
-                Rental rental = Rentals.getFirstBoletaOnWait();
-                if (rental != null) {
-                    correlativeBoleta = rental.getCorrelativo();
-                }
-            } else {
-                Rental rental = Rentals.getFirstBoletaOnWait();
-                if (rental != null && rental.getCorrelativo() < correlativeBoleta) {
-                    correlativeBoleta = rental.getCorrelativo();
+            if (firstSaleBoleta != null) {
+                correlativeBoleta = firstSaleBoleta.getCorrelativo();
+                if(firstRentalBoleta!=null&&firstRentalBoleta.getCorrelativo()<correlativeBoleta){
+                    correlativeBoleta = firstRentalBoleta.getCorrelativo();
                 }
             }
-
-            if (correlativeFactura == null) {
-                Rental rental = Rentals.getFirstFacturaOnWait();
-                if (rental != null) {
-                    correlativeFactura = rental.getCorrelativo();
-                }
-            } else {
-                Rental rental = Rentals.getFirstFacturaOnWait();
-                if (rental != null && rental.getCorrelativo() < correlativeFactura) {
-                    correlativeFactura = rental.getCorrelativo();
+            if (firstSaleFactura != null) {
+                correlativeFactura = firstSaleFactura.getCorrelativo();
+                if(firstRentalFactura!=null&&firstRentalFactura.getCorrelativo()<correlativeFactura){
+                    correlativeFactura = firstRentalFactura.getCorrelativo();
                 }
             }
 

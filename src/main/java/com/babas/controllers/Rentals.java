@@ -38,32 +38,12 @@ public class Rentals extends Babas {
                 .orderBy(builder.asc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
-    public static Rental getFirstNotaOnWait(){
+    public static Rental getFirstOnWait(String type){
         criteria = builder.createQuery(Rental.class);
         root=criteria.from(Rental.class);
         criteria.select(root).where(builder.and(
                         builder.isFalse(root.get("statusSunat")),
-                        builder.equal(root.get("typeVoucher"),"77")))
-                .orderBy(builder.asc(root.get("id")));
-        List<Rental> sales=session.createQuery(criteria).getResultList();
-        return sales.isEmpty()?null:sales.get(0);
-    }
-    public static Rental getFirstBoletaOnWait(){
-        criteria = builder.createQuery(Rental.class);
-        root=criteria.from(Rental.class);
-        criteria.select(root).where(builder.and(
-                        builder.isFalse(root.get("statusSunat")),
-                        builder.equal(root.get("typeVoucher"),"03")))
-                .orderBy(builder.asc(root.get("id")));
-        List<Rental> sales=session.createQuery(criteria).getResultList();
-        return sales.isEmpty()?null:sales.get(0);
-    }
-    public static Rental getFirstFacturaOnWait(){
-        criteria = builder.createQuery(Rental.class);
-        root=criteria.from(Rental.class);
-        criteria.select(root).where(builder.and(
-                        builder.isFalse(root.get("statusSunat")),
-                        builder.equal(root.get("typeVoucher"),"01")))
+                        builder.equal(root.get("typeVoucher"),type)))
                 .orderBy(builder.asc(root.get("id")));
         List<Rental> sales=session.createQuery(criteria).getResultList();
         return sales.isEmpty()?null:sales.get(0);
