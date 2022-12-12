@@ -65,37 +65,42 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     }
                     break;
                 default:
-                    if(Babas.boxSession.getId()!=null){
-                        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
-                        if(si){
-                            sale.refresh();
-                            if(sale.isActive()){
-                                sale.setActive(false);
-                                sale.updateStocks();
-                                Movement movement=new Movement();
-                                movement.setAmount(-sale.getTotalCurrent());
-                                movement.setEntrance(false);
-                                movement.setBoxSesion(Babas.boxSession);
-                                movement.setDescription("Venta cancelada NRO: "+sale.getId());
-                                movement.getBoxSesion().getMovements().add(0,movement);
-                                movement.getBoxSesion().calculateTotals();
-                                movement.save();
-                                Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
-                                Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
-                                if(Babas.company.isValidToken()){
-                                    sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
-                                    if(sale.isStatusSunat()==null){
-                                        sale.setStatusSunat(false);
+                    sale.refresh();
+                    if(sale.isActive()){
+                        if(Babas.boxSession.getId()!=null){
+                            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
+                            if(si){
+                                sale.refresh();
+                                if(sale.isActive()){
+                                    sale.setActive(false);
+                                    sale.updateStocks();
+                                    Movement movement=new Movement();
+                                    movement.setAmount(-sale.getTotalCurrent());
+                                    movement.setEntrance(false);
+                                    movement.setBoxSesion(Babas.boxSession);
+                                    movement.setDescription("Venta cancelada NRO: "+sale.getId());
+                                    movement.getBoxSesion().getMovements().add(0,movement);
+                                    movement.getBoxSesion().calculateTotals();
+                                    movement.save();
+                                    Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
+                                    Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                                    if(Babas.company.isValidToken()){
+                                        sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
+                                        if(sale.isStatusSunat()==null){
+                                            sale.setStatusSunat(false);
+                                        }
                                     }
+                                    sale.save();
+                                }else{
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                                 }
-                                sale.save();
-                            }else{
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                             }
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
                         }
                     }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                     }
                     break;
             }
@@ -107,9 +112,9 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
     private void changeSale(Sale sale){
         String messageError=null;
         if(Babas.company.isValidToken()){
-            if(Babas.boxSession.getId()!=null){
-                sale.refresh();
-                if(sale.isActive()){
+            sale.refresh();
+            if(sale.isActive()){
+                if(Babas.boxSession.getId()!=null){
                     if(sale.getTypeVoucher().equals("77")){
                         DChangeVoucher dChangeVoucher=new DChangeVoucher(sale.getClient());
                         int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
@@ -178,10 +183,11 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                         messageError="El documento no puede cambiarse";
                     }
                 }else{
-                    messageError="La venta está cancelada";
+                    messageError="Debe aperturar caja";
                 }
+
             }else{
-                messageError="Debe aperturar caja";
+                messageError="La venta está cancelada";
             }
         }
         if(messageError!=null){
