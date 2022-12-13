@@ -278,16 +278,15 @@ public class TabNewSale {
         Task task = new Task() {
             @Override
             protected Void doInBackground() {
-                Utilities.getProgressBar().setValue(0);
                 Utilities.getLblIzquierda().setVisible(false);
                 Utilities.getProgressBar().setVisible(true);
                 Thread thread = new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            for (int i = 0; i <= 15; i++) {
-                                sleep(1000);
-                                Utilities.getProgressBar().setValue(Math.min(7 * i, 100));
+                            for (int i = 0; i <= 100; i++) {
+                                Utilities.getProgressBar().setValue(i);
+                                sleep(150);
                             }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -297,10 +296,11 @@ public class TabNewSale {
                 thread.start();
                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                 tabPane.setCursor(null);
-                Utilities.getLblIzquierda().setVisible(true);
-                Utilities.getProgressBar().setVisible(false);
+                Utilities.getProgressBar().setValue(100);
                 Toolkit.getDefaultToolkit().beep();
                 endSale(option);
+                Utilities.getLblIzquierda().setVisible(true);
+                Utilities.getProgressBar().setVisible(false);
                 return null;
             }
         };
