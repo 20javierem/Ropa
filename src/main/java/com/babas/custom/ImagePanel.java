@@ -1,6 +1,8 @@
 package com.babas.custom;
 
+import com.babas.utilities.Utilities;
 import com.babas.views.dialogs.DCrop;
+import com.moreno.Notify;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -273,6 +275,8 @@ public class ImagePanel extends JPanel {
                 bGr.dispose();
                 repaint();
                 shapeImage=new Rectangle2D.Double(((double) getWidth()-bufferedImage.getWidth())/2,((double)getHeight()-bufferedImage.getHeight())/2,bufferedImage.getWidth(),bufferedImage.getHeight());
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER,"ERROR","El archivo no es una imagen");
             }
         } catch (IOException e) {
             e.printStackTrace();

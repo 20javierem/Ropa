@@ -5,6 +5,7 @@ import com.babas.utilities.Utilities;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
 import com.intellij.uiDesigner.core.Spacer;
+import com.moreno.Notify;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -104,7 +105,7 @@ public class DCrop extends JDialog {
         selectorArchivos.addChoosableFileFilter(filtro1);
         int resultado = selectorArchivos.showOpenDialog(Utilities.getJFrame());
         if (resultado != 0) {
-            JOptionPane.showMessageDialog(selectorArchivos, "No seleccionó la imagen", "", JOptionPane.WARNING_MESSAGE);
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ERROR", "No seleccionó la imagen");
             return null;
         } else {
             imagenProducto = selectorArchivos.getSelectedFile();
