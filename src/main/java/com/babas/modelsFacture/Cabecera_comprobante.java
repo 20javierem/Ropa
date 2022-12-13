@@ -1,17 +1,11 @@
 package com.babas.modelsFacture;
 
 public class Cabecera_comprobante {
-    private String moneda="PEN";
-    private String nro_placa="";
-    private String nro_orden="";
-    private String guia_remision="";
-    private String id_condicionpago="";
     private String observacion="";
     private String tipo_documento;
     private Integer idsucursal;
     private String fecha_comprobante;
     private Double descuento_monto;
-    private Double descuento_porcentaje=0.0;
 
 
     public Cabecera_comprobante(){
@@ -26,7 +20,7 @@ public class Cabecera_comprobante {
     }
 
     public String getMoneda() {
-        return moneda;
+        return "PEN";
     }
 
     public Integer getIdsucursal() {
@@ -38,7 +32,7 @@ public class Cabecera_comprobante {
     }
 
     public String getId_condicionpago() {
-        return id_condicionpago;
+        return "";
     }
 
     public String getFecha_comprobante() {
@@ -50,15 +44,15 @@ public class Cabecera_comprobante {
     }
 
     public String getNro_placa() {
-        return nro_placa;
+        return "";
     }
 
     public String getNro_orden() {
-        return nro_orden;
+        return "";
     }
 
     public String getGuia_remision() {
-        return guia_remision;
+        return "";
     }
 
     public Double getDescuento_monto() {
@@ -70,7 +64,7 @@ public class Cabecera_comprobante {
     }
 
     public Double getDescuento_porcentaje() {
-        return descuento_porcentaje;
+        return 0.0;
     }
 
     public String getObservacion() {

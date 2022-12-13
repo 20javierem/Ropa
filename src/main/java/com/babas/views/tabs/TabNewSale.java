@@ -1,6 +1,5 @@
 package com.babas.views.tabs;
 
-import com.babas.App;
 import com.babas.controllers.Clients;
 import com.babas.controllers.Rentals;
 import com.babas.controllers.Sales;
@@ -34,8 +33,6 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Set;
 
@@ -211,13 +208,14 @@ public class TabNewSale {
                             sale.save();
                             sale.saveDetails();
                             sale.updateStocks();
+                            Babas.boxSession.getSales().add(0, sale);
+                            Babas.boxSession.calculateTotals();
                             if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                tabPane.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                                loadProgressBar(option);
+                                loadProgressBar();
                             } else {
                                 sale.setStatusSunat(false);
                                 Toolkit.getDefaultToolkit().beep();
-                                endSale(option);
+                                endSale();
                             }
                         } else {
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido");
@@ -235,9 +233,7 @@ public class TabNewSale {
         btnSaleWithCash.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
-    private void endSale(int option) {
-        Babas.boxSession.getSales().add(0, sale);
-        Babas.boxSession.calculateTotals();
+    private void endSale() {
         Utilities.getLblIzquierda().setText("Venta registrada: " + sale.getSerie() + "-" + sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
         Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
@@ -250,7 +246,7 @@ public class TabNewSale {
                 UtilitiesReports.generateComprobanteOfSale(false, sale, true);
             }
         } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
-            option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
+            int option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.OK_OPTION) {
                 int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
                 if (index == 0) {
@@ -274,23 +270,21 @@ public class TabNewSale {
         load();
     }
 
-    private void loadProgressBar(int option) {
+    private void loadProgressBar() {
         Task task = new Task() {
             @Override
             protected Void doInBackground() {
+                tabPane.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 Utilities.getLblIzquierda().setVisible(false);
                 Utilities.getProgressBar().setVisible(true);
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            for (int i = 0; i <= 100; i++) {
-                                Utilities.getProgressBar().setValue(i);
-                                sleep(150);
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
+                Thread thread = new Thread(() -> {
+                    try {
+                        for (int i = 0; i <= 100; i++) {
+                            Utilities.getProgressBar().setValue(i);
+                            sleep(150);
                         }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 });
                 thread.start();
@@ -298,7 +292,7 @@ public class TabNewSale {
                 tabPane.setCursor(null);
                 Utilities.getProgressBar().setValue(100);
                 Toolkit.getDefaultToolkit().beep();
-                endSale(option);
+                endSale();
                 Utilities.getLblIzquierda().setVisible(true);
                 Utilities.getProgressBar().setVisible(false);
                 return null;

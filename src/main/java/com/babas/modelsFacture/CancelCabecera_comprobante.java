@@ -2,7 +2,6 @@ package com.babas.modelsFacture;
 
 public class CancelCabecera_comprobante {
     private String tipo_documento;
-    private String motivo_anulacion="Error en documento";
     private Long numero_comprobante;
     private String serie_comprobante;
 
@@ -16,7 +15,7 @@ public class CancelCabecera_comprobante {
     }
 
     public String getMotivo_anulacion() {
-        return motivo_anulacion;
+        return "Error en documento";
     }
 
     public Long getNumero_comprobante() {

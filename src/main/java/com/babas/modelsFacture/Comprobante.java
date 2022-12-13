@@ -7,7 +7,7 @@ public class Comprobante {
     private Contribuyente contribuyente;
     private Cliente cliente;
     private Cabecera_comprobante cabecera_comprobante;
-    private List<Detalle> detalle = new ArrayList<>();
+    private final List<Detalle> detalle = new ArrayList<>();
 
     public Contribuyente getContribuyente() {
         return contribuyente;

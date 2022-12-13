@@ -217,7 +217,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                         messageError="El cliente no es válido para el tipo de comprobante";
                                     }
                                 }else{
-                                    messageError="La venta fué cancelada por otro usuario";
+                                    messageError="El alquiler fué cancelada por otro usuario";
                                 }
                             }else{
                                 messageError="El documento no puede cambiarse";
@@ -230,7 +230,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     messageError="Debe aperturar caja";
                 }
             }else{
-                messageError="La venta está cancelada";
+                messageError="El alquiler está cancelado";
             }
         }
         if(messageError!=null){

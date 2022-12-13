@@ -3,10 +3,7 @@ package com.babas.modelsFacture;
 public class Detalle {
     private int idproducto;
     private String codigo;
-    private String afecto_icbper="no";
-    private int id_tipoafectacionigv=20;
     private String descripcion;
-    private String idunidadmedida="NIU";
     private Double precio_venta;
     private int cantidad;
 
@@ -27,12 +24,12 @@ public class Detalle {
     }
 
     public String getAfecto_icbper() {
-        return afecto_icbper;
+        return "no";
     }
 
 
     public int getId_tipoafectacionigv() {
-        return id_tipoafectacionigv;
+        return 20;
     }
 
     public String getDescripcion() {
@@ -44,7 +41,7 @@ public class Detalle {
     }
 
     public String getIdunidadmedida() {
-        return idunidadmedida;
+        return "NIU";
     }
 
     public Double getPrecio_venta() {
