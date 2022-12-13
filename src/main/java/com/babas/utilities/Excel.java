@@ -12,6 +12,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -275,12 +276,9 @@ public class Excel {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Datos importados");
             Utilities.getLblIzquierda().setText("Éxito: Registros cargados");
             Utilities.getTabbedPane().updateTab();
-        } catch (IOException e) {
+        } catch (IOException | OfficeXmlFileException e) {
             Utilities.getLblIzquierda().setText("Error al importar registros");
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Datos incorrectos");
-        }catch ( org.apache.poi.poifs.filesystem.OfficeXmlFileException e){
-            Utilities.getLblIzquierda().setText("Error al importar registros");
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Versión de excel inválida");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Archivo incorrecto");
         }
     }
 
