@@ -111,10 +111,8 @@ public class DetailRental extends Babas {
     public String getPriceString(){
         return getPrice().toString();
     }
-    @Override
-    public void save() {
-        super.save();
 
+    public void updateStocks(){
         Stock stock= Stocks.getStock(getRental().getBranch(),getProduct());
         stock.refresh();
         stock.getProduct().refresh();

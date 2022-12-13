@@ -344,6 +344,9 @@ public class Rental extends Babas {
     }
 
     public void updateStocks(){
+        getDetailRentals().forEach(DetailRental::updateStocks);
+    }
+    public void saveDetails(){
         getDetailRentals().forEach(Babas::save);
     }
     public void setNumbersVoucher(){

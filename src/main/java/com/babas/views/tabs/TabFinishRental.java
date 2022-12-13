@@ -146,11 +146,11 @@ public class TabFinishRental {
                                     movement.setAmount(-(rental.getWarranty() - rental.getPenalty()));
                                 }
                                 movement.setBoxSesion(Babas.boxSession);
-                                movement.setDescription("ALQUILER FINALIZADO NRO: " + rental.getId());
+                                movement.setDescription("ALQUILER FINALIZADO: " + rental.getSerie() + "-" + rental.getCorrelativo());
                                 movement.save();
                                 movement.getBoxSesion().getMovements().add(0, movement);
                                 movement.getBoxSesion().calculateTotals();
-                                Utilities.getLblIzquierda().setText("Aluiler finalizado Nro. " + rental.getId() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                Utilities.getLblIzquierda().setText("Alquiler finalizado: " + rental.getSerie() + "-" + rental.getCorrelativo() + " :" + Utilities.formatoFechaHora.format(rental.getUpdated()));
                                 Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                                 Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Alquiler finalizado");
                                 FPrincipal.rentalsActives.remove(rental);

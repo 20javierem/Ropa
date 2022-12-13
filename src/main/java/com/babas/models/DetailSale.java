@@ -112,10 +112,7 @@ public class DetailSale extends Babas {
         this.subtotal=Math.round(quantity*price*100.0)/100.0;
     }
 
-    @Override
-    public void save() {
-        super.save();
-
+    public void updateStocks(){
         Stock stock= Stocks.getStock(getSale().getBranch(),getProduct());
         stock.refresh();
         stock.getProduct().refresh();

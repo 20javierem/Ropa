@@ -261,7 +261,6 @@ public class BoxSession extends Babas {
             }
         });
         totalCash+=totalMovements;
-
         amountToDelivered+=(totalSalesCash+totalRentalsCash+totalReservesCash+totalMovements);
         save();
     }

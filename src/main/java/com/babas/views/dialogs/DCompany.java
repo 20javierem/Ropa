@@ -42,7 +42,6 @@ public class DCompany extends JDialog {
     private FlatTextField txtTradeName;
     private FlatTextField txtFiscalAdress;
     private JLabel lblLogo;
-    private FlatSpinner spinnerCompany;
     private JComboBox cbbUsers;
     private JComboBox cbbBranchs;
     private FlatSpinner spinnerUser;
@@ -50,7 +49,6 @@ public class DCompany extends JDialog {
     private JComboBox cbbCompany;
     private JComboBox cbbProduct;
     private FlatSpinner spinnerProduct;
-    private FlatButton btnSaveIdCompany;
     private FlatButton btnSaveIdProduct;
     private FlatButton btnSaveIdUser;
     private FlatButton btnSaveIdBranch;
@@ -92,12 +90,6 @@ public class DCompany extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 onHecho();
-            }
-        });
-        btnSaveIdCompany.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sabeIdFactCompany();
             }
         });
         btnSaveIdProduct.addActionListener(new ActionListener() {
@@ -227,15 +219,6 @@ public class DCompany extends JDialog {
         }
     }
 
-    private void sabeIdFactCompany() {
-        Babas.company.setIdFact(Integer.valueOf(String.valueOf(spinnerCompany.getValue())));
-        boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Cambiar id", JOptionPane.YES_NO_OPTION) == 0;
-        if (si) {
-            Babas.company.save();
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "Éxito", "Cambios guardados");
-        }
-    }
-
     private void onSave() {
         Babas.company.setBusinessName(txtBusinessName.getText().trim());
         Babas.company.setDirectionPrincipal(txtFiscalAdress.getText().trim());
@@ -323,12 +306,10 @@ public class DCompany extends JDialog {
         txtDetails.setText(Babas.company.getDetails());
         txtWebSite.setText(Babas.company.getWebSite());
         txtTokenFacture.setText(Babas.company.getToken());
-        spinnerCompany.setValue(Babas.company.getIdFact());
         spinnerProduct.setValue(Babas.company.getIdProduct());
         if (Utilities.iconCompanyx420x420 != null) {
             lblLogo.setIcon(Utilities.iconCompanyx420x420);
         }
-        cbbCompany.addItem(Babas.company.getBusinessName());
         cbbBranchs.setModel(new DefaultComboBoxModel(FPrincipal.branchs));
         cbbBranchs.setRenderer(new Branch.ListCellRenderer());
         cbbUsers.setModel(new DefaultComboBoxModel(FPrincipal.users));
@@ -342,6 +323,19 @@ public class DCompany extends JDialog {
             Babas.company.refresh();
         }
         dispose();
+    }
+
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+        spinnerBranch = new FlatSpinner();
+        spinnerBranch.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
+        spinnerBranch.setEditor(Utilities.getEditorPrice(spinnerBranch));
+        spinnerProduct = new FlatSpinner();
+        spinnerProduct.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
+        spinnerProduct.setEditor(Utilities.getEditorPrice(spinnerProduct));
+        spinnerUser = new FlatSpinner();
+        spinnerUser.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
+        spinnerUser.setEditor(Utilities.getEditorPrice(spinnerUser));
     }
 
     /**
@@ -429,71 +423,59 @@ public class DCompany extends JDialog {
         panel5.setLayout(new GridLayoutManager(1, 1, new Insets(10, 10, 10, 10), -1, 5));
         tabPane.addTab("Facturador", panel5);
         final JPanel panel6 = new JPanel();
-        panel6.setLayout(new GridLayoutManager(5, 5, new Insets(0, 0, 0, 0), -1, -1));
+        panel6.setLayout(new GridLayoutManager(4, 5, new Insets(0, 0, 0, 0), -1, -1));
         panel5.add(panel6, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        panel6.add(spinnerCompany, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
-        btnSaveIdCompany = new FlatButton();
-        btnSaveIdCompany.setText("Guardar");
-        panel6.add(btnSaveIdCompany, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label7 = new JLabel();
-        label7.setText("Id facturador:");
-        panel6.add(label7, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cbbCompany = new JComboBox();
-        panel6.add(cbbCompany, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        final JLabel label8 = new JLabel();
-        label8.setText("Compañia:");
-        panel6.add(label8, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        final JLabel label9 = new JLabel();
-        label9.setText("Producto:");
-        panel6.add(label9, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        label7.setText("Producto:");
+        panel6.add(label7, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         cbbProduct = new JComboBox();
-        panel6.add(cbbProduct, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        panel6.add(cbbProduct, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        final JLabel label8 = new JLabel();
+        label8.setText("Id facturador:");
+        panel6.add(label8, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        panel6.add(spinnerProduct, new GridConstraints(1, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
+        btnSaveIdProduct = new FlatButton();
+        btnSaveIdProduct.setText("Guardar");
+        panel6.add(btnSaveIdProduct, new GridConstraints(1, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        final JLabel label9 = new JLabel();
+        label9.setText("Sucursal:");
+        panel6.add(label9, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        cbbBranchs = new JComboBox();
+        panel6.add(cbbBranchs, new GridConstraints(2, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
         final JLabel label10 = new JLabel();
         label10.setText("Id facturador:");
         panel6.add(label10, new GridConstraints(2, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        panel6.add(spinnerProduct, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
-        btnSaveIdProduct = new FlatButton();
-        btnSaveIdProduct.setText("Guardar");
-        panel6.add(btnSaveIdProduct, new GridConstraints(2, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel6.add(spinnerBranch, new GridConstraints(2, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
+        btnSaveIdBranch = new FlatButton();
+        btnSaveIdBranch.setText("Guardar");
+        panel6.add(btnSaveIdBranch, new GridConstraints(2, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JLabel label11 = new JLabel();
-        label11.setText("Sucursal:");
+        label11.setText("Usuario:");
         panel6.add(label11, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cbbBranchs = new JComboBox();
-        panel6.add(cbbBranchs, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
+        cbbUsers = new JComboBox();
+        panel6.add(cbbUsers, new GridConstraints(3, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
         final JLabel label12 = new JLabel();
         label12.setText("Id facturador:");
         panel6.add(label12, new GridConstraints(3, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        panel6.add(spinnerBranch, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
-        btnSaveIdBranch = new FlatButton();
-        btnSaveIdBranch.setText("Guardar");
-        panel6.add(btnSaveIdBranch, new GridConstraints(3, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label13 = new JLabel();
-        label13.setText("Usuario:");
-        panel6.add(label13, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        cbbUsers = new JComboBox();
-        panel6.add(cbbUsers, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(200, -1), new Dimension(200, -1), new Dimension(200, -1), 0, false));
-        final JLabel label14 = new JLabel();
-        label14.setText("Id facturador:");
-        panel6.add(label14, new GridConstraints(4, 2, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        panel6.add(spinnerUser, new GridConstraints(4, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
+        panel6.add(spinnerUser, new GridConstraints(3, 3, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(150, -1), new Dimension(150, -1), 0, false));
         btnSaveIdUser = new FlatButton();
         btnSaveIdUser.setText("Guardar");
-        panel6.add(btnSaveIdUser, new GridConstraints(4, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
+        panel6.add(btnSaveIdUser, new GridConstraints(3, 4, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         final JPanel panel7 = new JPanel();
         panel7.setLayout(new GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
         panel6.add(panel7, new GridConstraints(0, 0, 1, 5, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label15 = new JLabel();
-        label15.setText("Token facturador:");
-        panel7.add(label15, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label13 = new JLabel();
+        label13.setText("Token facturador:");
+        panel7.add(label13, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtTokenFacture = new FlatTextField();
         txtTokenFacture.setPlaceholderText("Obligatorio");
         panel7.add(txtTokenFacture, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
         btnSaveToken = new FlatButton();
         btnSaveToken.setText("Guardar");
         panel7.add(btnSaveToken, new GridConstraints(1, 2, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
-        final JLabel label16 = new JLabel();
-        label16.setText("Token Dni/Ruc");
-        panel7.add(label16, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        final JLabel label14 = new JLabel();
+        label14.setText("Token Dni/Ruc");
+        panel7.add(label14, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         txtTokenDniRuc = new FlatTextField();
         txtTokenDniRuc.setPlaceholderText("Obligatorio");
         panel7.add(txtTokenDniRuc, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, new Dimension(210, -1), null, 0, false));
@@ -507,21 +489,5 @@ public class DCompany extends JDialog {
      */
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
-    }
-
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-        spinnerCompany = new FlatSpinner();
-        spinnerCompany.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
-        spinnerCompany.setEditor(Utilities.getEditorPrice(spinnerCompany));
-        spinnerBranch = new FlatSpinner();
-        spinnerBranch.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
-        spinnerBranch.setEditor(Utilities.getEditorPrice(spinnerBranch));
-        spinnerProduct = new FlatSpinner();
-        spinnerProduct.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
-        spinnerProduct.setEditor(Utilities.getEditorPrice(spinnerProduct));
-        spinnerUser = new FlatSpinner();
-        spinnerUser.setModel(new SpinnerNumberModel(0, 0, 100000, 1));
-        spinnerUser.setEditor(Utilities.getEditorPrice(spinnerUser));
     }
 }

@@ -72,26 +72,26 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                             if(si){
                                 sale.refresh();
                                 if(sale.isActive()){
-                                    sale.setActive(false);
-                                    sale.updateStocks();
-                                    Movement movement=new Movement();
-                                    movement.setAmount(-sale.getTotalCurrent());
-                                    movement.setEntrance(false);
-                                    movement.setBoxSesion(Babas.boxSession);
-                                    movement.setDescription("Venta cancelada NRO: "+sale.getId());
-                                    movement.getBoxSesion().getMovements().add(0,movement);
-                                    movement.getBoxSesion().calculateTotals();
-                                    movement.save();
-                                    Utilities.getLblIzquierda().setText("Venta cancelada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
-                                    Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                                    boolean change=false;
                                     if(Babas.company.isValidToken()){
-                                        sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
-                                        if(sale.isStatusSunat()==null){
-                                            sale.setStatusSunat(false);
-                                        }
+                                        change=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale));
                                     }
-                                    sale.save();
+                                    if(change){
+                                        sale.setActive(false);
+                                        sale.updateStocks();
+                                        Movement movement=new Movement();
+                                        movement.setAmount(-sale.getTotalCurrent());
+                                        movement.setEntrance(false);
+                                        movement.setBoxSesion(Babas.boxSession);
+                                        movement.setDescription("Venta cancelada: "+sale.getSerie()+"-"+sale.getCorrelativo());
+                                        movement.getBoxSesion().getMovements().add(0,movement);
+                                        movement.getBoxSesion().calculateTotals();
+                                        movement.save();
+                                        Utilities.getLblIzquierda().setText("Venta cancelada: " + sale.getSerie()+"-"+sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
+                                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                                        sale.save();
+                                    }
                                 }else{
                                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                                 }
@@ -125,7 +125,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                     Sale sale1=new Sale();
                                     sale1.setClient(dChangeVoucher.getClient());
                                     sale1.setTypeVoucher(dChangeVoucher.getTypeVoucher());
-                                    if (sale1.isValidClient()) {
+                                    if (sale1.isValidClient()&&Babas.company.isValidToken()&&ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale))) {
                                         sale.setActive(false);
                                         Movement movement=new Movement();
                                         movement.setAmount(-sale.getTotalCurrent());
@@ -135,9 +135,6 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                         movement.getBoxSesion().getMovements().add(0,movement);
                                         movement.getBoxSesion().calculateTotals();
                                         movement.save();
-                                        if(Babas.company.isValidToken()){
-                                            sale.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale)));
-                                        }
                                         sale.save();
 
                                         sale1.setUser(Babas.user);
@@ -159,12 +156,11 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                         sale1.calculateTotal();
                                         sale1.create();
                                         sale1.save();
-                                        if(Babas.company.isValidToken()){
-                                            if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
-                                                sale1.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale1),false));
-                                            }else{
-                                                sale1.setStatusSunat(false);
-                                            }
+                                        sale1.saveDetails();
+                                        if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
+                                            sale1.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale1),false));
+                                        }else{
+                                            sale1.setStatusSunat(false);
                                         }
                                         sale1.save();
                                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Cambios guardados");

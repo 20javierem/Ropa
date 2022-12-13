@@ -222,7 +222,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="7e858" layout-manager="GridLayoutManager" row-count="5" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+              <grid id="7e858" layout-manager="GridLayoutManager" row-count="4" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
                 <margin top="0" left="0" bottom="0" right="0"/>
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
@@ -230,32 +230,15 @@
                 <properties/>
                 <border type="none" title-justification="3"/>
                 <children>
-                  <component id="21856" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerCompany" custom-create="true">
+                  <component id="32650" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                        <maximum-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="4529b" class="com.formdev.flatlaf.extras.components.FlatButton" binding="btnSaveIdCompany">
-                    <constraints>
-                      <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Guardar"/>
+                      <text value="Producto:"/>
                     </properties>
                   </component>
-                  <component id="e6241" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Id facturador:"/>
-                    </properties>
-                  </component>
-                  <component id="eb48e" class="javax.swing.JComboBox" binding="cbbCompany">
+                  <component id="45495" class="javax.swing.JComboBox" binding="cbbProduct">
                     <constraints>
                       <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="200" height="-1"/>
@@ -265,23 +248,40 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="d765a" class="javax.swing.JLabel">
+                  <component id="a2395" class="javax.swing.JLabel">
                     <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Compañia:"/>
+                      <text value="Id facturador:"/>
                     </properties>
                   </component>
-                  <component id="32650" class="javax.swing.JLabel">
+                  <component id="d7492" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerProduct" custom-create="true">
+                    <constraints>
+                      <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                        <maximum-size width="150" height="-1"/>
+                      </grid>
+                    </constraints>
+                    <properties/>
+                  </component>
+                  <component id="ed822" class="com.formdev.flatlaf.extras.components.FlatButton" binding="btnSaveIdProduct">
+                    <constraints>
+                      <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                    </constraints>
+                    <properties>
+                      <text value="Guardar"/>
+                    </properties>
+                  </component>
+                  <component id="f16ac" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Producto:"/>
+                      <text value="Sucursal:"/>
                     </properties>
                   </component>
-                  <component id="45495" class="javax.swing.JComboBox" binding="cbbProduct">
+                  <component id="c6ab7" class="javax.swing.JComboBox" binding="cbbBranchs">
                     <constraints>
                       <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="200" height="-1"/>
@@ -291,7 +291,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="a2395" class="javax.swing.JLabel">
+                  <component id="5dd5" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -299,7 +299,7 @@
                       <text value="Id facturador:"/>
                     </properties>
                   </component>
-                  <component id="d7492" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerProduct" custom-create="true">
+                  <component id="112fb" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerBranch" custom-create="true">
                     <constraints>
                       <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -308,7 +308,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="ed822" class="com.formdev.flatlaf.extras.components.FlatButton" binding="btnSaveIdProduct">
+                  <component id="bf14d" class="com.formdev.flatlaf.extras.components.FlatButton" binding="btnSaveIdBranch">
                     <constraints>
                       <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -316,15 +316,15 @@
                       <text value="Guardar"/>
                     </properties>
                   </component>
-                  <component id="f16ac" class="javax.swing.JLabel">
+                  <component id="292af" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
-                      <text value="Sucursal:"/>
+                      <text value="Usuario:"/>
                     </properties>
                   </component>
-                  <component id="c6ab7" class="javax.swing.JComboBox" binding="cbbBranchs">
+                  <component id="591fd" class="javax.swing.JComboBox" binding="cbbUsers">
                     <constraints>
                       <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
                         <minimum-size width="200" height="-1"/>
@@ -334,7 +334,7 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="5dd5" class="javax.swing.JLabel">
+                  <component id="ac785" class="javax.swing.JLabel">
                     <constraints>
                       <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
@@ -342,7 +342,7 @@
                       <text value="Id facturador:"/>
                     </properties>
                   </component>
-                  <component id="112fb" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerBranch" custom-create="true">
+                  <component id="f8a5d" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerUser" custom-create="true">
                     <constraints>
                       <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
                         <preferred-size width="150" height="-1"/>
@@ -351,52 +351,9 @@
                     </constraints>
                     <properties/>
                   </component>
-                  <component id="bf14d" class="com.formdev.flatlaf.extras.components.FlatButton" binding="btnSaveIdBranch">
-                    <constraints>
-                      <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Guardar"/>
-                    </properties>
-                  </component>
-                  <component id="292af" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Usuario:"/>
-                    </properties>
-                  </component>
-                  <component id="591fd" class="javax.swing.JComboBox" binding="cbbUsers">
-                    <constraints>
-                      <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <minimum-size width="200" height="-1"/>
-                        <preferred-size width="200" height="-1"/>
-                        <maximum-size width="200" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
-                  <component id="ac785" class="javax.swing.JLabel">
-                    <constraints>
-                      <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                    </constraints>
-                    <properties>
-                      <text value="Id facturador:"/>
-                    </properties>
-                  </component>
-                  <component id="f8a5d" class="com.formdev.flatlaf.extras.components.FlatSpinner" binding="spinnerUser" custom-create="true">
-                    <constraints>
-                      <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                        <maximum-size width="150" height="-1"/>
-                      </grid>
-                    </constraints>
-                    <properties/>
-                  </component>
                   <component id="bc46b" class="com.formdev.flatlaf.extras.components.FlatButton" binding="btnSaveIdUser">
                     <constraints>
-                      <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                      <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                     </constraints>
                     <properties>
                       <text value="Guardar"/>

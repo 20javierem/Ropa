@@ -14,6 +14,7 @@ import org.objectweb.asm.commons.Method;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class ApiClient {
     private static final OkHttpClient client=new OkHttpClient();
@@ -37,6 +38,7 @@ public class ApiClient {
                     addHeader("Authorization", "Bearer " + Babas.company.getToken()).
                     addHeader("Content-Type", "application/json").
                     build();
+            client.setConnectTimeout(15, TimeUnit.SECONDS);
             response = client.newCall(request).execute();
             if(response.code()==200){
                 ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
@@ -59,6 +61,38 @@ public class ApiClient {
         return false;
     }
 
+    public static boolean cancelComprobante(CancelComprobante cancelComprobante) {
+        String url="https://facturadorbabas.com/facturacion/api/comunicacion_baja";
+        try {
+            body = RequestBody.create(mediaType,new Gson().toJson(cancelComprobante));
+            request = new Request.Builder().
+                    url(url).
+                    method("POST", body).
+                    addHeader("Authorization", "Bearer " + Babas.company.getToken()).
+                    addHeader("Content-Type", "application/json").
+                    build();
+            client.setConnectTimeout(15, TimeUnit.SECONDS);
+            response = client.newCall(request).execute();
+            if(response.code()==200){
+                ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
+                if(responseJson.getRespuesta().equals("ok")){
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante cancelado ante sunat");
+                    return true;
+                }else{
+                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
+                    return false;
+                }
+            }else{
+                return false;
+            }
+        } catch (UnknownHostException e){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión a internet");
+        } catch (IOException e) {
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
+        }
+        return false;
+    }
+
     public static Client getClient(String document){
         String url;
         int typeDocument=document.length()==8?1:document.length()==11?6:0;
@@ -74,6 +108,7 @@ public class ApiClient {
                     url(url).
                     method("GET", null).
                     build();
+            client.setConnectTimeout(10, TimeUnit.SECONDS);
             response = client.newCall(request).execute();
             if(response.code()==200){
                 ClientResponse clientResponse=new Gson().fromJson(response.body().string(), ClientResponse.class);
@@ -101,38 +136,6 @@ public class ApiClient {
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
         }
         return null;
-    }
-
-    public static Boolean cancelComprobante(CancelComprobante cancelComprobante) {
-        String url="https://facturadorbabas.com/facturacion/api/comunicacion_baja";
-        try {
-            body = RequestBody.create(mediaType,new Gson().toJson(cancelComprobante));
-            request = new Request.Builder().
-                    url(url).
-                    method("POST", body).
-                    addHeader("Authorization", "Bearer " + Babas.company.getToken()).
-                    addHeader("Content-Type", "application/json").
-                    build();
-            response = client.newCall(request).execute();
-            if(response.code()==200){
-                ResponseJson responseJson=new Gson().fromJson(response.body().string(), ResponseJson.class);
-                if(responseJson.getRespuesta().equals("ok")){
-                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Comprobante cancelado ante sunat");
-                    return true;
-                }else if(responseJson.getMensaje().equals("El documento electrónico no se encuentra o no es válido!")){
-                    return null;
-                }
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",responseJson.getMensaje());
-                return false;
-            }else{
-                return false;
-            }
-        } catch (UnknownHostException e){
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No hay conexión a internet");
-        } catch (IOException e) {
-            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedió un error inesperado");
-        }
-        return false;
     }
 
     public static Comprobante getComprobanteOfSale(Sale sale){

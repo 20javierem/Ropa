@@ -104,29 +104,41 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                 rental.refresh();
                                 boolean toSunat=rental.isActive()!=0;
                                 if(rental.isActive()!=2){
-                                    rental.setActive(2);
-                                    rental.updateStocks();
-                                    Movement movement=new Movement();
-                                    movement.setAmount(-rental.getTotalCurrent());
-                                    movement.setEntrance(false);
-                                    movement.setBoxSesion(Babas.boxSession);
-                                    movement.setDescription("Alquiler cancelado NRO: "+rental.getId());
-                                    movement.save();
-                                    movement.getBoxSesion().getMovements().add(0,movement);
-                                    movement.getBoxSesion().calculateTotals();
-                                    FPrincipal.rentalsActives.remove(rental);
-                                    Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getId() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
-                                    Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
                                     if(toSunat){
-                                        if(Babas.company.isValidToken()){
-                                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
-                                            if(rental.isStatusSunat()==null){
-                                                rental.setStatusSunat(false);
-                                            }
+                                        if(Babas.company.isValidToken()&&ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental))){
+                                            rental.setActive(2);
+                                            rental.updateStocks();
+                                            Movement movement=new Movement();
+                                            movement.setAmount(-rental.getTotalCurrent());
+                                            movement.setEntrance(false);
+                                            movement.setBoxSesion(Babas.boxSession);
+                                            movement.setDescription("Alquiler cancelado NRO: "+rental.getSerie()+"-"+rental.getCorrelativo());
+                                            movement.save();
+                                            movement.getBoxSesion().getMovements().add(0,movement);
+                                            movement.getBoxSesion().calculateTotals();
+                                            FPrincipal.rentalsActives.remove(rental);
+                                            Utilities.getLblIzquierda().setText("Alquiler cancelado: " + rental.getSerie()+"-"+rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
+                                            rental.save();
                                         }
+                                    }else{
+                                        rental.setActive(2);
+                                        rental.updateStocks();
+                                        Movement movement=new Movement();
+                                        movement.setAmount(-rental.getTotalCurrent());
+                                        movement.setEntrance(false);
+                                        movement.setBoxSesion(Babas.boxSession);
+                                        movement.setDescription("Alquiler cancelado: "+rental.getSerie()+"-"+rental.getCorrelativo());
+                                        movement.save();
+                                        movement.getBoxSesion().getMovements().add(0,movement);
+                                        movement.getBoxSesion().calculateTotals();
+                                        FPrincipal.rentalsActives.remove(rental);
+                                        Utilities.getLblIzquierda().setText("Alquiler cancelado Nro. " + rental.getId() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
+                                        rental.save();
                                     }
-                                    rental.save();
                                 }else{
                                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler ya está cancelado");
                                 }
@@ -159,7 +171,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                     Rental rental1=new Rental();
                                     rental1.setClient(dChangeVoucher.getClient());
                                     rental1.setTypeVoucher(dChangeVoucher.getTypeVoucher());
-                                    if (rental1.isValidClient()) {
+                                    if (rental1.isValidClient()&&Babas.company.isValidToken()&&ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental))) {
                                         rental.setActive(2);
                                         Movement movement=new Movement();
                                         movement.setAmount(-rental.getTotalCurrent());
@@ -169,9 +181,6 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                         movement.getBoxSesion().getMovements().add(0,movement);
                                         movement.getBoxSesion().calculateTotals();
                                         movement.save();
-                                        if(Babas.company.isValidToken()){
-                                            rental.setStatusSunat(ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental)));
-                                        }
                                         rental.save();
 
                                         rental1.setUser(Babas.user);
@@ -195,12 +204,11 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                         rental1.calculateTotals();
                                         rental1.create();
                                         rental1.save();
-                                        if(Babas.company.isValidToken()){
-                                            if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
-                                                rental1.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental1),false));
-                                            }else{
-                                                rental1.setStatusSunat(false);
-                                            }
+                                        rental1.saveDetails();
+                                        if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
+                                            rental1.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental1),false));
+                                        }else{
+                                            rental1.setStatusSunat(false);
                                         }
                                         rental1.save();
                                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Cambios guardados");

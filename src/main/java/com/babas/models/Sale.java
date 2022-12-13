@@ -287,9 +287,11 @@ public class Sale extends Babas {
     }
 
     public void updateStocks(){
+        getDetailSales().forEach(DetailSale::updateStocks);
+    }
+    public void saveDetails(){
         getDetailSales().forEach(Babas::save);
     }
-
     @Override
     public void save() {
         updated=new Date();

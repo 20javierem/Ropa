@@ -23,7 +23,6 @@ public class Company extends Babas {
     private String directionPrincipal;
     private String logo="";
     private String details="";
-    private Integer idFact=0;
     private Integer idProduct=0;
     private String token;
     private String webSite;
@@ -44,14 +43,6 @@ public class Company extends Babas {
 
     public void setToken(String token) {
         this.token = token;
-    }
-
-    public Integer getIdFact() {
-        return idFact;
-    }
-
-    public void setIdFact(Integer idFact) {
-        this.idFact = idFact;
     }
 
     public Long getId() {

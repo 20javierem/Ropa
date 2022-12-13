@@ -205,10 +205,11 @@ public class TabNewSale {
                         if (sale.isValidClient()) {
                             sale.create();
                             sale.save();
+                            sale.saveDetails();
                             sale.updateStocks();
                             Babas.boxSession.getSales().add(0, sale);
                             Babas.boxSession.calculateTotals();
-                            Utilities.getLblIzquierda().setText("Venta registrada Nro. " + sale.getId() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
+                            Utilities.getLblIzquierda().setText("Venta registrada: " + sale.getSerie() + "-" + sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
                             Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
                             if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {

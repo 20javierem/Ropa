@@ -228,6 +228,7 @@ public class TabNewRental {
                 if (si) {
                     rental.create();
                     rental.save();
+                    rental.saveDetails();
                     rental.updateStocks();
                     FPrincipal.rentalsActives.add(0, rental);
                     Babas.boxSession.getRentals().add(0, rental);
