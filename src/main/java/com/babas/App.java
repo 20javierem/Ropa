@@ -19,8 +19,8 @@ public class App
         Utilities.propiedades.save();
         Utilities.loadTheme();
         FLogin fLogin=new FLogin();
-        fLogin.setVisible(true);
         fLogin.tryConnection();
+        fLogin.setVisible(true);
     }
 
 }
