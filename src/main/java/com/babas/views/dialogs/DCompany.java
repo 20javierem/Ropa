@@ -252,14 +252,13 @@ public class DCompany extends JDialog {
             try {
                 ByteArrayOutputStream os = new ByteArrayOutputStream();
                 ImageIO.write(bufferedImage, "png", os);
-                String nameImage = "logoCompany.png";
                 InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
-                if (Utilities.newImage(inputStream, nameImage, true)) {
+                if (Utilities.newImage(inputStream, "logoCompany.png", true)) {
                     if (Utilities.getJFrame() != null && Utilities.getJFrame() instanceof FPrincipal) {
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.INFO, Notify.Location.TOP_CENTER, "ÉXITO", "Imagen guardada");
                     }
-                    Babas.company.setLogo(nameImage);
-                    Image logo = Utilities.getImage(nameImage, true);
+                    Babas.company.setLogo("logoCompany.png");
+                    Image logo = Utilities.getImage("logoCompany.png", true);
                     if (logo != null) {
                         Utilities.iconCompanyx255x220 = new ImageIcon(DCrop.getImage(bufferedImage, 255.00, 200.00));
                         Utilities.iconCompanyx420x420 = new ImageIcon(DCrop.getImage(bufferedImage, 420.00, 420.00));

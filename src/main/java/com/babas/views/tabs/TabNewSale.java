@@ -5,6 +5,7 @@ import com.babas.controllers.Clients;
 import com.babas.controllers.Rentals;
 import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
+import com.babas.custom.Task;
 import com.babas.models.Client;
 import com.babas.models.Sale;
 import com.babas.modelsFacture.ApiClient;
@@ -19,7 +20,6 @@ import com.babas.utilitiesTables.tablesModels.DetailSaleAbstractModel;
 import com.babas.validators.ProgramValidator;
 import com.babas.views.dialogs.DaddProductToSale;
 import com.babas.views.frames.FPrincipal;
-import com.formdev.flatlaf.FlatIconColors;
 import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -34,8 +34,12 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Locale;
 import java.util.Set;
+
+import static java.lang.Thread.sleep;
 
 public class TabNewSale {
     private TabPane tabPane;
@@ -207,38 +211,14 @@ public class TabNewSale {
                             sale.save();
                             sale.saveDetails();
                             sale.updateStocks();
-                            Babas.boxSession.getSales().add(0, sale);
-                            Babas.boxSession.calculateTotals();
-                            Utilities.getLblIzquierda().setText("Venta registrada: " + sale.getSerie() + "-" + sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
-                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
                             if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
-                                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
+                                tabPane.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                                loadProgressBar(option);
                             } else {
                                 sale.setStatusSunat(false);
+                                Toolkit.getDefaultToolkit().beep();
+                                endSale(option);
                             }
-                            sale.save();
-                            if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
-                                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                                if (index == 0) {
-                                    UtilitiesReports.generateComprobanteOfSale(true, sale, true);
-                                } else if (index == 1) {
-                                    UtilitiesReports.generateComprobanteOfSale(false, sale, true);
-                                }
-                            } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
-                                option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
-                                if (option == JOptionPane.OK_OPTION) {
-                                    int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
-                                    if (index == 0) {
-                                        UtilitiesReports.generateComprobanteOfSale(true, sale, true);
-                                    } else if (index == 1) {
-                                        UtilitiesReports.generateComprobanteOfSale(false, sale, true);
-                                    }
-                                }
-                            }
-                            sale = new Sale();
-                            clear();
-                            Utilities.getTabbedPane().updateTab();
                         } else {
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El cliente no es válido");
                         }
@@ -255,6 +235,36 @@ public class TabNewSale {
         btnSaleWithCash.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     }
 
+    private void endSale(int option) {
+        Babas.boxSession.getSales().add(0, sale);
+        Babas.boxSession.calculateTotals();
+        Utilities.getLblIzquierda().setText("Venta registrada: " + sale.getSerie() + "-" + sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getCreated()));
+        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER, "ÉXITO", "Venta registrada");
+        sale.save();
+        if (Utilities.propiedades.getPrintTicketSale().equals("always")) {
+            int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+            if (index == 0) {
+                UtilitiesReports.generateComprobanteOfSale(true, sale, true);
+            } else if (index == 1) {
+                UtilitiesReports.generateComprobanteOfSale(false, sale, true);
+            }
+        } else if (Utilities.propiedades.getPrintTicketSale().equals("question")) {
+            option = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Imprimir?", "Ticket de venta", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.OK_OPTION) {
+                int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+                if (index == 0) {
+                    UtilitiesReports.generateComprobanteOfSale(true, sale, true);
+                } else if (index == 1) {
+                    UtilitiesReports.generateComprobanteOfSale(false, sale, true);
+                }
+            }
+        }
+        sale = new Sale();
+        clear();
+        Utilities.getTabbedPane().updateTab();
+    }
+
     private void clear() {
         txtMail.setText(null);
         txtDocument.setText(null);
@@ -262,6 +272,39 @@ public class TabNewSale {
         txtNameClient.setText(null);
         txtObservation.setText(null);
         load();
+    }
+
+    private void loadProgressBar(int option) {
+        Task task = new Task() {
+            @Override
+            protected Void doInBackground() {
+                Utilities.getProgressBar().setValue(0);
+                Utilities.getLblIzquierda().setVisible(false);
+                Utilities.getProgressBar().setVisible(true);
+                Thread thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            for (int i = 0; i <= 15; i++) {
+                                sleep(1000);
+                                Utilities.getProgressBar().setValue(Math.min(7 * i, 100));
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                thread.start();
+                sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
+                tabPane.setCursor(null);
+                Utilities.getLblIzquierda().setVisible(true);
+                Utilities.getProgressBar().setVisible(false);
+                Toolkit.getDefaultToolkit().beep();
+                endSale(option);
+                return null;
+            }
+        };
+        task.execute();
     }
 
     private boolean getClient() {

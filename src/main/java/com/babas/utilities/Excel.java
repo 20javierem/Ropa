@@ -278,7 +278,9 @@ public class Excel {
         } catch (IOException e) {
             Utilities.getLblIzquierda().setText("Error al importar registros");
             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Datos incorrectos");
-            throw new RuntimeException(e);
+        }catch ( org.apache.poi.poifs.filesystem.OfficeXmlFileException e){
+            Utilities.getLblIzquierda().setText("Error al importar registros");
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Versión de excel inválida");
         }
     }
 

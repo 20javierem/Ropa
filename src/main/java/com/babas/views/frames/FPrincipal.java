@@ -68,6 +68,7 @@ public class FPrincipal extends JFrame {
     private JButton btnNewQuotation;
     private JButton btnSearchClient;
     private JMenu btnMenuQuotations;
+    private JProgressBar progressBar;
     private JLabel lblLogo;
     private MenuSales menuSales;
     private MenuManage menuManage;
@@ -658,6 +659,7 @@ public class FPrincipal extends JFrame {
         Utilities.setLblIzquierda(lblLeft);
         Utilities.setLblCentro(lblCenter);
         Utilities.setLblDerecha(lblRigth);
+        Utilities.setProgressBar(progressBar);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         cargarCursores();
         pack();
@@ -909,7 +911,7 @@ public class FPrincipal extends JFrame {
         panel3.setBackground(new java.awt.Color(-16777216));
         contentPane.add(panel3, new GridConstraints(2, 0, 1, 2, GridConstraints.ANCHOR_SOUTH, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(-1, 28), new Dimension(-1, 28), new Dimension(-1, 28), 0, false));
         final JPanel panel4 = new JPanel();
-        panel4.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
+        panel4.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1));
         panel4.setOpaque(false);
         panel3.add(panel4, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_VERTICAL, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, new Dimension(350, -1), new Dimension(350, -1), new Dimension(350, -1), 0, false));
         lblLeft = new JLabel();
@@ -918,6 +920,10 @@ public class FPrincipal extends JFrame {
         lblLeft.setForeground(new java.awt.Color(-1));
         lblLeft.setText("");
         panel4.add(lblLeft, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);
+        progressBar.setVisible(false);
+        panel4.add(progressBar, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridLayoutManager(1, 1, new Insets(0, 0, 0, 0), -1, -1));
         panel5.setOpaque(false);

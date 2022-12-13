@@ -72,6 +72,7 @@ public class Utilities {
     private static JLabel lblIzquierda;
     private static JLabel lblCentro;
     private static JLabel lblDerecha;
+    private static JProgressBar progressBar;
     public static JButton actions=new JButton();
     public static Icon iconCompanyx420x420;
     public static Icon iconCompanyx255x220;
@@ -492,6 +493,14 @@ public class Utilities {
 
     public static JLabel getLblDerecha() {
         return lblDerecha;
+    }
+
+    public static JProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public static void setProgressBar(JProgressBar progressBar) {
+        Utilities.progressBar = progressBar;
     }
 
     public static void setLblDerecha(JLabel lblDerecha) {
