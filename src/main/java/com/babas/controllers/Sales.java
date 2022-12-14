@@ -28,11 +28,13 @@ public class Sales extends Babas {
     public static List<Sale> getOnWait(){
         criteria = builder.createQuery(Sale.class);
         root=criteria.from(Sale.class);
-        criteria.select(root).where(
-                        builder.isFalse(root.get("statusSunat")))
+        criteria.select(root).where(builder.and(
+                        builder.isFalse(root.get("statusSunat")),
+                        builder.isTrue(root.get("active"))))
                 .orderBy(builder.asc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
+
     public static Sale getFirstOnWait(String type){
         criteria = builder.createQuery(Sale.class);
         root=criteria.from(Sale.class);

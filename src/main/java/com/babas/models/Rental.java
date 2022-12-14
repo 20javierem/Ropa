@@ -278,7 +278,7 @@ public class Rental extends Babas {
         return active==0?"EN ALQUILER":active==1?"COMPLETADO":"CANCELADO";
     }
     public String getStringSunat(){
-        return statusSunat?"CONFIRMADO":"PENDIENTE";
+        return !statusSunat&&active==2?"FORZADO":statusSunat?"CONFIRMADO":"PENDIENTE";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);

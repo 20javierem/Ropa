@@ -33,8 +33,9 @@ public class Rentals extends Babas {
     public static List<Rental> getOnWait(){
         criteria = builder.createQuery(Rental.class);
         root=criteria.from(Rental.class);
-        criteria.select(root).where(
-                        builder.isFalse(root.get("statusSunat")))
+        criteria.select(root).where(builder.and(
+                        builder.isFalse(root.get("statusSunat")),
+                        builder.equal(root.get("active"),1)))
                 .orderBy(builder.asc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }

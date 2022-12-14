@@ -77,8 +77,11 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                 if(cancel){
                                     sale.refresh();
                                     if(sale.isActive()){
+                                        sale.setStatusSunat(false);
                                         if(response==0&&Babas.company.isValidToken()){
                                             cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale));
+                                        }else{
+                                            sale.setStatusSunat(false);
                                         }
                                         if(cancel){
                                             sale.setActive(false);

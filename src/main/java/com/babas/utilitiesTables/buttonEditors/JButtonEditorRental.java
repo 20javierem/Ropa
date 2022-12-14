@@ -111,6 +111,8 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                     if(rental.isActive()!=2){
                                         if(toSunat&&Babas.company.isValidToken()&&response==0){
                                             cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental));
+                                        }else{
+                                            rental.setStatusSunat(false);
                                         }
                                         if(cancel){
                                             rental.setActive(2);
