@@ -66,41 +66,46 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     break;
                 default:
                     sale.refresh();
-                    if(sale.isActive()){
+                    if(sale.isActive()&&sale.isStatusSunat()){
                         if(Babas.boxSession.getId()!=null){
-                            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_OPTION)==0;
-                            if(si){
-                                sale.refresh();
-                                if(sale.isActive()){
-                                    boolean change=false;
-                                    if(Babas.company.isValidToken()){
-                                        change=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale));
+                            int response=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","Forzar","Cancelar"},"Si");
+                            if(response==0||response==1){
+                                boolean cancel=true;
+                                if(response==1){
+                                    cancel=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, forzar cancelación","Cancelar venta",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","Cancelar"},"Si")==0;
+                                }
+                                if(cancel){
+                                    sale.refresh();
+                                    if(sale.isActive()){
+                                        if(response==0&&Babas.company.isValidToken()){
+                                            cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale));
+                                        }
+                                        if(cancel){
+                                            sale.setActive(false);
+                                            sale.updateStocks();
+                                            Movement movement=new Movement();
+                                            movement.setAmount(-sale.getTotalCurrent());
+                                            movement.setEntrance(false);
+                                            movement.setBoxSesion(Babas.boxSession);
+                                            movement.setDescription("Venta cancelada: "+sale.getSerie()+"-"+sale.getCorrelativo());
+                                            movement.getBoxSesion().getMovements().add(0,movement);
+                                            movement.getBoxSesion().calculateTotals();
+                                            movement.save();
+                                            Utilities.getLblIzquierda().setText("Venta cancelada: " + sale.getSerie()+"-"+sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
+                                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
+                                            sale.save();
+                                        }
+                                    }else{
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                                     }
-                                    if(change){
-                                        sale.setActive(false);
-                                        sale.updateStocks();
-                                        Movement movement=new Movement();
-                                        movement.setAmount(-sale.getTotalCurrent());
-                                        movement.setEntrance(false);
-                                        movement.setBoxSesion(Babas.boxSession);
-                                        movement.setDescription("Venta cancelada: "+sale.getSerie()+"-"+sale.getCorrelativo());
-                                        movement.getBoxSesion().getMovements().add(0,movement);
-                                        movement.getBoxSesion().calculateTotals();
-                                        movement.save();
-                                        Utilities.getLblIzquierda().setText("Venta cancelada: " + sale.getSerie()+"-"+sale.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(sale.getUpdated()));
-                                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Venta cancelada");
-                                        sale.save();
-                                    }
-                                }else{
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
                                 }
                             }
                         }else{
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
                         }
                     }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta ya está cancelada");
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta no fué enviada a sunat o está cancelada");
                     }
                     break;
             }

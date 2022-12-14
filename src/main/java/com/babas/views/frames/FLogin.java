@@ -61,11 +61,6 @@ public class FLogin extends JFrame {
                 onHecho();
             }
         });
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onHecho();
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         btnInitSession.addActionListener(e -> start());
         lbl.addMouseListener(new MouseAdapter() {
             @Override
@@ -83,7 +78,7 @@ public class FLogin extends JFrame {
 
     public void onHecho() {
         Babas.close();
-        dispose();
+        System.exit(0);
     }
 
     public void tryConnection() {
