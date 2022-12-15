@@ -12,6 +12,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -342,7 +343,11 @@ public class Rental extends Babas {
             FPrincipal.reservesActives.remove(reserve);
         }
     }
-
+    public boolean isPosibleCancel(){
+        Calendar dateCreated=Calendar.getInstance();
+        dateCreated.setTime(created);
+        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
+    }
     public void updateStocks(){
         getDetailRentals().forEach(DetailRental::updateStocks);
     }

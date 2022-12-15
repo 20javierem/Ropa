@@ -7,10 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity(name = "sale_tbl")
 public class Sale extends Babas {
@@ -291,6 +288,12 @@ public class Sale extends Babas {
     }
     public void saveDetails(){
         getDetailSales().forEach(Babas::save);
+    }
+
+    public boolean isPosibleCancel(){
+        Calendar dateCreated=Calendar.getInstance();
+        dateCreated.setTime(created);
+        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
     }
     @Override
     public void save() {

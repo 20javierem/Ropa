@@ -97,7 +97,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     break;
                 default:
                     rental.refresh();
-                    if(rental.isActive()!=2&&rental.isStatusSunat()){
+                    if(rental.isActive()!=2&&rental.isStatusSunat()&&rental.isPosibleCancel()){
                         if(Babas.boxSession.getId()!=null){
                             int response=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","Forzar","Cancelar"},"Si");
                             if(response==0||response==1){
@@ -140,7 +140,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
                         }
                     }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler no fué enviado a sunat o está cancelado");
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler no fué enviado, está cancelado o pasó el tiempo de cancelación");
                     }
                     break;
             }
@@ -152,7 +152,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
         String messageError=null;
         if(Babas.company.isValidToken()){
             rental.refresh();
-            if(rental.isActive()==1){
+            if(rental.isActive()==1&&rental.isPosibleCancel()){
                 if(Babas.boxSession.getId()!=null){
                     if(rental.getTypeVoucher().equals("77")){
                         DChangeVoucher dChangeVoucher=new DChangeVoucher(rental.getClient());
@@ -223,7 +223,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     messageError="Debe aperturar caja";
                 }
             }else{
-                messageError="El alquiler está cancelado";
+                messageError="El alquiler está cancelado o pasó el tiempo de cancelación";
             }
         }
         if(messageError!=null){
