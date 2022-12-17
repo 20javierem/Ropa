@@ -78,6 +78,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                     sale.refresh();
                                     if(sale.isActive()){
                                         sale.setStatusSunat(false);
+                                        Babas.company.refresh();
                                         if(response==0&&Babas.company.isValidToken()){
                                             cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale));
                                         }else{
@@ -119,6 +120,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
 
     private void changeSale(Sale sale){
         String messageError=null;
+        Babas.company.refresh();
         if(Babas.company.isValidToken()){
             sale.refresh();
             if(sale.isActive()&&sale.isPosibleCancel()){
@@ -133,7 +135,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                     Sale sale1=new Sale();
                                     sale1.setClient(dChangeVoucher.getClient());
                                     sale1.setTypeVoucher(dChangeVoucher.getTypeVoucher());
-                                    if (sale1.isValidClient()&&Babas.company.isValidToken()&&ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale))) {
+                                    if (sale1.isValidClient()&&ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale))) {
                                         sale.setActive(false);
                                         Movement movement=new Movement();
                                         movement.setAmount(-sale.getTotalCurrent());

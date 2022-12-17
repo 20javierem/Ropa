@@ -193,6 +193,7 @@ public class TabNewSale {
                     jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
                     JComboBox comboBox = new JComboBox();
                     comboBox.addItem("NOTA");
+                    Babas.company.refresh();
                     if (Babas.company.isValidToken()) {
                         comboBox.addItem("BOLETA");
                         comboBox.addItem("FACTURA");

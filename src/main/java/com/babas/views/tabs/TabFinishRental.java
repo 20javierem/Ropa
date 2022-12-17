@@ -122,6 +122,7 @@ public class TabFinishRental {
                         jPanel.add(new JLabel("Seleccione el tipo de comprobante: "));
                         JComboBox comboBox = new JComboBox();
                         comboBox.addItem("NOTA");
+                        Babas.company.refresh();
                         if (Babas.company.isValidToken()) {
                             comboBox.addItem("BOLETA");
                             comboBox.addItem("FACTURA");
@@ -144,7 +145,6 @@ public class TabFinishRental {
                                 if (Sales.getOnWait().isEmpty() && Rentals.getOnWait().isEmpty()) {
                                     loadProgressBar();
                                 } else {
-                                    rental.setStatusSunat(false);
                                     Toolkit.getDefaultToolkit().beep();
                                     endRental();
                                 }
@@ -217,13 +217,8 @@ public class TabFinishRental {
 
     private void endRental() {
         Movement movement = new Movement();
-        if (rental.getPenalty() > rental.getWarranty()) {
-            movement.setEntrance(true);
-            movement.setAmount(rental.getPenalty() - rental.getWarranty());
-        } else {
-            movement.setEntrance(false);
-            movement.setAmount(-(rental.getWarranty() - rental.getPenalty()));
-        }
+        movement.setEntrance(rental.getPenalty() > rental.getWarranty());
+        movement.setAmount(rental.getPenalty() - rental.getWarranty());
         movement.setBoxSesion(Babas.boxSession);
         movement.setDescription("ALQUILER FINALIZADO: " + rental.getSerie() + "-" + rental.getCorrelativo());
         movement.save();
