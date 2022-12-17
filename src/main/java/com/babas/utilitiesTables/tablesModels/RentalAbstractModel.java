@@ -47,7 +47,7 @@ public class RentalAbstractModel extends AbstractTableModel {
         Rental rental = list.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return rental.getSerie()+"-"+rental.getCorrelativo();
+                return rental.getNumberRental();
             case 1:
                 return rental.getUpdated();
             case 2:

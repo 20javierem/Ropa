@@ -135,7 +135,12 @@ public class Rental extends Babas {
     public Long getCorrelativo() {
         return correlativo;
     }
-
+    public String getNumberRental(){
+        String number=serie!=null? serie :"A001";
+        number+="-";
+        number+= correlativo!=null?correlativo:id;
+        return number;
+    }
     public Double getTotal() {
         return total;
     }
@@ -279,7 +284,7 @@ public class Rental extends Babas {
         return active==0?"EN ALQUILER":active==1?"COMPLETADO":"CANCELADO";
     }
     public String getStringSunat(){
-        return !statusSunat&&active==2?"FORZADO":statusSunat?"CONFIRMADO":"PENDIENTE";
+        return !statusSunat&&active==2&&serie!=null?"FORZADO":statusSunat?"CONFIRMADO":"NO ENVIADO";
     }
     public String getStringSubtotal(){
         return Utilities.moneda.format(total);
