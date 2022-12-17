@@ -99,12 +99,12 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     String messageError=null;
                     rental.refresh();
                     if(rental.isActive()!=2){
-                        if(rental.isStatusSunat()){
-                            if(rental.isPosibleCancel()){
-                                if(Babas.boxSession.getId()!=null){
-                                    boolean toSunat=rental.isActive()==1;
-                                    boolean cancel;
-                                    if(toSunat){
+                        if(rental.isPosibleCancel()){
+                            if(Babas.boxSession.getId()!=null){
+                                boolean toSunat=rental.isActive()==1;
+                                boolean cancel;
+                                if(toSunat){
+                                    if(rental.isStatusSunat()){
                                         int response=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","Forzar","Cancelar"},"Si");
                                         if(response==1){
                                             cancel=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, forzar cancelación","Cancelar alquiler",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","No"},"Si")==0;
@@ -113,46 +113,47 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                             cancel=response==0;
                                         }
                                     }else{
-                                        cancel=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","No"},"Si")==0;
-                                    }
-                                    if(cancel){
-                                        rental.refresh();
-                                        if(rental.isActive()!=2){
-                                            Babas.company.refresh();
-                                            if(toSunat&&Babas.company.isValidToken()){
-                                                cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental));
-                                            }else{
-                                                rental.setStatusSunat(false);
-                                            }
-                                            if(cancel){
-                                                rental.setActive(2);
-                                                rental.updateStocks();
-                                                Movement movement=new Movement();
-                                                movement.setAmount(-rental.getTotalCurrent());
-                                                movement.setEntrance(false);
-                                                movement.setBoxSesion(Babas.boxSession);
-                                                movement.setDescription("Alquiler cancelado: "+rental.getSerie()+"-"+rental.getCorrelativo());
-                                                movement.save();
-                                                movement.getBoxSesion().getMovements().add(0,movement);
-                                                movement.getBoxSesion().calculateTotals();
-                                                FPrincipal.rentalsActives.remove(rental);
-                                                Utilities.getLblIzquierda().setText("Alquiler cancelado: " + rental.getSerie()+"-"+rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
-                                                Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
-                                                rental.save();
-                                            }
-                                        }else{
-                                            messageError="El alquiler está cancelado";
-                                        }
+                                        messageError="El alquiler no fué enviado a sunat";
+                                        cancel=false;
                                     }
                                 }else{
-                                    messageError="Debe aperturar caja";
+                                    cancel=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","No"},"Si")==0;
+                                }
+                                if(cancel){
+                                    rental.refresh();
+                                    if(rental.isActive()!=2){
+                                        Babas.company.refresh();
+                                        if(toSunat&&Babas.company.isValidToken()){
+                                            cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental));
+                                        }else{
+                                            rental.setStatusSunat(false);
+                                        }
+                                        if(cancel){
+                                            rental.setActive(2);
+                                            rental.updateStocks();
+                                            Movement movement=new Movement();
+                                            movement.setAmount(-rental.getTotalCurrent());
+                                            movement.setEntrance(false);
+                                            movement.setBoxSesion(Babas.boxSession);
+                                            movement.setDescription("Alquiler cancelado: "+rental.getSerie()+"-"+rental.getCorrelativo());
+                                            movement.save();
+                                            movement.getBoxSesion().getMovements().add(0,movement);
+                                            movement.getBoxSesion().calculateTotals();
+                                            FPrincipal.rentalsActives.remove(rental);
+                                            Utilities.getLblIzquierda().setText("Alquiler cancelado: " + rental.getSerie()+"-"+rental.getCorrelativo() + " : " + Utilities.formatoFechaHora.format(rental.getUpdated()));
+                                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
+                                            rental.save();
+                                        }
+                                    }else{
+                                        messageError="El alquiler está cancelado";
+                                    }
                                 }
                             }else{
-                                messageError="Ya pasó el periodo de cancelación";
+                                messageError="Debe aperturar caja";
                             }
                         }else{
-                            messageError="El alquiler no fué enviado a sunat";
+                            messageError="Ya pasó el periodo de cancelación";
                         }
                     }else{
                         messageError="El alquiler está cancelado";
