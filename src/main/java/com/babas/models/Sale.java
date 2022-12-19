@@ -290,11 +290,11 @@ public class Sale extends Babas {
         getDetailSales().forEach(Babas::save);
     }
 
-    public boolean isPosibleCancel(){
-        Calendar dateCreated=Calendar.getInstance();
-        dateCreated.setTime(created);
-        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
-    }
+//    public boolean isPosibleCancel(){
+//        Calendar dateCreated=Calendar.getInstance();
+//        dateCreated.setTime(created);
+//        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
+//    }
     @Override
     public void save() {
         updated=new Date();

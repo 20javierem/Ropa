@@ -66,7 +66,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     break;
                 default:
                     sale.refresh();
-                    if(sale.isActive()&&sale.isStatusSunat()&&sale.isPosibleCancel()){
+                    if(sale.isActive()&&sale.isStatusSunat()){
                         if(Babas.boxSession.getId()!=null){
                             int response=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar venta",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","Forzar","Cancelar"},"Si");
                             if(response==0||response==1){
@@ -109,7 +109,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                             Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
                         }
                     }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta no fué enviada, está cancelada o pasó el tiempo de cancelación");
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La venta no fué enviada o está cancelada");
                     }
                     break;
             }
@@ -123,7 +123,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
         Babas.company.refresh();
         if(Babas.company.isValidToken()){
             sale.refresh();
-            if(sale.isActive()&&sale.isPosibleCancel()){
+            if(sale.isActive()){
                 if(Babas.boxSession.getId()!=null){
                     if(sale.getTypeVoucher().equals("77")){
                         DChangeVoucher dChangeVoucher=new DChangeVoucher(sale.getClient());
@@ -193,7 +193,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                 }
 
             }else{
-                messageError="La venta está cancelada o pasó el tiempo de cancelación";
+                messageError="La venta está cancelada";
             }
         }
         if(messageError!=null){

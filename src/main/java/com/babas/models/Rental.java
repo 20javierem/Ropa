@@ -348,11 +348,11 @@ public class Rental extends Babas {
             FPrincipal.reservesActives.remove(reserve);
         }
     }
-    public boolean isPosibleCancel(){
-        Calendar dateCreated=Calendar.getInstance();
-        dateCreated.setTime(created);
-        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
-    }
+//    public boolean isPosibleCancel(){
+//        Calendar dateCreated=Calendar.getInstance();
+//        dateCreated.setTime(created);
+//        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
+//    }
     public void updateStocks(){
         getDetailRentals().forEach(DetailRental::updateStocks);
     }
