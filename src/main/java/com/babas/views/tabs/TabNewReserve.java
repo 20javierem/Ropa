@@ -194,7 +194,7 @@ public class TabNewReserve {
             reserve.setObservation(txtObservation.getText().trim());
             Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(reserve);
             if (constraintViolationSet.isEmpty()) {
-                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Reserva", JOptionPane.YES_NO_OPTION) == 0;
+                boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Confirmar Reserva", JOptionPane.YES_NO_OPTION) == 0;
                 if (si) {
                     reserve.save();
                     FPrincipal.reservesActives.add(reserve);
