@@ -541,7 +541,7 @@ public class TabRecordSales {
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();
         defaultComboBoxModel3.addElement("TODAS");
         defaultComboBoxModel3.addElement("REALIZADO");
-        defaultComboBoxModel3.addElement("CANCELADA");
+        defaultComboBoxModel3.addElement("CANCELADO");
         cbbState.setModel(defaultComboBoxModel3);
         panel4.add(cbbState, new GridConstraints(0, 6, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label4 = new JLabel();

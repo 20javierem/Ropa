@@ -20,7 +20,7 @@ public class JButtonEditorDetailTransfer extends AbstractCellEditor implements T
     private JButtonAction button;
 
     public JButtonEditorDetailTransfer() {
-        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+        button=new JButtonAction("error");
         iniciarComponentes();
     }
 

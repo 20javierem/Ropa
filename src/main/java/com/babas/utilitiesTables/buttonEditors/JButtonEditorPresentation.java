@@ -26,9 +26,9 @@ public class JButtonEditorPresentation extends AbstractCellEditor implements Tab
     public JButtonEditorPresentation(boolean edit) {
         this.edit=edit;
         if(edit){
-            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+            button=new JButtonAction("edit");
         }else{
-            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+            button=new JButtonAction("error");
         }
         iniciarComponentes();
     }

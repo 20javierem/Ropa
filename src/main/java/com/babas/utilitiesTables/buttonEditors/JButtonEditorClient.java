@@ -23,7 +23,7 @@ public class JButtonEditorClient extends AbstractCellEditor implements TableCell
     private JButtonAction button;
 
     public JButtonEditorClient() {
-        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+        button=new JButtonAction("edit");
         iniciarComponentes();
     }
 

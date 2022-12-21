@@ -29,13 +29,13 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
         this.type=type;
         switch (type){
             case "change":
-                button= new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg")));
+                button= new JButtonAction("change");
                 break;
             case "show":
-                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                button=new JButtonAction("show");
                 break;
             default:
-                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                button=new JButtonAction("error");
                 break;
         }
         iniciarComponentes();

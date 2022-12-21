@@ -70,11 +70,11 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 10:
                 return sale.getStringSunat();
             case 11:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg")));
+                return new JButtonAction("change");
             case 12:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                return new JButtonAction("show");
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 

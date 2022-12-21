@@ -47,7 +47,7 @@ public class PermissionAbstractModel extends AbstractTableModel {
             case 1:
                 return permission.getUsers().size();
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+                return new JButtonAction("edit");
         }
     }
 

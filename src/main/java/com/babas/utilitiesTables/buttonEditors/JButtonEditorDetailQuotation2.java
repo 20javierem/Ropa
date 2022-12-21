@@ -18,7 +18,7 @@ public class JButtonEditorDetailQuotation2 extends AbstractCellEditor implements
     private JButtonAction button;
 
     public JButtonEditorDetailQuotation2() {
-        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+        button=new JButtonAction("error");
         iniciarComponentes();
     }
 

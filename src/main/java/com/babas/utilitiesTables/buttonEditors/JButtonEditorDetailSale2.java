@@ -20,7 +20,7 @@ public class JButtonEditorDetailSale2 extends AbstractCellEditor implements Tabl
     private JButtonAction button;
 
     public JButtonEditorDetailSale2() {
-        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+        button=new JButtonAction("error");
         iniciarComponentes();
     }
 

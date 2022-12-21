@@ -21,7 +21,7 @@ public class JButtonEditorPermission extends AbstractCellEditor implements Table
     private JButtonAction button;
 
     public JButtonEditorPermission() {
-        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+        button=new JButtonAction("edit");
         iniciarComponentes();
     }
 

@@ -62,11 +62,11 @@ public class ProductAbstractModel extends AbstractTableModel {
             case 8:
                 return product.getStockTotal();
             case 9:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                return new JButtonAction("show");
             case 10:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+                return new JButtonAction("edit");
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 
