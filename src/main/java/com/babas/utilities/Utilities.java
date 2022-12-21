@@ -22,6 +22,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import com.hierynomus.mssmb2.SMBApiException;
 import com.hierynomus.smbj.SmbConfig;
 import com.hierynomus.smbj.auth.AuthenticationContext;
@@ -122,6 +123,7 @@ public class Utilities {
             Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
             hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
             hints.put(EncodeHintType.MARGIN, 0);
+            hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.Q);
             BufferedImage bufferedImage= MatrixToImageWriter.toBufferedImage(new QRCodeWriter().encode(contentQr, BarcodeFormat.QR_CODE, 220, 220,hints));
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", os);
