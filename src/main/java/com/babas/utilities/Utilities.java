@@ -17,6 +17,11 @@ import com.formdev.flatlaf.intellijthemes.FlatSolarizedDarkIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatSolarizedLightIJTheme;
 import com.formdev.flatlaf.intellijthemes.*;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.*;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.hierynomus.mssmb2.SMBApiException;
 import com.hierynomus.smbj.SmbConfig;
 import com.hierynomus.smbj.auth.AuthenticationContext;
@@ -34,6 +39,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.math.BigInteger;
 import java.nio.channels.FileChannel;
@@ -111,7 +117,33 @@ public class Utilities {
             return addres;
         }
     }
-
+    public static void createQrCode(String contentQr){
+        try {
+            Map<EncodeHintType, Object> hints = new EnumMap<EncodeHintType, Object>(EncodeHintType.class);
+            hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+            hints.put(EncodeHintType.MARGIN, 0);
+            BufferedImage bufferedImage= MatrixToImageWriter.toBufferedImage(new QRCodeWriter().encode(contentQr, BarcodeFormat.QR_CODE, 220, 220,hints));
+            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", os);
+            InputStream inputStream = new ByteArrayInputStream(os.toByteArray());
+            String home = System.getProperty("user.home");
+            String directoryName = home + "/.clothes/";
+            File directory = new File(directoryName);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            File file=new File(directoryName+"contentQr.png");
+            try{
+                OutputStream outputStream = new FileOutputStream(file);
+                IOUtils.copy(inputStream, outputStream);
+            } catch (IOException exception) {
+                exception.printStackTrace();
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Ocurrió un error inesperado");
+            }
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static JSpinner.NumberEditor getEditorPrice(FlatSpinner spinner) {
         spinner.remove(spinner.getComponent(0));
         spinner.remove(spinner.getComponent(0));

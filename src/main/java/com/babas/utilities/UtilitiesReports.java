@@ -340,8 +340,9 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-comprobante.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
-        String logo=file.getAbsolutePath();
+        String logo=new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo()).getAbsolutePath();
+        Utilities.createQrCode(rental.getContentQR());
+        String qr=new File(System.getProperty("user.home")+"/.clothes/contentQr.png").getAbsolutePath();
         try {
             if(pathReport!=null){
                 List<DetailRental> list=new ArrayList<>(new Vector<>(rental.getDetailRentals()));
@@ -370,7 +371,7 @@ public class UtilitiesReports {
                 parameters.put("observacion",rental.getObservation());
                 parameters.put("ubigeo",rental.getBranch().getUbigeo());
                 parameters.put("webSite",Babas.company.getWebSite());
-                parameters.put("contentQR",rental.getContentQR());
+                parameters.put("contentQR",qr);
                 parameters.put("montoEnLetras", NumberToText.toText(rental.getTotalCurrent()));
                 parameters.put("clienteDireccion",rental.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
@@ -407,8 +408,9 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-comprobante.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
-        String logo=file.getAbsolutePath();
+        String logo=new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo()).getAbsolutePath();
+        Utilities.createQrCode(sale.getContentQR());
+        String qr=new File(System.getProperty("user.home")+"/.clothes/contentQr.png").getAbsolutePath();
         try {
             if(pathReport!=null){
                 List<DetailSale> list=new ArrayList<>(new Vector<>(sale.getDetailSales()));
@@ -437,7 +439,7 @@ public class UtilitiesReports {
                 parameters.put("observacion",sale.getObservation());
                 parameters.put("ubigeo",sale.getBranch().getUbigeo());
                 parameters.put("webSite",Babas.company.getWebSite());
-                parameters.put("contentQR",sale.getContentQR());
+                parameters.put("contentQR",qr);
                 parameters.put("montoEnLetras", NumberToText.toText(sale.getTotalCurrent()));
                 parameters.put("clienteDireccion",sale.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
