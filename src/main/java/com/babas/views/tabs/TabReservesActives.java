@@ -135,10 +135,10 @@ public class TabReservesActives {
         listaFiltros.put(8, busqueda);
         if (((Branch) cbbBranch.getSelectedItem()).getId() != null) {
             Branch branch = (Branch) cbbBranch.getSelectedItem();
-            filtros.add(RowFilter.regexFilter(branch.getName(), 3));
+            filtros.add(RowFilter.regexFilter(branch.getName(), 2));
         }
         if (cbbType.getSelectedIndex() != 0) {
-            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 5));
+            filtros.add(RowFilter.regexFilter(String.valueOf(cbbType.getSelectedItem()), 4));
         }
         filtroand = RowFilter.andFilter(filtros);
         modeloOrdenado.setRowFilter(filtroand);

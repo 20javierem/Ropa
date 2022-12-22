@@ -101,6 +101,7 @@ public class TabRecordQuotations {
     }
 
     private void clearFilters() {
+        txtSearch.setText(null);
         cbbBranch.setSelectedIndex(0);
         filter();
     }
