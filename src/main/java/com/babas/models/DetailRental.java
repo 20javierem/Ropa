@@ -103,7 +103,7 @@ public class DetailRental extends Babas {
         return product.getBarcode();
     }
     public String getProductString(){
-        return product.getStyle().getName();
+        return product.getStyle().getName()+" - "+product.getBarcode();
     }
     public String getSub_totalString(){
         return getSubtotal().toString();

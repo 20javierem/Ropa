@@ -231,7 +231,7 @@ public class UtilitiesReports {
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalWithDiscount()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(rental.getTotalWithDiscount()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getUpdated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getCreated()));
                 parameters.put("nombreCliente",rental.getStringClient());
                 parameters.put("vendedor",rental.getUser().getUserName());
                 parameters.put("clienteDni",rental.getClientDni());
@@ -248,7 +248,7 @@ public class UtilitiesReports {
                 parameters.put("clienteDireccion",rental.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
                 parameters.put("detailTicket",rental.getDetailTicket());
-                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(rental.getCreated()));
                 parameters.put("typeTicket",rental.getStringTypeDocument());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
@@ -299,7 +299,7 @@ public class UtilitiesReports {
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotalCurrent()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getUpdated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getCreated()));
                 parameters.put("nombreCliente",sale.getStringClient());
                 parameters.put("vendedor",sale.getUser().getUserName());
                 parameters.put("clienteDni",sale.getClientDni());
@@ -316,7 +316,7 @@ public class UtilitiesReports {
                 parameters.put("clienteDireccion",sale.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
                 parameters.put("detailTicket",sale.getDetailTicket());
-                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(sale.getCreated()));
                 parameters.put("typeTicket",sale.getStringTypeDocument());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);

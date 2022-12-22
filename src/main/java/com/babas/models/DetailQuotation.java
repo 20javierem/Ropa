@@ -108,7 +108,7 @@ public class DetailQuotation extends Babas {
         return product.getBarcode();
     }
     public String getProductString(){
-        return product.getStyle().getName();
+        return product.getStyle().getName()+" - "+product.getBarcode();
     }
     public String getSub_totalString(){
         return Utilities.moneda.format(getSubtotal());
