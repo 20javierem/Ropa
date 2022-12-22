@@ -135,7 +135,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                         movement.setAmount(-rental.getTotalCurrent());
                                         movement.setEntrance(false);
                                         movement.setBoxSesion(Babas.boxSession);
-                                        movement.setDescription("Alquiler cancelado: "+rental.getSerie()+"-"+rental.getCorrelativo());
+                                        movement.setDescription("Alquiler cancelado: "+rental.getNumberRental());
                                         movement.save();
                                         movement.getBoxSesion().getMovements().add(0,movement);
                                         movement.getBoxSesion().calculateTotals();
