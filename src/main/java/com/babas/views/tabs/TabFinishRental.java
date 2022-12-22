@@ -220,7 +220,7 @@ public class TabFinishRental {
         movement.setEntrance(rental.getPenalty() > rental.getWarranty());
         movement.setAmount(rental.getPenalty() - rental.getWarranty());
         movement.setBoxSesion(Babas.boxSession);
-        movement.setDescription("ALQUILER FINALIZADO: " + rental.getSerie() + "-" + rental.getCorrelativo());
+        movement.setDescription("ALQUILER FINALIZADO: " + rental.getNumberRental());
         movement.save();
         movement.getBoxSesion().getMovements().add(0, movement);
         movement.getBoxSesion().calculateTotals();

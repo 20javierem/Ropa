@@ -227,7 +227,7 @@ public class UtilitiesReports {
                 parameters.put("direccion",rental.getBranch().getDirection());
                 parameters.put("telefono",rental.getBranch().getPhone());
                 parameters.put("email",rental.getBranch().getEmail());
-                parameters.put("numberTicket",rental.getSerie()+" - "+rental.getCorrelativo());
+                parameters.put("numberTicket",rental.getNumberRental());
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalWithDiscount()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(rental.getTotalWithDiscount()));
@@ -256,7 +256,7 @@ public class UtilitiesReports {
                 }else{
                     JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                     if(viewer!=null){
-                        viewer.setTitle("Comprobante "+rental.getSerie()+"-"+rental.getCorrelativo());
+                        viewer.setTitle("Comprobante "+rental.getNumberRental());
                         if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                             Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                         }
