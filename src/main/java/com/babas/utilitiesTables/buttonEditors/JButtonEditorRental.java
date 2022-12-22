@@ -124,6 +124,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                     Babas.company.refresh();
                                     if(toSunat&&Babas.company.isValidToken()){
                                         cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental));
+                                        rental.setStatusSunat(cancel);
                                     }else{
                                         rental.setStatusSunat(false);
                                     }
@@ -159,6 +160,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     }
                     break;
             }
+            rental.refresh();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
         }

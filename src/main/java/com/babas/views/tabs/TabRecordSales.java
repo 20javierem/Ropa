@@ -266,6 +266,7 @@ public class TabRecordSales {
     }
 
     private void clearFilters() {
+        txtSearch.setText(null);
         cbbBranch.setSelectedIndex(0);
         cbbType.setSelectedIndex(0);
         cbbState.setSelectedIndex(0);

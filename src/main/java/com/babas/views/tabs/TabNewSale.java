@@ -291,6 +291,7 @@ public class TabNewSale {
                 thread.start();
                 sale.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfSale(sale), true));
                 tabPane.setCursor(null);
+                thread.stop();
                 Utilities.getProgressBar().setValue(100);
                 Toolkit.getDefaultToolkit().beep();
                 endSale();

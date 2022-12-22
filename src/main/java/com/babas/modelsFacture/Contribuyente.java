@@ -4,6 +4,8 @@ package com.babas.modelsFacture;
 public class Contribuyente {
     private String token_contribuyente;
     private Integer id_usuario_vendedor;
+    private final String tipo_proceso="produccion";
+    private final String tipo_envio="inmediato";
 
     public String getToken_contribuyente() {
         return token_contribuyente;
@@ -19,14 +21,6 @@ public class Contribuyente {
 
     public void setId_usuario_vendedor(Integer id_usuario_vendedor) {
         this.id_usuario_vendedor = id_usuario_vendedor;
-    }
-
-    public String getTipo_proceso() {
-        return "produccion";
-    }
-
-    public String getTipo_envio() {
-        return "inmediato";
     }
 
 }
