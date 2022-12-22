@@ -79,31 +79,36 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
                     break;
                 default:
                     if(Babas.boxSession.getId()!=null){
-                        boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar reserva",JOptionPane.YES_NO_OPTION)==0;
-                        if(si){
-                            reserve.refresh();
-                            if(reserve.isActive()!=2){
-                                if(reserve.isActive()==0){
-                                    reserve.setActive(2);
-                                    reserve.save();
-                                    Movement movement=new Movement();
-                                    movement.setAmount(-reserve.getAdvance());
-                                    movement.setEntrance(false);
-                                    movement.setBoxSesion(Babas.boxSession);
-                                    movement.setDescription("Reserva cancelada NRO: "+reserve.getNumberReserve());
-                                    movement.save();
-                                    movement.getBoxSesion().getMovements().add(0,movement);
-                                    movement.getBoxSesion().calculateTotals();
-                                    FPrincipal.reservesActives.remove(reserve);
-                                    Utilities.getLblIzquierda().setText("Reserva cancelada Nro. " + reserve.getNumberReserve() + " : " + Utilities.formatoFechaHora.format(reserve.getUpdated()));
-                                    Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Reserva cancelada");
+                        reserve.refresh();
+                        if(reserve.isActive()!=2){
+                            boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar reserva",JOptionPane.YES_NO_OPTION)==0;
+                            if(si){
+                                reserve.refresh();
+                                if(reserve.isActive()!=2){
+                                    if(reserve.isActive()==0){
+                                        reserve.setActive(2);
+                                        reserve.save();
+                                        Movement movement=new Movement();
+                                        movement.setAmount(-reserve.getAdvance());
+                                        movement.setEntrance(false);
+                                        movement.setBoxSesion(Babas.boxSession);
+                                        movement.setDescription("Reserva cancelada NRO: "+reserve.getNumberReserve());
+                                        movement.save();
+                                        movement.getBoxSesion().getMovements().add(0,movement);
+                                        movement.getBoxSesion().calculateTotals();
+                                        FPrincipal.reservesActives.remove(reserve);
+                                        Utilities.getLblIzquierda().setText("Reserva cancelada Nro. " + reserve.getNumberReserve() + " : " + Utilities.formatoFechaHora.format(reserve.getUpdated()));
+                                        Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Reserva cancelada");
+                                    }else{
+                                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No puede cancelar una reserva completada");
+                                    }
                                 }else{
-                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No puede cancelar una reserva completada");
+                                    Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva ya está cancelada");
                                 }
-                            }else{
-                                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva ya está cancelada");
                             }
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva ya está cancelada");
                         }
                     }else{
                         Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");

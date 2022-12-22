@@ -37,8 +37,9 @@ public class Reserves extends Babas {
     public static Vector<Reserve> getByRangeOfDate( Date start, Date end){
         criteria = builder.createQuery(Reserve.class);
         root=criteria.from(Reserve.class);
-        criteria.select(root).where(
-                        builder.between(root.get("created"),Utilities.getDateStart(start),Utilities.getDateEnd(end)))
+        criteria.select(root).where(builder.and(
+                builder.between(root.get("created"),Utilities.getDateStart(start),Utilities.getDateEnd(end))),
+                        builder.notEqual(root.get("active"),0))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
@@ -46,8 +47,9 @@ public class Reserves extends Babas {
     public static Vector<Reserve> getBefore(Date end){
         criteria = builder.createQuery(Reserve.class);
         root=criteria.from(Reserve.class);
-        criteria.select(root).where(
-                builder.lessThan(root.get("created"),Utilities.getDateLessThan(end)))
+        criteria.select(root).where(builder.and(
+                builder.lessThan(root.get("created"),Utilities.getDateLessThan(end))),
+                builder.notEqual(root.get("active"),0))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
@@ -55,8 +57,9 @@ public class Reserves extends Babas {
     public static Vector<Reserve> getAfter(Date start){
         criteria = builder.createQuery(Reserve.class);
         root=criteria.from(Reserve.class);
-        criteria.select(root).where(
-                builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start)))
+        criteria.select(root).where(builder.and(
+                builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start))),
+                        builder.notEqual(root.get("active"),0))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
