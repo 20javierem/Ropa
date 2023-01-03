@@ -58,7 +58,7 @@ public class StockProductAbstractModel extends AbstractTableModel {
             case 7:
                 return stock.getTimesRented();
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+                return new JButtonAction("edit");
         }
     }
 

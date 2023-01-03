@@ -21,7 +21,7 @@ public class JButtonEditorStock extends AbstractCellEditor implements TableCellE
     private JButtonAction button;
 
     public JButtonEditorStock() {
-        button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+        button=new JButtonAction("edit");
         iniciarComponentes();
     }
 

@@ -65,11 +65,11 @@ public class ReserveAbstractModel extends AbstractTableModel {
             case 8:
                 return Utilities.moneda.format(reserve.getToCancel());
             case 9:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
+                return new JButtonAction("check");
             case 10:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                return new JButtonAction("show");
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 

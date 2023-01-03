@@ -4,7 +4,7 @@ public class CancelCabecera_comprobante {
     private String tipo_documento;
     private Long numero_comprobante;
     private String serie_comprobante;
-
+    private final String motivo_anulacion="Error en documento";
 
     public String getTipo_documento() {
         return tipo_documento;
@@ -12,10 +12,6 @@ public class CancelCabecera_comprobante {
 
     public void setTipo_documento(String tipo_documento) {
         this.tipo_documento = tipo_documento;
-    }
-
-    public String getMotivo_anulacion() {
-        return "Error en documento";
     }
 
     public Long getNumero_comprobante() {

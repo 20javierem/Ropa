@@ -73,7 +73,7 @@ public class DetailReserveAbstractModel extends AbstractTableModel {
             case 7:
                 return Utilities.moneda.format(detailReserve.getSubtotal());
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 

@@ -25,9 +25,9 @@ public class JButtonEditorQuotation extends AbstractCellEditor implements TableC
     public JButtonEditorQuotation(boolean complete) {
         this.complete=complete;
         if(complete){
-            button= new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
+            button= new JButtonAction("check");
         }else{
-            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+            button=new JButtonAction("show");
         }
         iniciarComponentes();
     }

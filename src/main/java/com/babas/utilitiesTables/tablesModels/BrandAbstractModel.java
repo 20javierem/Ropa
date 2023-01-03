@@ -48,9 +48,9 @@ public class BrandAbstractModel extends AbstractTableModel {
             case 1:
                 return brand.getProducts().size();
             case 2:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg")));
+                return new JButtonAction("edit");
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 

@@ -31,16 +31,16 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
         this.type=type;
         switch (type){
             case "change":
-                button= new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg")));
+                button= new JButtonAction("change");
                 break;
             case "end":
-                button= new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
+                button= new JButtonAction("check");
                 break;
             case "ticket":
-                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                button=new JButtonAction("show");
                 break;
             default:
-                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                button=new JButtonAction("error");
                 break;
         }
         iniciarComponentes();
@@ -124,6 +124,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                     Babas.company.refresh();
                                     if(toSunat&&Babas.company.isValidToken()){
                                         cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(rental));
+                                        rental.setStatusSunat(cancel);
                                     }else{
                                         rental.setStatusSunat(false);
                                     }
@@ -134,7 +135,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                         movement.setAmount(-rental.getTotalCurrent());
                                         movement.setEntrance(false);
                                         movement.setBoxSesion(Babas.boxSession);
-                                        movement.setDescription("Alquiler cancelado: "+rental.getSerie()+"-"+rental.getCorrelativo());
+                                        movement.setDescription("Alquiler cancelado: "+rental.getNumberRental());
                                         movement.save();
                                         movement.getBoxSesion().getMovements().add(0,movement);
                                         movement.getBoxSesion().calculateTotals();
@@ -159,6 +160,7 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                     }
                     break;
             }
+            rental.refresh();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
         }
@@ -187,9 +189,9 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                             movement.setAmount(-rental.getTotalCurrent());
                                             movement.setEntrance(false);
                                             movement.setBoxSesion(Babas.boxSession);
-                                            movement.setDescription("Cambio de comprobante, Alquiler: "+rental.getSerie()+"-"+rental.getCorrelativo());
-                                            movement.getBoxSesion().getMovements().add(0,movement);
-                                            movement.getBoxSesion().calculateTotals();
+                                            movement.setDescription("Cambio de comprobante, Alquiler: "+rental.getNumberRental());
+                                            Babas.boxSession.getMovements().add(0,movement);
+                                            Babas.boxSession.calculateTotals();
                                             movement.save();
                                             rental.save();
 
@@ -211,6 +213,8 @@ public class JButtonEditorRental extends AbstractCellEditor implements TableCell
                                                 detailRental1.setQuantityPresentation(detailRental.getQuantityPresentation());
                                                 rental1.getDetailRentals().add(detailRental1);
                                             });
+                                            Babas.boxSession.getRentals().add(rental1);
+                                            Babas.boxSession.calculateTotals();
                                             rental1.calculateTotals();
                                             rental1.create();
                                             rental1.save();

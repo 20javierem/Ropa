@@ -6,6 +6,9 @@ public class Detalle {
     private String descripcion;
     private Double precio_venta;
     private int cantidad;
+    private final String afecto_icbper="no";
+    private final String idunidadmedida="NIU";
+    private final int id_tipoafectacionigv=20;
 
     public int getIdproducto() {
         return idproducto;
@@ -23,25 +26,12 @@ public class Detalle {
         this.codigo = codigo;
     }
 
-    public String getAfecto_icbper() {
-        return "no";
-    }
-
-
-    public int getId_tipoafectacionigv() {
-        return 20;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public String getIdunidadmedida() {
-        return "NIU";
     }
 
     public Double getPrecio_venta() {

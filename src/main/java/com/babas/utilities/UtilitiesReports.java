@@ -22,66 +22,6 @@ import java.util.*;
 
 public class UtilitiesReports {
 
-    public static void generateTicketSale(boolean a4,Sale sale,boolean print) {
-        InputStream pathReport;
-        if(a4){
-            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-sale.jasper");
-        }else{
-            pathReport = App.class.getResourceAsStream("jasperReports/ticket-sale.jasper");
-        }
-        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
-        String logo=file.getAbsolutePath();
-        try {
-            if(pathReport!=null){
-                List<DetailSale> list=new ArrayList<>(new Vector<>(sale.getDetailSales()));
-                list.add(0,new DetailSale());
-                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
-                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
-                Map<String,Object> parameters=new HashMap<>();
-                parameters.put("ruc",Babas.company.getRuc());
-                parameters.put("direccion",sale.getBranch().getDirection());
-                parameters.put("telefono",sale.getBranch().getPhone());
-                parameters.put("email",sale.getBranch().getEmail());
-                parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
-                parameters.put("nameTicket","Ticket de venta");
-                parameters.put("numberTicket",sale.getId());
-                parameters.put("detalles",sp);
-                parameters.put("stade",sale.getStringStade());
-                parameters.put("nameCompany",Babas.company.getBusinessName());
-                parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getCreated()));
-                parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
-                parameters.put("nombreCliente",sale.getClient()!=null?sale.getClient().getNames():"");
-                parameters.put("clienteDni",sale.getClient()!=null?sale.getClient().getDni():"");
-                parameters.put("descuento",Utilities.moneda.format(sale.getDiscount()));
-                parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
-                parameters.put("formaDePago",sale.isCash()?"EFECTIVO":"TRANSFERENCIA");
-                parameters.put("vendedor",sale.getUser().getUserName());
-                parameters.put("observacion",sale.getObservation());
-                if(print){
-                    JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
-                    JasperPrintManager.printReport(jasperPrint,true);
-                }else{
-                    JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
-                    if(viewer!=null){
-                        viewer.setTitle("Venta Nro. "+sale.getId());
-                        if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
-                            Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
-                        }
-                        Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
-                        Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
-                    }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
-                    }
-                }
-            }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
-            }
-        } catch (JRException e) {
-            e.printStackTrace();
-        }
-    }
     public static void generateTicketQuotation(boolean a4,Quotation quotation,boolean print) {
         InputStream pathReport;
         if(a4){
@@ -265,74 +205,6 @@ public class UtilitiesReports {
             e.printStackTrace();
         }
     }
-    public static void generateTicketRentalFinish(boolean a4,Rental rental, boolean print) {
-        InputStream pathReport;
-        if(a4){
-            pathReport = App.class.getResourceAsStream("jasperReports/sheetTicket-rental-finish.jasper");
-        }else{
-            pathReport = App.class.getResourceAsStream("jasperReports/ticket-rental-finish.jasper");
-        }
-        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
-        String logo=file.getAbsolutePath();
-        try {
-            if(pathReport!=null){
-                List<DetailRental> list=new ArrayList<>(new Vector<>(rental.getDetailRentals()));
-                list.add(0,new DetailRental());
-                JasperReport report=(JasperReport) JRLoader.loadObject(pathReport);
-                JRBeanArrayDataSource sp=new JRBeanArrayDataSource(list.toArray());
-                Map<String,Object> parameters=new HashMap<>();
-                parameters.put("ruc",Babas.company.getRuc());
-                parameters.put("direccion",rental.getBranch().getDirection());
-                parameters.put("telefono",rental.getBranch().getPhone());
-                parameters.put("email",rental.getBranch().getEmail());
-                parameters.put("logo",logo);
-                parameters.put("message",Babas.company.getDetails().isBlank()?"Gracias por su compra":Babas.company.getDetails());
-                parameters.put("nameTicket","TICKET DE ALQUILER");
-                parameters.put("numberTicket",rental.getCorrelativo());
-                parameters.put("detalles",sp);
-                parameters.put("nameCompany",Babas.company.getBusinessName());
-                parameters.put("nameComercial",Babas.company.getTradeName());
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getCreated()));
-                parameters.put("clienteDni",rental.getClient()!=null?rental.getClient().getDni():"");
-                parameters.put("nombreCliente",rental.getClient()!=null?rental.getClient().getNames():"");
-                parameters.put("stade",rental.getStringStade());
-                parameters.put("totalRental",Utilities.moneda.format(rental.getTotal()));
-                parameters.put("descuento",Utilities.moneda.format(rental.getDiscount()));
-                parameters.put("subtotal",Utilities.moneda.format(rental.getTotalWithDiscount()));
-                parameters.put("advance",rental.getReserve()!=null?Utilities.moneda.format(rental.getReserve().getAdvance()):Utilities.moneda.format(0.0));
-                parameters.put("subtotal2",Utilities.moneda.format(rental.getTotalCurrent() - rental.getWarranty()));
-                parameters.put("warranty",Utilities.moneda.format(rental.getWarranty()));
-                parameters.put("total",Utilities.moneda.format(rental.getTotalCurrent()));
-
-                parameters.put("multa",Utilities.moneda.format(rental.getPenalty()));
-                parameters.put("totalDevolucion",Utilities.moneda.format(rental.getWarranty()-rental.getPenalty()));
-
-                parameters.put("formaDePago",rental.isCash()?"EFECTIVO":"TRANSFERENCIA");
-                parameters.put("vendedor",rental.getUser().getUserName());
-                parameters.put("observacion",rental.getObservation());
-                if(print){
-                    JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
-                    JasperPrintManager.printReport(jasperPrint,true);
-                }else{
-                    JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
-                    if(viewer!=null){
-                        viewer.setTitle("Alquiler Nro. "+rental.getCorrelativo());
-                        if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
-                            Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
-                        }
-                        Utilities.getTabbedPane().addTab(viewer.getTitle(), viewer.getContentPane());
-                        Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
-                    }else{
-                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Sucedio un error inesperado");
-                    }
-                }
-            }else{
-                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la plantilla");
-            }
-        } catch (JRException e) {
-            e.printStackTrace();
-        }
-    }
     public static void generateComprobanteOfRental(boolean a4,Rental rental,boolean print){
         InputStream pathReport;
         if(a4){
@@ -340,8 +212,9 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-comprobante.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
-        String logo=file.getAbsolutePath();
+        String logo=new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo()).getAbsolutePath();
+        Utilities.createQrCode(rental.getContentQR());
+        String qr=new File(System.getProperty("user.home")+"/.clothes/contentQr.png").getAbsolutePath();
         try {
             if(pathReport!=null){
                 List<DetailRental> list=new ArrayList<>(new Vector<>(rental.getDetailRentals()));
@@ -354,11 +227,11 @@ public class UtilitiesReports {
                 parameters.put("direccion",rental.getBranch().getDirection());
                 parameters.put("telefono",rental.getBranch().getPhone());
                 parameters.put("email",rental.getBranch().getEmail());
-                parameters.put("numberTicket",rental.getSerie()+" - "+rental.getCorrelativo());
+                parameters.put("numberTicket",rental.getNumberRental());
                 parameters.put("subtotal",Utilities.moneda.format(rental.getTotal()));
                 parameters.put("total",Utilities.moneda.format(rental.getTotalWithDiscount()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(rental.getTotalWithDiscount()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getUpdated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(rental.getCreated()));
                 parameters.put("nombreCliente",rental.getStringClient());
                 parameters.put("vendedor",rental.getUser().getUserName());
                 parameters.put("clienteDni",rental.getClientDni());
@@ -370,12 +243,12 @@ public class UtilitiesReports {
                 parameters.put("observacion",rental.getObservation());
                 parameters.put("ubigeo",rental.getBranch().getUbigeo());
                 parameters.put("webSite",Babas.company.getWebSite());
-                parameters.put("contentQR",rental.getContentQR());
+                parameters.put("contentQR",qr);
                 parameters.put("montoEnLetras", NumberToText.toText(rental.getTotalCurrent()));
                 parameters.put("clienteDireccion",rental.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
                 parameters.put("detailTicket",rental.getDetailTicket());
-                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(rental.getCreated()));
                 parameters.put("typeTicket",rental.getStringTypeDocument());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);
@@ -383,7 +256,7 @@ public class UtilitiesReports {
                 }else{
                     JasperViewer viewer = getjasperViewer(report,parameters,sp,true);
                     if(viewer!=null){
-                        viewer.setTitle("Comprobante "+rental.getSerie()+"-"+rental.getCorrelativo());
+                        viewer.setTitle("Comprobante "+rental.getNumberRental());
                         if(Utilities.getTabbedPane().indexOfTab(viewer.getTitle())!=-1){
                             Utilities.getTabbedPane().remove(Utilities.getTabbedPane().indexOfTab(viewer.getTitle()));
                         }
@@ -407,8 +280,9 @@ public class UtilitiesReports {
         }else{
             pathReport = App.class.getResourceAsStream("jasperReports/ticket-comprobante.jasper");
         }
-        File file= new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo());
-        String logo=file.getAbsolutePath();
+        String logo=new File(System.getProperty("user.home") + "/.clothes" + "/" + Babas.company.getLogo()).getAbsolutePath();
+        Utilities.createQrCode(sale.getContentQR());
+        String qr=new File(System.getProperty("user.home")+"/.clothes/contentQr.png").getAbsolutePath();
         try {
             if(pathReport!=null){
                 List<DetailSale> list=new ArrayList<>(new Vector<>(sale.getDetailSales()));
@@ -425,7 +299,7 @@ public class UtilitiesReports {
                 parameters.put("subtotal",Utilities.moneda.format(sale.getTotal()));
                 parameters.put("total",Utilities.moneda.format(sale.getTotalCurrent()));
                 parameters.put("importeEnLetras",Utilities.moneda.format(sale.getTotalCurrent()));
-                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getUpdated()));
+                parameters.put("fechaEmision", Utilities.formatoFechaHora.format(sale.getCreated()));
                 parameters.put("nombreCliente",sale.getStringClient());
                 parameters.put("vendedor",sale.getUser().getUserName());
                 parameters.put("clienteDni",sale.getClientDni());
@@ -437,12 +311,12 @@ public class UtilitiesReports {
                 parameters.put("observacion",sale.getObservation());
                 parameters.put("ubigeo",sale.getBranch().getUbigeo());
                 parameters.put("webSite",Babas.company.getWebSite());
-                parameters.put("contentQR",sale.getContentQR());
+                parameters.put("contentQR",qr);
                 parameters.put("montoEnLetras", NumberToText.toText(sale.getTotalCurrent()));
                 parameters.put("clienteDireccion",sale.getClientAdress());
                 parameters.put("igv",Utilities.moneda.format(0));
                 parameters.put("detailTicket",sale.getDetailTicket());
-                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(new Date()));
+                parameters.put("fechaVencimiento", Utilities.formatoFechaHora.format(sale.getCreated()));
                 parameters.put("typeTicket",sale.getStringTypeDocument());
                 if(print){
                     JasperPrint jasperPrint = JasperFillManager.fillReport(report,parameters,sp);

@@ -29,9 +29,9 @@ public class JButtonEditorTransfer extends AbstractCellEditor implements TableCe
     public JButtonEditorTransfer(boolean show) {
         this.show=show;
         if(show){
-            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+            button=new JButtonAction("show");
         }else{
-            button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+            button=new JButtonAction("error");
         }
 
         iniciarComponentes();

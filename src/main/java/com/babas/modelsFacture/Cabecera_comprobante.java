@@ -6,10 +6,12 @@ public class Cabecera_comprobante {
     private Integer idsucursal;
     private String fecha_comprobante;
     private Double descuento_monto;
-
-
-    public Cabecera_comprobante(){
-    }
+    private final String moneda="PEN";
+    private final String id_condicionpago="";
+    private final String nro_placa="";
+    private final String nro_orden="";
+    private final String guia_remision="";
+    private final Double descuento_porcentaje=0.0;
 
     public void setTipo_documento(String tipo_documento) {
         this.tipo_documento = tipo_documento;
@@ -17,10 +19,6 @@ public class Cabecera_comprobante {
 
     public String getTipo_documento() {
         return tipo_documento;
-    }
-
-    public String getMoneda() {
-        return "PEN";
     }
 
     public Integer getIdsucursal() {
@@ -31,28 +29,12 @@ public class Cabecera_comprobante {
         this.idsucursal = idsucursal;
     }
 
-    public String getId_condicionpago() {
-        return "";
-    }
-
     public String getFecha_comprobante() {
         return fecha_comprobante;
     }
 
     public void setFecha_comprobante(String fecha_comprobante) {
         this.fecha_comprobante = fecha_comprobante;
-    }
-
-    public String getNro_placa() {
-        return "";
-    }
-
-    public String getNro_orden() {
-        return "";
-    }
-
-    public String getGuia_remision() {
-        return "";
     }
 
     public Double getDescuento_monto() {

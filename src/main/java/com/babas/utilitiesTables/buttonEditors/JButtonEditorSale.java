@@ -29,13 +29,13 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
         this.type=type;
         switch (type){
             case "change":
-                button= new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg")));
+                button= new JButtonAction("change");
                 break;
             case "show":
-                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                button=new JButtonAction("show");
                 break;
             default:
-                button=new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                button=new JButtonAction("error");
                 break;
         }
         iniciarComponentes();
@@ -77,10 +77,10 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                 if(cancel){
                                     sale.refresh();
                                     if(sale.isActive()){
-                                        sale.setStatusSunat(false);
                                         Babas.company.refresh();
                                         if(response==0&&Babas.company.isValidToken()){
                                             cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfSale(sale));
+                                            sale.setStatusSunat(cancel);
                                         }else{
                                             sale.setStatusSunat(false);
                                         }
@@ -113,6 +113,7 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                     }
                     break;
             }
+            sale.refresh();
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
         }
@@ -142,8 +143,8 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                         movement.setEntrance(false);
                                         movement.setBoxSesion(Babas.boxSession);
                                         movement.setDescription("Cambio de comprobante, Venta: "+sale.getSerie()+"-"+sale.getCorrelativo());
-                                        movement.getBoxSesion().getMovements().add(0,movement);
-                                        movement.getBoxSesion().calculateTotals();
+                                        Babas.boxSession.getMovements().add(0,movement);
+                                        Babas.boxSession.calculateTotals();
                                         movement.save();
                                         sale.save();
 
@@ -163,6 +164,8 @@ public class JButtonEditorSale extends AbstractCellEditor implements TableCellEd
                                             detailSale1.setQuantityPresentation(detailSale.getQuantityPresentation());
                                             sale1.getDetailSales().add(detailSale1);
                                         });
+                                        Babas.boxSession.getSales().add(0,sale1);
+                                        Babas.boxSession.calculateTotals();
                                         sale1.calculateTotal();
                                         sale1.create();
                                         sale1.save();

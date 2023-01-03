@@ -62,9 +62,9 @@ public class TransferAbstractModel extends AbstractTableModel {
             case 7:
                 return transfer.getState()==0?"EN ESPERA":transfer.getState()==1?"COMPLETADO":"CANCELADO";
             case 8:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                return new JButtonAction("show");
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 

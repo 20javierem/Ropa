@@ -1,5 +1,7 @@
 package com.babas.views.dialogs;
 
+import com.babas.controllers.Branchs;
+import com.babas.controllers.Users;
 import com.babas.models.Branch;
 import com.babas.models.Brand;
 import com.babas.models.DetailQuotation;
@@ -151,16 +153,16 @@ public class DCompany extends JDialog {
     }
 
     private void saveTokenFacture() {
-        Babas.company.setToken(txtTokenFacture.getText().trim());
         boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Cambiar token", JOptionPane.YES_NO_OPTION) == 0;
         if (si) {
+            Babas.company.setToken(txtTokenFacture.getText().trim());
             Comprobante comprobante = new Comprobante();
             Contribuyente contribuyente = new Contribuyente();
             contribuyente.setToken_contribuyente(Babas.company.getToken());
-            contribuyente.setId_usuario_vendedor(3);
+            contribuyente.setId_usuario_vendedor(Users.get(1).getIdFact());
             comprobante.setContribuyente(contribuyente);
             Cabecera_comprobante cabecera_comprobante = new Cabecera_comprobante();
-            cabecera_comprobante.setIdsucursal(2);
+            cabecera_comprobante.setIdsucursal(Branchs.get(1).getIdFact());
             cabecera_comprobante.setTipo_documento("77");
             cabecera_comprobante.setFecha_comprobante(Utilities.formatoFecha.format(new Date()));
             cabecera_comprobante.setDescuento_monto(0.0);
@@ -171,7 +173,7 @@ public class DCompany extends JDialog {
             detalle.setCodigo("P001");
             detalle.setDescripcion("Producto de Ejemplo");
             detalle.setPrecio_venta(0.1);
-            detalle.setIdproducto(7);
+            detalle.setIdproducto(Babas.company.getIdProduct());
             comprobante.getDetalle().add(detalle);
             if (ApiClient.sendComprobante(comprobante, false)) {
                 Babas.company.setValidToken(true);

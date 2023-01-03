@@ -63,9 +63,9 @@ public class QuotationAbstractModel extends AbstractTableModel {
             case 7:
                 return Utilities.moneda.format(quotation.getTotalCurrent());
             case 8:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/check.svg")));
+                return new JButtonAction("check");
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/show.svg")));
+                return new JButtonAction("show");
         }
     }
 

@@ -3,7 +3,7 @@ package com.babas.modelsFacture;
 public class CancelContribuyente {
     private String token_contribuyente;
     private Integer id_usuario_vendedor;
-
+    private final String tipo_proceso="produccion";
 
     public String getToken_contribuyente() {
         return token_contribuyente;
@@ -19,10 +19,6 @@ public class CancelContribuyente {
 
     public void setId_usuario_vendedor(Integer id_usuario_vendedor) {
         this.id_usuario_vendedor = id_usuario_vendedor;
-    }
-
-    public String getTipo_proceso() {
-        return "produccion";
     }
 
 }

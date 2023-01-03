@@ -173,6 +173,7 @@ public class TabRecordRentals {
     }
 
     private void clearFilters() {
+        txtSearch.setText(null);
         cbbState.setSelectedIndex(0);
         cbbType.setSelectedIndex(0);
         cbbBranch.setSelectedIndex(0);

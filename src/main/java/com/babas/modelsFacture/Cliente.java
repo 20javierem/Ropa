@@ -4,11 +4,11 @@ public class Cliente {
     private int tipo_docidentidad=1;
     private String numerodocumento="00000000";
     private String nombre="";
-    private String email="";
+    private final String email="";
     private String direccion="";
-    private String ubigeo="";
-    private String sexo="";
-    private String fecha_nac="";
+    private final String ubigeo="";
+    private final String sexo="";
+    private final String fecha_nac="";
     private String celular="";
 
 
@@ -36,28 +36,12 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public String getDireccion() {
         return direccion;
     }
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
-    }
-
-    public String getUbigeo() {
-        return ubigeo;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public String getFecha_nac() {
-        return fecha_nac;
     }
 
     public String getCelular() {

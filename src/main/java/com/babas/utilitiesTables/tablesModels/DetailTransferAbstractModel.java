@@ -63,7 +63,7 @@ public class DetailTransferAbstractModel extends AbstractTableModel {
             case 4:
                 return detailTransfer.getQuantity();
             default:
-                return new JButtonAction(new FlatSVGIcon(App.class.getResource("icons/svg/error.svg")));
+                return new JButtonAction("error");
         }
     }
 
