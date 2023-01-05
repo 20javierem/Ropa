@@ -8,6 +8,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorTransfer;
 import com.babas.utilitiesTables.tablesCellRendered.TransferCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
@@ -28,6 +29,8 @@ import javax.swing.text.StyleContext;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 
@@ -98,6 +101,34 @@ public class TabRecordTransfers {
                 generateReport();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        if (table.getSelectedRow() != -1) {
+            Transfer transfer = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("Seleccione una opción"));
+            JButton btnTicket = new JButton("Ver ticket", JButtonAction.iconShow);
+            btnTicket.addActionListener(e -> {
+                transfer.showTicket();
+                JDialog jDialog = (JDialog) btnTicket.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnCancel = new JButton("Cancelar", JButtonAction.iconError);
+            btnCancel.addActionListener(e -> {
+                transfer.cancelTransfer();
+                JDialog jDialog = (JDialog) btnTicket.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Opciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new JButton[]{btnTicket, btnCancel}, btnTicket);
+        }
     }
 
     private void generateReport() {
@@ -241,7 +272,7 @@ public class TabRecordTransfers {
     private void loadTable() {
         transfers = new ArrayList<>();
         for (Branch branch : Babas.user.getBranchs()) {
-            Transfers.getAfter(branch, new Date()).forEach(transfer -> {
+            Transfers.getLast30(branch).forEach(transfer -> {
                 if (!transfers.contains(transfer)) {
                     transfers.add(transfer);
                 }
@@ -261,7 +292,7 @@ public class TabRecordTransfers {
         // TODO: place custom component creation code here
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
-        fechaDesde = new JDateChooser(new Date());
+        fechaDesde = new JDateChooser();
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());

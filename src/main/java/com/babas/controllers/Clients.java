@@ -34,7 +34,7 @@ public class Clients extends Babas {
         }else if(api){
             return ApiClient.getClient(dni);
         }else{
-            return client;
+            return null;
         }
     }
 }

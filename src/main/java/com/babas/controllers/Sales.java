@@ -88,4 +88,11 @@ public class Sales extends Babas {
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
+
+    public static Vector<Sale> getLast30(){
+        criteria = builder.createQuery(Sale.class);
+        root=criteria.from(Sale.class);
+        criteria.select(root).orderBy(builder.desc(root.get("id")));
+        return new Vector<>(session.createQuery(criteria).setMaxResults(30).getResultList());
+    }
 }

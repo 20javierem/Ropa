@@ -12,6 +12,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
 import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
@@ -30,10 +31,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -129,6 +127,40 @@ public class TabRecordSales {
                 sendOnWaitSunat();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        if (table.getSelectedRow() != -1) {
+            Sale Sale = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("Seleccione una opción"));
+            JButton btnChange = new JButton("Cambiar", JButtonAction.iconChange);
+            btnChange.addActionListener(e -> {
+                Sale.changeSale();
+                JDialog jDialog = (JDialog) btnChange.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnTicket = new JButton("Ver ticket", JButtonAction.iconShow);
+            btnTicket.addActionListener(e -> {
+                Sale.showTicket();
+                JDialog jDialog = (JDialog) btnChange.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnCancel = new JButton("Cancelar", JButtonAction.iconError);
+            btnCancel.addActionListener(e -> {
+                Sale.cancelSale();
+                JDialog jDialog = (JDialog) btnChange.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Opciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new JButton[]{btnChange, btnTicket, btnCancel}, btnChange);
+        }
     }
 
     private void sendOnWaitSunat() {
@@ -349,7 +381,7 @@ public class TabRecordSales {
 
     private void loadTable() {
         sales = new ArrayList<>();
-        sales.addAll(Sales.getAfter(new Date()));
+        sales.addAll(Sales.getLast30());
         model = new SaleAbstractModel(sales);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -442,7 +474,7 @@ public class TabRecordSales {
         // TODO: place custom component creation code here
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
-        fechaDesde = new JDateChooser(new Date());
+        fechaDesde = new JDateChooser();
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());

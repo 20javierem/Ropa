@@ -31,7 +31,7 @@ public class DClient extends JDialog {
     private boolean update;
     private boolean fprincipal;
 
-    public DClient(boolean fprincipal, Client client) {
+    public DClient(Client client, boolean fprincipal) {
         super(Utilities.getJFrame(), "Nuevo Cliente", true);
         this.client = client;
         this.fprincipal = fprincipal;
@@ -110,7 +110,7 @@ public class DClient extends JDialog {
                     Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER, "ERROR", "El documento ya está registrado");
                 }
             } else {
-                Client client1 = Clients.getByDNI(client.getDni(), true);
+                Client client1 = Clients.getByDNI(client.getDni(), false);
                 if (client1 == null || Objects.equals(client1.getId(), client.getId())) {
                     client.save();
                     Utilities.updateDialog();

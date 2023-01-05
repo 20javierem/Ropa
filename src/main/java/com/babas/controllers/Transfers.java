@@ -1,6 +1,7 @@
 package com.babas.controllers;
 
 import com.babas.models.Branch;
+import com.babas.models.Sale;
 import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
@@ -53,5 +54,14 @@ public class Transfers extends Babas {
                         builder.or(builder.equal(root.get("source"),branch),builder.equal(root.get("destiny"),branch)))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
+    }
+
+    public static Vector<Transfer> getLast30(Branch branch){
+        criteria = builder.createQuery(Transfer.class);
+        root=criteria.from(Transfer.class);
+        criteria.select(root).where(
+                builder.or(builder.equal(root.get("source"),branch),builder.equal(root.get("destiny"),branch)))
+                .orderBy(builder.desc(root.get("id")));
+        return new Vector<>(session.createQuery(criteria).setMaxResults(30).getResultList());
     }
 }

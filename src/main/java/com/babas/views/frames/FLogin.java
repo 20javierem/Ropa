@@ -171,7 +171,7 @@ public class FLogin extends JFrame {
                     user.getPermitions().setManageClients(true);
                     user.getPermitions().setNewQuotation(true);
                     user.getPermitions().setRecordQuotations(true);
-                    DUser dUser = new DUser(true, user);
+                    DUser dUser = new DUser(user, true);
                     dUser.setVisible(true);
                 }
             }

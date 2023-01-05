@@ -5,11 +5,13 @@ import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
 import com.babas.models.Quotation;
+import com.babas.models.Rental;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorQuotation;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
 import com.babas.utilitiesTables.tablesCellRendered.QuotationCellRendered;
@@ -17,6 +19,8 @@ import com.babas.utilitiesTables.tablesCellRendered.SaleCellRendered;
 import com.babas.utilitiesTables.tablesModels.QuotationAbstractModel;
 import com.babas.utilitiesTables.tablesModels.SaleAbstractModel;
 import com.babas.views.frames.FPrincipal;
+import com.formdev.flatlaf.extras.FlatSVGIcon;
+import com.formdev.flatlaf.extras.components.FlatSpinner;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
@@ -30,10 +34,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -98,6 +99,34 @@ public class TabRecordQuotations {
                 clearFilters();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        if (table.getSelectedRow() != -1) {
+            Quotation quotation = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("Seleccione una opción"));
+            JButton btnComplete = new JButton("Completar", JButtonAction.iconCheck);
+            btnComplete.addActionListener(e -> {
+                quotation.loadCompleteQuotation();
+                JDialog jDialog = (JDialog) btnComplete.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnTicket = new JButton("Ver ticket", JButtonAction.iconShow);
+            btnTicket.addActionListener(e -> {
+                quotation.showTicket();
+                JDialog jDialog = (JDialog) btnComplete.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Opciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new JButton[]{btnComplete, btnTicket}, btnComplete);
+        }
     }
 
     private void clearFilters() {
@@ -144,7 +173,7 @@ public class TabRecordQuotations {
 
     private void loadTable() {
         quotations = new ArrayList<>();
-        quotations.addAll(Quotations.getAfter(new Date()));
+        quotations.addAll(Quotations.getLast30());
         model = new QuotationAbstractModel(quotations);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -235,7 +264,7 @@ public class TabRecordQuotations {
         // TODO: place custom component creation code here
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
-        fechaDesde = new JDateChooser(new Date());
+        fechaDesde = new JDateChooser();
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());

@@ -3,6 +3,7 @@ package com.babas.controllers;
 import com.babas.models.Branch;
 import com.babas.models.Rental;
 import com.babas.models.Sale;
+import com.babas.models.Transfer;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import jakarta.persistence.LockModeType;
@@ -93,5 +94,12 @@ public class Rentals extends Babas {
         ).orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
     }
-
+    public static Vector<Rental> getLast30(){
+        criteria = builder.createQuery(Rental.class);
+        root=criteria.from(Rental.class);
+        criteria.select(root).where(
+                builder.notEqual(root.get("active"),0)
+        ).orderBy(builder.desc(root.get("id")));
+        return new Vector<>(session.createQuery(criteria).setMaxResults(30).getResultList());
+    }
 }

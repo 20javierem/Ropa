@@ -1,12 +1,14 @@
 package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
+import com.babas.models.Product;
 import com.babas.models.User;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorUser;
 import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
 import com.babas.utilitiesTables.tablesModels.UserAbstractModel;
+import com.babas.views.dialogs.DProduct;
 import com.babas.views.dialogs.DUser;
 import com.babas.views.dialogs.DallGroups;
 import com.babas.views.frames.FPrincipal;
@@ -21,10 +23,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,6 +74,20 @@ public class TabUsers {
                 filter();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadUser();
+                }
+            }
+        });
+    }
+
+    private void loadUser() {
+        User user = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+        DUser dUser = new DUser(user, false);
+        dUser.setVisible(true);
+        Utilities.getTabbedPane().updateTab();
     }
 
     private void loadGroups() {
@@ -83,7 +96,7 @@ public class TabUsers {
     }
 
     private void loadNewUser() {
-        DUser dUser = new DUser(false, new User());
+        DUser dUser = new DUser(new User(), false);
         dUser.setVisible(true);
     }
 

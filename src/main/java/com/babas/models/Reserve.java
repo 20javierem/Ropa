@@ -2,11 +2,16 @@ package com.babas.models;
 
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
+import com.babas.views.frames.FPrincipal;
+import com.babas.views.tabs.TabNewRental;
+import com.moreno.Notify;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -170,7 +175,68 @@ public class Reserve extends Babas {
     }
     public String getStringAdvance(){return Utilities.moneda.format(advance);}
     public String getStringToCancel(){return Utilities.moneda.format(toCancel);}
-
+    public void cancelReserve(){
+        if(Babas.boxSession.getId()!=null){
+            refresh();
+            if(isActive()!=2){
+                boolean si=JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar reserva",JOptionPane.YES_NO_OPTION)==0;
+                if(si){
+                    refresh();
+                    if(isActive()!=2){
+                        if(isActive()==0){
+                            setActive(2);
+                            save();
+                            Movement movement=new Movement();
+                            movement.setAmount(-getAdvance());
+                            movement.setEntrance(false);
+                            movement.setBoxSesion(Babas.boxSession);
+                            movement.setDescription("Reserva cancelada NRO: "+getNumberReserve());
+                            movement.save();
+                            movement.getBoxSesion().getMovements().add(0,movement);
+                            movement.getBoxSesion().calculateTotals();
+                            FPrincipal.reservesActives.remove(this);
+                            Utilities.getLblIzquierda().setText("Reserva cancelada Nro. " + getNumberReserve() + " : " + Utilities.formatoFechaHora.format(getUpdated()));
+                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Reserva cancelada");
+                        }else{
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No puede cancelar una reserva completada");
+                        }
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva ya está cancelada");
+                    }
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva ya está cancelada");
+            }
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
+        }
+    }
+    public void completeReserve(){
+        if(Babas.boxSession.getId()!=null){
+            if(isActive()==0){
+                TabNewRental tabNewRental=new TabNewRental(new Rental(this));
+                if(Utilities.getTabbedPane().indexOfTab(tabNewRental.getTabPane().getTitle())==-1){
+                    Utilities.getTabbedPane().addTab(tabNewRental.getTabPane().getTitle(),tabNewRental.getTabPane());
+                }
+                Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabNewRental.getTabPane().getTitle()));
+            }else if(isActive()==1){
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva ya fue completada");
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La reserva está cancelada");
+            }
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
+        }
+    }
+    public void showTicket(){
+        int index = JOptionPane.showOptionDialog(Utilities.getJFrame(), "Seleccione el formato a ver", "Ver ticket", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"A4", "Ticket", "Cancelar"}, "A4");
+        if (index == 0) {
+            UtilitiesReports.generateTicketReserve(true, this, false);
+        } else if (index == 1) {
+            UtilitiesReports.generateTicketReserve(false, this, false);
+        }
+    }
     @Override
     public void save() {
         if(created==null){

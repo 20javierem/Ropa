@@ -1,14 +1,21 @@
 package com.babas.models;
 
 import com.babas.controllers.Rentals;
+import com.babas.controllers.Sales;
+import com.babas.modelsFacture.ApiClient;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
+import com.babas.views.dialogs.DChangeVoucher;
 import com.babas.views.frames.FPrincipal;
+import com.babas.views.tabs.TabFinishRental;
+import com.moreno.Notify;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.swing.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import java.util.ArrayList;
@@ -348,11 +355,6 @@ public class Rental extends Babas {
             FPrincipal.reservesActives.remove(reserve);
         }
     }
-//    public boolean isPosibleCancel(){
-//        Calendar dateCreated=Calendar.getInstance();
-//        dateCreated.setTime(created);
-//        return (dateCreated.get(Calendar.DAY_OF_YEAR)-Calendar.getInstance().get(Calendar.DAY_OF_YEAR))<=7;
-//    }
     public void updateStocks(){
         getDetailRentals().forEach(DetailRental::updateStocks);
     }
@@ -376,6 +378,195 @@ public class Rental extends Babas {
                 serie=branch.getSerieNotaVenta();
                 branch.setCorrelativoNotaVenta(branch.getCorrelativoNotaVenta()+1);
                 break;
+        }
+    }
+    public void endRental(){
+        refresh();
+        if(isActive()==0){
+            if(Babas.boxSession.getId()!=null){
+                TabFinishRental tabFinishRental=new TabFinishRental(this);
+                if(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle())==-1){
+                    Utilities.getTabbedPane().addTab(tabFinishRental.getTabPane().getTitle(),tabFinishRental.getTabPane());
+                }
+                Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabFinishRental.getTabPane().getTitle()));
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","Debe aperturar caja");
+            }
+        }else if(isActive()==1){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler ya fue completado");
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","El alquiler está cancelado");
+        }
+    }
+    public void showTicket(){
+        int index=JOptionPane.showOptionDialog(Utilities.getJFrame(),"Seleccione el formato a ver","Ver ticket",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"A4", "Ticket","Cancelar"}, "A4");
+        if(getCorrelativo()!=null){
+            if(index==0){
+                UtilitiesReports.generateComprobanteOfRental(true,this,false);
+            }else if(index==1){
+                UtilitiesReports.generateComprobanteOfRental(false,this,false);
+            }
+        }else{
+            if(index==0){
+                UtilitiesReports.generateTicketRental(true,this,false);
+            }else if(index==1){
+                UtilitiesReports.generateTicketRental(false,this,false);
+            }
+        }
+    }
+    public void cancelRental(){
+        String messageError=null;
+        refresh();
+        if(isActive()!=2){
+            if(Babas.boxSession.getId()!=null){
+                boolean toSunat=isActive()==1;
+                boolean cancel;
+                if(toSunat){
+                    if(isStatusSunat()){
+                        int response=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","Forzar","Cancelar"},"Si");
+                        if(response==1){
+                            cancel=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, forzar cancelación","Cancelar alquiler",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","No"},"Si")==0;
+                            toSunat=false;
+                        }else{
+                            cancel=response==0;
+                        }
+                    }else{
+                        messageError="El alquiler no fué enviado a sunat";
+                        cancel=false;
+                    }
+                }else{
+                    cancel=JOptionPane.showOptionDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar alquiler",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,new Object[]{"Si","No"},"Si")==0;
+                }
+                if(cancel){
+                    refresh();
+                    if(isActive()!=2){
+                        Babas.company.refresh();
+                        if(toSunat&&Babas.company.isValidToken()){
+                            cancel=ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(this));
+                            setStatusSunat(cancel);
+                        }else{
+                            setStatusSunat(false);
+                        }
+                        if(cancel){
+                            setActive(2);
+                            updateStocks();
+                            Movement movement=new Movement();
+                            movement.setAmount(-getTotalCurrent());
+                            movement.setEntrance(false);
+                            movement.setBoxSesion(Babas.boxSession);
+                            movement.setDescription("Alquiler cancelado: "+getNumberRental());
+                            movement.save();
+                            movement.getBoxSesion().getMovements().add(0,movement);
+                            movement.getBoxSesion().calculateTotals();
+                            FPrincipal.rentalsActives.remove(this);
+                            Utilities.getLblIzquierda().setText("Alquiler cancelado: " + getSerie()+"-"+getCorrelativo() + " : " + Utilities.formatoFechaHora.format(getUpdated()));
+                            Utilities.getLblDerecha().setText("Monto caja: " + Utilities.moneda.format(Babas.boxSession.getAmountToDelivered()));
+                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Alquiler cancelada");
+                            save();
+                        }
+                    }else{
+                        messageError="El alquiler está cancelado";
+                    }
+                }
+            }else{
+                messageError="Debe aperturar caja";
+            }
+        }else{
+            messageError="El alquiler está cancelado";
+        }
+        if(messageError!=null){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",messageError);
+        }
+    }
+    public void changeRental(){
+        String messageError=null;
+        Babas.company.refresh();
+        if(Babas.company.isValidToken()){
+            refresh();
+            if(isStatusSunat()){
+                if(isActive()==1){
+                    if(Babas.boxSession.getId()!=null){
+                        if(getTypeVoucher().equals("77")){
+                            DChangeVoucher dChangeVoucher=new DChangeVoucher(getClient());
+                            int option = JOptionPane.showOptionDialog(Utilities.getJFrame(), dChangeVoucher.getContentPane(), "Cambio de comprobante", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new Object[]{"Confirmar", "Cancelar"}, "Confirmar");
+                            if (option == JOptionPane.OK_OPTION) {
+                                refresh();
+                                if(getTypeVoucher().equals("77")){
+                                    if(isActive()==1){
+                                        Rental rental1=new Rental();
+                                        rental1.setClient(dChangeVoucher.getClient());
+                                        rental1.setTypeVoucher(dChangeVoucher.getTypeVoucher());
+                                        if (rental1.isValidClient()&& ApiClient.cancelComprobante(ApiClient.getCancelComprobanteOfRental(this))) {
+                                            setActive(2);
+                                            Movement movement=new Movement();
+                                            movement.setAmount(-getTotalCurrent());
+                                            movement.setEntrance(false);
+                                            movement.setBoxSesion(Babas.boxSession);
+                                            movement.setDescription("Cambio de comprobante, Alquiler: "+getNumberRental());
+                                            Babas.boxSession.getMovements().add(0,movement);
+                                            Babas.boxSession.calculateTotals();
+                                            movement.save();
+                                            save();
+
+                                            rental1.setUser(Babas.user);
+                                            rental1.setObservation(getObservation());
+                                            rental1.setBoxSession(Babas.boxSession);
+                                            rental1.setCash(isCash());
+                                            rental1.setDiscount(getDiscount());
+                                            rental1.setWarranty(getWarranty());
+                                            rental1.setPenalty(getPenalty());
+                                            rental1.setBranch(getBranch());
+                                            getDetailRentals().forEach(detailRental -> {
+                                                DetailRental detailRental1=new DetailRental();
+                                                detailRental1.setRental(rental1);
+                                                detailRental1.setQuantity(detailRental.getQuantity());
+                                                detailRental1.setProduct(detailRental.getProduct());
+                                                detailRental1.setPrice(detailRental.getPrice());
+                                                detailRental1.setNamePresentation(detailRental.getNamePresentation());
+                                                detailRental1.setQuantityPresentation(detailRental.getQuantityPresentation());
+                                                rental1.getDetailRentals().add(detailRental1);
+                                            });
+                                            Babas.boxSession.getRentals().add(rental1);
+                                            Babas.boxSession.calculateTotals();
+                                            rental1.calculateTotals();
+                                            rental1.create();
+                                            rental1.save();
+                                            rental1.saveDetails();
+                                            if(Rentals.getOnWait().isEmpty() && Sales.getOnWait().isEmpty()){
+                                                rental1.setStatusSunat(ApiClient.sendComprobante(ApiClient.getComprobanteOfRental(rental1),false));
+                                            }else{
+                                                rental1.setStatusSunat(false);
+                                            }
+                                            rental1.save();
+                                            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Cambios guardados");
+                                        }else{
+                                            refresh();
+                                            messageError="El cliente no es válido para el tipo de comprobante";
+                                        }
+                                    }else{
+                                        messageError="El alquiler fué cancelada por otro usuario";
+                                    }
+                                }else{
+                                    messageError="El documento no puede cambiarse";
+                                }
+                            }
+                        }else{
+                            messageError="El documento no puede cambiarse";
+                        }
+                    }else{
+                        messageError="Debe aperturar caja";
+                    }
+                }else{
+                    messageError="El alquiler está cancelado";
+                }
+            }else{
+                messageError="El alquiler no fue enviado a sunat";
+            }
+        }else{
+            messageError="El token no es válido";
+        }
+        if(messageError!=null){
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR",messageError);
         }
     }
     @Override

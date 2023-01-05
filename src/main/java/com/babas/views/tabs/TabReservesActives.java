@@ -6,6 +6,7 @@ import com.babas.models.Rental;
 import com.babas.models.Reserve;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorDetailReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
@@ -25,10 +26,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -79,6 +77,41 @@ public class TabReservesActives {
                 filter();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        if (table.getSelectedRow() != -1) {
+            Reserve reserve = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("Seleccione una opción"));
+            JButton btnComplete = new JButton("Completar", JButtonAction.iconCheck);
+            btnComplete.addActionListener(e -> {
+                reserve.completeReserve();
+                JDialog jDialog = (JDialog) btnComplete.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnTicket = new JButton("Ver ticket", JButtonAction.iconShow);
+            btnTicket.addActionListener(e -> {
+                reserve.showTicket();
+                JDialog jDialog = (JDialog) btnComplete.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnCancel = new JButton("Cancelar", JButtonAction.iconError);
+            btnCancel.addActionListener(e -> {
+                reserve.cancelReserve();
+                JDialog jDialog = (JDialog) btnComplete.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Opciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new JButton[]{btnComplete, btnTicket, btnCancel}, btnComplete);
+
+        }
     }
 
     private void init() {
@@ -107,7 +140,7 @@ public class TabReservesActives {
         ReserveCellRendered.setCellRenderer(table, listaFiltros);
         table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve("cancel"));
         table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorReserve("ticket"));
-        table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorReserve("detail"));
+        table.getColumnModel().getColumn(table.getColumnCount() - 3).setCellEditor(new JButtonEditorReserve("complete"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }

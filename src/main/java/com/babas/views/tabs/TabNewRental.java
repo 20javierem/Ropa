@@ -274,7 +274,7 @@ public class TabNewRental {
     private Client getClient() {
         Client client = null;
         if (!txtDocument.getText().isBlank() && !txtNameClient.getText().isBlank()) {
-            client = Clients.getByDNI(txtDocument.getText().trim(), true);
+            client = Clients.getByDNI(txtDocument.getText().trim(), false);
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());

@@ -10,6 +10,7 @@ import com.babas.utilitiesTables.buttonEditors.JButtonEditorProduct;
 import com.babas.utilitiesTables.tablesCellRendered.ProductCellRendered;
 import com.babas.utilitiesTables.tablesModels.ProductAbstractModel;
 import com.babas.views.ModelProduct;
+import com.babas.views.dialogs.DProductCatalogue;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatTabbedPane;
@@ -25,10 +26,7 @@ import javax.swing.plaf.ComboBoxUI;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.awt.print.PrinterException;
 import java.util.*;
 import java.util.List;
@@ -108,6 +106,19 @@ public class TabCatalogue {
                 clearFilters();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadProductCatalogue();
+                }
+            }
+        });
+    }
+
+    private void loadProductCatalogue() {
+        Product product = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+        DProductCatalogue dProductCatalogue = new DProductCatalogue(product);
+        dProductCatalogue.setVisible(true);
     }
 
     private void clearFilters() {

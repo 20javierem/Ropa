@@ -1,6 +1,7 @@
 package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
+import com.babas.models.Branch;
 import com.babas.models.Client;
 import com.babas.models.User;
 import com.babas.utilities.Utilities;
@@ -10,6 +11,7 @@ import com.babas.utilitiesTables.buttonEditors.JButtonEditorUser;
 import com.babas.utilitiesTables.tablesCellRendered.UserCellRendered;
 import com.babas.utilitiesTables.tablesModels.ClientAbstractModel;
 import com.babas.utilitiesTables.tablesModels.UserAbstractModel;
+import com.babas.views.dialogs.DBranch;
 import com.babas.views.dialogs.DClient;
 import com.babas.views.dialogs.DUser;
 import com.babas.views.dialogs.DallGroups;
@@ -25,10 +27,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,10 +64,24 @@ public class TabClients {
                 filter();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadClient();
+                }
+            }
+        });
+    }
+
+    private void loadClient() {
+        Client client = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+        DClient dClient = new DClient(client, false);
+        dClient.setVisible(true);
+        Utilities.getTabbedPane().updateTab();
     }
 
     private void loadNewClient() {
-        DClient dClient = new DClient(false, new Client());
+        DClient dClient = new DClient(new Client(), false);
         dClient.setVisible(true);
     }
 

@@ -1,6 +1,8 @@
 package com.babas.models;
 
 import com.babas.utilities.Babas;
+import com.babas.utilities.Utilities;
+import com.babas.views.tabs.TabBoxSesion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
@@ -265,6 +267,14 @@ public class BoxSession extends Babas {
         save();
     }
 
+    public void loadTab(){
+        TabBoxSesion tabBoxSesion=new TabBoxSesion(this);
+        if(Utilities.getTabbedPane().indexOfTab(tabBoxSesion.getTabPane().getTitle())==-1){
+            Utilities.getTabbedPane().addTab(tabBoxSesion.getTabPane().getTitle(),tabBoxSesion.getTabPane());
+        }
+        Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabBoxSesion.getTabPane().getTitle()));
+        Utilities.getTabbedPane().updateTab();
+    }
     @Override
     public void save() {
         if(created==null){

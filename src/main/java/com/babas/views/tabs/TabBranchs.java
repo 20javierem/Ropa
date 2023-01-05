@@ -2,12 +2,14 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
+import com.babas.models.User;
 import com.babas.utilities.Utilities;
 import com.babas.utilitiesTables.UtilitiesTables;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorBranch;
 import com.babas.utilitiesTables.tablesCellRendered.BranchCellRendered;
 import com.babas.utilitiesTables.tablesModels.BranchAbstractModel;
 import com.babas.views.dialogs.DBranch;
+import com.babas.views.dialogs.DUser;
 import com.babas.views.frames.FPrincipal;
 import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -20,10 +22,7 @@ import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -61,6 +60,20 @@ public class TabBranchs {
                 filter();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadBranch();
+                }
+            }
+        });
+    }
+
+    private void loadBranch() {
+        Branch branch = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+        DBranch dBranch = new DBranch(branch, false);
+        dBranch.setVisible(true);
+        Utilities.getTabbedPane().updateTab();
     }
 
     private void loadNewBranch() {

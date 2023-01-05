@@ -38,7 +38,7 @@ public class JButtonEditorClient extends AbstractCellEditor implements TableCell
         if(table.getSelectedRow()!=-1){
             fireEditingStopped();
             Client client=((ClientAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-            DClient dClient=new DClient(false,client);
+            DClient dClient=new DClient(client,false);
             dClient.setVisible(true);
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();

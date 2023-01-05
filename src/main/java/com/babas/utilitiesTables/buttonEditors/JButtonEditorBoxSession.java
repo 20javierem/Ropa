@@ -23,7 +23,7 @@ public class JButtonEditorBoxSession extends AbstractCellEditor implements Table
     private JButtonAction button;
 
     public JButtonEditorBoxSession() {
-        button=new JButtonAction("x16/mostrarContraseña.png","Detalle");
+        button=new JButtonAction("show","Detalle");
         iniciarComponentes();
     }
 
@@ -38,12 +38,7 @@ public class JButtonEditorBoxSession extends AbstractCellEditor implements Table
         if(table.getSelectedRow()!=-1){
             fireEditingStopped();
             BoxSession boxSession=((BoxSesionAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
-            TabBoxSesion tabBoxSesion=new TabBoxSesion(boxSession);
-            if(Utilities.getTabbedPane().indexOfTab(tabBoxSesion.getTabPane().getTitle())==-1){
-                Utilities.getTabbedPane().addTab(tabBoxSesion.getTabPane().getTitle(),tabBoxSesion.getTabPane());
-            }
-            Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabBoxSesion.getTabPane().getTitle()));
-            Utilities.getTabbedPane().updateTab();
+            boxSession.loadTab();
         }
     }
 

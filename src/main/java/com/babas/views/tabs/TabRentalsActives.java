@@ -2,9 +2,14 @@ package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
+import com.babas.models.Movement;
 import com.babas.models.Rental;
+import com.babas.modelsFacture.ApiClient;
+import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.tablesCellRendered.RentalCellRendered;
@@ -15,6 +20,7 @@ import com.formdev.flatlaf.extras.components.FlatTable;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.moreno.Notify;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -22,10 +28,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -76,6 +79,41 @@ public class TabRentalsActives {
                 filter();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        if (table.getSelectedRow() != -1) {
+            Rental rental = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("Seleccione una opción"));
+            JButton btnEnd = new JButton("Finalizar", JButtonAction.iconCheck);
+            btnEnd.addActionListener(e -> {
+                rental.endRental();
+                JDialog jDialog = (JDialog) btnEnd.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnTicket = new JButton("Ver ticket", JButtonAction.iconShow);
+            btnTicket.addActionListener(e -> {
+                rental.showTicket();
+                JDialog jDialog = (JDialog) btnEnd.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnCancel = new JButton("Cancelar", JButtonAction.iconError);
+            btnCancel.addActionListener(e -> {
+                rental.cancelRental();
+                JDialog jDialog = (JDialog) btnEnd.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Opciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new JButton[]{btnEnd, btnTicket, btnCancel}, btnEnd);
+
+        }
     }
 
     private void init() {

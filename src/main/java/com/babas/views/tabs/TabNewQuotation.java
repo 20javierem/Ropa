@@ -180,7 +180,7 @@ public class TabNewQuotation {
                 quotation.setEnded(jDateFinish.getDate());
                 Set<ConstraintViolation<Object>> constraintViolationSet = ProgramValidator.loadViolations(quotation);
                 if (constraintViolationSet.isEmpty()) {
-                    boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Comfirmar Cotización", JOptionPane.YES_NO_OPTION) == 0;
+                    boolean si = JOptionPane.showConfirmDialog(Utilities.getJFrame(), "¿Está seguro?", "Confirmar Cotización", JOptionPane.YES_NO_OPTION) == 0;
                     if (si) {
                         quotation.save();
                         Utilities.getLblIzquierda().setText("Cotización registrada Nro. " + quotation.getId() + " : " + Utilities.formatoFechaHora.format(quotation.getCreated()));
@@ -220,7 +220,7 @@ public class TabNewQuotation {
 
     private boolean getClient() {
         if (!txtDocument.getText().isBlank() && !txtNameClient.getText().isBlank()) {
-            Client client = Clients.getByDNI(txtDocument.getText().trim(), true);
+            Client client = Clients.getByDNI(txtDocument.getText().trim(), false);
             if (client == null) {
                 client = new Client();
                 client.setDni(txtDocument.getText().trim());

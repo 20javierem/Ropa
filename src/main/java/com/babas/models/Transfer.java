@@ -3,11 +3,14 @@ package com.babas.models;
 import com.babas.controllers.Stocks;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
+import com.babas.views.tabs.TabNewTraslade;
+import com.moreno.Notify;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -127,6 +130,37 @@ public class Transfer extends Babas {
         return numberTransfer;
     }
 
+    public void showTicket(){
+        TabNewTraslade tabNewTraslade=new TabNewTraslade(this);
+        if(Utilities.getTabbedPane().indexOfTab(tabNewTraslade.getTabPane().getTitle())==-1){
+            Utilities.getTabbedPane().addTab(tabNewTraslade.getTabPane().getTitle(),tabNewTraslade.getTabPane());
+        }
+        Utilities.getTabbedPane().setSelectedIndex(Utilities.getTabbedPane().indexOfTab(tabNewTraslade.getTabPane().getTitle()));
+    }
+
+    public void cancelTransfer(){
+        if(getState()!=2){
+            if(getSource().isActive()){
+                boolean si= JOptionPane.showConfirmDialog(Utilities.getJFrame(),"¿Está seguro?, esta acción no se puede deshacer","Cancelar transferencia",JOptionPane.YES_NO_OPTION)==0;
+                if(si){
+                    refresh();
+                    if(getState()!=2){
+                        setState(2);
+                        setUpdated(new Date());
+                        save();
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","Transferencia cancelada");
+                    }else{
+                        Notify.sendNotify(Utilities.getJFrame(), Notify.Type.SUCCESS, Notify.Location.TOP_CENTER,"ÉXITO","La transferencia ya fue cancelada por otro usuario");
+                    }
+                }
+            }else{
+                Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","No se encontró la sucursal de origen");
+            }
+
+        }else{
+            Notify.sendNotify(Utilities.getJFrame(), Notify.Type.WARNING, Notify.Location.TOP_CENTER,"ERROR","La transferencia ya está cancelada");
+        }
+    }
     @Override
     public void save() {
         if(created==null){

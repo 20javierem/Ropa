@@ -1,12 +1,12 @@
 package com.babas.views.tabs;
 
 import com.babas.custom.TabPane;
-import com.babas.models.BoxSession;
-import com.babas.models.Movement;
+import com.babas.models.*;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
@@ -30,8 +30,11 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.FontUIResource;
 import javax.swing.text.StyleContext;
 import java.awt.*;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Locale;
 
 public class TabBoxSesion {
@@ -137,12 +140,16 @@ public class TabBoxSesion {
         tableSales.getColumnModel().getColumn(tableSales.getColumnCount() - 2).setCellEditor(new JButtonEditorSale("show"));
         tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-1));
         tableSales.removeColumn(tableSales.getColumnModel().getColumn(tableSales.getColumnCount()-2));
-
-
-        movementAbstractModel=new MovementAbstractModel(boxSession.getMovements());
-        tableMovements.setModel(movementAbstractModel);
-        UtilitiesTables.headerNegrita(tableMovements);
-        SaleCellRendered.setCellRenderer(tableMovements,null);
+        tableSales.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    if (tableSales.getSelectedRow() != -1) {
+                        Sale Sale = saleAbstractModel.getList().get(tableSales.convertRowIndexToModel(tableSales.getSelectedRow()));
+                        Sale.showTicket();
+                    }
+                }
+            }
+        });
 
         rentalAbstractModel=new RentalAbstractModel(boxSession.getRentals());
         tableRentals.setModel(rentalAbstractModel);
@@ -153,6 +160,16 @@ public class TabBoxSesion {
         tableRentals.removeColumn(tableRentals.getColumnModel().getColumn(tableRentals.getColumnCount()-2));
         tableRentals.removeColumn(tableRentals.getColumn(""));
         tableRentals.removeColumn(tableRentals.getColumn("MULTA"));
+        tableRentals.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    if (tableRentals.getSelectedRow() != -1) {
+                        Rental rental = rentalAbstractModel.getList().get(tableRentals.convertRowIndexToModel(tableRentals.getSelectedRow()));
+                        rental.showTicket();
+                    }
+                }
+            }
+        });
 
         reserveAbstractModel=new ReserveAbstractModel(boxSession.getReserves());
         tableReserves.setModel(reserveAbstractModel);
@@ -161,7 +178,21 @@ public class TabBoxSesion {
         tableReserves.getColumnModel().getColumn(tableReserves.getColumnCount() - 2).setCellEditor(new JButtonEditorReserve("ticket"));
         tableReserves.removeColumn(tableReserves.getColumnModel().getColumn(tableReserves.getColumnCount()-1));
         tableReserves.removeColumn(tableReserves.getColumn(""));
+        tableReserves.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    if (tableReserves.getSelectedRow() != -1) {
+                        Reserve reserve = reserveAbstractModel.getList().get(tableReserves.convertRowIndexToModel(tableReserves.getSelectedRow()));
+                        reserve.showTicket();
+                    }
+                }
+            }
+        });
 
+        movementAbstractModel=new MovementAbstractModel(boxSession.getMovements());
+        tableMovements.setModel(movementAbstractModel);
+        UtilitiesTables.headerNegrita(tableMovements);
+        SaleCellRendered.setCellRenderer(tableMovements,null);
     }
     private void init(){
         if(boxSession.getId().equals(Babas.boxSession.getId())){

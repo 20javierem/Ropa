@@ -9,6 +9,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.tablesCellRendered.ReserveCellRendered;
 import com.babas.utilitiesTables.tablesModels.ReserveAbstractModel;
@@ -26,10 +27,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -118,6 +116,18 @@ public class TabRecordReserves {
                 clearFilters();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        Reserve reserve = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+        reserve.showTicket();
     }
 
     private void clearFilters() {
@@ -188,14 +198,14 @@ public class TabRecordReserves {
 
     private void loadTable() {
         reserves = new ArrayList<>();
-        reserves.addAll(Reserves.getAfter(new Date()));
+        reserves.addAll(Reserves.getLast30());
         model = new ReserveAbstractModel(reserves);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
         ReserveCellRendered.setCellRenderer(table, listaFiltros);
         table.removeColumn(table.getColumn(""));
-        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve("cancel"));
-        table.getColumnModel().getColumn(table.getColumnCount() - 2).setCellEditor(new JButtonEditorReserve("ticket"));
+        table.removeColumn(table.getColumnModel().getColumn(table.getColumnCount() - 1));
+        table.getColumnModel().getColumn(table.getColumnCount() - 1).setCellEditor(new JButtonEditorReserve("ticket"));
         modeloOrdenado = new TableRowSorter<>(model);
         table.setRowSorter(modeloOrdenado);
     }
@@ -296,7 +306,7 @@ public class TabRecordReserves {
         // TODO: place custom component creation code here
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
-        fechaDesde = new JDateChooser(new Date());
+        fechaDesde = new JDateChooser();
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());

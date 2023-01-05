@@ -231,7 +231,7 @@ public class FPrincipal extends JFrame {
             boolean find = false;
             Client client = Clients.getByDNI(flatTextField.getText().trim(), false);
             if (client != null) {
-                DClient dClient = new DClient(true, client);
+                DClient dClient = new DClient(client, true);
                 dClient.setVisible(true);
                 find = true;
             }
@@ -367,7 +367,7 @@ public class FPrincipal extends JFrame {
     }
 
     private void loadSettingUser() {
-        DUser dUser = new DUser(true, Babas.user);
+        DUser dUser = new DUser(Babas.user, true);
         dUser.setVisible(true);
     }
 

@@ -47,7 +47,7 @@ public class JButtonEditorUser extends AbstractCellEditor implements TableCellEd
             fireEditingStopped();
             User user=((UserAbstractModel) table.getModel()).getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
             if(edit){
-                DUser dUser=new DUser(false,user);
+                DUser dUser=new DUser(user,false);
                 dUser.setVisible(true);
             }else{
                 if(!user.getId().equals(Babas.user.getId())){

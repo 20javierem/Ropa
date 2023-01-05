@@ -11,11 +11,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class JButtonAction extends JButton {
-    private static Icon iconError=new FlatSVGIcon(App.class.getResource("icons/svg/error.svg"));
-    private static Icon iconCheck=new FlatSVGIcon(App.class.getResource("icons/svg/check.svg"));
-    private static Icon iconEdit=new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg"));
-    private static Icon iconChange=new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg"));
-    private static Icon iconShow=new FlatSVGIcon(App.class.getResource("icons/svg/show.svg"));
+    public static Icon iconError=new FlatSVGIcon(App.class.getResource("icons/svg/error.svg"));
+    public static Icon iconCheck=new FlatSVGIcon(App.class.getResource("icons/svg/check.svg"));
+    public static Icon iconEdit=new FlatSVGIcon(App.class.getResource("icons/svg/edit.svg"));
+    public static Icon iconChange=new FlatSVGIcon(App.class.getResource("icons/svg/changeVoucher.svg"));
+    public static Icon iconShow=new FlatSVGIcon(App.class.getResource("icons/svg/show.svg"));
 
 //    private static Icon iconError=new ImageIcon(App.class.getResource("icons/x16/eliminar.png"));
 //    private static Icon iconCheck=new ImageIcon(App.class.getResource("icons/x16/checkbox.png"));
@@ -23,8 +23,24 @@ public class JButtonAction extends JButton {
 //    private static Icon iconChange=new ImageIcon(App.class.getResource("icons/x16/change.png"));
 //    private static Icon iconShow=new ImageIcon(App.class.getResource("icons/x16/mostrarContraseña.png"));
 
-    public JButtonAction(String icon, String text) {
-        setIcon(new ImageIcon(App.class.getResource("icons/"+icon)));
+    public JButtonAction(String icon,String text) {
+        switch (icon){
+            case "error":
+                setIcon(iconError);
+                break;
+            case "edit":
+                setIcon(iconEdit);
+                break;
+            case "change":
+                setIcon(iconChange);
+                break;
+            case "show":
+                setIcon(iconShow);
+                break;
+            case "check":
+                setIcon(iconCheck);
+                break;
+        }
         setText(text);
         initialize();
     }

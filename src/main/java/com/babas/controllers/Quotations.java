@@ -2,6 +2,7 @@ package com.babas.controllers;
 
 import com.babas.models.Branch;
 import com.babas.models.Quotation;
+import com.babas.models.Rental;
 import com.babas.models.Sale;
 import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
@@ -59,5 +60,12 @@ public class Quotations extends Babas {
                 builder.greaterThan(root.get("created"),Utilities.getDateGreaterThan(start)))
                 .orderBy(builder.desc(root.get("id")));
         return new Vector<>(session.createQuery(criteria).getResultList());
+    }
+
+    public static Vector<Quotation> getLast30(){
+        criteria = builder.createQuery(Quotation.class);
+        root=criteria.from(Quotation.class);
+        criteria.select(root).orderBy(builder.desc(root.get("id")));
+        return new Vector<>(session.createQuery(criteria).setMaxResults(30).getResultList());
     }
 }

@@ -5,6 +5,7 @@ import com.babas.controllers.Rentals;
 import com.babas.controllers.Sales;
 import com.babas.custom.TabPane;
 import com.babas.models.Branch;
+import com.babas.models.Quotation;
 import com.babas.models.Rental;
 import com.babas.models.Sale;
 import com.babas.modelsFacture.ApiClient;
@@ -12,6 +13,7 @@ import com.babas.utilities.Babas;
 import com.babas.utilities.Utilities;
 import com.babas.utilities.UtilitiesReports;
 import com.babas.utilitiesTables.UtilitiesTables;
+import com.babas.utilitiesTables.buttonEditors.JButtonAction;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorRental;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorReserve;
 import com.babas.utilitiesTables.buttonEditors.JButtonEditorSale;
@@ -34,10 +36,7 @@ import javax.swing.plaf.FontUIResource;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.StyleContext;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.*;
 import java.util.List;
 
@@ -133,6 +132,40 @@ public class TabRecordRentals {
                 sendOnWaitSunat();
             }
         });
+        table.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent me) {
+                if (me.getClickCount() == 2) {
+                    loadOptions();
+                }
+            }
+        });
+    }
+
+    private void loadOptions() {
+        if (table.getSelectedRow() != -1) {
+            Rental rental = model.getList().get(table.convertRowIndexToModel(table.getSelectedRow()));
+            JPanel jPanel = new JPanel();
+            jPanel.add(new JLabel("Seleccione una opción"));
+            JButton btnChange = new JButton("Cambiar", JButtonAction.iconChange);
+            btnChange.addActionListener(e -> {
+                rental.changeRental();
+                JDialog jDialog = (JDialog) btnChange.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnTicket = new JButton("Ver ticket", JButtonAction.iconShow);
+            btnTicket.addActionListener(e -> {
+                rental.showTicket();
+                JDialog jDialog = (JDialog) btnChange.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JButton btnCancel = new JButton("Cancelar", JButtonAction.iconError);
+            btnCancel.addActionListener(e -> {
+                rental.cancelRental();
+                JDialog jDialog = (JDialog) btnChange.getParent().getParent().getParent().getParent().getParent().getParent();
+                jDialog.dispose();
+            });
+            JOptionPane.showOptionDialog(Utilities.getJFrame(), jPanel, "Opciones", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE, null, new JButton[]{btnChange, btnTicket, btnCancel}, btnChange);
+        }
     }
 
     private void generateReport() {
@@ -205,7 +238,7 @@ public class TabRecordRentals {
 
     private void loadTable() {
         rentals = new ArrayList<>();
-        rentals.addAll(Rentals.getAfter(new Date()));
+        rentals.addAll(Rentals.getLast30());
         model = new RentalAbstractModel(rentals);
         table.setModel(model);
         UtilitiesTables.headerNegrita(table);
@@ -454,7 +487,7 @@ public class TabRecordRentals {
         // TODO: place custom component creation code here
         fechaInicio = new JDateChooser(new Date());
         fechaFin = new JDateChooser(new Date());
-        fechaDesde = new JDateChooser(new Date());
+        fechaDesde = new JDateChooser();
         fechaInicio.setDateFormatString(Utilities.getFormatoFecha());
         fechaFin.setDateFormatString(Utilities.getFormatoFecha());
         fechaDesde.setDateFormatString(Utilities.getFormatoFecha());

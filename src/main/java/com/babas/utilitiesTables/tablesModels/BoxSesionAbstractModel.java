@@ -61,7 +61,7 @@ public class BoxSesionAbstractModel extends AbstractTableModel {
             case 7:
                 return Utilities.moneda.format(boxSession.getAmountTotal());
             default:
-                return new JButtonAction("x16/mostrarContraseña.png","Detalle");
+                return new JButtonAction("show","Detalle");
         }
     }
 
