@@ -49,7 +49,7 @@ public class RentalAbstractModel extends AbstractTableModel {
             case 0:
                 return rental.getNumberRental();
             case 1:
-                return rental.getUpdated();
+                return rental.getCreated();
             case 2:
                 return rental.getBranch().getName();
             case 3:

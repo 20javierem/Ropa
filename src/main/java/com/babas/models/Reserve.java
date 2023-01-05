@@ -175,6 +175,7 @@ public class Reserve extends Babas {
     }
     public String getStringAdvance(){return Utilities.moneda.format(advance);}
     public String getStringToCancel(){return Utilities.moneda.format(toCancel);}
+
     public void cancelReserve(){
         if(Babas.boxSession.getId()!=null){
             refresh();

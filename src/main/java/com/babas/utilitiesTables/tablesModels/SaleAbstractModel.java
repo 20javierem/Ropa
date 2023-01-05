@@ -50,7 +50,7 @@ public class SaleAbstractModel extends AbstractTableModel {
             case 0:
                 return sale.getSerie()+"-"+sale.getCorrelativo();
             case 1:
-                return sale.getUpdated();
+                return sale.getCreated();
             case 2:
                 return sale.getBranch().getName();
             case 3:

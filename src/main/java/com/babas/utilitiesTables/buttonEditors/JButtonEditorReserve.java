@@ -59,7 +59,8 @@ public class JButtonEditorReserve extends AbstractCellEditor implements TableCel
                     reserve.showTicket();
                     break;
                 default:
-
+                    reserve.cancelReserve();
+                    break;
             }
             Utilities.getTabbedPane().updateTab();
             Utilities.updateDialog();
