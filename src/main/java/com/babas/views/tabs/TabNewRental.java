@@ -146,6 +146,7 @@ public class TabNewRental {
                 lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
+        btnAddProducts.setMnemonic(KeyEvent.VK_A);
     }
 
     private void searchClient(String document) {

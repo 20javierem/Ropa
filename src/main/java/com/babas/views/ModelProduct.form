@@ -3,43 +3,11 @@
   <grid id="27dc6" binding="contentPane" custom-create="true" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="10" left="10" bottom="10" right="10"/>
     <constraints>
-      <xy x="39" y="23" width="292" height="350"/>
+      <xy x="39" y="23" width="271" height="346"/>
     </constraints>
-    <properties>
-      <maximumSize width="265" height="350"/>
-      <minimumSize width="265" height="350"/>
-      <preferredSize width="265" height="350"/>
-    </properties>
+    <properties/>
     <border type="none" title=""/>
     <children>
-      <grid id="94310" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-        <margin top="0" left="0" bottom="0" right="0"/>
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <opaque value="false"/>
-        </properties>
-        <border type="none"/>
-        <children>
-          <component id="928e8" class="javax.swing.JTextArea" binding="lblArea">
-            <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties>
-              <editable value="false"/>
-              <font style="1"/>
-              <foreground color="-16777216"/>
-              <lineWrap value="true"/>
-              <opaque value="false"/>
-              <rows value="2"/>
-              <wrapStyleWord value="true"/>
-            </properties>
-          </component>
-        </children>
-      </grid>
       <grid id="a15c7" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="20" vgap="5">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
@@ -162,7 +130,7 @@
       </grid>
       <component id="8d626" class="javax.swing.JLabel" binding="lblIcon">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="0" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="2" indent="0" use-parent-layout="false">
             <minimum-size width="245" height="200"/>
             <preferred-size width="245" height="200"/>
             <maximum-size width="245" height="200"/>
@@ -175,6 +143,30 @@
           <text value=""/>
         </properties>
       </component>
+      <grid id="b278a" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <opaque value="false"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="928e8" class="javax.swing.JTextArea" binding="lblArea">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <editable value="false"/>
+              <font style="1"/>
+              <lineWrap value="true"/>
+              <opaque value="false"/>
+              <wrapStyleWord value="true"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>

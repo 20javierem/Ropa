@@ -222,6 +222,7 @@ public class TabNewTraslade {
             btnGenerateReport.setVisible(true);
         }
         getTabPane().getActions().addActionListener(e -> model.fireTableDataChanged());
+        btnAddProducts.setMnemonic(KeyEvent.VK_A);
     }
 
     private void loadCombos() {

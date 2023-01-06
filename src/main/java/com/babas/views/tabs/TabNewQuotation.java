@@ -141,6 +141,7 @@ public class TabNewQuotation {
                 lblLogo.setIcon(Utilities.iconCompanyx255x220);
             }
         }
+        btnAddProducts.setMnemonic(KeyEvent.VK_A);
     }
 
     public Quotation getQuotation() {

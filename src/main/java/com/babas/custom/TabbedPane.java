@@ -103,6 +103,7 @@ public class TabbedPane extends FlatTabbedPane {
         for (Component component : getComponents()) {
             if(indexOfComponent(component)!=-1){
                 setEnabledAt(indexOfComponent(component),true);
+                setBackgroundAt(indexOfComponent(component),getBackground());
                 if(component instanceof TabPane){
                     TabPane tabPane=(TabPane) component;
                     if(tabPane.getOption()!=null){
@@ -133,6 +134,7 @@ public class TabbedPane extends FlatTabbedPane {
     public void pintarSeleccionado(){
         if(getSelectedIndex()!=-1){
             setEnabledAt(getSelectedIndex(),false);
+            setBackgroundAt(getSelectedIndex(),lighten(getBackground(),0.05f));
             if(getComponentAt(getSelectedIndex()) instanceof TabPane){
                 TabPane tabPane =(TabPane) getComponentAt(getSelectedIndex());
                 if(tabPane.getOption()!=null){
@@ -265,6 +267,7 @@ public class TabbedPane extends FlatTabbedPane {
 
     public TabbedPane() {
         super();
+//        putClientProperty("TabbedPane.selectedBackground",lighten(getBackground(),0.05f));
         setShowTabSeparators(true);
         setTabsClosable(true);
         setTabCloseCallback(JTabbedPane::removeTabAt);

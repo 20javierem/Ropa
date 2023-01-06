@@ -454,6 +454,7 @@ public class FPrincipal extends JFrame {
         menuRecordSales.addActionListener(e -> menuSales.loadCatalogue());
         btnMenuSales.setMnemonic(KeyEvent.VK_V);
         menuNewSale.setMnemonic(KeyEvent.VK_N);
+        menuNewSale.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK));
         menuCatalogue.setMnemonic(KeyEvent.VK_C);
         menuRecordSales.setMnemonic(KeyEvent.VK_H);
         btnMenuSales.add(menuNewSale);
@@ -469,6 +470,7 @@ public class FPrincipal extends JFrame {
         menuRecordRentals.addActionListener(e -> menuRentals.loadRecordRentals());
         btnMenuRentals.setMnemonic(KeyEvent.VK_A);
         menuNewRental.setMnemonic(KeyEvent.VK_N);
+        menuNewRental.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, KeyEvent.CTRL_DOWN_MASK));
         menuRentalsActives.setMnemonic(KeyEvent.VK_A);
         menuRecordRentals.setMnemonic(KeyEvent.VK_H);
         btnMenuRentals.add(menuNewRental);
@@ -484,6 +486,7 @@ public class FPrincipal extends JFrame {
         menuRecordReserves.addActionListener(e -> menuReserves.loadRecordRentals());
         btnMenuReserves.setMnemonic(KeyEvent.VK_R);
         menuNewReserve.setMnemonic(KeyEvent.VK_N);
+        menuNewReserve.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK));
         menuReservesActives.setMnemonic(KeyEvent.VK_R);
         menuRecordReserves.setMnemonic(KeyEvent.VK_H);
         btnMenuReserves.add(menuNewReserve);
@@ -497,6 +500,7 @@ public class FPrincipal extends JFrame {
         menuRecorQuotations.addActionListener(e -> menuQuotations.loadRecordQuotations());
         btnMenuQuotations.setMnemonic(KeyEvent.VK_O);
         menuNewQuotation.setMnemonic(KeyEvent.VK_N);
+        menuNewQuotation.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK));
         menuRecorQuotations.setMnemonic(KeyEvent.VK_H);
         btnMenuQuotations.add(menuNewQuotation);
         btnMenuQuotations.add(menuRecorQuotations);
@@ -508,6 +512,7 @@ public class FPrincipal extends JFrame {
         menuRecordTransfers.addActionListener(e -> menuTraslade.loadRecordTraslades());
         btnMenuTransfers.setMnemonic(KeyEvent.VK_T);
         menuNewTransfer.setMnemonic(KeyEvent.VK_N);
+        menuNewTransfer.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, KeyEvent.CTRL_DOWN_MASK));
         menuRecordTransfers.setMnemonic(KeyEvent.VK_H);
         btnMenuTransfers.add(menuNewTransfer);
         btnMenuTransfers.add(menuRecordTransfers);
