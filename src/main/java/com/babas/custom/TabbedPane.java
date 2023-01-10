@@ -1,4 +1,5 @@
 package com.babas.custom;
+
 import com.babas.App;
 import com.babas.utilities.Utilities;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
@@ -7,6 +8,7 @@ import com.formdev.flatlaf.extras.components.FlatTabbedPane;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -135,6 +137,7 @@ public class TabbedPane extends FlatTabbedPane {
     private void insertarButtons(){
         //creacion de pop_up
         pop_up = new JPopupMenu();
+        Point point=new Point();
         JMenuItem moveToLeft = new JMenuItem("Mover a la izquierda",new FlatSVGIcon(App.class.getResource("icons/svg/arrowCollapse.svg")));
         JMenuItem moveToRight = new JMenuItem("Mover a la derecha",new FlatSVGIcon(App.class.getResource("icons/svg/arrowExpand.svg")));
         JMenuItem closeTab = new JMenuItem("Cerrar Pestaña");
@@ -144,35 +147,37 @@ public class TabbedPane extends FlatTabbedPane {
         moveToLeft.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(getSelectedIndex()>0){
-                    Component component=getSelectedComponent();
-                    int newIndex=getSelectedIndex()-1;
-                    String tittle=getTitleAt(getSelectedIndex());
-                    String tooltip=getToolTipTextAt(getSelectedIndex());
-                    removeTabAt(getSelectedIndex());
+                if(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y)>0){
+                    Component componentSelected=getSelectedComponent();
+                    Component component=getComponentAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
+                    int newIndex=getUI().tabForCoordinate(TabbedPane.this,point.x,point.y)-1;
+                    String tittle=getTitleAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
+                    String tooltip=getToolTipTextAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
+                    removeTabAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
                     insertTab(tittle,null,component,tooltip,newIndex);
-                    setSelectedIndex(newIndex);
+                    setSelectedComponent(componentSelected);
                 }
             }
         });
         moveToRight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(getSelectedIndex()<getTabCount()-1){
-                    Component component=getSelectedComponent();
-                    int newIndex=getSelectedIndex()+1;
-                    String tittle=getTitleAt(getSelectedIndex());
-                    String tooltip=getToolTipTextAt(getSelectedIndex());
-                    removeTabAt(getSelectedIndex());
+                if(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y)<getTabCount()-1){
+                    Component componentSelected=getSelectedComponent();
+                    Component component=getComponentAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
+                    int newIndex=getUI().tabForCoordinate(TabbedPane.this,point.x,point.y)+1;
+                    String tittle=getTitleAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
+                    String tooltip=getToolTipTextAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
+                    removeTabAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
                     insertTab(tittle,null,component,tooltip,newIndex);
-                    setSelectedIndex(newIndex);
+                    setSelectedComponent(componentSelected);
                 }
             }
         });
         closeTab.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                removeTabAt(getSelectedIndex());
+                removeTabAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
             }
         });
         closeOthers.addActionListener(new ActionListener() {
@@ -180,12 +185,12 @@ public class TabbedPane extends FlatTabbedPane {
             public void actionPerformed(ActionEvent e) {
                 if(getSelectedIndex()!=-1){
                     if(getComponentAt(getSelectedIndex()) instanceof TabPane){
-                        TabPane tabPane= (TabPane) getComponentAt(getSelectedIndex());
+                        TabPane tabPane= (TabPane) getComponentAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
                         removeAll();
                         addTab(tabPane.getTitle(),tabPane.getIcon(),tabPane);
                     }else{
                         String tittle=getTitleAt(getSelectedIndex());
-                        Component component=getComponentAt(getSelectedIndex());
+                        Component component=getComponentAt(getUI().tabForCoordinate(TabbedPane.this,point.x,point.y));
                         removeAll();
                         addTab(tittle,component);
                     }
@@ -211,6 +216,7 @@ public class TabbedPane extends FlatTabbedPane {
                 super.mouseClicked(e);
                 if(e.getButton()==3){
                     if(getUI().tabForCoordinate(TabbedPane.this,e.getX(),e.getY())!=-1){
+                        point.setLocation(e.getPoint());
                         pop_up.show(getComponentAt(getMousePosition()),e.getX(),e.getY());
                     }
                 }
@@ -220,6 +226,7 @@ public class TabbedPane extends FlatTabbedPane {
         buttonEsquina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                point.setLocation(getUI().getTabBounds(TabbedPane.this,getSelectedIndex()).getLocation());
                 pop_up.show(buttonEsquina,buttonEsquina.getVisibleRect().x,buttonEsquina.getVisibleRect().y+buttonEsquina.getHeight());
             }
         });
@@ -230,7 +237,6 @@ public class TabbedPane extends FlatTabbedPane {
 
     public TabbedPane() {
         super();
-//        putClientProperty("TabbedPane.selectedBackground",lighten(getBackground(),0.05f));
         setShowTabSeparators(true);
         setTabsClosable(true);
         setTabCloseCallback(JTabbedPane::removeTabAt);
