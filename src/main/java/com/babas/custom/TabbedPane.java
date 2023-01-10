@@ -223,37 +223,13 @@ public class TabbedPane extends FlatTabbedPane {
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 if(e.getButton()==3){
-                    maxX=0.0;
-                    maxY=0.0;
-                    minX=10000.0;
-                    minY=10000.0;
-                    for (Component component : getComponents()) {
-                        if(indexOfComponent(component)!=-1){
-                            if(maxX<getBoundsAt(indexOfComponent(component)).getMaxX()){
-                                maxX=getBoundsAt(indexOfComponent(component)).getMaxX();
-                            }
-                            if(maxY<getBoundsAt(indexOfComponent(component)).getMaxY()){
-                                maxY=getBoundsAt(indexOfComponent(component)).getMaxY();
-                            }
-                            if(minX>getBoundsAt(indexOfComponent(component)).getLocation().getLocation().getX()){
-                                minX=getBoundsAt(indexOfComponent(component)).getLocation().getLocation().getX();
-                            }
-                            if(minY>getBoundsAt(indexOfComponent(component)).getLocation().getLocation().getY()){
-                                minY=getBoundsAt(indexOfComponent(component)).getLocation().getLocation().getY();
-                            }
-                        }
-                    }
-                    if(e.getY()<=maxY&&e.getY()>=minY&&e.getX()<=maxX&&e.getX()>=minX){
-                        if(tabPlacement==3||tabPlacement==4){
-                            pop_up.show(getComponentAt(getSelectedIndex()),e.getX(),e.getY());
-                        }else{
-                            pop_up.show(getComponentAt(getMousePosition()),e.getX(),e.getY());
-                        }
+                    if(getUI().tabForCoordinate(TabbedPane.this,e.getX(),e.getY())!=-1){
+                        pop_up.show(getComponentAt(getMousePosition()),e.getX(),e.getY());
                     }
                 }
             }
         });
-        buttonEsquina.setIcon(new ImageIcon(com.babas.App.class.getResource("icons/x24/menu.png")));
+        buttonEsquina.setIcon(new ImageIcon(App.class.getResource("icons/x24/menu.png")));
         buttonEsquina.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
